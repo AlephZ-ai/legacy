@@ -1,7 +1,7 @@
 #!/usr/bin/env zsh
 #shellcheck shell=bash
 #shellcheck source=/dev/null
-projectRoot="$(dirname "$(dirname "$(dirname "$(dirname "$(cd -- "$(dirname -- "${BASH_SOURCE-$0}")" &> /dev/null && pwd)")")")")"
+projectRoot="$(dirname "$(dirname "$(dirname "$(cd -- "$(dirname -- "${BASH_SOURCE-$0}")" &> /dev/null && pwd)")")")"
 set -o allexport
 source "$projectRoot/.env"
 set +o allexport
