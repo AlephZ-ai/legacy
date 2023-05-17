@@ -3,7 +3,7 @@
 #shellcheck source=/dev/null
 script="$1"
 command="${2-null}"
-isdevcontainercommand="${3-true}"
+isdevcontainercommand=${3-true}
 DEVCONTAINER_DIRECTORY=.devcontainer
 DEVCONTAINER_FEATURES_DEVCONTAINER_SCRIPTS_ROOT="$(cd -- "$(dirname -- "${BASH_SOURCE-$0}")" &> /dev/null && pwd)/$DEVCONTAINER_DIRECTORY/src/scripts"
 source "$DEVCONTAINER_FEATURES_DEVCONTAINER_SCRIPTS_ROOT/setup/set-env-vars.sh"
