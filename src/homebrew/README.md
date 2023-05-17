@@ -7,7 +7,7 @@ Installs Homebrew
 
 ```json
 "features": {
-    "ghcr.io/AlephZ-ai/devcontainer-features-new/homebrew:2": {}
+    "ghcr.io/AlephZ-ai/devcontainer-features/homebrew:2": {}
 }
 ```
 
@@ -21,4 +21,4 @@ Installs Homebrew
 
 ---
 
-_Note: This file was auto-generated from the [devcontainer-feature.json](https://github.com/AlephZ-ai/devcontainer-features-new/blob/main/src/homebrew/devcontainer-feature.json).  Add additional notes to a `NOTES.md`._
+_Note: This file was auto-generated from the [devcontainer-feature.json](https://github.com/AlephZ-ai/devcontainer-features/blob/main/src/homebrew/devcontainer-feature.json).  Add additional notes to a `NOTES.md`._
