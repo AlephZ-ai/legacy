@@ -13,7 +13,15 @@
                 ]
             },
             "extensions": [
-                "mads-hartmann.bash-ide-vscode"
+                "editorconfig.editorconfig",
+                "gitHub.codespaces",
+                "gitHub.vscode-pull-request-github",
+                "gitHub.remotehub",
+                "gitHub.copilot-nightly",
+                "gitHub.copilot-labs",
+                "github.vscode-github-actions",
+                "ms-vscode-remote.remote-containers",
+                "hilleer.yaml-plus-json"
             ]
         }
     },
