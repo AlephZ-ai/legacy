@@ -1,7 +1,18 @@
 #!/usr/bin/env zsh
 #shellcheck shell=bash
+#shellcheck source=/dev/null
 script="$1"
-command="$2"
-scriptsRoot="$(cd -- "$(dirname -- "${BASH_SOURCE-$0}")" &> /dev/null && pwd)/.devcontainer/src/scripts"
-source "$scriptsRoot/setup/set-env-vars.sh"
-"$DEVCONTAINER_FEATURES_SCRIPTS_ROOT/$script.sh" "$command"
+command="${2-null}"
+isdevcontainercommand="${3-true}"
+DEVCONTAINER_DIRECTORY=.devcontainer
+DEVCONTAINER_FEATURES_DEVCONTAINER_SCRIPTS_ROOT="$(cd -- "$(dirname -- "${BASH_SOURCE-$0}")" &> /dev/null && pwd)/$DEVCONTAINER_DIRECTORY/src/scripts"
+source "$DEVCONTAINER_FEATURES_DEVCONTAINER_SCRIPTS_ROOT/setup/set-env-vars.sh"
+echo "$DEVCONTAINER_FEATURES_SCRIPTS_ROOT"
+echo "$DEVCONTAINER_FEATURES_DEVCONTAINER_SCRIPTS_ROOT"
+echo "$isdevcontainercommand"
+if $isdevcontainercommand; then
+  scriptsRoot="$DEVCONTAINER_FEATURES_DEVCONTAINER_SCRIPTS_ROOT"
+else
+  scriptsRoot="$DEVCONTAINER_FEATURES_SCRIPTS_ROOT"
+fi
+"$scriptsRoot/$script.sh" "$command"
