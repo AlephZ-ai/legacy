@@ -7,9 +7,6 @@ isdevcontainercommand="${3-true}"
 DEVCONTAINER_DIRECTORY=.devcontainer
 DEVCONTAINER_FEATURES_DEVCONTAINER_SCRIPTS_ROOT="$(cd -- "$(dirname -- "${BASH_SOURCE-$0}")" &> /dev/null && pwd)/$DEVCONTAINER_DIRECTORY/src/scripts"
 source "$DEVCONTAINER_FEATURES_DEVCONTAINER_SCRIPTS_ROOT/setup/set-env-vars.sh"
-echo "$DEVCONTAINER_FEATURES_SCRIPTS_ROOT"
-echo "$DEVCONTAINER_FEATURES_DEVCONTAINER_SCRIPTS_ROOT"
-echo "$isdevcontainercommand"
 if $isdevcontainercommand; then
   scriptsRoot="$DEVCONTAINER_FEATURES_DEVCONTAINER_SCRIPTS_ROOT"
 else
