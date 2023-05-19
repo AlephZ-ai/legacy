@@ -15,7 +15,7 @@ Installs nvm, Node.js (lts and latest), yarn, pnpm, and needed dependencies.
 
 | Options Id | Description | Type | Default Value |
 |-----|-----|-----|-----|
-| version | Select or enter a Node.js version to install | string | lts |
+| username | User to install nvm | string | automatic |
 | nodeGypDependencies | Install dependencies to compile native node modules (node-gyp)? | boolean | true |
 
 ## Customizations
