@@ -7,7 +7,7 @@ Installs Homebrew
 
 ```json
 "features": {
-    "ghcr.io/AlephZ-ai/devcontainer-features/homebrew:2": {}
+    "ghcr.io/AlephZ-ai/devcontainer-features/homebrew:3": {}
 }
 ```
 
@@ -15,6 +15,7 @@ Installs Homebrew
 
 | Options Id | Description | Type | Default Value |
 |-----|-----|-----|-----|
+| username | User to install Homebrew | string | automatic |
 | brews | Space seperated list of Brews to install after installing homebrew | string | - |
 
 
