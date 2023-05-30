@@ -16,7 +16,7 @@ Executes a user command
 | Options Id | Description | Type | Default Value |
 |-----|-----|-----|-----|
 | username | User to run command as | string | automatic |
-| command | command to be executed as username (will be forwarded as is to a 'bash -c <command>' line) | string | - |
+| command | command to be executed as username (will be forwarded as is to a 'bash -c <command>' line) | string | if [ "\$USERNAME" = "root" ]; then echo TEST="test" >> "/etc/environment"; else echo TEST="test" >> "\$HOME/.bashrc"; fi |
 
 
 
