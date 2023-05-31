@@ -16,7 +16,7 @@ Executes a sudo command
 | Options Id | Description | Type | Default Value |
 |-----|-----|-----|-----|
 | username | User to run command as | string | automatic |
-| command | command to be executed as root (will be forwarded as is to a 'bash -c <command>' line) | string | - |
+| command | command to be executed as root (will be forwarded as is to a 'bash -c <command>' line) | string | echo TEST=42 >> /etc/environment |
 
 
 
