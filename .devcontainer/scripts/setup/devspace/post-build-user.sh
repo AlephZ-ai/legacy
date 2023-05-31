@@ -32,5 +32,8 @@
 # Adding GH .ssh known hosts
   # shellcheck source=/dev/null
   source "$DEVCONTAINER_SCRIPTS_ROOT/setup/devspace/gh.sh"
+# Setup desktop-list
+  # shellcheck source=/dev/null
+  source "$DEVCONTAINER_SCRIPTS_ROOT/setup/devspace/desktop-lite.sh"
 # Done
   echo "Please restart shell to get latest environment variables"
