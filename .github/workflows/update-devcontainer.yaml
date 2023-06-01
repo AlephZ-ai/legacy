@@ -23,7 +23,7 @@ jobs:
       - name: Create a PR for DevContainer
         id: push_image_info
         env:
-          GITHUB_TOKEN: ${{ secrets.PAT }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           set -e
           echo "Start."
@@ -33,7 +33,7 @@ jobs:
           git config --global user.name github-actions
           git config pull.rebase false
       
-          branch=automated-devcontainer-update-v$GITHUB_RUN_ID
+          branch=automated-devcontainer-update-$GITHUB_RUN_ID
           git checkout -b $branch
           message='Automated devcontainer.json update'
       
