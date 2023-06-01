@@ -24,4 +24,3 @@ echo "my favorite color is ${FAVORITE}"
 EOF
 
 chmod +x /usr/local/bin/color
-echo test

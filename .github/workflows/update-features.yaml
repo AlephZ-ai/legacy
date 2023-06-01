@@ -22,7 +22,7 @@ jobs:
 
       - name: Update devcontainer-feature.json
         run: |
-          CHANGED_FEATURES=$(git diff --name-only HEAD~1 HEAD | awk -F'/' '{print $2}' | uniq)
+          CHANGED_FEATURES=$(git diff --name-only HEAD~1 HEAD -- ./src | awk -F'/' '{print $2}' | uniq)
           for feature in $CHANGED_FEATURES; do
               if [[ -d "./src/$feature" ]]; then
                   json_file="src/$feature/devcontainer-feature.json"
