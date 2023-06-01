@@ -33,3 +33,4 @@ su "$USERNAME" -c "$COMMAND"
 rm -rf /var/lib/apt/lists/*
 
 echo "Done!"
+echo TEST
