@@ -20,7 +20,7 @@ jobs:
 
       - name: Update devcontainer.json
         run: |
-          jq '.name = "DevContainer Features v'${{ github.run_id }}'"' .devcontainer/devcontainer.json > temp.json && mv temp.json .devcontainer/devcontainer.json
+          jq '.name = "DevContainer Features v${{ github.run_id }}"' .devcontainer/devcontainer.json > temp.json && mv temp.json .devcontainer/devcontainer.json
 
       - name: Commit changes
         run: |
