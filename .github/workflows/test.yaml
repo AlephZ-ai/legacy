@@ -14,7 +14,7 @@ jobs:
   check:
     runs-on: ubuntu-latest
     outputs:
-      should_continue: env.SHOULD_CONTINUE
+      should_continue: ${{ env.SHOULD_CONTINUE }}
     steps:
       - uses: actions/checkout@v3
         with:
@@ -67,7 +67,7 @@ jobs:
     needs: check
     runs-on: ubuntu-latest
     continue-on-error: true
-    if: needs.check.outputs.should_continue == 'true'
+    if: ${{ needs.check.outputs.should_continue == 'true' }}
     strategy:
       matrix:
         features: [
@@ -89,7 +89,7 @@ jobs:
     needs: check
     runs-on: ubuntu-latest
     continue-on-error: true
-    if: needs.check.outputs.should_continue == 'true'
+    if: ${{ needs.check.outputs.should_continue == 'true' }}
     steps:
       - uses: actions/checkout@v3
 

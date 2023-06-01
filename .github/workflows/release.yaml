@@ -30,7 +30,7 @@ jobs:
 
       - name: "Publish"
         uses: devcontainers/action@v1
-        if: env.SHOULD_CONTINUE == 'true'
+        if: ${{ env.SHOULD_CONTINUE == 'true' }}
         with:
           publish-features: "true"
           base-path-to-features: "./src"

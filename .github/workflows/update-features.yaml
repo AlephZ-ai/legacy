@@ -33,14 +33,14 @@ jobs:
           echo "SHOULD_CONTINUE=$(if [[ "$LAST_COMMIT_MESSAGE" == *"Automated devcontainer features update"* ]]; then echo false; else echo true; fi)" >> "$GITHUB_ENV"
 
       - name: Generate Documentation
-        if: env.SHOULD_CONTINUE == 'true'
+        if: ${{ env.SHOULD_CONTINUE == 'true' }}
         uses: devcontainers/action@v1
         with:
           generate-docs: "true"
           base-path-to-features: "./src"
 
       - name: Update devcontainer-feature.json
-        if: env.SHOULD_CONTINUE == 'true'
+        if: ${{ env.SHOULD_CONTINUE == 'true' }}
         run: |
           CHANGED_FEATURES=$(git diff --name-only HEAD~1 HEAD -- ./src | awk -F'/' '{print $2}' | uniq)
           for feature in $CHANGED_FEATURES; do
@@ -54,7 +54,7 @@ jobs:
           done
 
       - name: Create a PR for Features
-        if: env.SHOULD_CONTINUE == 'true'
+        if: ${{ env.SHOULD_CONTINUE == 'true' }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
