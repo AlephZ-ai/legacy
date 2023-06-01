@@ -32,6 +32,7 @@
     brew update
     brew upgrade
   # Setup post hombrew packages
+    sudo chsh "$USERNAME" -s "$(which zsh)" || chsh -u "$USERNAME" -s "$(which zsh)"
     brew link --force --overwrite postgresql@15 openssl@3
     # shellcheck disable=SC2016
     updaterc "export PATH=\"$HOMEBREW_PREFIX/opt/python/libexec/bin:\$PATH\""

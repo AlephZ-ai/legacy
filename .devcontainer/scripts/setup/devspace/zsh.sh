@@ -5,7 +5,7 @@
   source "$HOME/.bashrc"
   USERNAME="${USERNAME:-$(whoami)}"
 # Setup ohmyzsh and make zsh default shell
-  sudo chsh -u "$USERNAME" -s "$(which zsh)"
+  sudo chsh "$USERNAME" -s "$(which zsh)" || chsh -u "$USERNAME" -s "$(which zsh)"
   sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended || true
   # powerlevel10k not working in wsl
   # git clone --depth=1 https://github.com/romkatv/powerlevel10k.git "$HOME/powerlevel10k" || true
