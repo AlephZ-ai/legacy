@@ -3,7 +3,7 @@
 set -e
 # desktop-lite fix for versions > 1.2.0
 # Find the version number by looking at the directory names
-NOVNC_VERSION=$(basename "$(find /usr/local/novnc -type d -name 'noVNC-*' | head -n 1)")
+NOVNC_VERSION=$(basename "$(find /usr/local/novnc -type d -name 'noVNC-*' | head -n 1)") || true
 
 # Check if NOVNC_VERSION is not null
 if [[ -n "${NOVNC_VERSION}" ]]; then
@@ -19,5 +19,4 @@ if [[ -n "${NOVNC_VERSION}" ]]; then
   fi
 else
   echo "NOVNC_VERSION is null. Exiting."
-  exit 0
 fi

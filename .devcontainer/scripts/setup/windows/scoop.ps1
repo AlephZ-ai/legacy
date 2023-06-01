@@ -6,7 +6,7 @@ scoop update
 $complete = $false
 do {
     try {
-        scoop install --global vcredist vcredist2022 touch patch
+        scoop install --global touch patch
         scoop install --global gawk cacert file sed coreutils grep curl wget bzip2 less
         scoop install --global zlib buf protobuf grpc-tools dos2unix gitsign gh
         scoop install --global jq gcc make cmake llvm dotnet-nightly dotnet-sdk-preview dotnet-sdk dotnet-sdk-lts mono go python openssl openssh age 
@@ -25,8 +25,6 @@ scoop update --all --global
 Stop-Service -Force sshd
 C:\ProgramData\scoop\apps\openssh\current\install-sshd.ps1
 C:\ProgramData\scoop\apps\zlib\current\register.reg
-# Remove vcredist so the will update if this script is run again, these are special
-scoop uninstall --global vcredist vcredist2005 vcredist2008 vcredist2010 vcredist2012 vcredist2013 vcredist2022
 # scoop update
 scoop update
 scoop update --all
