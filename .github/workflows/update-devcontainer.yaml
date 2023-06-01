@@ -19,8 +19,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-
-          
       - name: Create a PR for DevContainer
         id: push_image_info
         env:

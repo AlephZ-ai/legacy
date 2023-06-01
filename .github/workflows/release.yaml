@@ -26,7 +26,7 @@ jobs:
       - name: Check should continue
         id: should_continue
         run: |
-          echo "SHOULD_CONTINUE=$([[ "$LAST_COMMIT_MESSAGE" == *"Automated devcontainer features update"* ]])" >> "$GITHUB_ENV"
+          echo "SHOULD_CONTINUE=$(if [[ "$LAST_COMMIT_MESSAGE" == *"Automated devcontainer features update"* ]]; then echo true; else echo false; fi)" >> "$GITHUB_OUTPUT"
 
       - name: "Publish"
         uses: devcontainers/action@v1
