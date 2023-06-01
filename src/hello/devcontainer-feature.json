@@ -4,6 +4,7 @@
   "version": "1.0.54",
   "description": "A hello world feature",
   "options": {
+    "test": { "type": "string", "default": "test" },
     "greeting": {
       "type": "string",
       "proposals": [
