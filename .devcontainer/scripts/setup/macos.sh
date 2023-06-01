@@ -4,11 +4,11 @@
   # shellcheck source=/dev/null
   source "$HOME/.zshrc"
 # Setup Developer Command Line tools
-  if ! git --version; then sudo xcode-select --install; fi
+  if ! (bash --version && git --version); then sudo xcode-select --install; fi
 # Run post-build commands
   # shellcheck source=/dev/null
   export HOMEBREW_PREFIX="/usr/local"
-  bash -l -c "source $DEVCONTAINER_SCRIPTS_ROOT/setup/devspace/post-build-user.sh"
+  bash -l -c "$DEVCONTAINER_SCRIPTS_ROOT/setup/devspace/post-build-user.sh"
   source "$HOME/.zshrc"
 # Continue with devspace setup
   "$DEVCONTAINER_SCRIPTS_ROOT/setup/devspace.sh"
