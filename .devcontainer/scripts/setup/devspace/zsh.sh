@@ -10,7 +10,7 @@
   if [ "$os" == "Linux" ]; then
     sudo chsh "$USERNAME" -s "$(which zsh)"
   else
-    chsh /bin/zsh
+    chsh -s /bin/zsh
   fi
 
   # powerlevel10k not working in wsl
