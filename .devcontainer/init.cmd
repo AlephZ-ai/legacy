@@ -1,2 +1,2 @@
-@ECHO OFF
+@echo off
 run.cmd setup environment

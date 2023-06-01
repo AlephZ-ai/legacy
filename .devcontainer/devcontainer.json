@@ -6,7 +6,10 @@
   "remoteUser": "vscode",
   "userEnvProbe": "loginInteractiveShell",
   "containerEnv": {},
-  "remoteEnv": {},
+  "remoteEnv": {
+    "GITHUB_USERNAME": "${localEnv:GITHUB_USERNAME}",
+    "GITHUB_TOKEN": "${localEnv:GITHUB_TOKEN}"
+  },
   "mounts": [],
   "forwardPorts": [
     11080,
