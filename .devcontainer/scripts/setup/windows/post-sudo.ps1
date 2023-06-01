@@ -11,10 +11,12 @@ scoop update --all --global
 & "$env:DEVCONTAINER_FEATURES_PROJECT_ROOT/run.ps1" setup/windows nvm
 & "$env:DEVCONTAINER_FEATURES_PROJECT_ROOT/run.ps1" setup/windows pwsh
 & "$env:DEVCONTAINER_FEATURES_PROJECT_ROOT/run.ps1" setup/windows pip
+& "$env:DEVCONTAINER_FEATURES_PROJECT_ROOT/run.ps1" setup/windows gh
 # Setup environment
 refreshenv
 & "$env:DEVCONTAINER_FEATURES_PROJECT_ROOT/run.ps1" setup environment
 & "$env:DEVCONTAINER_FEATURES_PROJECT_ROOT/run.ps1" utils gh-login
+& "$env:DEVCONTAINER_FEATURES_PROJECT_ROOT/run.ps1" utils docker-login
 winget install --id Microsoft.PowerToys --accept-package-agreements --accept-source-agreements --disable-interactivity
 # The command above will fail if it's already installed, so make sure to have clean exit code
 exit

@@ -32,9 +32,6 @@
 # Setup GH
   # shellcheck source=/dev/null
   source "$DEVCONTAINER_SCRIPTS_ROOT/setup/devspace/gh.sh"
-# Login to Docker
-  # shellcheck source=/dev/null
-  source "$DEVCONTAINER_SCRIPTS_ROOT/setup/devspace/docker-login.sh"
 # Setup desktop-list
   # shellcheck source=/dev/null
   source "$DEVCONTAINER_SCRIPTS_ROOT/setup/devspace/desktop-lite.sh"

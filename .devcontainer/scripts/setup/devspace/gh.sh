@@ -10,6 +10,3 @@
 # Configure GH
   gh auth setup-git
   gh config set -h github.com git_protocol https
-  if [[ -n "$GITHUB_TOKEN" ]]; then
-    gh auth status
-  fi

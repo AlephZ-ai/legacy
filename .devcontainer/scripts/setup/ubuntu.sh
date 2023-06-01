@@ -23,6 +23,8 @@
   if [ "$IS_WSL" != "true" ]; then
     # shellcheck source=/dev/null
     source "$DEVCONTAINER_SCRIPTS_ROOT/utils/gh-login.sh"
+    # shellcheck source=/dev/null
+    source "$DEVCONTAINER_SCRIPTS_ROOT/utils/docker-login.sh"
   fi
 # Done
   echo "Please restart shell to get latest environment variables"

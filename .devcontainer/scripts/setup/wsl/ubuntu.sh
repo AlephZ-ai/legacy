@@ -36,6 +36,8 @@
 # Log into GitHub
   # shellcheck source=/dev/null
   source "$DEVCONTAINER_SCRIPTS_ROOT/utils/gh-login.sh"
+  # shellcheck source=/dev/null
+  source "$DEVCONTAINER_SCRIPTS_ROOT/utils/docker-login.sh"
 # WSLg GPU acceleration
   # glxinfo
 # Done
