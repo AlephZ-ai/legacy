@@ -33,9 +33,10 @@
       grep -qF "$cmd" "$file" || echo "$cmd" >> "$file"
     done
   done
-# Log into GitHub
+# Login to GitHub
   # shellcheck source=/dev/null
   source "$DEVCONTAINER_SCRIPTS_ROOT/utils/gh-login.sh"
+# Login to Docker
   # shellcheck source=/dev/null
   source "$DEVCONTAINER_SCRIPTS_ROOT/utils/docker-login.sh"
 # WSLg GPU acceleration

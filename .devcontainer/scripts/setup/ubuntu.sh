@@ -19,7 +19,7 @@
   source "$DEVCONTAINER_SCRIPTS_ROOT/setup/devspace/post-build-user.sh"
 # Continue with devspace setup
   "$DEVCONTAINER_SCRIPTS_ROOT/setup/devspace.sh"
-# Log into GitHub
+# Login to GitHub and Docker
   if [ "$IS_WSL" != "true" ]; then
     # shellcheck source=/dev/null
     source "$DEVCONTAINER_SCRIPTS_ROOT/utils/gh-login.sh"
