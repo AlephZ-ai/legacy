@@ -25,7 +25,7 @@ jobs:
         id: last_commit
         run: |
           LAST_COMMIT_MESSAGE=$(git log -1 --pretty=%B)
-          echo "LAST_COMMIT_MESSAGE=$LAST_COMMIT_MESSAGE" >> "$GITHUB_ENV"
+          echo LAST_COMMIT_MESSAGE="$LAST_COMMIT_MESSAGE" >> "$GITHUB_ENV"
  
       - name: Check should continue
         id: should_continue
