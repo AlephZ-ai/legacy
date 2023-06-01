@@ -4,7 +4,7 @@ version: '3.8'
 services:
   # Kind cluster
   devcontainer-features:
-    image: ghcr.io/alephz-ai/devcontainer-features:latest
+    image: devcontainer-features
     container_name: devcontainer-devspace
     labels: [ "ai.alephz.role=devcontainer-features" ]
     env_file: .env
