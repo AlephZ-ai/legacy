@@ -1,10 +1,13 @@
 {
   "name": "My Favorite Color",
   "id": "color",
-  "version": "1.0.43",
+  "version": "1.0.44",
   "description": "A feature to remind you of your favorite color",
   "options": {
-    "test": { "type": "string", "default": "test" },
+    "test": {
+      "type": "string",
+      "default": "test"
+    },
     "favorite": {
       "type": "string",
       "enum": [
