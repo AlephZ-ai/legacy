@@ -27,4 +27,3 @@ echo "\${RED}${GREETING}, \$(whoami)!\${NC}"
 EOF
 
 chmod +x /usr/local/bin/hello
-echo "test"
