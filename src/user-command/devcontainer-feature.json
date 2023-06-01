@@ -1,7 +1,7 @@
 {
   "name": "User Command",
   "id": "user-command",
-  "version": "1.0.73",
+  "version": "1.0.74",
   "description": "Executes a user command",
   "documentationURL": "https://github.com/alephz-ai/devcontainer-features/tree/main/src/user-command",
   "options": {
@@ -25,5 +25,5 @@
     "ghcr.io/devcontainers-contrib/featues/apt-packages",
     "ghcr.io/rocker-org/devcontainer-features/apt-packages",
     "ghcr.io/AlephZ-ai/devcontainer-features/sudo-command"
-  ]  
+  ]
 }

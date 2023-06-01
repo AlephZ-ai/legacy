@@ -1,7 +1,7 @@
 {
   "name": "Sudo Command",
   "id": "sudo-command",
-  "version": "1.0.52",
+  "version": "1.0.53",
   "description": "Executes a sudo command",
   "documentationURL": "https://github.com/alephz-ai/devcontainer-features/tree/main/src/sudo-command",
   "options": {
@@ -19,5 +19,5 @@
       "description": "command to be executed as root (will be forwarded as is to a 'bash -c <command>' line)"
     }
   },
-  "installsAfter": []  
+  "installsAfter": []
 }
