@@ -9,8 +9,6 @@
   sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended || true
   if [ "$os" == "Linux" ]; then
     sudo chsh "$USERNAME" -s "$(which zsh)"
-  else
-    chsh -s /bin/zsh
   fi
 
   # powerlevel10k not working in wsl
