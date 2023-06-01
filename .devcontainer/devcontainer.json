@@ -3,13 +3,10 @@
   "dockerComposeFile": "docker-compose.yaml",
   "service": "devcontainer-features",
   "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
-  // https://aka.ms/dev-containers-non-root.
   "remoteUser": "vscode",
   "userEnvProbe": "loginInteractiveShell",
-  // https://code.visualstudio.com/remote/advancedcontainers/environment-variables
   "containerEnv": {},
   "remoteEnv": {},
-  // https://code.visualstudio.com/remote/advancedcontainers/add-local-file-mount
   "mounts": [],
   "forwardPorts": [
     11080,
@@ -25,8 +22,6 @@
       "protocol": "http"
     }
   },
-  // https://code.visualstudio.com/remote/advancedcontainers/start-processes
-  // https://containers.dev/implementors/json_reference/#lifecycle-scripts
   "initializeCommand": [ ".devcontainer/init" ],
   "updateContentCommand": [ "/bin/zsh", "-l", "-c", "./run events update-content" ],
   "onCreateCommand": [ "/bin/zsh", "-l", "-c", "./run events on-create" ],
@@ -109,11 +104,9 @@
     }
   },
   "features": {
-    // https://github.com/devcontainers-contrib/features/tree/main/src/bash-command
     "ghcr.io/AlephZ-ai/devcontainer-features/sudo-command:1": {
       "command": "/devspaces/devcontainer/scripts/setup/devspace/pre-build-sudo.sh"
     },
-    // https://github.com/devcontainers/features/tree/main/src/common-utils
     "ghcr.io/devcontainers/features/common-utils:2": {
       "installZsh": "true",
       "configureZshAsDefaultShell": "true",
@@ -123,7 +116,6 @@
       "userGid": "automatic",
       "nonFreePackages": "true"
     },
-    // https://github.com/devcontainers/features/tree/main/src/docker-in-docker
     "ghcr.io/devcontainers/features/docker-in-docker:2": {
       "version": "latest",
       "moby": "true",
@@ -132,7 +124,6 @@
       "enableNonRootDocker": "true",
       "installDockerBuildx": "true"
     },
-    // https://github.com/devcontainers/features/tree/main/src/desktop-lite
     "ghcr.io/devcontainers/features/desktop-lite:1": {
       "version": "latest",
       "noVncVersion": "1.4.0",
@@ -140,7 +131,6 @@
       "webPort": 11080,
       "vncPort": 11901
     },
-    // https://github.com/devcontainers-contrib/features/tree/main/src/bash-command
     "ghcr.io/AlephZ-ai/devcontainer-features/user-command:1": {
       "command": "/devspaces/devcontainer/scripts/setup/devspace/post-build-user.sh"
     }
