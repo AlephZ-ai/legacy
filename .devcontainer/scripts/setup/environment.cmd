@@ -10,18 +10,6 @@ popd
 set "DEVCONTAINER_FEATURES_PROJECT_ROOT=%projectRoot%"
 set "DEVCONTAINER_FEATURES_SOURCE_ROOT=%DEVCONTAINER_FEATURES_PROJECT_ROOT%\src"
 set "DEVCONTAINER_SCRIPTS_ROOT=%DEVCONTAINER_FEATURES_PROJECT_ROOT%\.devcontainer\scripts"
-rem Check if GITHUB_TOKEN is not set
-if not defined GITHUB_TOKEN (
-    rem Check if GitHub CLI is authenticated
-    gh auth status >nul 2>&1
-    if %errorlevel% NEQ 0 (
-        echo GitHub CLI is not authenticated. Please authenticate using 'gh auth login'.
-        exit /b
-    ) else (
-        rem Get GitHub token
-        for /F "tokens=*" %%i IN ('gh auth token') do set GITHUB_TOKEN=%%i
-    )
-)
 
 set
 endlocal

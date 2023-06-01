@@ -29,7 +29,7 @@
 # Make trusted root CA then install and trust it
   # shellcheck source=/dev/null
   source "$DEVCONTAINER_SCRIPTS_ROOT/setup/devspace/trust-root-ca.sh"
-# Adding GH .ssh known hosts
+# Setup GH
   # shellcheck source=/dev/null
   source "$DEVCONTAINER_SCRIPTS_ROOT/setup/devspace/gh.sh"
 # Login to Docker
