@@ -5,7 +5,8 @@
   source "$HOME/.bashrc"
 # Setup pwsh modules
   pwsh_modules=('Pester' 'Set-PsEnv' 'posh-docker' 'posh-git' 'lazy-posh-git')
-  pwsh_update='Install-Module PowerShellGet -ErrorAction Stop -Force -SkipPublisherCheck -AllowClobber; Update-Module; Install-Module PowerShellGet -ErrorAction Stop -Force -SkipPublisherCheck -AllowClobber -AllowPrerelease; Set-Alias -Name awk -Value gawk'
+  # shellcheck disable=SC2016
+  pwsh_update='if (!(Test-Path $PROFILE)) { New-Item -ItemType File -Path $PROFILE -Force; }; Install-Module PowerShellGet -ErrorAction Stop -Force -SkipPublisherCheck -AllowClobber; Update-Module; Install-Module PowerShellGet -ErrorAction Stop -Force -SkipPublisherCheck -AllowClobber -AllowPrerelease; Set-Alias -Name awk -Value gawk'
   # shellcheck disable=SC2016
   pwsh_install_module='Install-Module -Name $module -ErrorAction Stop -Force -SkipPublisherCheck -AllowClobber;'
   # shellcheck disable=SC2034
