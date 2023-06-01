@@ -5,16 +5,31 @@ on:
   push:
     branches:
       - main
+    paths:
+      - 'src/*/devcontainer-feature.json'
 
 jobs:
   deploy:
-    if: ${{ github.ref == 'refs/heads/main' }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      
+        with:
+          fetch-depth: 0
+
+      - name: Check last commit message
+        id: last_commit
+        run: |
+          LAST_COMMIT_MESSAGE=$(git log -1 --pretty=%B)
+          echo "::set-output name=message::$LAST_COMMIT_MESSAGE"
+
+      - name: Check should continue
+        id: should_continue
+        run: |
+          echo "::set-output name=value::$([[ "${{ steps.last_commit.outputs.message }}" == *"Automated devcontainer features update"* ]])"
+
       - name: "Publish"
         uses: devcontainers/action@v1
+        if: steps.should_continue.outputs.value == 'true'
         with:
           publish-features: "true"
           base-path-to-features: "./src"

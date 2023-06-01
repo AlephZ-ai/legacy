@@ -1,15 +1,39 @@
 #example=https://github.com/devcontainers/features/blob/main/.github/workflows/test-all.yaml
 name: "CI - Test Features"
 on:
+  workflow_dispatch:
   push:
     branches:
       - main
-  workflow_dispatch:
+    paths:
+      - 'src/**'
+      - 'test/**'
 
 jobs:
+  check:
+    runs-on: ubuntu-latest
+    outputs:
+      should_continue: ${{ steps.should_continue.outputs.value }}
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Check last commit message
+        id: last_commit
+        run: |
+          LAST_COMMIT_MESSAGE=$(git log -1 --pretty=%B)
+          echo "::set-output name=message::$LAST_COMMIT_MESSAGE"
+
+      - name: Check should continue
+        id: should_continue
+        run: |
+          echo "::set-output name=value::$([[ "${{ steps.last_commit.outputs.message }}" != *"Automated devcontainer features update"* ]] && echo true || echo false)"
+
   test:
     runs-on: ubuntu-latest
     continue-on-error: true
+    if: needs.check.outputs.should_continue == 'true'
     strategy:
       matrix:
         features: [
@@ -40,6 +64,7 @@ jobs:
   test-scenarios:
     runs-on: ubuntu-latest
     continue-on-error: true
+    if: needs.check.outputs.should_continue == 'true'
     strategy:
       matrix:
         features: [
@@ -60,6 +85,7 @@ jobs:
   test-global:
     runs-on: ubuntu-latest
     continue-on-error: true
+    if: needs.check.outputs.should_continue == 'true'
     steps:
       - uses: actions/checkout@v3
 

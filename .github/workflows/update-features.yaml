@@ -26,13 +26,27 @@ jobs:
           LAST_COMMIT_MESSAGE=$(git log -1 --pretty=%B)
           echo "::set-output name=message::$LAST_COMMIT_MESSAGE"
  
-      - name: Update devcontainer-feature.json
+          - name: Check last commit message
+          id: last_commit
+          run: |
+            LAST_COMMIT_MESSAGE=$(git log -1 --pretty=%B)
+            echo "::set-output name=message::$LAST_COMMIT_MESSAGE"
+  
+      - name: Check should continue
+        id: should_continue
         run: |
-          if [[ "${{ steps.last_commit.outputs.message }}" == *"Automated devcontainer-feature.json update"* ]]; then
-            echo "Last commit was an automated devcontainer-feature.json update, skipping version update..."
-            exit 0
-          fi
+          echo "::set-output name=value::$(! [[ "${{ steps.last_commit.outputs.message }}" == *"Automated devcontainer features update"* ]])"
 
+      - name: Generate Documentation
+        if: steps.should_continue.outputs.value == 'true'
+        uses: devcontainers/action@v1
+        with:
+          generate-docs: "true"
+          base-path-to-features: "./src"
+
+      - name: Update devcontainer-feature.json
+        if: steps.should_continue.outputs.value == 'true'
+        run: |
           CHANGED_FEATURES=$(git diff --name-only HEAD~1 HEAD -- ./src | awk -F'/' '{print $2}' | uniq)
           for feature in $CHANGED_FEATURES; do
               if [[ -d "./src/$feature" ]]; then
@@ -45,7 +59,7 @@ jobs:
           done
 
       - name: Create a PR for Features
-        id: push_image_info
+        if: steps.should_continue.outputs.value == 'true'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
@@ -58,8 +72,9 @@ jobs:
       
           branch=automated-features-update-$GITHUB_RUN_ID
           git checkout -b $branch
-          message='Automated devcontainer-feature.json update'
+          message='Automated devcontainer features update'
       
+          git add */**/README.md
           git add src/**/devcontainer-feature.json
           git commit -m 'Automated devcontainer-feature.json update' || export NO_UPDATES=true
       

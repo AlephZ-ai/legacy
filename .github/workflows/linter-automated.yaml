@@ -1,10 +1,14 @@
 #example=https://github.com/devcontainers/features/blob/main/.github/workflows/linter-automated.yaml
 name: "CI - Shell Script Linter"
 on: 
+  pull_request:
+    paths:
+      - 'src/**/*.sh'
   push:
     branches:
       - main
-  pull_request:
+    paths:
+      - 'src/**/*.sh'
 
 jobs:
   shellchecker:
