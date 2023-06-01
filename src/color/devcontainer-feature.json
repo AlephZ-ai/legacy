@@ -4,10 +4,6 @@
   "version": "1.0.44",
   "description": "A feature to remind you of your favorite color",
   "options": {
-    "test": {
-      "type": "string",
-      "default": "test"
-    },
     "favorite": {
       "type": "string",
       "enum": [

@@ -5,10 +5,6 @@
   "description": "Executes a user command",
   "documentationURL": "https://github.com/alephz-ai/devcontainer-features/tree/main/src/user-command",
   "options": {
-    "test": {
-      "type": "string",
-      "default": "test"
-    },
     "username": {
       "type": "string",
       "default": "automatic",
