@@ -2,7 +2,7 @@
 # init
   # Setup to use windows git credential manager if exists
     gcm="/mnt/c/Program\\ Files/Git/mingw64/bin/git-credential-manager.exe"
-    if [ -e "$(eval echo $gcm)" ]; then
+    if [ -e "$(eval echo "$gcm")" ]; then
       echo "Updating credential helper to use windows"
       git config --global credential.helper "$gcm"
     fi

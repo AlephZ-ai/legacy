@@ -12,7 +12,7 @@
   source "$DEVCONTAINER_SCRIPTS_ROOT/setup/devspace/apt-install.sh"
 # Install docker completions
   # shellcheck source=/dev/null
-  source "$DEVCONTAINER_SCRIPTS_ROOT/setup/devspace/docker.sh"
+  source "$DEVCONTAINER_SCRIPTS_ROOT/setup/devspace/docker-completions.sh"
 # Install Microsoft Edge
   # shellcheck source=/dev/null
   source "$DEVCONTAINER_SCRIPTS_ROOT/setup/devspace/edge-install.sh"

@@ -14,17 +14,7 @@ scoop update --all --global
 # Setup environment
 refreshenv
 & "$env:DEVCONTAINER_FEATURES_PROJECT_ROOT/run.ps1" setup environment
-try {
-  gh auth status
-  if ($LASTEXITCODE -ne 0) { Write-Host "gh auth status failed"; throw "Exit code is $LASTEXITCODE" }
-} catch {
-  gh auth login
-}
-
-gh config set -h github.com git_protocol https
-gh auth status
-git-credential-manager configure
-git-credential-manager diagnose
+& "$env:DEVCONTAINER_FEATURES_PROJECT_ROOT/run.ps1" utils gh-login
 winget install --id Microsoft.PowerToys --accept-package-agreements --accept-source-agreements --disable-interactivity
 # The command above will fail if it's already installed, so make sure to have clean exit code
 exit

@@ -12,5 +12,3 @@
   mkdir -p /usr/share/zsh/vendor-completions
   touch /usr/share/zsh/vendor-completions/_docker
   curl https://raw.githubusercontent.com/docker/docker-ce/master/components/cli/contrib/completion/zsh/docker -o /usr/share/zsh/vendor-completions/_docker
-# Docker login
-  echo "$GITHUB_TOKEN" | docker login ghcr.io -u TOKEN --password-stdin
