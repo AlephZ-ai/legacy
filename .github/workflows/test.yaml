@@ -35,7 +35,7 @@ jobs:
   test:
     runs-on: ubuntu-latest
     continue-on-error: true
-    if: needs.check.outputs.should_continue == 'true'
+    if: ${{ needs.check.outputs.should_continue == 'true' }}
     strategy:
       matrix:
         features: [
@@ -66,7 +66,7 @@ jobs:
   test-scenarios:
     runs-on: ubuntu-latest
     continue-on-error: true
-    if: needs.check.outputs.should_continue == 'true'
+    if: ${{ needs.check.outputs.should_continue == 'true' }}
     strategy:
       matrix:
         features: [
@@ -87,7 +87,7 @@ jobs:
   test-global:
     runs-on: ubuntu-latest
     continue-on-error: true
-    if: needs.check.outputs.should_continue == 'true'
+    if: ${{ needs.check.outputs.should_continue == 'true' }}
     steps:
       - uses: actions/checkout@v3
 
