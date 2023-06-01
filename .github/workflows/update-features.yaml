@@ -25,28 +25,22 @@ jobs:
         id: last_commit
         run: |
           LAST_COMMIT_MESSAGE=$(git log -1 --pretty=%B)
-          echo "::set-output name=message::$LAST_COMMIT_MESSAGE"
+          echo "LAST_COMMIT_MESSAGE=$LAST_COMMIT_MESSAGE" >> "$GITHUB_ENV"
  
-          - name: Check last commit message
-          id: last_commit
-          run: |
-            LAST_COMMIT_MESSAGE=$(git log -1 --pretty=%B)
-            echo "::set-output name=message::$LAST_COMMIT_MESSAGE"
-  
       - name: Check should continue
         id: should_continue
         run: |
-          echo "::set-output name=value::$(! [[ "${{ steps.last_commit.outputs.message }}" == *"Automated devcontainer features update"* ]])"
+          echo "SHOULD_CONTINUE=$(! [[ "$LAST_COMMIT_MESSAGE" == *"Automated devcontainer features update"* ]])" >> "$GITHUB_ENV"
 
       - name: Generate Documentation
-        if: steps.should_continue.outputs.value == 'true'
+        if: env.SHOULD_CONTINUE == 'true'
         uses: devcontainers/action@v1
         with:
           generate-docs: "true"
           base-path-to-features: "./src"
 
       - name: Update devcontainer-feature.json
-        if: steps.should_continue.outputs.value == 'true'
+        if: env.SHOULD_CONTINUE == 'true'
         run: |
           CHANGED_FEATURES=$(git diff --name-only HEAD~1 HEAD -- ./src | awk -F'/' '{print $2}' | uniq)
           for feature in $CHANGED_FEATURES; do
@@ -60,7 +54,7 @@ jobs:
           done
 
       - name: Create a PR for Features
-        if: steps.should_continue.outputs.value == 'true'
+        if: env.SHOULD_CONTINUE == 'true'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
@@ -77,7 +71,7 @@ jobs:
       
           git add */**/README.md
           git add src/**/devcontainer-feature.json
-          git commit -m 'Automated devcontainer-feature.json update' || export NO_UPDATES=true
+          git commit -m "$message" || export NO_UPDATES=true
       
           if [ "$NO_UPDATES" != "true" ] ; then
               git push origin "$branch"

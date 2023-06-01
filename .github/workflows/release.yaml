@@ -21,16 +21,16 @@ jobs:
         id: last_commit
         run: |
           LAST_COMMIT_MESSAGE=$(git log -1 --pretty=%B)
-          echo "::set-output name=message::$LAST_COMMIT_MESSAGE"
+          echo "LAST_COMMIT_MESSAGE=$LAST_COMMIT_MESSAGE" >> "$GITHUB_ENV"
 
       - name: Check should continue
         id: should_continue
         run: |
-          echo "::set-output name=value::$([[ "${{ steps.last_commit.outputs.message }}" == *"Automated devcontainer features update"* ]])"
+          echo "SHOULD_CONTINUE=$([[ "$LAST_COMMIT_MESSAGE" == *"Automated devcontainer features update"* ]])" >> "$GITHUB_ENV"
 
       - name: "Publish"
         uses: devcontainers/action@v1
-        if: steps.should_continue.outputs.value == 'true'
+        if: env.SHOULD_CONTINUE == 'true'
         with:
           publish-features: "true"
           base-path-to-features: "./src"
