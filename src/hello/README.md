@@ -15,7 +15,6 @@ A hello world feature
 
 | Options Id | Description | Type | Default Value |
 |-----|-----|-----|-----|
-| test | - | string | test |
 | greeting | Select a pre-made greeting, or enter your own | string | hey |
 
 

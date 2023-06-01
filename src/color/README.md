@@ -15,7 +15,6 @@ A feature to remind you of your favorite color
 
 | Options Id | Description | Type | Default Value |
 |-----|-----|-----|-----|
-| test | - | string | test |
 | favorite | Choose your favorite color. | string | red |
 
 
