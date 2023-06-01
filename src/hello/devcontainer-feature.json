@@ -1,10 +1,13 @@
 {
   "name": "Hello, World!",
   "id": "hello",
-  "version": "1.0.54",
+  "version": "1.0.55",
   "description": "A hello world feature",
   "options": {
-    "test": { "type": "string", "default": "test" },
+    "test": {
+      "type": "string",
+      "default": "test"
+    },
     "greeting": {
       "type": "string",
       "proposals": [
