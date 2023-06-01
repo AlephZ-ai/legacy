@@ -2,6 +2,7 @@ name: "PR - Test Updated Features"
 on:
   pull_request:
     paths:
+      - '.github/workflows/test-pr.yaml'
       - 'src/**'
       - 'test/**'
 

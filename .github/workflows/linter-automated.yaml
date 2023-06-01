@@ -3,11 +3,13 @@ name: "CI - Shell Script Linter"
 on: 
   pull_request:
     paths:
+      - '.github//workflows/linter-automated.yaml'
       - 'src/**/*.sh'
   push:
     branches:
       - main
     paths:
+      - '.github//workflows/linter-automated.yaml'
       - 'src/**/*.sh'
 
 jobs:

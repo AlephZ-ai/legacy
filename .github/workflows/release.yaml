@@ -6,6 +6,7 @@ on:
     branches:
       - main
     paths:
+      - '.github/workflows/release.yaml'
       - 'src/*/devcontainer-feature.json'
 
 jobs:
