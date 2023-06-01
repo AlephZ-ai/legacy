@@ -1,5 +1,5 @@
 {
-  "name": "DevContainer Features v5139401015",
+  "name": "DevContainer Features v5139421375",
   "dockerComposeFile": "docker-compose.yaml",
   "service": "devcontainer-features",
   "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
