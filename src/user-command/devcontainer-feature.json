@@ -10,6 +10,11 @@
       "default": "automatic",
       "description": "User to run command as"
     },
+    "dummy": {
+      "type": "string",
+      "default": "automatic",
+      "description": "User to run command as"
+    },
     "command": {
       "type": "string",
       "proposals": [
