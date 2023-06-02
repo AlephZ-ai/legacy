@@ -1,6 +1,7 @@
 #!/usr/bin/env zsh
 #shellcheck shell=bash
 # init
+  set -e
   # shellcheck source=/dev/null
   source "$HOME/.zshrc"
 # Setup Developer Command Line tools

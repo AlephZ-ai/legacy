@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 #shellcheck shell=bash
 # init
+  set -e
   # shellcheck source=/dev/null
   source "$HOME/.bashrc"
   current_user="$(whoami)"
@@ -14,7 +15,7 @@
     line="$current_user hard nofile 1048576"
     sudo grep -qxF "$line" "$file" || echo "$line" | sudo tee --append "$file"
 # Run pre-build commands
-  sudo -i USERNAME="$current_user" bash -l -c "$DEVCONTAINER_SCRIPTS_ROOT/setup/devspace/pre-build-sudo.sh"
+  sudo -s DEVCONTAINER_SCRIPTS_ROOT="$DEVCONTAINER_SCRIPTS_ROOT" USERNAME="$current_user" bash -c "$DEVCONTAINER_SCRIPTS_ROOT/setup/devspace/pre-build-sudo.sh"
 # Run post-build commands
   source "$DEVCONTAINER_SCRIPTS_ROOT/setup/devspace/post-build-user.sh"
 # Continue with devspace setup

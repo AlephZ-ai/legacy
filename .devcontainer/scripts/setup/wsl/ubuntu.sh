@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 # init
+  set -e
   # Setup to use windows git credential manager if exists
     gcm="/mnt/c/Program\\ Files/Git/mingw64/bin/git-credential-manager.exe"
     if [ -e "$(eval echo "$gcm")" ]; then

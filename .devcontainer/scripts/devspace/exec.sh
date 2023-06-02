@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-#shellcheck shell=bash
 set -e
 commandPath="$1"
 command="$2"

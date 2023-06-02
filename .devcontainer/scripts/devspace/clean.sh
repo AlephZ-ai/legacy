@@ -1,6 +1,4 @@
 #!/usr/bin/env bash
-#shellcheck shell=bash
-#shellcheck disable=SC2034
 set -e
 for j in {1..5}; do
     containerid=$(docker container ls --all --quiet --filter name="$DEVCONTAINER_FEATURES_PROJECT_NAME-devspace")
