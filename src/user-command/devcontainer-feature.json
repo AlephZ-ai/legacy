@@ -19,11 +19,5 @@
       "description": "command to be executed as username (will be forwarded as is to a 'su <username> -c <command>' line)"
     }
   },
-  "installsAfter": [
-    "ghcr.io/devcontainers/features/common-utils",
-    "ghcr.io/devcontainers-contrib/featues/apt-get-packages",
-    "ghcr.io/devcontainers-contrib/featues/apt-packages",
-    "ghcr.io/rocker-org/devcontainer-features/apt-packages",
-    "ghcr.io/AlephZ-ai/devcontainer-features/sudo-command"
-  ]
+  "installsAfter": []
 }
