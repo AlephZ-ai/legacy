@@ -16,11 +16,16 @@ if errorlevel 1 (
     exit /b
 )
 
-set "LIB_WSL=/usr/lib/wsl"
-for /f "delims=" %%i in ('wsl --distribution Ubuntu echo $XDG_RUNTIME_DIR') do set "XDG_RUNTIME_DIR=%%i"
-if errorlevel 1 (
-    echo Ubuntu WSLg distribution not found
-    for /f "delims=" %%i in ('wsl echo $XDG_RUNTIME_DIR') do set "XDG_RUNTIME_DIR=%%i"
+set MNT_C="/mnt/c"
+set LIB_WSL="/usr/lib/wsl"
+set DEFAULT_XDG="/run/user/0/"
+for /f "delims=" %%i in ('wsl echo $XDG_RUNTIME_DIR') do set "XDG_RUNTIME_DIR=%%i"
+if "%XDG_RUNTIME_DIR%"=="%DEFAULT_XDG%" (
+    for /f "delims=" %%i in ('wsl --distribution Ubuntu echo $XDG_RUNTIME_DIR') do set "XDG_RUNTIME_DIR=%%i"
+    if errorlevel 1 (
+        echo Ubuntu WSLg distribution not found
+        set XDG_RUNTIME_DIR=%DEFAULT_XDG%%
+    )
 )
 
 if not "%DISPLAY%"=="" (

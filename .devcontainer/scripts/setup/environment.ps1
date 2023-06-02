@@ -31,8 +31,8 @@ try {
   if ($LASTEXITCODE -ne 0) { throw "WSL not found" }
   $env:MNT_C="/mnt/c"
   $env:LIB_WSL="/usr/lib/wsl"
-  $env:XDG_RUNTIME_DIR=wsl echo '$XDG_RUNTIME_DIR'
   $DEFAULT_XDG="/run/user/0/"
+  $env:XDG_RUNTIME_DIR=wsl echo '$XDG_RUNTIME_DIR'
   if ($env:XDG_RUNTIME_DIR -eq "$DEFAULT_XDG") {
     try {
       # TODO: Work out something with default WSL distro instead of hardcoding Ubuntu, myabe setup/wsl/ubuntu could set the default distro?
