@@ -29,10 +29,10 @@ $env:DEVCONTAINER_SCRIPTS_ROOT="$env:DEVCONTAINER_FEATURES_PROJECT_ROOT/.devcont
 try {
   $wd=wsl echo '$DISPLAY'
   if ($LASTEXITCODE -ne 0) { throw "WSL not found" }
-  $env:LIB_WSL=/usr/lib/wsl
+  $env:LIB_WSL="/usr/lib/wsl"
   if ($wd) {
-    $env:MNT_WSLG=/mnt/wslg
-    $env:X11_SOCKET=/tmp/.X11-unix
+    $env:MNT_WSLG="/mnt/wslg"
+    $env:X11_SOCKET="/tmp/.X11-unix"
   } else {
     Write-Host "WSLg not found"
   }
