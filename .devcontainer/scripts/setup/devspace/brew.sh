@@ -46,6 +46,7 @@
     updaterc "export PATH=\"$HOMEBREW_PREFIX/opt/python/libexec/bin:\$PATH\""
     updaterc "export PATH=\"$HOMEBREW_PREFIX/opt/coreutils/libexec/gnubin:\$PATH\""
     updaterc "export PATH=\"$HOMEBREW_PREFIX/opt/gnu-sed/libexec/gnubin:\$PATH\""
+    updaterc "export MANPATH=\"$HOMEBREW_PREFIX/opt/coreutils/libexec/gnuman:\$MANPATH\""
   # Run Homebrew cleanup and doctor to check for errors
     brew cleanup
     brew doctor || true

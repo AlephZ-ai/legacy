@@ -131,15 +131,6 @@
     "ghcr.io/AlephZ-ai/devcontainer-features/sudo-command:1": {
       "command": "/devspaces/devcontainer/scripts/setup/devspace/pre-build-sudo.sh"
     },
-    "ghcr.io/devcontainers/features/common-utils:2": {
-      "installZsh": "true",
-      "configureZshAsDefaultShell": "true",
-      "installOhMyZsh": "true",
-      "username": "automatic",
-      "userUid": "automatic",
-      "userGid": "automatic",
-      "nonFreePackages": "true"
-    },
     "ghcr.io/devcontainers/features/docker-in-docker:2": {
       "version": "latest",
       "moby": "true",
