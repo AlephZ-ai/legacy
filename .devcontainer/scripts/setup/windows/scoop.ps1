@@ -11,7 +11,7 @@ do {
         scoop install --global zlib buf protobuf grpc-tools dos2unix gitsign gh
         scoop install --global jq gcc make cmake llvm dotnet-nightly dotnet-sdk-preview dotnet-sdk dotnet-sdk-lts mono go python openssl openssh age 
         scoop install --global mkcert shellcheck speedtest-cli chezmoi sqlite postgresql azure-cli aws
-        scoop install --global gedit
+        scoop install --global gedit kubectl helm minikube kind k3d argo-cd k9s kustomize skaffold vcluster terraform
         scoop install --global nvm vulkan fiddler speedtest gimp vlc azuredatastudio azuredatastudio-insiders
         if ($LASTEXITCODE -ne 0) { Write-Host "scoop install --global failed"; throw "Exit code is $LASTEXITCODE" }
         $complete = $true

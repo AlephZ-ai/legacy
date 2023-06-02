@@ -14,7 +14,7 @@
   brew update --cask
   brew upgrade --cask
 # Install xquartz
-  brew install --cask xquartz
+  brew install --cask microsoft-edge xquartz
 # Run Homebrew cleanup and doctor to check for errors
   brew cleanup
   brew doctor || true
