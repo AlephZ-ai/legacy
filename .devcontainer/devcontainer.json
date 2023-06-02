@@ -23,8 +23,9 @@
   "mounts": [
     "source=/sys/fs/cgroup,target=/sys/fs/cgroup,type=bind,consistency=cached,readonly",
     "source=/usr/lib/wsl,target=/usr/lib/wsl,type=bind,consistency=cached",
-    "source=${localEnv:XDG_RUNTIME_DIR},target=${localEnv:XDG_RUNTIME_DIR},type=bind,consistency=cached",
-    "source=/mnt/wslg,target=/mnt/wslg,type=bind,consistency=cached"
+    "source=/tmp/.X11-unix,target=/tmp/.X11-unix,type=bind,consistency=cached",
+    "source=/mnt/wslg,target=/mnt/wslg,type=bind,consistency=cached",
+    "source=${localEnv:XDG_RUNTIME_DIR},target=${containerEnv:XDG_RUNTIME_DIR},type=bind,consistency=cached"
   ],
   "forwardPorts": [
     11080,

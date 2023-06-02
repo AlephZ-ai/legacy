@@ -31,8 +31,5 @@ services:
     # https://medium.com/swlh/docker-and-systemd-381dfd7e4628
     volumes:
       - ../..:/workspaces:cached
-      # - ${XDG_RUNTIME_DIR:="/tmp/runtime-$USER"}:$XDG_RUNTIME_DIR
-      # - ${WSLG:=/tmp/wslg}:/mnt/wslg
-      # - ${LIB_WSL:=/tmp/lib/wsl}:/usr/lib/wsl
 networks:
   default:
