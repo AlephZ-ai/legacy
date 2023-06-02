@@ -20,7 +20,6 @@
     brew tap --repair
   # Install Homebrew packages
     # linux only brews
-      #TODO: Fix
       if [ "$os" == "Linux" ]; then HOMEBREW_ACCEPT_EULA=Y brew install procps systemd; fi
     # These work on all brew platforms
       HOMEBREW_ACCEPT_EULA=Y brew install sevenzip p7zip awk ca-certificates bash zsh oh-my-posh file-formula gnu-sed coreutils grep curl wget bzip2 less lesspipe
