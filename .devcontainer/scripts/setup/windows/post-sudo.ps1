@@ -2,7 +2,6 @@ Write-Host "setup/windows/post-sudo.ps1"
 scoop install --global sudo refreshenv | Write-Host #aria2
 scoop update --all --global | Write-Host
 #scoop config aria2-warning-enabled false
-sudo regedit /s "$HOME\scoop\apps\python\current\install-pep-514.reg" | Write-Host
 & "$env:DEVCONTAINER_FEATURES_PROJECT_ROOT/run.ps1" setup/windows powershell
 & "$env:DEVCONTAINER_FEATURES_PROJECT_ROOT/run.ps1" setup/windows winget
 & "$env:DEVCONTAINER_FEATURES_PROJECT_ROOT/run.ps1" setup/windows features

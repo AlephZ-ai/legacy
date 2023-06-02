@@ -26,6 +26,7 @@ scoop update --all --global | Write-Host
 Stop-Service -Force sshd
 C:\ProgramData\scoop\apps\openssh\current\install-sshd.ps1 | Write-Host
 regedit /s C:\ProgramData\scoop\apps\zlib\current\register.reg | Write-Host
+regedit /s "$HOME\scoop\apps\python\current\install-pep-514.reg" | Write-Host
 # scoop update
 scoop update | Write-Host
 scoop update --all | Write-Host
