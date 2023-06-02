@@ -17,5 +17,4 @@
   brew install --cask xquartz
 # Run Homebrew cleanup and doctor to check for errors
   brew cleanup
-  brew cleanup --cask
   brew doctor || true

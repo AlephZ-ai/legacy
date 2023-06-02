@@ -13,6 +13,9 @@
   # shellcheck source=/dev/null
   source "$HOME/.zshrc"
 # Continue with devspace setup
+  # shellcheck source=/dev/null
+  source "$DEVCONTAINER_SCRIPTS_ROOT/setup/macos/brew.sh"
+# Continue with devspace setup
   "$DEVCONTAINER_SCRIPTS_ROOT/setup/devspace.sh"
 # Login to GitHub
   # shellcheck source=/dev/null
