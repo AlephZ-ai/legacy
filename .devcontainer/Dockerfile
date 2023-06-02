@@ -6,7 +6,7 @@ FROM ${IMAGE}
 COPY scripts/docker/ /usr/local/bin/
 ARG USERNAME=vscode
 ARG USER_UID=1000
-ARG USER_GID=$USER_UID
+ARG USER_GID=1001
 RUN create-user.sh $USERNAME $USER_UID $USER_GID
 USER $USERNAME
 COPY --chown=vscode:vscode ./ /devspaces/devcontainer/

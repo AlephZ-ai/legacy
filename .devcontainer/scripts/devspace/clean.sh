@@ -3,7 +3,7 @@
 #shellcheck disable=SC2034
 set -e
 for j in {1..5}; do
-    containerid=$(docker container ls --all --quiet --filter name="$DEVCONTAINER_PROJECT_NAME-devspace")
+    containerid=$(docker container ls --all --quiet --filter name="$DEVCONTAINER_FEATURES_PROJECT_NAME-devspace")
     if [ -n "$containerid" ]; then
         docker rm -f "$containerid"
     fi

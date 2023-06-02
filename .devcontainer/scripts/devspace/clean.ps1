@@ -1,5 +1,5 @@
 for($j=1; $j -le 5; $j++) {
-  $containerid = docker container ls --all --quiet --filter name="${env:DEVCONTAINER_PROJECT_NAME}-devspace"
+  $containerid = docker container ls --all --quiet --filter name="${env:DEVCONTAINER_FEATURES_PROJECT_NAME}-devspace"
   if ($containerid) {
       docker rm -f $containerid
   }
