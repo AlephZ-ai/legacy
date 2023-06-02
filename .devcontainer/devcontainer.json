@@ -1,5 +1,5 @@
 {
-  "name": "DevContainer Features ${devcontainerId} v5150766502",
+  "name": "DevContainer Features v5151977675",
   "dockerComposeFile": "docker-compose.yaml",
   "service": "devcontainer-features",
   "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
@@ -8,8 +8,14 @@
   "privileged": true,
   "remoteUser": "vscode",
   "updateRemoteUserUID": true,
-  "capAdd": ["SYS_ADMIN", "DAC_READ_SEARCH", "SYS_PTRACE"],
-  "securityOpt": ["seccomp=unconfined"],
+  "capAdd": [
+    "SYS_ADMIN",
+    "DAC_READ_SEARCH",
+    "SYS_PTRACE"
+  ],
+  "securityOpt": [
+    "seccomp=unconfined"
+  ],
   "containerEnv": {},
   "remoteEnv": {
     "GITHUB_TOKEN": "${containerEnv:GITHUB_TOKEN:-${localEnv:GITHUB_TOKEN}}"
