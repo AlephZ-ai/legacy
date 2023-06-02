@@ -9,7 +9,12 @@ services:
     labels: [ "ai.alephz.role=devcontainer-features" ]
     env_file: .env
     # https://github.com/microsoft/wslg/blob/main/samples/container/Containers.md
-    environment: {}
+    environment:
+      - GITHUB_TOKEN=$GITHUB_TOKEN_DEVCONTAINER_FEATURES
+      - DISPLAY=$DISPLAY
+      - WAYLAND_DISPLAY=$WAYLAND_DISPLAY
+      - PULSE_SERVER=$PULSE_SERVER
+      - XDG_RUNTIME_DIR=$XDG_RUNTIME_DIR
     devices:
       - /dev/dxg
     # https://docs.docker.com/compose/compose-file/build/#build-definition
@@ -31,5 +36,10 @@ services:
     # https://medium.com/swlh/docker-and-systemd-381dfd7e4628
     volumes:
       - ../..:/workspaces:cached
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+      - ${XDG_RUNTIME_DIR:-/tmp}:${XDG_RUNTIME_DIR:-/tmp}
+      - $LIB_WSL:/usr/lib/wsl
+      - $MNT_WSLG:/mnt/wslg
+      - $X11_SOCKET:/tmp/.X11-unix
 networks:
   default:

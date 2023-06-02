@@ -10,22 +10,13 @@
   "updateRemoteUserUID": true,
   "capAdd": ["SYS_ADMIN", "DAC_READ_SEARCH", "SYS_PTRACE"],
   "securityOpt": ["seccomp=unconfined"],
-  "containerEnv": {
-    "GITHUB_TOKEN": "${localEnv:$GITHUB_TOKEN_DEVCONTAINER_FEATURES}"
-  },
+  "containerEnv": {},
   "remoteEnv": {
-    "GITHUB_TOKEN": "${containerEnv:GITHUB_TOKEN:-${localEnv:GITHUB_TOKEN}}",
-    "DISPLAY": "${localEnv:DISPLAY}",
-    "WAYLAND_DISPLAY": "${localEnv:WAYLAND_DISPLAY}",
-    "PULSE_SERVER": "${localEnv:PULSE_SERVER}",
-    "XDG_RUNTIME_DIR": "${localEnv:XDG_RUNTIME_DIR}"
+    "GITHUB_TOKEN": "${containerEnv:GITHUB_TOKEN:-${localEnv:GITHUB_TOKEN}}"
   },
   "mounts": [
-    "source=/sys/fs/cgroup,target=/sys/fs/cgroup,type=bind,consistency=cached,readonly",
-    "source=/usr/lib/wsl,target=/usr/lib/wsl,type=bind,consistency=cached",
     "source=/tmp/.X11-unix,target=/tmp/.X11-unix,type=bind,consistency=cached",
-    "source=/mnt/wslg,target=/mnt/wslg,type=bind,consistency=cached",
-    "source=${localEnv:XDG_RUNTIME_DIR},target=${containerEnv:XDG_RUNTIME_DIR},type=bind,consistency=cached"
+    "source=/mnt/wslg,target=/mnt/wslg,type=bind,consistency=cached"
   ],
   "forwardPorts": [
     11080,
