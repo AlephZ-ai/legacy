@@ -152,7 +152,6 @@
   },
   "overrideFeatureInstallOrder": [
     "ghcr.io/AlephZ-ai/devcontainer-features/sudo-command",
-    "ghcr.io/devcontainers/features/common-utils",
     "ghcr.io/devcontainers/features/docker-in-docker",
     "ghcr.io/devcontainers/features/desktop-lite",
     "ghcr.io/AlephZ-ai/devcontainer-features/user-command"
