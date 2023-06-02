@@ -1,6 +1,6 @@
 Write-Host "setup/windows/nvm.ps1"
-nvm on
-nvm version
+nvm on | Write-Host
+nvm version | Write-Host
 # Install Node.js latest and lts
 $nodes = 'latest', 'lts'
 $packages = 'npm-check-updates', 'corepack', '@npmcli/fs', '@devcontainers/cli', 'dotenv-cli', 'typescript'
@@ -12,15 +12,15 @@ $packages = 'npm-check-updates', 'corepack', '@npmcli/fs', '@devcontainers/cli',
 # Run this command to ensure nvm is installed: nvm version
 
 foreach ($node in $nodes) {
-    nvm install $node
-    nvm use $node
-    node --version
-    npm install -g npm
+    nvm install $node | Write-Host
+    nvm use $node | Write-Host
+    node --version | Write-Host
+    npm install -g npm | Write-Host
     foreach ($package in $packages) {
-        npm install -g $package
+        npm install -g $package | Write-Host
     }
 
-    ncu -u
+    ncu -u | Write-Host
 }
 
-nvm use latest
+nvm use latest | Write-Host

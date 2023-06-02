@@ -2,31 +2,31 @@ Write-Host "setup/windows/winget.ps1"
 # https://apps.microsoft.com/store/detail/app-installer/
 # https://github.com/microsoft/winget-cli
 # https://github.com/microsoft/winget-cli/issues/210
-winget --version
-winget install --name "Sysinternals Suite" --accept-package-agreements --accept-source-agreements --disable-interactivity
-winget install --id "Microsoft.Edge" --accept-package-agreements --accept-source-agreements --disable-interactivity
-winget install --id "Microsoft.Edge.Beta" --accept-package-agreements --accept-source-agreements --disable-interactivity
-winget install --id "Microsoft.Edge.Dev" --accept-package-agreements --accept-source-agreements --disable-interactivity
-winget install --name "Microsoft Edge DevTools Preview" --accept-package-agreements --accept-source-agreements --disable-interactivity
-winget install --name "Remote Tools for Microsoft Edge" --accept-package-agreements --accept-source-agreements --disable-interactivity
-winget install --id "Google.Chrome" --accept-package-agreements --accept-source-agreements --disable-interactivity
-winget install --name "Chrome Remote Desktop Host" --accept-package-agreements --accept-source-agreements --disable-interactivity
-winget install --id "Microsoft.WindowsTerminal" --accept-package-agreements --accept-source-agreements --disable-interactivity
-winget install --id "Microsoft.WindowsTerminal.Preview" --accept-package-agreements --accept-source-agreements --disable-interactivity
-winget install --id "RedHat.Podman" --accept-package-agreements --accept-source-agreements --disable-interactivity
-winget install --id "JanDeDobbeleer.OhMyPosh" --accept-package-agreements --accept-source-agreements --disable-interactivity
-winget install --name "Windows Subsystem for Linux" --accept-package-agreements --accept-source-agreements --disable-interactivity
-wsl --update
-wsl --set-default-version 2
-winget install --name --exact "Ubuntu" --accept-package-agreements --accept-source-agreements --disable-interactivity
-winget install --name "Ubuntu (Preview)" --accept-package-agreements --accept-source-agreements --disable-interactivity
-winget install --id "Docker.DockerDesktop" --accept-package-agreements --accept-source-agreements --disable-interactivity
-winget install --name "Microsoft Visual Studio Code" --accept-package-agreements --accept-source-agreements --disable-interactivity
-winget install --name "Microsoft Visual Studio Code Insiders" --accept-package-agreements --accept-source-agreements --disable-interactivity
+winget --version | Write-Host
+winget install --name "Sysinternals Suite" --accept-package-agreements --accept-source-agreements --disable-interactivity | Write-Host
+winget install --id "Microsoft.Edge" --accept-package-agreements --accept-source-agreements --disable-interactivity | Write-Host
+winget install --id "Microsoft.Edge.Beta" --accept-package-agreements --accept-source-agreements --disable-interactivity | Write-Host
+winget install --id "Microsoft.Edge.Dev" --accept-package-agreements --accept-source-agreements --disable-interactivity | Write-Host
+winget install --name "Microsoft Edge DevTools Preview" --accept-package-agreements --accept-source-agreements --disable-interactivity | Write-Host
+winget install --name "Remote Tools for Microsoft Edge" --accept-package-agreements --accept-source-agreements --disable-interactivity | Write-Host
+winget install --id "Google.Chrome" --accept-package-agreements --accept-source-agreements --disable-interactivity | Write-Host
+winget install --name "Chrome Remote Desktop Host" --accept-package-agreements --accept-source-agreements --disable-interactivity | Write-Host
+winget install --id "Microsoft.WindowsTerminal" --accept-package-agreements --accept-source-agreements --disable-interactivity | Write-Host
+winget install --id "Microsoft.WindowsTerminal.Preview" --accept-package-agreements --accept-source-agreements --disable-interactivity | Write-Host
+winget install --id "RedHat.Podman" --accept-package-agreements --accept-source-agreements --disable-interactivity | Write-Host
+winget install --id "JanDeDobbeleer.OhMyPosh" --accept-package-agreements --accept-source-agreements --disable-interactivity | Write-Host
+winget install --name "Windows Subsystem for Linux" --accept-package-agreements --accept-source-agreements --disable-interactivity | Write-Host
+wsl --update | Write-Host
+wsl --set-default-version 2 | Write-Host
+winget install --name --exact "Ubuntu" --accept-package-agreements --accept-source-agreements --disable-interactivity | Write-Host
+winget install --name "Ubuntu (Preview)" --accept-package-agreements --accept-source-agreements --disable-interactivity | Write-Host
+winget install --id "Docker.DockerDesktop" --accept-package-agreements --accept-source-agreements --disable-interactivity | Write-Host
+winget install --name "Microsoft Visual Studio Code" --accept-package-agreements --accept-source-agreements --disable-interactivity | Write-Host
+winget install --name "Microsoft Visual Studio Code Insiders" --accept-package-agreements --accept-source-agreements --disable-interactivity | Write-Host
 # https://learn.microsoft.com/en-us/visualstudio/install/use-command-line-parameters-to-install-visual-studio?view=vs-2022
 # https://learn.microsoft.com/en-us/visualstudio/install/workload-and-component-ids?view=vs-2022
 # https://learn.microsoft.com/en-us/visualstudio/install/workload-component-id-vs-build-tools?view=vs-2022&preserve-view=true
-winget install --id Microsoft.VisualStudio.2022.BuildTools --accept-package-agreements --accept-source-agreements --disable-interactivity --override "--passive --wait --add Microsoft.VisualStudio.Workload.AzureBuildTools;includeRecommended --add Microsoft.VisualStudio.Workload.DataBuildTools;includeRecommended --add Microsoft.VisualStudio.Workload.ManagedDesktopBuildTools;includeRecommended --add Microsoft.VisualStudio.Workload.MSBuildTools;includeRecommended --add Microsoft.VisualStudio.Workload.NodeBuildTools;includeRecommended --add Microsoft.VisualStudio.Workload.OfficeBuildTools;includeRecommended --add Microsoft.VisualStudio.Workload.UniversalBuildTools;includeRecommended --add Microsoft.VisualStudio.Workload.VCTools;includeRecommended --add Microsoft.VisualStudio.Workload.VisualStudioExtensionBuildTools;includeRecommended --add Microsoft.VisualStudio.Workload.WebBuildTools;includeRecommended --add Microsoft.VisualStudio.Workload.XamarinBuildTools;includeRecommended"
+winget install --id Microsoft.VisualStudio.2022.BuildTools --accept-package-agreements --accept-source-agreements --disable-interactivity --override "--passive --wait --add Microsoft.VisualStudio.Workload.AzureBuildTools;includeRecommended --add Microsoft.VisualStudio.Workload.DataBuildTools;includeRecommended --add Microsoft.VisualStudio.Workload.ManagedDesktopBuildTools;includeRecommended --add Microsoft.VisualStudio.Workload.MSBuildTools;includeRecommended --add Microsoft.VisualStudio.Workload.NodeBuildTools;includeRecommended --add Microsoft.VisualStudio.Workload.OfficeBuildTools;includeRecommended --add Microsoft.VisualStudio.Workload.UniversalBuildTools;includeRecommended --add Microsoft.VisualStudio.Workload.VCTools;includeRecommended --add Microsoft.VisualStudio.Workload.VisualStudioExtensionBuildTools;includeRecommended --add Microsoft.VisualStudio.Workload.WebBuildTools;includeRecommended --add Microsoft.VisualStudio.Workload.XamarinBuildTools;includeRecommended" | Write-Host
 # The command above will fail if it's already installed, so make sure to have clean exit code
 exit
 # https://learn.microsoft.com/en-us/visualstudio/install/workload-component-id-vs-enterprise?view=vs-2022&preserve-view=true

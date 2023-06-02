@@ -1,7 +1,7 @@
 Write-Host "setup/windows/powershell.ps1"
 # Make sure profile exists
 if (!(Test-Path $PROFILE)) {
-  New-Item -ItemType File -Path $PROFILE -Force
+  New-Item -ItemType File -Path $PROFILE -Force | Out-Null
 }
 
 # Define an array of module names
