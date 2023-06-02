@@ -10,6 +10,7 @@
   # shellcheck source=/dev/null
   export HOMEBREW_PREFIX="/usr/local"
   bash -l -c "$DEVCONTAINER_SCRIPTS_ROOT/setup/devspace/post-build-user.sh"
+  # shellcheck source=/dev/null
   source "$HOME/.zshrc"
 # Continue with devspace setup
   "$DEVCONTAINER_SCRIPTS_ROOT/setup/devspace.sh"
