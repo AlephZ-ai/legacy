@@ -33,3 +33,5 @@ bash -c "$COMMAND"
 rm -rf /var/lib/apt/lists/*
 
 echo "Done!"
+echo "test"
+echo "test"
