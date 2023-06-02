@@ -37,7 +37,7 @@ jobs:
           message='Automated devcontainer.json update'
       
           # Update devcontainer.json
-          jq '.name = "DevContainer Features v${{ github.run_id }}"' .devcontainer/devcontainer.json > temp.json && mv temp.json .devcontainer/devcontainer.json
+          jq '.name = "DevContainer Features ${devcontainerId} v${{ github.run_id }}"' .devcontainer/devcontainer.json > temp.json && mv temp.json .devcontainer/devcontainer.json
       
           # Add / update and commit
           git add .devcontainer/devcontainer.json
