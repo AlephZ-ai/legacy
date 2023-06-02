@@ -12,7 +12,7 @@ do {
         scoop install --global jq gcc make cmake llvm dotnet-nightly dotnet-sdk-preview dotnet-sdk dotnet-sdk-lts mono go rust python openssl openssh age 
         scoop install --global mkcert shellcheck speedtest-cli chezmoi sqlite postgresql azure-cli aws
         scoop install --global gedit kubeadm kubectl helm minikube kind k3d argo-cd k9s kustomize skaffold vcluster
-        scoop install --global terraform
+        scoop install --global terraform openjdk openjdk-ea openjdk openjdk11 openjdk17 openjdk21 openjdk8-redhat microsoft-jdk maven groovy gradle scala scala-cli sbt
         scoop install --global nvm vulkan fiddler speedtest gimp vlc azuredatastudio azuredatastudio-insiders
         if ($LASTEXITCODE -ne 0) { Write-Host "scoop install --global failed"; throw "Exit code is $LASTEXITCODE" }
         $complete = $true

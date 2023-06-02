@@ -49,6 +49,15 @@
       "patcx.vscode-nuget-gallery",
       "aliasadidev.nugetpackagemanagergui",
       "ms-vscode.mono-debug",
-      "ms-dotnettools.blazorwasm-companion"
+      "ms-dotnettools.blazorwasm-companion",
+      "googlecloudtools.cloudcode",
+      "vscjava.vscode-java-pack",
+      "vscjava.vscode-gradle",
+      "richardwillis.vscode-gradle-extension-pack",
+      "redhat.vscode-xml",
+      "redhat.vscode-quarkus",
+      "scala-lang.scala",
+      "scalameta.metals",
+      "itryapitsin.sbt"
     ]
 }
