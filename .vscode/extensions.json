@@ -18,7 +18,6 @@
       "ms-vscode.vscode-node-azure-pack",
       "ms-vscode.azurecli",
       "ms-vscode.cpptools",
-      "ms-python.python",
       "ms-mssql.mssql",
       "donjayamanne.python-extension-pack",
       "ms-azuretools.vscode-docker",
@@ -33,7 +32,6 @@
       "ms-ossdata.vscode-postgresql",
       "uniquevision.vscode-plpgsql-lsp",
       "bradymholt.pgformatter",
-      "golang.go",
       "rebornix.ruby",
       "amazonwebservices.aws-toolkit-vscode",
       "github.codespaces",
@@ -41,6 +39,16 @@
       "github.remotehub",
       "github.copilot-nightly",
       "github.copilot-labs",
-      "github.vscode-github-actions"
+      "github.vscode-github-actions",
+      "kevinrose.vsc-python-indent",
+      "ms-toolsai.jupyter-renderers",
+      "ms-dotnettools.dotnet-interactive-vscode",
+      "rust-lang.rust-analyzer",
+      "ms-vscode.cpptools-extension-pack",
+      "jmrog.vscode-nuget-package-manager",
+      "patcx.vscode-nuget-gallery",
+      "aliasadidev.nugetpackagemanagergui",
+      "ms-vscode.mono-debug",
+      "ms-dotnettools.blazorwasm-companion"
     ]
 }
