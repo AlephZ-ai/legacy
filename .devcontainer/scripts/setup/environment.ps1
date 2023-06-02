@@ -28,7 +28,7 @@ $env:DEVCONTAINER_SCRIPTS_ROOT="$env:DEVCONTAINER_FEATURES_PROJECT_ROOT/.devcont
 
 try {
   $wd=wsl echo '$DISPLAY'
-  if ($ERRORLEVEL -ne 0) { throw "WSL not found" }
+  if ($LASTEXITCODE -ne 0) { throw "WSL not found" }
   $env:LIB_WSL=/usr/lib/wsl
   if ($wd) {
     $env:MNT_WSLG=/mnt/wslg
