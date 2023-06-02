@@ -10,11 +10,13 @@ services:
     env_file: .env
     # https://github.com/microsoft/wslg/blob/main/samples/container/Containers.md
     environment:
-      - GITHUB_TOKEN=$GITHUB_TOKEN_DEVCONTAINER_FEATURES
-      - DISPLAY=$DISPLAY
-      - WAYLAND_DISPLAY=$WAYLAND_DISPLAY
-      - PULSE_SERVER=$PULSE_SERVER
-      - XDG_RUNTIME_DIR=$XDG_RUNTIME_DIR
+      - DISPLAY=${DISPLAY:-:0}
+      - WAYLAND_DISPLAY=${WAYLAND_DISPLAY:-wayland-0}
+      - PULSE_SERVER=${PULSE_SERVER:-/tmp}
+      - XDG_RUNTIME_DIR=${XDG_RUNTIME_DIR:-/tmp}
+      - LIB_WSL=${LIB_WSL:-/tmp}
+      - MNT_WSLG=${MNT_WSLG:-/tmp}
+      - X11_SOCKET=${X11_SOCKET:-/tmp}
     devices:
       - /dev/dxg
     # https://docs.docker.com/compose/compose-file/build/#build-definition
@@ -36,10 +38,18 @@ services:
     # https://medium.com/swlh/docker-and-systemd-381dfd7e4628
     volumes:
       - ../..:/workspaces:cached
-      - /sys/fs/cgroup:/sys/fs/cgroup:ro
-      - ${XDG_RUNTIME_DIR:-/tmp}:${XDG_RUNTIME_DIR:-/tmp}
-      - $LIB_WSL:/usr/lib/wsl
-      - $MNT_WSLG:/mnt/wslg
+      - $XDG_RUNTIME_DIR:$XDG_RUNTIME_DIR:cached
+      - $MNT_WSLG:/mnt/wslg:cached
       - $X11_SOCKET:/tmp/.X11-unix
+      - type: bind
+        source: $LIB_WSL
+        target: /usr/lib/wsl
+        read_only: true
+        consistency: cached
+      - type: bind
+        source: /sys/fs/cgroup
+        target: /sys/fs/cgroup
+        read_only: true
+        consistency: cached
 networks:
   default:

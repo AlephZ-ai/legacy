@@ -27,12 +27,22 @@ $env:DEVCONTAINER_FEATURES_SOURCE_ROOT="$env:DEVCONTAINER_FEATURES_PROJECT_ROOT/
 $env:DEVCONTAINER_SCRIPTS_ROOT="$env:DEVCONTAINER_FEATURES_PROJECT_ROOT/.devcontainer/scripts"
 
 try {
-  $wd=wsl echo '$DISPLAY'
+  $env:DISPLAY=wsl echo '$DISPLAY'
   if ($LASTEXITCODE -ne 0) { throw "WSL not found" }
   $env:LIB_WSL="/usr/lib/wsl"
-  if ($wd) {
+  try {
+    # TODO: Work out something with default WSL distro instead of hardcoding Ubuntu, myabe setup/wsl/ubuntu could set the default distro?
+    $env:XDG_RUNTIME_DIR=wsl --distribution Ubuntu echo '$XDG_RUNTIME_DIR'
+  } catch {
+    Write-Host "Ubuntu WSLg distribution not found"
+    $env:XDG_RUNTIME_DIR=wsl echo '$XDG_RUNTIME_DIR'
+  }
+
+  if ($env:DISPLAY) {
     $env:MNT_WSLG="/mnt/wslg"
     $env:X11_SOCKET="/tmp/.X11-unix"
+    $env:WAYLAND_DISPLAY=wsl echo '$WAYLAND_DISPLAY'
+    $env:PULSE_SERVER=wsl echo '$PULSE_SERVER'
   } else {
     Write-Host "WSLg not found"
   }

@@ -12,12 +12,9 @@
   "securityOpt": ["seccomp=unconfined"],
   "containerEnv": {},
   "remoteEnv": {
-    "GITHUB_TOKEN": "${containerEnv:GITHUB_TOKEN:-${localEnv:GITHUB_TOKEN}}"
+    "GITHUB_TOKEN": "${localEnv:GITHUB_TOKEN_DEVCONTAINER_FEATURES:-${env:GITHUB_TOKEN:-${localEnv:GITHUB_TOKEN:-}}}"
   },
-  "mounts": [
-    "source=/tmp/.X11-unix,target=/tmp/.X11-unix,type=bind,consistency=cached",
-    "source=/mnt/wslg,target=/mnt/wslg,type=bind,consistency=cached"
-  ],
+  "mounts": [],
   "forwardPorts": [
     11080,
     11901
