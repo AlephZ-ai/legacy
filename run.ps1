@@ -12,7 +12,6 @@ param (
 $projectRoot = "$PSCommandPath" | Split-Path -Parent
 $scriptsRoot = "$projectRoot/.devcontainer/scripts"
 & "$scriptsRoot/setup/environment.ps1"
-# & "$env:DEVCONTAINER_SCRIPTS_ROOT/utils/gui-sound.ps1"
 $executionRoot = "$env:DEVCONTAINER_SCRIPTS_ROOT/$scriptPath"
 Push-Location "$executionRoot"
 try {
