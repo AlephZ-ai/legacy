@@ -6,10 +6,8 @@
   source "$HOME/.zshrc"
   updaterc() { local line="$1"; eval "$line"; echo "Updating ~/.bashrc and ~/.zshrc..."; rcs=("$HOME/.bashrc" "$HOME/.zshrc"); for rc in "${rcs[@]}"; do if [[ "$(cat "$rc")" != *"$line"* ]]; then echo "$line" >> "$rc"; fi; done }
 # Disable needing password for sudo
-  line="$USERNAME ALL=(ALL:ALL) NOPASSWD: ALL"
-  file="/etc/sudoers.d/$USERNAME"
-  sudo grep -qxF "$line" "$file" || echo "$line" | sudo tee --append "$file"
-  sudo chmod 440 "$file"
+  # shellcheck source=/dev/null
+  source "$DEVCONTAINER_SCRIPTS_ROOT/utils/disable-sudo-password.sh"
 # Setup Developer Command Line tools
   if ! (bash --version && git --version); then sudo xcode-select --install; fi
 # Update permissions

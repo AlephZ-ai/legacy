@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+# init
+  set -e
+  USERNAME=${USERNAME:-$(whoami)}
+# Disable needing password for sudo
+  line="$USERNAME ALL=(ALL:ALL) NOPASSWD: ALL"
+  file="/etc/sudoers.d/$USERNAME"
+  sudo grep -qxF "$line" "$file" &> /dev/null || echo "$line" | sudo tee -a "$file" &> /dev/null
+  sudo chmod 440 "$file"

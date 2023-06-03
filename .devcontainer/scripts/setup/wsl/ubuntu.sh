@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 # init
   set -e
+# Disable needing password for sudo
+  # shellcheck source=/dev/null
+  source "$DEVCONTAINER_SCRIPTS_ROOT/utils/disable-sudo-password.sh"
 # Run base ubuntu setup
   # shellcheck source=/dev/null
   source "$DEVCONTAINER_SCRIPTS_ROOT/setup/ubuntu.sh"

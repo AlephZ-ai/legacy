@@ -10,9 +10,9 @@
   sudo sh -c "ulimit -n 1048576"
     line="$current_user soft nofile 4096"
     file=/etc/security/limits.conf
-    sudo grep -qxF "$line" "$file" || echo "$line" | sudo tee --append "$file"
+    sudo grep -qxF "$line" "$file" || echo "$line" | sudo tee -a "$file"
     line="$current_user hard nofile 1048576"
-    sudo grep -qxF "$line" "$file" || echo "$line" | sudo tee --append "$file"
+    sudo grep -qxF "$line" "$file" || echo "$line" | sudo tee -a "$file"
 # Run pre-build commands
   sudo -s DEVCONTAINER_SCRIPTS_ROOT="$DEVCONTAINER_SCRIPTS_ROOT" USERNAME="$current_user" bash -c "$DEVCONTAINER_SCRIPTS_ROOT/setup/devspace/pre-build-sudo.sh"
 # Run post-build commands

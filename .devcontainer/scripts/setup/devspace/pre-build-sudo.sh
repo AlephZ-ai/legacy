@@ -4,9 +4,6 @@
   # shellcheck source=/dev/null
   source /etc/bash.bashrc
   USERNAME=${USERNAME:-}
-# Disable needing password for sudo
-  # shellcheck source=/dev/null
-  source "$DEVCONTAINER_SCRIPTS_ROOT/setup/devspace/user.sh"
 # Update apt-packages
   # shellcheck source=/dev/null
   source "$DEVCONTAINER_SCRIPTS_ROOT/setup/devspace/apt-install.sh"
