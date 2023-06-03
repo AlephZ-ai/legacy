@@ -6,6 +6,9 @@
   source "$HOME/.bashrc"
   current_user="$(whoami)"
   updaterc() { line="$1"; eval "$line"; echo "Updating ~/.bashrc and ~/.zshrc..."; rcs=("$HOME/.bashrc" "$HOME/.zshrc"); for rc in "${rcs[@]}"; do if [[ "$(cat "$rc")" != *"$line"* ]]; then echo "$line" >> "$rc"; fi; done }
+# Disable needing password for sudo
+  # shellcheck source=/dev/null
+  source "$DEVCONTAINER_SCRIPTS_ROOT/utils/disable-sudo-password.sh"
 # Update max open files
   sudo sh -c "ulimit -n 1048576"
     line="$current_user soft nofile 4096"
