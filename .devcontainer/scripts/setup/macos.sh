@@ -9,7 +9,7 @@
   line="$USERNAME ALL=(ALL:ALL) NOPASSWD: ALL"
   file="/etc/sudoers.d/$USERNAME"
   sudo grep -qxF "$line" "$file" || echo "$line" | sudo tee --append "$file"
-  chmod 440 "$file"
+  sudo chmod 440 "$file"
 # Setup Developer Command Line tools
   if ! (bash --version && git --version); then sudo xcode-select --install; fi
 # Update permissions
