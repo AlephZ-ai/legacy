@@ -55,12 +55,11 @@
     updaterc "export PATH=\"$HOMEBREW_PREFIX/opt/coreutils/libexec/gnubin:\$PATH\""
     updaterc "export PATH=\"$HOMEBREW_PREFIX/opt/gnu-sed/libexec/gnubin:\$PATH\""
     updaterc "export PATH=\"$HOMEBREW_PREFIX/opt/grep/libexec/gnubin:\$PATH\""
-    # This causes issues with npm
-    # updaterc "export PATH=\"$HOMEBREW_PREFIX/opt/make/libexec/gnubin:\$PATH\""
+    updaterc "export PATH=\"$HOMEBREW_PREFIX/opt/make/libexec/gnubin:\$PATH\""
     updaterc "export MANPATH=\"$HOMEBREW_PREFIX/opt/coreutils/libexec/gnuman:\$MANPATH\""
     updaterc "export LESSOPEN=\"|$HOMEBREW_PREFIX/bin/lesspipe.sh %s\""
-    updaterc "export LDFLAGS=\"$HOMEBREW_PREFIX/opt/postgresql@15/lib\${LDFLAGS:+ }\$LDFLAGS\""
-    updaterc "export CPPFLAGS=\"$HOMEBREW_PREFIX/opt/postgresql@15/lib\${CPPFLAGS:+ }\$CPPFLAGS\""
+    updaterc "export LDFLAGS=\"-L$HOMEBREW_PREFIX/opt/postgresql@15/lib\${LDFLAGS:+ }\$LDFLAGS\""
+    updaterc "export CPPFLAGS=\"-I$HOMEBREW_PREFIX/opt/postgresql@15/include\${CPPFLAGS:+ }\$CPPFLAGS\""
     updaterc "export PKG_CONFIG_PATH=\"$HOMEBREW_PREFIX/opt/postgresql@15/lib/pkgconfig\${PKG_CONFIG_PATH:+:}\$PKG_CONFIG_PATH\""
 
   # Run Homebrew cleanup and doctor to check for errors
