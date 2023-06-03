@@ -20,7 +20,15 @@
   asdf reshim
   asdf info
   # Update rc files
-    updaterc "export DOTNET_ROOT=\"\$HOME/.asdf/installs/dotnet-core/$preview\""
+    root="\$HOME/.asdf/installs/dotnet-core/$preview\""
+    cmd="export DOTNET_ROOT=$root"
+    sed="s:^export DOTNET_ROOT=.*$:$cmd:"
+    files=("$HOME/.bashrc" "$HOME/.zshrc")
+    eval "$cmd"
+    for file in "${files[@]}"; do
+      sed -i "$sed" "$file"
+      grep -qF "$cmd" "$file" || echo "$cmd" >> "$file"
+    done
     # shellcheck source=/dev/null
     source "$HOME/.asdf/plugins/dotnet-core/set-dotnet-home.bash"
       # shellcheck disable=SC2016
