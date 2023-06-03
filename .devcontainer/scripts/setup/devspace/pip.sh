@@ -7,7 +7,7 @@
     python -m ensurepip --upgrade
     python -m pip install --upgrade pip setuptools wheel
     while ! (
-      pip install --upgrade platformdirs astroid dill isort mccabe ipykernel ipython-genutils pygments \
+      pip install --upgrade pygobject platformdirs astroid dill isort mccabe ipykernel ipython-genutils pygments \
         flake8 pytest pytest-sugar pytest-cov pytest-xdist pytest-xprocess pytest-mock pytest-benchmark \
         autopep8 opencv-python aiosqlite absl-py astunparse flatbuffers gast google-pasta grpcio h5py jax \
         keras libclang numpy opt-einsum protobuf blis catalogue confection cymem murmurhash preshed \
