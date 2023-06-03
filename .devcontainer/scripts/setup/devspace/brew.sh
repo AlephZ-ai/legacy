@@ -78,5 +78,3 @@
   # Run Homebrew cleanup and doctor to check for errors
     brew cleanup
     brew doctor || true
-  # Update permissions
-    sudo chown -R "$(whoami)" "$HOMEBREW_PREFIX" &> /dev/null || sudo chown -R "$(whoami)" "$HOMEBREW_PREFIX/*" &> /dev/null || true

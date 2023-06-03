@@ -10,8 +10,6 @@
   source "$DEVCONTAINER_SCRIPTS_ROOT/utils/disable-sudo-password.sh"
 # Setup Developer Command Line tools
   if ! (bash --version && git --version); then sudo xcode-select --install; fi
-# Update permissions
-  sudo chown -R "$(whoami)" /usr/local/* &> /dev/null || true
 # Add docker path
   # shellcheck disable=SC2016
   updaterc 'PATH="$HOME/.docker/bin:$PATH"'
@@ -32,7 +30,5 @@
 # Login to Docker
   # shellcheck source=/dev/null
   source "$DEVCONTAINER_SCRIPTS_ROOT/utils/docker-login.sh"
-# Update permissions
-  sudo chown -R "$(whoami)" /usr/local/* &> /dev/null || true
 # Done
   echo "Please restart shell to get latest environment variables"

@@ -19,8 +19,4 @@
         jupyterlab-sparksql jupyterlab-drawio jupyterlab-powerpoint jupyterlab-github jupyterlab-flake8 jupyterlab-lsp \
         jupyterlab-graph-lsp jupyterlab-telemetry jupyterlab-kernelspy jupyterlab-system-monitor \
         jupyterlab-topbar jupyterlab-quickopen jupyter_contrib_core jupyter-contrib-nbextensions
-  )
-  do
-    echo "Retrying with fixed permissions..."
-    sudo chown -R "$(whoami)" "$HOMEBREW_PREFIX" &> /dev/null || sudo chown -R "$(whoami)" "$HOMEBREW_PREFIX/*" &> /dev/null || true
-  done
+  ) do echo "Retrying"; done
