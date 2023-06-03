@@ -38,19 +38,30 @@
   # Setup post hombrew packages
     if [ "$os" == "Linux" ]; then
       sudo chsh "$USERNAME" -s "$(which zsh)"
+      brew link --force --overwrite openssl@3
     fi
 
-    brew link --force --overwrite bash-completion@2 openssl@3 postgresql@15
+    brew link --force --overwrite postgresql@15
     # shellcheck source=/dev/null
     [[ -r "$HOMEBREW_PREFIX/etc/profile.d/bash_completion.sh" ]] && source "$HOMEBREW_PREFIX/etc/profile.d/bash_completion.sh"
     rcLine="[[ -r \"$HOMEBREW_PREFIX/etc/profile.d/bash_completion.sh\" ]] && source \"$HOMEBREW_PREFIX/etc/profile.d/bash_completion.sh\""
     grep -qxF "$rcLine" "$HOME/.bashrc" || echo "$rcLine" >> "$HOME/.bashrc"
     updaterc "source \"$HOMEBREW_PREFIX/opt/asdf/libexec/asdf.sh\""
     updaterc "export MONO_GAC_PREFIX=\"$HOMEBREW_PREFIX\""
+    updaterc "export DOTNET_ROOT=\"$HOMEBREW_PREFIX/opt/dotnet/libexec\""
+    updaterc "export GROOVY_HOME=\"$HOMEBREW_PREFIX/opt/groovy/libexec\""
+    updaterc "export SCALA_HOME=\"$HOMEBREW_PREFIX/opt/scala/idea\"" 
     updaterc "export PATH=\"$HOMEBREW_PREFIX/opt/python/libexec/bin:\$PATH\""
     updaterc "export PATH=\"$HOMEBREW_PREFIX/opt/coreutils/libexec/gnubin:\$PATH\""
     updaterc "export PATH=\"$HOMEBREW_PREFIX/opt/gnu-sed/libexec/gnubin:\$PATH\""
+    updaterc "export PATH=\"$HOMEBREW_PREFIX/opt/grep/libexec/gnubin:\$PATH\""
+    updaterc "export PATH=\"$HOMEBREW_PREFIX/opt/make/libexec/gnubin:\$PATH\""
     updaterc "export MANPATH=\"$HOMEBREW_PREFIX/opt/coreutils/libexec/gnuman:\$MANPATH\""
+    updaterc "export LESSOPEN=\"|$HOMEBREW_PREFIX/bin/lesspipe.sh %s\""
+    updaterc "export LDFLAGS=\"$HOMEBREW_PREFIX/opt/postgresql@15/lib\${LDFLAGS:+ }\$LDFLAGS\""
+    updaterc "export CPPFLAGS=\"$HOMEBREW_PREFIX/opt/postgresql@15/lib\${CPPFLAGS:+ }\$CPPFLAGS\""
+    updaterc "export PKG_CONFIG_PATH=\"$HOMEBREW_PREFIX/opt/postgresql@15/lib/pkgconfig\${PKG_CONFIG_PATH:+:}\$PKG_CONFIG_PATH\""
+
   # Run Homebrew cleanup and doctor to check for errors
     brew cleanup
     brew doctor || true

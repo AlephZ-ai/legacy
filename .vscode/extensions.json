@@ -58,6 +58,9 @@
       "redhat.vscode-quarkus",
       "scala-lang.scala",
       "scalameta.metals",
-      "itryapitsin.sbt"
+      "itryapitsin.sbt",
+      "mellowmarshmallow.groovy",
+      "marlon407.code-groovy",
+      "nicolasvuillamy.vscode-groovy-lint"
     ]
 }

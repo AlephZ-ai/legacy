@@ -9,6 +9,3 @@
   bash -c eval "$(ssh-keyscan github.com >> "$HOME/.ssh/known_hosts")"
 # Configure GH
   gh config set -h github.com git_protocol https
-  if gh auth status; then
-    gh auth setup-git
-  fi

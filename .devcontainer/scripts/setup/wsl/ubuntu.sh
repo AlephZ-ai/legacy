@@ -1,15 +1,7 @@
 #!/usr/bin/env bash
 # init
   set -e
-  # Setup to use windows git credential manager if exists
-    gcm="/mnt/c/Program\\ Files/Git/mingw64/bin/git-credential-manager.exe"
-    if [ -e "$(eval echo "$gcm")" ]; then
-      echo "Updating credential helper to use windows"
-      git config --global credential.helper "$gcm"
-    fi
 # Run base ubuntu setup
-  # shellcheck source=/dev/null
-  export IS_WSL="true"
   # shellcheck source=/dev/null
   source "$DEVCONTAINER_SCRIPTS_ROOT/setup/ubuntu.sh"
   # shellcheck source=/dev/null

@@ -5,7 +5,6 @@
   # shellcheck source=/dev/null
   source "$HOME/.bashrc"
   current_user="$(whoami)"
-  IS_WSL=${IS_WSL:=false}
   updaterc() { line="$1"; eval "$line"; echo "Updating ~/.bashrc and ~/.zshrc..."; rcs=("$HOME/.bashrc" "$HOME/.zshrc"); for rc in "${rcs[@]}"; do if [[ "$(cat "$rc")" != *"$line"* ]]; then echo "$line" >> "$rc"; fi; done }
 # Update max open files
   sudo sh -c "ulimit -n 1048576"
@@ -17,11 +16,12 @@
 # Run pre-build commands
   sudo -s DEVCONTAINER_SCRIPTS_ROOT="$DEVCONTAINER_SCRIPTS_ROOT" USERNAME="$current_user" bash -c "$DEVCONTAINER_SCRIPTS_ROOT/setup/devspace/pre-build-sudo.sh"
 # Run post-build commands
+  # shellcheck source=/dev/null
   source "$DEVCONTAINER_SCRIPTS_ROOT/setup/devspace/post-build-user.sh"
 # Continue with devspace setup
   "$DEVCONTAINER_SCRIPTS_ROOT/setup/devspace.sh"
-# Login to GitHub and Docker
-  if [ "$IS_WSL" != "true" ]; then
+# Login to GitHub and Docker if not in WSL
+  if ! uname -r | grep -q microsoft; then
     # shellcheck source=/dev/null
     source "$DEVCONTAINER_SCRIPTS_ROOT/utils/gh-login.sh"
     # shellcheck source=/dev/null
