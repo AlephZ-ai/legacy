@@ -18,6 +18,6 @@
   # Install Node.js latest and lts
     nodes=('node' '--lts')
     packages=('npm-check-updates' 'corepack' '@npmcli/fs' '@devcontainers/cli' 'dotenv-cli' 'typescript')
-    for node in "${nodes[@]}"; do nvm install "$node"; nvm use "$node"; node --version; npm update -g npm; npm i -g "${packages[@]}"; ncu -u; done
+    for node in "${nodes[@]}"; do nvm install "$node" || true; nvm use "$node"; node --version; npm update -g npm; npm i -g "${packages[@]}"; ncu -u; done
     nvm use node
   sudo rm -rf $package_json

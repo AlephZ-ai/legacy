@@ -22,15 +22,15 @@
     # linux only brews
       if [ "$os" == "Linux" ]; then HOMEBREW_ACCEPT_EULA=Y brew install procps systemd wayland wayland-protocols; fi
     # These work on all brew platforms
-    while ! (
-      sudo "cache sudo"
-      HOMEBREW_ACCEPT_EULA=Y brew install sevenzip p7zip awk ca-certificates bash zsh oh-my-posh file-formula gnu-sed coreutils grep curl wget bzip2 less lesspipe
-      HOMEBREW_ACCEPT_EULA=Y brew install zlib zlib-ng buf protobuf grpc dos2unix git git-lfs sigstore/tap/gitsign-credential-cache sigstore/tap/gitsign gh asdf
-      HOMEBREW_ACCEPT_EULA=Y brew install jq moreutils bash-completion@2 gcc make cmake cmake-docs llvm dotnet dotnet@6 mono go rust python@3.11 nss openssl@3 openssl@1.1
-      HOMEBREW_ACCEPT_EULA=Y brew install openssh age nghttp2 mkcert shellcheck speedtest-cli mono-libgdiplus chezmoi sqlite sqlite-utils postgresql@15 azure-cli awscli
-      HOMEBREW_ACCEPT_EULA=Y brew install msodbcsql18 mssql-tools18 gedit kubernetes-cli helm minikube kind k3d kubefirst argocd derailed/k9s/k9s kustomize skaffold vcluster
-      HOMEBREW_ACCEPT_EULA=Y brew install terraform openjdk openjdk@8 openjdk@11 openjdk@17 maven groovy gradle scala sbt yarn
-    ) do echo "Retrying"; done
+      while ! (
+        sudo echo "cache sudo"
+        HOMEBREW_ACCEPT_EULA=Y brew install sevenzip p7zip awk ca-certificates bash zsh oh-my-posh file-formula gnu-sed coreutils grep curl wget bzip2 less lesspipe
+        HOMEBREW_ACCEPT_EULA=Y brew install zlib zlib-ng buf protobuf grpc dos2unix git git-lfs sigstore/tap/gitsign-credential-cache sigstore/tap/gitsign gh asdf
+        HOMEBREW_ACCEPT_EULA=Y brew install jq moreutils bash-completion@2 gcc make cmake cmake-docs llvm dotnet dotnet@6 mono go rust python@3.11 nss openssl@3 openssl@1.1
+        HOMEBREW_ACCEPT_EULA=Y brew install openssh age nghttp2 mkcert shellcheck speedtest-cli mono-libgdiplus chezmoi sqlite sqlite-utils postgresql@15 azure-cli awscli
+        HOMEBREW_ACCEPT_EULA=Y brew install msodbcsql18 mssql-tools18 gedit kubernetes-cli helm minikube kind k3d kubefirst argocd derailed/k9s/k9s kustomize skaffold vcluster
+        HOMEBREW_ACCEPT_EULA=Y brew install terraform openjdk openjdk@8 openjdk@11 openjdk@17 maven groovy gradle scala sbt yarn
+      ) do echo "Retrying"; done
 
   # Upgrade all packages
     brew update
@@ -43,7 +43,7 @@
     brew link --force --overwrite bash-completion@2 openssl@3 postgresql@15
     # shellcheck source=/dev/null
     [[ -r "$HOMEBREW_PREFIX/etc/profile.d/bash_completion.sh" ]] && source "$HOMEBREW_PREFIX/etc/profile.d/bash_completion.sh"
-    rcLine="[[ -r \"$HOMEBREW_PREFIX//etc/profile.d/bash_completion.sh\" ]] && source \"$HOMEBREW_PREFIX/etc/profile.d/bash_completion.sh\""
+    rcLine="[[ -r \"$HOMEBREW_PREFIX/etc/profile.d/bash_completion.sh\" ]] && source \"$HOMEBREW_PREFIX/etc/profile.d/bash_completion.sh\""
     grep -qxF "$rcLine" "$HOME/.bashrc" || echo "$rcLine" >> "$HOME/.bashrc"
     updaterc "source \"$HOMEBREW_PREFIX/opt/asdf/libexec/asdf.sh\""
     updaterc "export MONO_GAC_PREFIX=\"$HOMEBREW_PREFIX\""
@@ -54,3 +54,5 @@
   # Run Homebrew cleanup and doctor to check for errors
     brew cleanup
     brew doctor || true
+  # Update permissions
+    sudo chown -R "$(whoami)" "$HOMEBREW_PREFIX" &> /dev/null || sudo chown -R "$(whoami)" "$HOMEBREW_PREFIX/*" &> /dev/null || true
