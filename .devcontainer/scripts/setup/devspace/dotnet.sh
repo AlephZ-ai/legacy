@@ -20,7 +20,7 @@
   asdf reshim
   asdf info
   # Update rc files
-    root="\$HOME/.asdf/installs/dotnet-core/$preview\""
+    root="\"\$HOME/.asdf/installs/dotnet-core/$preview\""
     cmd="export DOTNET_ROOT=$root"
     sed="s:^export DOTNET_ROOT=.*$:$cmd:"
     files=("$HOME/.bashrc" "$HOME/.zshrc")

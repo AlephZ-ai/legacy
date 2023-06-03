@@ -61,6 +61,12 @@
       "itryapitsin.sbt",
       "mellowmarshmallow.groovy",
       "marlon407.code-groovy",
-      "nicolasvuillamy.vscode-groovy-lint"
+      "nicolasvuillamy.vscode-groovy-lint",
+      "mtxr.sqltools",
+      "mtxr.sqltools-driver-sqlite",
+      "mtxr.sqltools-driver-pg",
+      "mtxr.sqltools-driver-mysql",
+      "mtxr.sqltools-driver-mssql",
+      "oracle.oracledevtools"
     ]
 }
