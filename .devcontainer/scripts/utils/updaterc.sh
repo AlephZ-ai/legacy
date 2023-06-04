@@ -46,8 +46,9 @@ updaterc() {
   fi
 }
 
+defaultFiles="$HOME/.bashrc;$HOME/.zshrc"
 cmd="$1"
-files="$2"
+files="${2:-"$defaultFiles"}"
 set -f
 # shellcheck disable=SC2086
 set -- $cmd
@@ -59,7 +60,7 @@ if [[ "${cmd_parts[0]}" = 'sudo' ]]; then
 fi
 
 rcs=()
-if $sudo; then
+if $sudo && [[ "$files" = "$defaultFiles" ]]; then
   rcs=("/etc/bash.bashrc" "/etc/zsh/zshrc")
 else
   IFS=$';' read -ra rcs <<<"$(split_string "$files" ";")"
