@@ -30,7 +30,7 @@ while ! (
   HOMEBREW_ACCEPT_EULA=Y brew install zlib zlib-ng buf protobuf grpc dos2unix git git-lfs sigstore/tap/gitsign-credential-cache sigstore/tap/gitsign gh asdf
   HOMEBREW_ACCEPT_EULA=Y brew install jq moreutils bash-completion@2 gcc make cmake cmake-docs llvm dotnet dotnet@6 mono go rust python@3.11 nss openssl@3 openssl@1.1
   HOMEBREW_ACCEPT_EULA=Y brew install openssh age nghttp2 mkcert shellcheck speedtest-cli mono-libgdiplus chezmoi sqlite sqlite-utils postgresql@15 azure-cli awscli
-  HOMEBREW_ACCEPT_EULA=Y brew install msodbcsql18 mssql-tools18 gedit kubernetes-cli helm minikube kind k3d kubefirst argocd derailed/k9s/k9s kustomize skaffold vcluster
+  HOMEBREW_ACCEPT_EULA=Y brew install msodbcsql18 mssql-tools18 gedit kubernetes-cli helm minikube kind k3d argocd derailed/k9s/k9s kustomize skaffold vcluster
   HOMEBREW_ACCEPT_EULA=Y brew install terraform openjdk openjdk@8 openjdk@11 openjdk@17 maven groovy gradle scala sbt yarn pygobject3 gtk+3 gtk+4 libffi libyaml
 ); do echo "Retrying"; done
 
