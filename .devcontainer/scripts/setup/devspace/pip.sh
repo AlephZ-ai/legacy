@@ -5,7 +5,7 @@ set -ex
 source "$HOME/.bashrc"
 # Setup pip
 python -m ensurepip --upgrade
-python -m pip install --no-input --upgrade pip setuptools wheel
+python -m pip install --no-input --upgrade pip setuptools wheel pygobject pycairo
 while ! (
   pip install --no-input --user --upgrade pip setuptools wheel pygobject pycairo platformdirs astroid dill isort \
     mccabe ipykernel ipython-genutils pygments flake8 pytest pytest-sugar pytest-cov pytest-xdist \

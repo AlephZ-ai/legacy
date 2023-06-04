@@ -1,6 +1,6 @@
 Write-Host "setup/windows/pip.ps1"
 python -m ensurepip --upgrade | Write-Host
-python -m pip install --upgrade pip setuptools wheel | Write-Host
+python -m pip install --upgrade pip setuptools wheel pygobject pycairo | Write-Host
 pip install --no-input --user --upgrade pip setuptools wheel pygobject pycairo platformdirs astroid dill isort \
   mccabe ipykernel ipython-genutils pygments flake8 pytest pytest-sugar pytest-cov pytest-xdist \
   pytest-xprocess pytest-mock pytest-benchmark autopep8 opencv-python aiosqlite absl-py astunparse \
