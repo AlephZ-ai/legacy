@@ -1,23 +1,39 @@
 {
-    "files.eol": "\n",
-    "terminal.integrated.profiles.windows": {
-        "PowerShell": {
-            "source": "PowerShell"
-        }
-    },
-    "terminal.integrated.profiles.osx": {
-        "zsh": {
-            "path": "zsh",
-            "args": ["-l"]
-        }
-    },
-    "terminal.integrated.profiles.linux": {
-        "zsh": {
-            "path": "zsh",
-            "args": ["-l"]
-        }
-    },
-    "terminal.integrated.defaultProfile.windows": "PowerShell",
-    "terminal.integrated.defaultProfile.osx": "zsh",
-    "terminal.integrated.defaultProfile.linux": "zsh"
+  "files.eol": "\n",
+  "editor.formatOnSave": true,
+  "terminal.integrated.profiles.windows": {
+    "PowerShell": {
+      "source": "PowerShell"
+    }
+  },
+  "terminal.integrated.profiles.osx": {
+    "zsh": {
+      "path": "zsh",
+      "args": [
+        "-l"
+      ]
+    }
+  },
+  "terminal.integrated.profiles.linux": {
+    "zsh": {
+      "path": "zsh",
+      "args": [
+        "-l"
+      ]
+    }
+  },
+  "terminal.integrated.defaultProfile.windows": "PowerShell",
+  "terminal.integrated.defaultProfile.osx": "zsh",
+  "terminal.integrated.defaultProfile.linux": "zsh",
+  "json.schemas": [
+    {
+      "fileMatch": [
+        "*/devcontainer-feature.json"
+      ],
+      "url": "https://raw.githubusercontent.com/devcontainers/spec/main/schemas/devContainerFeature.schema.json"
+    }
+  ],
+  "[csharp]": {
+    "editor.formatOnSave": true
+  }
 }
