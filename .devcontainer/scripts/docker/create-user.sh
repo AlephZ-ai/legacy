@@ -16,6 +16,6 @@ else
   apt-get install -y sudo
   line="$USERNAME ALL=\(root\) NOPASSWD:ALL"
   file="/etc/sudoers.d/$USERNAME"
-  grep -qxF "$line" "$file" || echo -e "$line" >>"$file"
+  grep -qxF "$line" "$file" &>/dev/null || echo -e "$line" >>"$file"
   chmod 0440 "/etc/sudoers.d/$USERNAME"
 fi

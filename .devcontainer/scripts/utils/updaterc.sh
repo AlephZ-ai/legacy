@@ -12,10 +12,28 @@ else
   IFS=';' read -r -a rcs <<<"$(split_string "$2")"
 fi
 
-eval "$cmd"
+# Split the command into an array
+IFS=' ' read -r -a cmd_parts <<<"$cmd"
+
+# Check if the first part of the command is 'sudo'
+if [[ "${cmd_parts[0]}" == 'sudo' ]]; then
+  # If it is, run the command with sudo
+  sudo "${cmd_parts[@]:1}"
+else
+  # If not, run the command as is
+  eval "$cmd"
+fi
+
 echo "Updating ~/.bashrc and ~/.zshrc..."
 for rc in "${rcs[@]}"; do
   if [[ "$(cat "$rc")" != *"$cmd"* ]]; then
-    echo -e "$cmd" >>"$rc"
+    # Check again if the original command starts with sudo
+    if [[ "${cmd_parts[0]}" == 'sudo' ]]; then
+      # If it is, append the command to the file with sudo
+      echo -e "$cmd" | sudo tee -a "$rc" >/dev/null
+    else
+      # If not, append the command to the file normally
+      echo -e "$cmd" >>"$rc"
+    fi
   fi
 done
