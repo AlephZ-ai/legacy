@@ -25,11 +25,10 @@ set -- $cmd      # split on whitespace
 cmd_parts=("$@") # assign to array
 CMD_FIRST_PART="${cmd_parts[0]}"
 
+rcs=("$HOME/.bashrc" "$HOME/.zshrc")
 if [[ "$option" == "sudo" ]]; then
   rcs=("/etc/bash.bashrc" "/etc/zsh/zshrc")
   [[ $cmd != sudo* ]] && cmd="sudo $cmd"
-elif [[ -z "$option" ]]; then
-  rcs=("$HOME/.bashrc" "$HOME/.zshrc")
 else
   arr=()
   while IFS= read -r line; do
@@ -49,14 +48,11 @@ fi
 
 printf 'Updating: %s\n' "${rcs[@]}"
 for rc in "${rcs[@]}"; do
-  if [[ "$(cat "$rc")" != *"$cmd"* ]]; then
-    # Check again if the original command starts with sudo
-    if [ "$CMD_FIRST_PART" = 'sudo' ]; then
-      # If it is, append the command to the file with sudo
-      echo -e "$cmd" | sudo tee -a "$rc" >/dev/null
-    else
-      # If not, append the command to the file normally
-      echo -e "$cmd" >>"$rc"
+  if [ -f "$rc" ]; then
+    if ! grep -Fxq "$cmd" "$rc"; then
+      sudo echo -e "$cmd" | if [ "$CMD_FIRST_PART" = 'sudo' ]; then sudo tee -a "$rc"; fi >/dev/null
     fi
+  else
+    echo "File $rc does not exist."
   fi
 done
