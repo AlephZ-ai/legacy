@@ -1,7 +1,11 @@
 {
   "files.eol": "\n",
+  "editor.formatOnPaste": true,
   "editor.formatOnSave": true,
   "editor.formatOnType": true,
+  "editor.tabCompletion": "on",
+  "editor.minimap.enabled": true,
+  "files.autoSave": "afterDelay",
   "terminal.integrated.profiles.windows": {
     "PowerShell": {
       "source": "PowerShell"
@@ -35,7 +39,10 @@
     }
   ],
   "[csharp]": {
+    "editor.formatOnPaste": true,
     "editor.formatOnSave": true,
-    "editor.formatOnType": true
+    "editor.formatOnType": true,
+    "editor.tabCompletion": "on",
+    "editor.minimap.enabled": true
   }
 }
