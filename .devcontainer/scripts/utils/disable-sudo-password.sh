@@ -3,7 +3,8 @@
 set -ex
 USERNAME=${USERNAME:-$(whoami)}
 # Disable needing password for sudo
-line="$USERNAME ALL=(ALL:ALL) NOPASSWD: ALL"
+# shellcheck source=/dev/null
 file="/etc/sudoers.d/$USERNAME"
-sudo grep -qxF "$line" "$file" &>/dev/null || echo -e "$line" | sudo tee -a "$file" &>/dev/null
-sudo chmod 440 "$file"
+# shellcheck source=/dev/null
+source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "$USERNAME ALL=(ALL:ALL) NOPASSWD: ALL" "$file"
+fudo chmod 440 "$file"
