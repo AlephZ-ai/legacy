@@ -6,7 +6,9 @@ split_string() {
 }
 
 cmd="$1"
-if [[ -z "$2" ]]; then
+if [[ "$2" == "sudo" ]]; then
+  rcs=("/etc/bash.bashrc" "/etc/zsh/zshrc")
+elif [[ -z "$2" ]]; then
   rcs=("$HOME/.bashrc" "$HOME/.zshrc")
 else
   IFS=';' read -r -a rcs <<<"$(split_string "$2")"
@@ -24,7 +26,7 @@ else
   eval "$cmd"
 fi
 
-echo "Updating ~/.bashrc and ~/.zshrc..."
+printf 'Updating: %s\n' "${rcs[@]}"
 for rc in "${rcs[@]}"; do
   if [[ "$(cat "$rc")" != *"$cmd"* ]]; then
     # Check again if the original command starts with sudo
