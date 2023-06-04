@@ -6,7 +6,6 @@
 # Setup pip
     python -m ensurepip --upgrade
     python -m pip install --upgrade pip setuptools wheel
-    pip install --upgrade --ignore-installed pygobject
     while ! (
       pip install --upgrade platformdirs astroid dill isort mccabe ipykernel ipython-genutils pygments \
         flake8 pytest pytest-sugar pytest-cov pytest-xdist pytest-xprocess pytest-mock pytest-benchmark \
