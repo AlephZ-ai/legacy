@@ -1,7 +1,7 @@
 #!/usr/bin/env zsh
 # shellcheck shell=bash
 unsafe="$1"
-if brew; then
+if brew --version &> /dev/null; then
   brew uninstall --force --ignore-dependencies bash
   "$DEVCONTAINER_SCRIPTS_ROOT/uninstall/brew.sh"
 fi
