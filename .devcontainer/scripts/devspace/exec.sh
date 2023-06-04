@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-set -e
+set -ex
 commandPath="$1"
 command="$2"
 "$DEVCONTAINER_FEATURES_PROJECT_ROOT/run" devspace up

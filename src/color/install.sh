@@ -1,5 +1,5 @@
 #!/bin/sh
-set -e
+set -ex
 
 echo "Activating feature 'color'"
 echo "The provided favorite color is: ${FAVORITE}"
@@ -8,7 +8,7 @@ echo "The provided favorite color is: ${FAVORITE}"
 # The 'install.sh' entrypoint script is always executed as the root user.
 #
 # These following environment variables are passed in by the dev container CLI.
-# These may be useful in instances where the context of the final 
+# These may be useful in instances where the context of the final
 # remoteUser or containerUser is useful.
 # For more details, see https://containers.dev/implementors/features#user-env-var
 echo "The effective dev container remoteUser is '$_REMOTE_USER'"

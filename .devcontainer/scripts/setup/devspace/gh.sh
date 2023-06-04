@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # init
-  set -e
+  set -ex
   # shellcheck source=/dev/null
   source "$HOME/.bashrc"
 # Adding GH .ssh known hosts

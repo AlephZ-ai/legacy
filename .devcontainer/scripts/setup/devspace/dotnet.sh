@@ -1,10 +1,11 @@
 #!/usr/bin/env bash
 # init
-  set -e
+  set -ex
   # shellcheck source=/dev/null
   source "$HOME/.bashrc"
   updaterc() { local line="$1"; eval "$line"; echo "Updating ~/.bashrc and ~/.zshrc..."; rcs=("$HOME/.bashrc" "$HOME/.zshrc"); for rc in "${rcs[@]}"; do if [[ "$(cat "$rc")" != *"$line"* ]]; then echo "$line" >> "$rc"; fi; done }
 # Setup dotnet
+  preview="$(asdf list all dotnet-core 8)"
   dotnet_latest_major_global='{ "sdk": { "rollForward": "latestmajor" } }'
   updaterc 'export DOTNET_ROLL_FORWARD=LatestMajor'
   echo "$dotnet_latest_major_global" > "$HOME/global.json"

@@ -1,7 +1,7 @@
 #!/usr/bin/env zsh
 #shellcheck shell=bash
 # init
-  set -e
+  set -ex
   # shellcheck source=/dev/null
   source "$HOME/.zshrc"
 # Repair and Update if needed

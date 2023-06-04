@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # init
-  set -e
+  set -ex
   USERNAME=${USERNAME:-$(whoami)}
 # Disable needing password for sudo
   line="$USERNAME ALL=(ALL:ALL) NOPASSWD: ALL"

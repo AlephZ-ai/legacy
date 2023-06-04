@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 #shellcheck shell=bash
 # init
-  set -e
+  set -ex
   # shellcheck source=/dev/null
   source "$HOME/.bashrc"
   current_user="$(whoami)"

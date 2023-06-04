@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # init
-  set -e
+  set -ex
   # shellcheck source=/dev/null
   source "$HOME/.bashrc"
 # Make trusted root CA then install and trust it

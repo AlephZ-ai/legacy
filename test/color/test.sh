@@ -20,17 +20,17 @@
 #
 # These scripts are run as 'root' by default. Although that can be changed
 # with the '--remote-user' flag.
-# 
+#
 # This test can be run with the following command:
 #
-#    devcontainer features test    \ 
+#    devcontainer features test    \
 #               --features color   \
 #               --remote-user root \
 #               --skip-scenarios   \
 #               --base-image mcr.microsoft.com/devcontainers/base:ubuntu \
 #               /path/to/this/repo
 
-set -e
+set -ex
 
 # Optional: Import test library bundled with the devcontainer CLI
 # See https://github.com/devcontainers/cli/blob/HEAD/docs/features/test.md#dev-container-features-test-lib

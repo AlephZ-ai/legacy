@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
 # init
-  set -e
+  set -ex
   # shellcheck source=/dev/null
   source "$HOME/.bashrc"
 # Setup pip
     python -m ensurepip --upgrade
     python -m pip install --no-input --upgrade pip setuptools wheel
     while ! (
-      pip install --no-input --upgrade platformdirs astroid dill isort mccabe ipykernel ipython-genutils pygments \
+      pip install --no-input --upgrade pycairo platformdirs astroid dill isort mccabe ipykernel ipython-genutils pygments \
         flake8 pytest pytest-sugar pytest-cov pytest-xdist pytest-xprocess pytest-mock pytest-benchmark \
         autopep8 opencv-python aiosqlite absl-py astunparse flatbuffers gast google-pasta grpcio h5py jax \
         keras libclang numpy opt-einsum protobuf blis catalogue confection cymem murmurhash preshed \

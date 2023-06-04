@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # init
   # shellcheck source=/dev/null
-  set -e
+  set -ex
   source "$HOME/.bashrc"
   HOMEBREW_PREFIX=${HOMEBREW_PREFIX:-/home/linuxbrew/.linuxbrew}
   USERNAME="${USERNAME:-$(whoami)}"

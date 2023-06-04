@@ -26,7 +26,7 @@ jobs:
         run: |
           LAST_COMMIT_MESSAGE=$(git log -1 --pretty=%B | tr -dc '[:alnum:] ')
           echo "LAST_COMMIT_MESSAGE=$LAST_COMMIT_MESSAGE" >> "$GITHUB_ENV"
- 
+
       - name: Check should continue
         id: should_continue
         run: |
@@ -58,21 +58,21 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          set -e
+          set -ex
           echo "Start."
-      
+
           git config --global user.email github-actions@github.com
           git config --global user.name github-actions
           git config pull.rebase false
-      
+
           branch=automated-features-update-$GITHUB_RUN_ID
           git checkout -b $branch
           message='Automated devcontainer features update'
-      
+
           git add */**/README.md
           git add src/**/devcontainer-feature.json
           git commit -m "$message" || export NO_UPDATES=true
-      
+
           if [ "$NO_UPDATES" != "true" ] ; then
               git push origin "$branch"
               gh api \

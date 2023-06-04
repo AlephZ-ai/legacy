@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-set -e
+set -ex
 git update-index --add --chmod=+x "$DEVCONTAINER_FEATURES_PROJECT_ROOT/run"
 chmod +x "$DEVCONTAINER_FEATURES_PROJECT_ROOT/run"
 dos2unix "$DEVCONTAINER_FEATURES_PROJECT_ROOT/run" || true
