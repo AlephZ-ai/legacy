@@ -14,7 +14,7 @@ if [[ $- == *i* ]]; then
   source "$DEVCONTAINER_SCRIPTS_ROOT/utils/docker-login.sh"
 else
   # Non-interactive commands...
-  echo "Running in a prebuild or in GitHub Codespaces. Ignore interactive commands."
+  echo "Running in a prebuild. Ignore interactive commands."
 fi
 
 echo "Press Ctrl+Shift+~ to open a terminal in the current dev container"

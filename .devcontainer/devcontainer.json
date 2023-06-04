@@ -83,7 +83,7 @@
   "postCreateCommand": [
     "zsh",
     "-c",
-    "unset PS1; export NONINTERACTIVE=1; export DEBIAN_FRONTEND=noninteractive; ./run events post-create"
+    "./run events post-create"
   ],
   "postStartCommand": [
     "zsh",
