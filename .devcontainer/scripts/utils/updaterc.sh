@@ -23,14 +23,19 @@ updaterc() {
   echo "Updating $rc"
   local prefix="${cmd%%=*}="
   # shellcheck disable=SC2016
-  local awk_cmd='!index($0, p) {print $0} index($0, p) {print c}'
+  local template='!index($0, p) {print $0} index($0, p) {print c}'
+  if $sudo; then
+    sudo touch "$rc"
+  else
+    touch "$rc"
+  fi
 
   if [[ -n "$prefix" ]]; then
     if $sudo; then
-      sudo awk -v p="$prefix" -v c="$cmd" "$awk_cmd" "$rc" | sudo tee "/tmp/rc_tmp" >/dev/null
+      sudo awk -v p="$prefix" -v c="$cmd" "$template" "$rc" | sudo tee "/tmp/rc_tmp" >/dev/null
       sudo mv "/tmp/rc_tmp" "$rc"
     else
-      awk -v p="$prefix" -v c="$cmd" "$awk_cmd" "$rc" >"/tmp/rc_tmp"
+      awk -v p="$prefix" -v c="$cmd" "$template" "$rc" >"/tmp/rc_tmp"
       mv "/tmp/rc_tmp" "$rc"
     fi
   fi
