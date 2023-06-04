@@ -7,7 +7,6 @@ if brew --version &>/dev/null; then
   "$DEVCONTAINER_SCRIPTS_ROOT/uninstall/brew.sh"
 fi
 
-set -ex
 sudo rm -rf "/Users/$(whoami)/Library/Caches/Homebrew/"
 sudo rm -rf "/Users/$(whoami)/Library/Logs/Homebrew/"
 if [ "$unsafe" -ge 1 ]; then
