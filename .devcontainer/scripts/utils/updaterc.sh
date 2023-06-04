@@ -65,7 +65,7 @@ if [[ "${cmd_parts[0]}" = 'sudo' ]]; then
 fi
 
 rcs=()
-if $sudo && [[ "$files" = "$defaultFiles" ]]; then
+if $sudo && [[ "$files" = "$defaultFiles" ]] || [[ $(id -u) -eq 0 ]]; then
   rcs=("/etc/bash.bashrc" "/etc/zsh/zshrc")
 else
   IFS=$';' read -ra rcs <<<"$(split_string "$files" ";")"
