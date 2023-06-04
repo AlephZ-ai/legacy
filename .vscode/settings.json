@@ -1,6 +1,7 @@
 {
   "files.eol": "\n",
   "editor.formatOnSave": true,
+  "editor.formatOnType": true,
   "terminal.integrated.profiles.windows": {
     "PowerShell": {
       "source": "PowerShell"
@@ -34,6 +35,7 @@
     }
   ],
   "[csharp]": {
-    "editor.formatOnSave": true
+    "editor.formatOnSave": true,
+    "editor.formatOnType": true
   }
 }
