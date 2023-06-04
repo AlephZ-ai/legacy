@@ -9,15 +9,7 @@ services:
     labels: [ "ai.alephz.role=$DEVCONTAINER_FEATURES_PROJECT_NAME" ]
     env_file: .env
     # https://github.com/microsoft/wslg/blob/main/samples/container/Containers.md
-    environment:
-      - MNT_C=${MNT_C:-/tmp}
-      - DISPLAY=${DISPLAY:-:0}
-      - WAYLAND_DISPLAY=${WAYLAND_DISPLAY:-wayland-0}
-      - PULSE_SERVER=${PULSE_SERVER:-/tmp}
-      - XDG_RUNTIME_DIR=${XDG_RUNTIME_DIR:-/tmp}
-      - LIB_WSL=${LIB_WSL:-/tmp}
-      - MNT_WSLG=${MNT_WSLG:-/tmp}
-      - X11_SOCKET=${X11_SOCKET:-/tmp}
+    environment: []
     devices:
       - /dev/dxg
     # https://docs.docker.com/compose/compose-file/build/#build-definition
@@ -37,21 +29,6 @@ services:
     networks:
       - default
     # https://medium.com/swlh/docker-and-systemd-381dfd7e4628
-    volumes:
-      - ../..:/workspaces:cached
-      - ${MNT_C:-/tmp}:/mnt/c:cached
-      - ${XDG_RUNTIME_DIR:-/tmp}:${XDG_RUNTIME_DIR:-/tmp}:cached
-      - ${MNT_WSLG:-/tmp}:/mnt/wslg:cached
-      - ${X11_SOCKET:-/tmp}:/tmp/.X11-unix
-      - type: bind
-        source: ${LIB_WSL:-/tmp}
-        target: /usr/lib/wsl
-        read_only: true
-        consistency: cached
-      - type: bind
-        source: /sys/fs/cgroup
-        target: /sys/fs/cgroup
-        read_only: true
-        consistency: cached
+    volumes: []
 networks:
   default:

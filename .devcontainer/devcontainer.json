@@ -17,11 +17,36 @@
   "securityOpt": [
     "seccomp=unconfined"
   ],
-  "containerEnv": {},
-  "remoteEnv": {
-    "GITHUB_TOKEN": "${localEnv:GITHUB_TOKEN_DEVCONTAINER_FEATURES:-${env:GITHUB_TOKEN:-${localEnv:GITHUB_TOKEN:-}}}"
+  "containerEnv": {
+    "MNT_C": "${remoteEnv:MNT_C:/tmp}",
+    "DISPLAY": "${remoteEnv:DISPLAY::0}",
+    "WAYLAND_DISPLAY": "${remoteEnv:WAYLAND_DISPLAY:wayland-0}",
+    "PULSE_SERVER": "${remoteEnv:PULSE_SERVER:/tmp}",
+    "XDG_RUNTIME_DIR": "${remoteEnv:XDG_RUNTIME_DIR:/tmp}",
+    "LIB_WSL": "${remoteEnv:LIB_WSL:/tmp}",
+    "MNT_WSLG": "${remoteEnv:MNT_WSLG:/tmp}",
+    "X11_SOCKET": "${remoteEnv:X11_SOCKET:/tmp}"
   },
-  "mounts": [],
+  "remoteEnv": {
+    "GITHUB_TOKEN": "${localEnv:GITHUB_TOKEN_DEVCONTAINER_FEATURES:-${remoteEnv:GITHUB_TOKEN:-${localEnv:GITHUB_TOKEN:-}}}",
+    "MNT_C": "${remoteEnv:MNT_C:/tmp}",
+    "DISPLAY": "${remoteEnv:DISPLAY::0}",
+    "WAYLAND_DISPLAY": "${remoteEnv:WAYLAND_DISPLAY:wayland-0}",
+    "PULSE_SERVER": "${remoteEnv:PULSE_SERVER:/tmp}",
+    "XDG_RUNTIME_DIR": "${remoteEnv:XDG_RUNTIME_DIR:/tmp}",
+    "LIB_WSL": "${remoteEnv:LIB_WSL:/tmp}",
+    "MNT_WSLG": "${remoteEnv:MNT_WSLG:/tmp}",
+    "X11_SOCKET": "${remoteEnv:X11_SOCKET:/tmp}"
+  },
+  "mounts": [
+    "../..:/workspaces:cached",
+    "${remoteEnv:MNT_C:/tmp}:/mnt/c:cached",
+    "${remoteEnv:XDG_RUNTIME_DIR:/tmp}:${remoteEnv:XDG_RUNTIME_DIR:/tmp}:cached",
+    "${remoteEnv:MNT_WSLG:/tmp}:/mnt/wslg:cached",
+    "${remoteEnv:X11_SOCKET:/tmp}:/tmp/.X11-unix:cached",
+    "${remoteEnv:LIB_WSL:/tmp}:/usr/lib/wsl:ro,cached",
+    "/sys/fs/cgroup:/sys/fs/cgroup:ro,cached"
+  ],
   "forwardPorts": [
     11080,
     11901
