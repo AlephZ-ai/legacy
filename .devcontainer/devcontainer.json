@@ -79,6 +79,7 @@
         "editor.minimap.enabled": true,
         "files.autoSave": "afterDelay",
         "json.format.enable": true,
+        "omnisharp.enableRoslynAnalyzers": true,
         "terminal.integrated.profiles.linux": {
           "zsh": {
             "path": "zsh",
