@@ -1,3 +1,5 @@
 #!/usr/bin/env bash
 set -ex
-pip cache purge --no-input
+if command -v pip >/dev/null 2>&1; then
+  pip cache purge --no-input
+fi
