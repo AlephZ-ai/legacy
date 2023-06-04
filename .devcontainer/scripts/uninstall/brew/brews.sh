@@ -1,6 +1,6 @@
 #!/bin/bash
 set -ex
-brew uninstall --force --ignore-dependencies pycairo py3cairo
+brew uninstall --force --ignore-dependencies pycairo py3cairo pygobject3
 "$DEVCONTAINER_SCRIPTS_ROOT/uninstall/pip/packages.sh"
 "$DEVCONTAINER_SCRIPTS_ROOT/uninstall/pip/package-cache.sh"
 while [[ $(brew list | wc -l) -ne 0 ]]; do
