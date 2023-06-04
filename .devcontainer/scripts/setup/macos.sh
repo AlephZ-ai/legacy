@@ -10,15 +10,15 @@
   source "$DEVCONTAINER_SCRIPTS_ROOT/utils/disable-sudo-password.sh"
 # Setup Developer Command Line tools
   if ! (bash --version && git --version); then sudo xcode-select --install; fi
-# Add docker path
-  # shellcheck disable=SC2016
-  updaterc 'PATH="$HOME/.docker/bin:$PATH"'
 # build commands
   # shellcheck source=/dev/null
   export HOMEBREW_PREFIX="/usr/local"
   bash -l -c "$DEVCONTAINER_SCRIPTS_ROOT/setup/devspace/post-build-user.sh"
   # shellcheck source=/dev/null
   source "$HOME/.zshrc"
+# Add docker path
+  # shellcheck disable=SC2016
+  updaterc 'PATH="$HOME/.docker/bin:$PATH"'
 # Continue with devspace setup
   # shellcheck source=/dev/null
   source "$DEVCONTAINER_SCRIPTS_ROOT/setup/macos/brew.sh"
