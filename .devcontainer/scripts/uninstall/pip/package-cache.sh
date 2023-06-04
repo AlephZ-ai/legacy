@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-pip cache purge
+pip cache purge --no-input
