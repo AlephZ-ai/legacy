@@ -17,18 +17,18 @@ files=("$HOME/.bashrc" "$HOME/.zshrc")
 eval "$cmd"
 for file in "${files[@]}"; do
   sed -i "$sed" "$file"
-  grep -qF "$cmd" "$file" || echo "$cmd" >>"$file"
+  grep -qF "$cmd" "$file" || echo -e "$cmd" >>"$file"
 done
 # shellcheck source=/dev/null
 source "$HOME/.asdf/plugins/dotnet-core/set-dotnet-home.bash"
 # shellcheck disable=SC2016
 rcLine='source "$HOME/.asdf/plugins/dotnet-core/set-dotnet-home.bash"'
 rcFile="$HOME/.bashrc"
-grep -qxF "$rcLine" "$rcFile" || echo "$rcLine" >>"$rcFile"
+grep -qxF "$rcLine" "$rcFile" || echo -e "$rcLine" >>"$rcFile"
 # shellcheck disable=SC2016
 rcLine='source "$HOME/.asdf/plugins/dotnet-core/set-dotnet-home.zsh"'
 rcFile="$HOME/.zshrc"
-grep -qxF "$rcLine" "$rcFile" || echo "$rcLine" >>"$rcFile"
+grep -qxF "$rcLine" "$rcFile" || echo -e "$rcLine" >>"$rcFile"
 # Setup dotnet workloads
 dotnet workload install --include-previews wasi-experimental
 # Clean, repair, and update

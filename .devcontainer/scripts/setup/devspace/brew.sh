@@ -47,7 +47,7 @@ brew link --force --overwrite postgresql@15
 # shellcheck source=/dev/null
 [[ -r "$HOMEBREW_PREFIX/etc/profile.d/bash_completion.sh" ]] && source "$HOMEBREW_PREFIX/etc/profile.d/bash_completion.sh"
 rcLine="[[ -r \"$HOMEBREW_PREFIX/etc/profile.d/bash_completion.sh\" ]] && source \"$HOMEBREW_PREFIX/etc/profile.d/bash_completion.sh\""
-grep -qxF "$rcLine" "$HOME/.bashrc" || echo "$rcLine" >>"$HOME/.bashrc"
+grep -qxF "$rcLine" "$HOME/.bashrc" || echo -w "$rcLine" >>"$HOME/.bashrc"
 # shellcheck source=/dev/null
 source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "source \"$HOMEBREW_PREFIX/opt/asdf/libexec/asdf.sh\""
 # shellcheck source=/dev/null

@@ -4,7 +4,7 @@ USERNAME="$1"
 USER_UID="$2"
 USER_GID="$3"
 
-if id "$USERNAME"; then 
+if id "$USERNAME"; then
   groupmod --gid "$USER_GID" "$USERNAME"
   usermod --uid "$USER_UID" --gid "$USER_GID" "$USERNAME"
   chown -R "$USER_UID":"$USER_GID" "/home/$USERNAME"
@@ -16,6 +16,6 @@ else
   apt-get install -y sudo
   line="$USERNAME ALL=\(root\) NOPASSWD:ALL"
   file="/etc/sudoers.d/$USERNAME"
-  grep -qxF "$line" "$file" || echo "$line" >> "$file"
+  grep -qxF "$line" "$file" || echo -e "$line" >>"$file"
   chmod 0440 "/etc/sudoers.d/$USERNAME"
 fi

@@ -12,10 +12,10 @@ if [[ -n "${NOVNC_VERSION}" ]]; then
   LAUNCH_SCRIPT="${NOVNC_UTILS_PATH}/launch.sh"
   # Create the launch.sh script if it doesn't exist
   if [ ! -f "$LAUNCH_SCRIPT" ]; then
-      echo "${NOVNC_UTILS_PATH}/novnc_proxy \"\$@\"" | sudo tee "$LAUNCH_SCRIPT"
-      sudo chmod +x "$LAUNCH_SCRIPT"
+    echo -e "${NOVNC_UTILS_PATH}/novnc_proxy \"\$@\"" | sudo tee "$LAUNCH_SCRIPT"
+    sudo chmod +x "$LAUNCH_SCRIPT"
   else
-      echo "File $LAUNCH_SCRIPT already exists."
+    echo "File $LAUNCH_SCRIPT already exists."
   fi
 else
   echo "NOVNC_VERSION is null. Exiting."
