@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-
 # Update submodules
 init_submodules="false"
 submodule_path="$DEVCONTAINER_FEATURES_PROJECT_ROOT/.devcontainer/dependencies/devcontainers/features"

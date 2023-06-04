@@ -1,5 +1,6 @@
 #!/usr/bin/env zsh
 # shellcheck shell=bash
+set -ex
 unsafe="$1"
 if brew --version &> /dev/null; then
   brew uninstall --force --ignore-dependencies bash

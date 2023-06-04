@@ -1,6 +1,5 @@
 #!/usr/bin/env zsh
 #shellcheck shell=bash
-set -ex
 rm -f nohup.out
 rm -f gcm-diagnose.log
 # shellcheck source=/dev/null
