@@ -6,13 +6,19 @@ split_string() {
 }
 
 cmd="$1"
-if [[ "$2" == "sudo" ]]; then
+# Check if $1 starts with sudo and set $2 as "sudo" if it's unset or empty
+if [[ $cmd == sudo* && -z "$2" ]]; then
+  option="sudo"
+else
+  option="$2"
+fi
+
+if [[ "$option" == "sudo" ]]; then
   rcs=("/etc/bash.bashrc" "/etc/zsh/zshrc")
-  [[ $cmd != sudo* ]] && cmd="sudo $cmd"
-elif [[ -z "$2" ]]; then
+elif [[ -z "$option" ]]; then
   rcs=("$HOME/.bashrc" "$HOME/.zshrc")
 else
-  IFS=';' read -r -a rcs <<<"$(split_string "$2")"
+  IFS=';' read -r -a rcs <<<"$(split_string "$option")"
 fi
 
 # Split the command into an array
