@@ -1,6 +1,6 @@
 # shellcheck shell=bash
 set -ex
-# Splits a string by semicolon
+
 split_string() {
   local string="$1"
   local delimiter="$2"
@@ -15,15 +15,47 @@ split_string() {
   done
 }
 
+updaterc() {
+  local cmd="$1"
+  local rc="$2"
+  local sudo="$3"
+
+  echo "Updating $rc"
+  local prefix="${cmd%%=*}="
+
+  if [[ -n "$prefix" ]]; then
+    # shellcheck disable=SC2016
+    local awk_cmd='!index($0, p) {print $0} index($0, p) {print c}'
+
+    if $sudo; then
+      tmp="$(sudo mktemp)"
+      sudo awk -v p="$prefix" -v c="$cmd" "$awk_cmd" "$rc" | sudo tee "$tmp" >/dev/null
+      sudo mv "$tmp" "$rc"
+    else
+      tmp="$(mktemp)"
+      awk -v p="$prefix" -v c="$cmd" "$awk_cmd" "$rc" >"$tmp"
+      mv "$tmp" "$rc"
+    fi
+  fi
+
+  if $sudo; then
+    if ! sudo grep -Fxq "$cmd" "$rc" >/dev/null; then
+      echo -e "$cmd" | sudo tee -a "$rc" >/dev/null
+    fi
+  else
+    if ! grep -Fxq "$cmd" "$rc" >/dev/null; then
+      echo -e "$cmd" >>"$rc"
+    fi
+  fi
+}
+
 cmd="$1"
 option="$2"
 
-# Split the command into an array
-set -f # disable glob
+set -f
 # shellcheck disable=SC2086
-set -- $cmd      # split on whitespace
-cmd_parts=("$@") # assign to array
-CMD_FIRST_PART="${cmd_parts[0]}"
+set -- $cmd
+cmd_parts=("$@")
 
 rcs=("$HOME/.bashrc" "$HOME/.zshrc")
 if [[ "$option" == "sudo" ]]; then
@@ -33,18 +65,15 @@ else
   IFS=$';' read -ra rcs <<<"$(split_string "$option" ";")"
 fi
 
-# Check if the first part of the command is 'sudo'
-if [ "$CMD_FIRST_PART" = 'sudo' ]; then
-  # If it is, run the command with sudo
+sudo=false
+[[ "${cmd_parts[0]}" = 'sudo' ]] && sudo=true
+
+if $sudo; then
   cmd="${cmd_parts[*]:1}"
 fi
 
 eval "$cmd" &>/dev/null || true
+
 for rc in "${rcs[@]}"; do
-  echo "Updating $rc"
-  if [ "$CMD_FIRST_PART" = 'sudo' ]; then
-    if ! sudo grep -Fxq "$cmd" "$rc" >/dev/null; then echo -e "$cmd" | sudo tee -a "$rc" >/dev/null; fi
-  else
-    if ! grep -Fxq "$cmd" "$rc" >/dev/null; then echo -e "$cmd" >>"$rc"; fi
-  fi
+  updaterc "$cmd" "$rc" "$sudo"
 done

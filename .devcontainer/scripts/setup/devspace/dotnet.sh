@@ -10,25 +10,10 @@ dotnet_latest_major_global='{ "sdk": { "rollForward": "latestmajor" } }'
 source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'export DOTNET_ROLL_FORWARD=LatestMajor'
 echo "$dotnet_latest_major_global" >"$HOME/global.json"
 # Update rc files
-root="\"\$HOME/.asdf/installs/dotnet-core/$preview\""
-cmd="export DOTNET_ROOT=$root"
-sed="s:^export DOTNET_ROOT=.*$:$cmd:"
-files=("$HOME/.bashrc" "$HOME/.zshrc")
-eval "$cmd"
-for file in "${files[@]}"; do
-  sed -i "$sed" "$file"
-  grep -qF "$cmd" "$file" || echo -e "$cmd" >>"$file"
-done
 # shellcheck source=/dev/null
-source "$HOME/.asdf/plugins/dotnet-core/set-dotnet-home.bash"
-# shellcheck disable=SC2016
-rcLine='source "$HOME/.asdf/plugins/dotnet-core/set-dotnet-home.bash"'
-rcFile="$HOME/.bashrc"
-grep -qxF "$rcLine" "$rcFile" || echo -e "$rcLine" >>"$rcFile"
-# shellcheck disable=SC2016
-rcLine='source "$HOME/.asdf/plugins/dotnet-core/set-dotnet-home.zsh"'
-rcFile="$HOME/.zshrc"
-grep -qxF "$rcLine" "$rcFile" || echo -e "$rcLine" >>"$rcFile"
+source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export DOTNET_ROOT=\"\$HOME/.asdf/installs/dotnet-core/$preview\""
+# shellcheck source=/dev/null
+source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "$HOME/.asdf/plugins/dotnet-core/set-dotnet-home.bash"
 # Setup dotnet workloads
 dotnet workload install --include-previews wasi-experimental
 # Clean, repair, and update
