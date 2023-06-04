@@ -2,6 +2,7 @@
 # init
 set -ex
 USERNAME=${USERNAME:-$(whoami)}
+echo $USERNAME
 # Disable needing password for sudo
 # shellcheck source=/dev/null
 file="/etc/sudoers.d/$USERNAME"
