@@ -6,7 +6,7 @@
   updaterc() { local line="$1"; eval "$line"; echo "Updating ~/.bashrc and ~/.zshrc..."; rcs=("$HOME/.bashrc" "$HOME/.zshrc"); for rc in "${rcs[@]}"; do if [[ "$(cat "$rc")" != *"$line"* ]]; then echo "$line" >> "$rc"; fi; done }
 # Setup nvm
   updaterc 'export NVM_SYMLINK_CURRENT="true"'
-  curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/master/install.sh | bash
+  PROFILE=/dev/null curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/master/install.sh | bash
   # shellcheck disable=SC2016
   updaterc 'export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"'
   # shellcheck disable=SC2016
