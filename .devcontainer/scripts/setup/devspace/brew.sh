@@ -43,7 +43,7 @@ if [ "$os" == "Linux" ]; then
   brew link --force --overwrite openssl@3
 fi
 
-brew link --force --overwrite postgresql@15
+brew link --force --overwrite python@3.11 postgresql@15
 # shellcheck source=/dev/null
 source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "[[ -r \"$HOMEBREW_PREFIX/etc/profile.d/bash_completion.sh\" ]] && source \"$HOMEBREW_PREFIX/etc/profile.d/bash_completion.sh\"" "$HOME/.bashrc"
 # shellcheck source=/dev/null
