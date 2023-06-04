@@ -82,7 +82,6 @@
   ],
   "postCreateCommand": [
     "/bin/zsh",
-    "-l",
     "-c",
     "./run events post-create"
   ],
