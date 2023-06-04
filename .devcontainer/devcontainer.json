@@ -188,7 +188,8 @@
         "Fudge.auto-using",
         "adrianwilczynski.namespace",
         "josefpihrt-vscode.roslynator",
-        "SonarSource.sonarlint-vscode"
+        "SonarSource.sonarlint-vscode",
+        "foxundermoon.shell-format"
       ]
     }
   },
