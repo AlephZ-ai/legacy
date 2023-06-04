@@ -20,6 +20,9 @@
 # Setup nvm
   # shellcheck source=/dev/null
   source "$DEVCONTAINER_SCRIPTS_ROOT/setup/devspace/nvm.sh"
+# Update adsf
+  # shellcheck source=/dev/null
+  source "$DEVCONTAINER_SCRIPTS_ROOT/setup/devspace/asdf.sh"
 # Setup dotnet
   # shellcheck source=/dev/null
   source "$DEVCONTAINER_SCRIPTS_ROOT/setup/devspace/dotnet.sh"

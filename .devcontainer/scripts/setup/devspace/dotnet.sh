@@ -8,17 +8,6 @@
   dotnet_latest_major_global='{ "sdk": { "rollForward": "latestmajor" } }'
   updaterc 'export DOTNET_ROLL_FORWARD=LatestMajor'
   echo "$dotnet_latest_major_global" > "$HOME/global.json"
-  asdf plugin-add dotnet-core https://github.com/emersonsoares/asdf-dotnet-core.git || true
-  asdf plugin update --all
-  preview="$(asdf list all dotnet-core 8)"
-  current="$(asdf list all dotnet-core 7)"
-  lts="$(asdf list all dotnet-core 6)"
-  asdf install dotnet-core "$preview"
-  asdf install dotnet-core "$current"
-  asdf install dotnet-core "$lts"
-  asdf global dotnet-core "$preview"
-  asdf reshim
-  asdf info
   # Update rc files
     root="\"\$HOME/.asdf/installs/dotnet-core/$preview\""
     cmd="export DOTNET_ROOT=$root"
