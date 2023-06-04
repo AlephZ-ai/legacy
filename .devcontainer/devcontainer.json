@@ -69,24 +69,24 @@
     ".devcontainer/init"
   ],
   "updateContentCommand": [
-    "/bin/zsh",
+    "zsh",
     "-l",
     "-c",
     "./run events update-content"
   ],
   "onCreateCommand": [
-    "/bin/zsh",
+    "zsh",
     "-l",
     "-c",
     "./run events on-create"
   ],
   "postCreateCommand": [
-    "/bin/zsh",
+    "zsh",
     "-c",
-    "./run events post-create"
+    "unset PS1; export NONINTERACTIVE=1; export DEBIAN_FRONTEND=noninteractive; ./run events post-create"
   ],
   "postStartCommand": [
-    "/bin/zsh",
+    "zsh",
     "-l",
     "-c",
     "./run events post-start"
