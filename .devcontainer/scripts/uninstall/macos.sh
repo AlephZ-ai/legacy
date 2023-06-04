@@ -1,4 +1,4 @@
-#!/usr/bin/env zsh
+#!/bin/zsh
 # shellcheck shell=bash
 set -ex
 unsafe_level="$1"
