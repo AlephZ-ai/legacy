@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+# shellcheck shell=bash
 set -ex
 git update-index --add --chmod=+x "$DEVCONTAINER_FEATURES_PROJECT_ROOT/run"
 chmod +x "$DEVCONTAINER_FEATURES_PROJECT_ROOT/run"

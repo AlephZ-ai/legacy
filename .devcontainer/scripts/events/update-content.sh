@@ -3,5 +3,6 @@
 set -ex
 rm -f nohup.out
 rm -f gcm-diagnose.log
-"$DEVCONTAINER_FEATURES_PROJECT_ROOT/run" setup devspace
+# shellcheck source=/dev/null
+source "$DEVCONTAINER_FEATURES_PROJECT_ROOT/run" setup devspace
 echo "Press Ctrl+Shift+~ to open a terminal in the current dev container"

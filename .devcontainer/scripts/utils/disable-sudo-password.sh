@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+# shellcheck shell=bash
 # init
   set -ex
   USERNAME=${USERNAME:-$(whoami)}

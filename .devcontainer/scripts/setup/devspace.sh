@@ -1,10 +1,10 @@
-#!/usr/bin/env bash
+#!/usr/bin/env zsh
 #shellcheck shell=bash
 # init
   set -ex
   updaterc() { line="$1"; eval "$line"; echo "Updating ~/.bashrc and ~/.zshrc..."; rcs=("$HOME/.bashrc" "$HOME/.zshrc"); for rc in "${rcs[@]}"; do if [[ "$(cat "$rc")" != *"$line"* ]]; then echo "$line" >> "$rc"; fi; done }
   # shellcheck source=/dev/null
-  source "$HOME/.bashrc"
+  source "$HOME/.zshrc"
 # Test all tools are installed
   docker --version
   docker-compose --version

@@ -22,7 +22,9 @@
   # shellcheck source=/dev/null
   source "$DEVCONTAINER_SCRIPTS_ROOT/setup/devspace/post-build-user.sh"
 # Continue with devspace setup
-  "$DEVCONTAINER_SCRIPTS_ROOT/setup/devspace.sh"
+  zsh -l -c "$DEVCONTAINER_SCRIPTS_ROOT/setup/devspace.sh"
+  # shellcheck source=/dev/null
+  source "$HOME/.bashrc"
 # Login to GitHub and Docker if not in WSL
   if ! uname -r | grep -q microsoft; then
     # shellcheck source=/dev/null
