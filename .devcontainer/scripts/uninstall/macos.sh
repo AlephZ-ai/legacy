@@ -1,5 +1,7 @@
-#!/usr/bin/env bash
+#!/usr/bin/env zsh
+# shellcheck shell=bash
 unsafe="$1"
+brew uninstall --force --ignore-dependencies bash
 "$DEVCONTAINER_SCRIPTS_ROOT/uninstall/brew.sh"
 sudo rm -rf "/Users/$(whoami)/Library/Caches/Homebrew/"
 sudo rm -rf "/Users/$(whoami)/Library/Logs/Homebrew/"

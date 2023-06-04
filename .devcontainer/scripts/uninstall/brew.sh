@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 "$DEVCONTAINER_SCRIPTS_ROOT/uninstall/brew/brews.sh"
 NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/uninstall.sh)"
 sudo rm -rf "$HOMEBREW_PREFIX/Caskroom"
