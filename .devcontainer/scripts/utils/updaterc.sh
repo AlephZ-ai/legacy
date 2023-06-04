@@ -8,6 +8,7 @@ split_string() {
 cmd="$1"
 if [[ "$2" == "sudo" ]]; then
   rcs=("/etc/bash.bashrc" "/etc/zsh/zshrc")
+  cmd="sudo $cmd"
 elif [[ -z "$2" ]]; then
   rcs=("$HOME/.bashrc" "$HOME/.zshrc")
 else
