@@ -18,5 +18,5 @@ while ! (
     jupyterlab_widgets jupyterlab-commands jupyterlab_code_formatter jupyterlab-black jupyterlab-requirements \
     jupyterlab-sparksql jupyterlab-drawio jupyterlab-powerpoint jupyterlab-github jupyterlab-flake8 jupyterlab-lsp \
     jupyterlab-graph-lsp jupyterlab-telemetry jupyterlab-kernelspy jupyterlab-system-monitor \
-    jupyterlab-topbar jupyterlab-quickopen jupyter_contrib_core jupyter-contrib-nbextensions
+    jupyterlab-topbar jupyterlab-quickopen jupyter_contrib_core jupyter-contrib-nbextensions cataclysm
 ); do echo "Retrying"; done
