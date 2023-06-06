@@ -1,7 +1,7 @@
 #!/bin/zsh
 #shellcheck shell=bash
 # init
-set -ex
+set -e
 # shellcheck source=/dev/null
 source "$HOME/.zshrc"
 # Disable needing password for sudo

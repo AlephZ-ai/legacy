@@ -1,18 +1,21 @@
 #!/usr/bin/env bash
 # init
-set -ex
+set -e
 # shellcheck source=/dev/null
 source "$HOME/.bashrc"
 # Setup nvm
 # shellcheck source=/dev/null
 source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'export NVM_SYMLINK_CURRENT="true"'
-PROFILE=/dev/null curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/master/install.sh | bash
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/master/install.sh | bash
 # shellcheck source=/dev/null
 # shellcheck disable=SC2016
 source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"'
 # shellcheck source=/dev/null
 # shellcheck disable=SC2016
-source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" '[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"'
+source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" '[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm'
+# shellcheck source=/dev/null
+# shellcheck disable=SC2016
+source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" '[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion'
 # Create default package.json
 package_json=package.json
 default_package_json='{ "name": "devspace" }'
@@ -21,7 +24,7 @@ echo "$default_package_json" | sudo tee $package_json
 nodes=('node' '--lts')
 packages=('npm-check-updates' 'corepack' '@npmcli/fs' '@devcontainers/cli' 'dotenv-cli' 'typescript')
 for node in "${nodes[@]}"; do
-  nvm install "$node" || true
+  nvm install "$node"
   nvm use "$node"
   node --version
   npm update -g npm

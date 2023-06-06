@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # init
-set -ex
+set -e
 # Run base ubuntu setup
 # shellcheck source=/dev/null
 source "$DEVCONTAINER_SCRIPTS_ROOT/setup/ubuntu.sh"

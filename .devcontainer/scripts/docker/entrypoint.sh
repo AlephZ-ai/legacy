@@ -1,3 +1,3 @@
 #shellcheck shell=bash
-set -ex
+set -e
 exec "$@"

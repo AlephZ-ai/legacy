@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-set -ex
+set -e
 echo -e "--- file: $DEVCONTAINER_FEATURES_PROJECT_ROOT/run ---"
 cat "$DEVCONTAINER_FEATURES_PROJECT_ROOT/run"
 echo -e "--- file: $DEVCONTAINER_FEATURES_PROJECT_ROOT/.devcontainer/init ---"

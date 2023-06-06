@@ -1,7 +1,8 @@
 #!/bin/zsh
 # shellcheck shell=bash
-set -ex
+set -e
 unsafe_level="$1"
+"$DEVCONTAINER_SCRIPTS_ROOT/uninstall/nvm.sh"
 if brew --version &>/dev/null; then
   brew uninstall --force --ignore-dependencies bash
   "$DEVCONTAINER_SCRIPTS_ROOT/uninstall/brew.sh"

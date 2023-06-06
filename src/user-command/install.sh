@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #shellcheck disable=SC2086
-set -exx
+set -ex
 
 USERNAME="${USERNAME:-"automatic"}"
 COMMAND="${COMMAND:-}"

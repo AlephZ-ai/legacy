@@ -19,7 +19,9 @@ services:
       dockerfile: Dockerfile
       args:
         # https://hub.docker.com/r/nvidia/cuda
-        IMAGE: cuda:12.1.1-cudnn8-devel-ubuntu22.04
+        # https://catalog.ngc.nvidia.com/orgs/nvidia/containers/cuda
+        IMAGE: nvcr.io/nvidia/cuda:11.8.0-cudnn8-devel-ubuntu22.04
+        #IMAGE: nvcr.io/nvidia/merlin/merlin-tensorflow
     deploy:
       resources:
         reservations:

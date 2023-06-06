@@ -1,7 +1,7 @@
 #!/usr/bin/env zsh
 #shellcheck shell=bash
 # init
-set -ex
+set -e
 # shellcheck source=/dev/null
 source "$HOME/.zshrc"
 # Test all tools are installed

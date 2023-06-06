@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # init
-set -ex
+set -e
 # shellcheck source=/dev/null
 source "$HOME/.bashrc"
 # Setup dotnet

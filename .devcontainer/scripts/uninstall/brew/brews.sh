@@ -1,5 +1,5 @@
 #!/bin/bash
-set -ex
+set -e
 brew uninstall --force --ignore-dependencies pycairo py3cairo pygobject3
 "$DEVCONTAINER_SCRIPTS_ROOT/uninstall/pip/packages.sh"
 "$DEVCONTAINER_SCRIPTS_ROOT/uninstall/pip/package-cache.sh"

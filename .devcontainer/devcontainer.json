@@ -12,7 +12,8 @@
   "capAdd": [
     "SYS_ADMIN",
     "DAC_READ_SEARCH",
-    "SYS_PTRACE"
+    "SYS_PTRACE",
+    "SYS_NICE"
   ],
   "securityOpt": [
     "seccomp=unconfined"

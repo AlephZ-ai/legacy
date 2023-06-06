@@ -1,6 +1,6 @@
 # shellcheck shell=bash
 # init
-set -ex
+set -e
 USERNAME=${USERNAME:-$(whoami)}
 # Disable needing password for sudo
 # shellcheck source=/dev/null

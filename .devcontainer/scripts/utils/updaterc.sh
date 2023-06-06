@@ -1,19 +1,5 @@
 # shellcheck shell=bash
-set -ex
-
-split_string() {
-  local string="$1"
-  local delimiter="$2"
-
-  while [[ "$string" ]]; do
-    echo "${string%%"$delimiter"*}"
-    if [[ "$string" == *"$delimiter"* ]]; then
-      string="${string#*"${delimiter}"}"
-    else
-      break
-    fi
-  done
-}
+set -e
 
 updaterc() {
   local cmd="$1"
@@ -65,13 +51,14 @@ if [[ "${cmd_parts[0]}" = 'sudo' ]]; then
 fi
 
 rcs=()
-if $sudo && [[ "$files" = "$defaultFiles" ]] || [[ $(id -u) -eq 0 ]]; then
+if $sudo || [[ $(id -u) -eq 0 ]] && [[ "$files" = "$defaultFiles" ]]; then
   rcs=("/etc/bash.bashrc" "/etc/zsh/zshrc")
 else
-  IFS=$';' read -ra rcs <<<"$(split_string "$files" ";")"
+  IFS=';' read -ra rcs <<<"$files"
 fi
 
 eval "$cmd" &>/dev/null || true
-for rc in "${rcs[@]}"; do
+# shellcheck disable=SC2068
+for rc in ${rcs[@]}; do
   updaterc "$cmd" "$rc" "$sudo"
 done
