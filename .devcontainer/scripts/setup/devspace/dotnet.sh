@@ -40,7 +40,7 @@ tools=('powershell' 'git-credential-manager' 'mlnet' 'microsoft.quantum.iqsharp'
   'dotnet-gcdump' 'dotnet-retire' 'dotnet-trace' 'dotnet-counters' 'dotnet-dump' 'dotnet-symbol'
   'dotnet-monitor' 'dotnet-sos' 'dotnet-sql-cache' 'dotnet-config' 'dotnet-grpc'
   'dotnet-dev-certs' 'dotnet-user-secrets' 'dotnet-watch' 'bundlerminifier.core.tool' 'amazon.lambda.tools'
-  'dotnet-serve' 'dotnet-xdt' 'xunit.cli' 'nUnit.consolerunner.tool')
+  'dotnet-serve' 'dotnet-xdt' 'xunit-cli' 'nunit.consolerunner.netcore' 'nunit.runner' 'nunitreporter')
 # shellcheck disable=SC2143
 for tool in "${tools[@]}"; do
   installed_version=$(dotnet tool list -g | awk -v tool="$tool" '$1 == tool { print $2 }')
