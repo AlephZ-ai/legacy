@@ -23,6 +23,11 @@ dotnet workload clean
 dotnet workload update
 dotnet workload repair
 # Setup dotnet tools
+# shellcheck source=/dev/null
+# shellcheck disable=SC2016
+source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'PATH="$HOME/.dotnet/tools:$PATH"'
+mkdir -p "$HOME/.dotnet/tools"
+echo "$dotnet_latest_major_global" >"$HOME/.dotnet/tools/global.json"
 tools=('powershell' 'git-credential-manager' 'mlnet' 'Microsoft.Quantum.IQSharp' 'dotnet-ef' 'dotnet-try' 'cake.tool'
   'Microsoft.dotnet-httprepl' 'paket' 'BenchmarkDotNet.Tool' 'flubu' 'dotnet-gitversion' 'minver-cli' 'coverlet.console'
   'Scripty' 'microsoft.tye' 'dotnet-fdos' 'sourcelink' 'swashbuckle.aspnetcore.cli' 'Wyam.Tool' 'nbgv' 't-rex'
@@ -35,8 +40,14 @@ tools=('powershell' 'git-credential-manager' 'mlnet' 'Microsoft.Quantum.IQSharp'
   'dotnet-list-reference' 'dotnet-restore' 'dotnet-build' 'dotnet-run' 'dotnet-clean' 'dotnet-sln' 'dotnet-vstest'
   'dotnet-bundler' 'dotnet-lambda' 'dotnet-serve' 'dotnet-xdt' 'xunit.cli' 'NUnit.ConsoleRunner.Tool')
 # shellcheck disable=SC2143
-for tool in "${tools[@]}"; do if [ -z "$(dotnet tool list -g | grep -q "$tool")" ]; then dotnet tool update -g "$tool"; else dotnet tool install -g "$tool"; fi; done
-# shellcheck source=/dev/null
-# shellcheck disable=SC2016
-source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'PATH="$HOME/.dotnet/tools:$PATH"'
-echo "$dotnet_latest_major_global" >"$HOME/.dotnet/tools/global.json"
+for tool in "${tools[@]}"; do
+  installed_version=$(dotnet tool list -g | awk -v tool="$tool" '$1 == tool { print $2 }')
+  latest_version=$(dotnet tool search "$tool" --prerelease | grep "$tool" | awk '{print $2}')
+  if [[ -z "$installed_version" ]]; then
+    echo "Installing $tool"
+    dotnet tool install -g "$tool"
+  elif [[ "$installed_version" != "$latest_version" ]]; then
+    echo "Updating $tool from version $installed_version to version $latest_version"
+    dotnet tool update -g "$tool"
+  fi
+done
