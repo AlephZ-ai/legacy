@@ -23,7 +23,12 @@ default_package_json='{ "name": "devspace" }'
 echo "$default_package_json" | sudo tee $package_json
 # Install Node.js latest and lts
 nodes=('node' '--lts' 'node')
-packages=('npm-check-updates' 'corepack' '@npmcli/fs' '@devcontainers/cli' 'dotenv-cli' 'typescript' 'azure-functions-core-tools@3' 'nodemon')
+packages=('npm' 'npx' 'npm-check-updates' 'corepack' '@npmcli/fs' '@devcontainers/cli' 'dotenv-cli' 'typescript' 'tsc'
+  'azure-functions-core-tools@3' 'nodemon' 'yarn' 'grunt'' gulp' 'webpack' 'bower' 'create-react-app' 'express'
+  'vue-cli' 'angular-cli' 'react-native-cli' 'babel-cli' 'gulp-cli' 'webpack-cli' 'sequelize-cli' 'generator-angular'
+  'mocha' 'eslint' 'jshint' 'standard' 'tslint' 'pm2' 'cordova' 'ionic' 'karma' 'browserify' 'rollup' 'less' 'sass'
+  'prettier' 'http-server' 'serve' 'forever' 'concurrently' 'cross-env' 'newman' 'lerna' 'yeoman' 'knex' 'husky'
+  'commitizen' 'ava' 'jest' 'storybook' 'apidoc' 'coffeescript' 'node-gyp' 'node-pre-gyp' 'node-sass')
 for node in "${nodes[@]}"; do
   nvm install "$node"
   nvm use "$node"

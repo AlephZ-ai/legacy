@@ -17,8 +17,7 @@ source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export DOTNET_ROOT=\"\$HO
 source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "$HOME/.asdf/plugins/dotnet-core/set-dotnet-home.bash"
 # Setup dotnet workloads
 dotnet workload install --include-previews wasm-tools wasm-tools-net6 wasi-experimental android ios maccatalyst macos \
-  maui maui-android maui-desktop maui-ios maui-maccatalyst maui-mobile maui-tizen maui-windows runtimes-windows \
-  runtimes-windows-net6 tvos
+  maui maui-android maui-desktop maui-ios maui-maccatalyst maui-mobile maui-tizen tvos
 # Clean, repair, and update
 dotnet workload clean
 dotnet workload update
