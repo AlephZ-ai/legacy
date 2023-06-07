@@ -23,7 +23,7 @@ default_package_json='{ "name": "devspace" }'
 echo "$default_package_json" | sudo tee $package_json
 # Install Node.js latest and lts
 nodes=('node' '--lts' 'node')
-packages=('npm-check-updates' 'corepack' '@npmcli/fs' '@devcontainers/cli' 'dotenv-cli' 'typescript')
+packages=('npm-check-updates' 'corepack' '@npmcli/fs' '@devcontainers/cli' 'dotenv-cli' 'typescript' 'azure-functions-core-tools@3')
 for node in "${nodes[@]}"; do
   nvm install "$node"
   nvm use "$node"

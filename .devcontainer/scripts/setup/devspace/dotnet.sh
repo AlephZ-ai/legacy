@@ -22,7 +22,17 @@ dotnet workload clean
 dotnet workload update
 dotnet workload repair
 # Setup dotnet tools
-tools=('powershell' 'git-credential-manager' 'mlnet' 'Microsoft.Quantum.IQSharp')
+tools=('powershell' 'git-credential-manager' 'mlnet' 'Microsoft.Quantum.IQSharp' 'dotnet-ef' 'dotnet-try' 'dotnet-cake'
+  'Microsoft.dotnet-httprepl' 'paket' 'BenchmarkDotNet.Tool' 'flubu' 'dotnet-gitversion' 'minver-cli' 'coverlet.console'
+  'Scripty' 'microsoft.tye' 'dotnet-fdos' 'sourcelink' 'swashbuckle.aspnetcore.cli' 'Wyam.Tool' 'nbgv' 't-rex'
+  'dotnet-bump' 'sharpen' 'dotnet-script' 'dotnet-interactive' 'dotnet-reportgenerator-globaltool' 'dotnet-outdated'
+  'dotnet-depends' 'dotnet-sonarscanner' 'dotnet-format' 'dotnet-templating' 'dotnet-gcdump' 'dotnet-gcdump-analyzer'
+  'dotnet-retire' 'dotnet-trace' 'dotnet-counters' 'dotnet-dump' 'dotnet-symbol' 'dotnet-monitor' 'dotnet-sos'
+  'dotnet-sql-cache' 'dotnet-apidoc' 'dotnet-config' 'dotnet-credentials' 'dotnet-grpc' 'dotnet-dev-certs'
+  'dotnet-user-secrets' 'dotnet-watch' 'dotnet-new' 'dotnet-test' 'dotnet-publish' 'dotnet-pack' 'dotnet-nuget'
+  'dotnet-add-package' 'dotnet-add-reference' 'dotnet-remove-package' 'dotnet-remove-reference' 'dotnet-list-package'
+  'dotnet-list-reference' 'dotnet-restore' 'dotnet-build' 'dotnet-run' 'dotnet-clean' 'dotnet-sln' 'dotnet-vstest'
+  'dotnet-bundler' 'dotnet-lambda' 'dotnet-serve' 'dotnet-xdt' 'xunit.cli' 'NUnit.ConsoleRunner.Tool')
 # shellcheck disable=SC2143
 for tool in "${tools[@]}"; do if [ -z "$(dotnet tool list -g | grep -q "$tool")" ]; then dotnet tool update -g "$tool"; else dotnet tool install -g "$tool"; fi; done
 # shellcheck source=/dev/null
