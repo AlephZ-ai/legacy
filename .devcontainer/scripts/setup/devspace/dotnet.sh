@@ -24,7 +24,7 @@ dotnet workload clean
 dotnet workload update
 dotnet workload repair
 # Setup dotnet tools
-tools=('powershell' 'git-credential-manager' 'mlnet' 'Microsoft.Quantum.IQSharp' 'dotnet-ef' 'dotnet-try' 'dotnet-cake'
+tools=('powershell' 'git-credential-manager' 'mlnet' 'Microsoft.Quantum.IQSharp' 'dotnet-ef' 'dotnet-try' 'cake.tool'
   'Microsoft.dotnet-httprepl' 'paket' 'BenchmarkDotNet.Tool' 'flubu' 'dotnet-gitversion' 'minver-cli' 'coverlet.console'
   'Scripty' 'microsoft.tye' 'dotnet-fdos' 'sourcelink' 'swashbuckle.aspnetcore.cli' 'Wyam.Tool' 'nbgv' 't-rex'
   'dotnet-bump' 'sharpen' 'dotnet-script' 'dotnet-interactive' 'dotnet-reportgenerator-globaltool' 'dotnet-outdated'
