@@ -35,7 +35,7 @@ echo "$dotnet_latest_major_global" >"$HOME/.dotnet/tools/preview/global.json"
 tools=('powershell' 'git-credential-manager' 'mlnet' 'microsoft.quantum.iqsharp' 'dotnet-ef' 'cake.tool'
   'microsoft.dotnet-httprepl' 'paket' 'benchmarkdotnet.tool' 'gitversion.tool' 'minver-cli' 'coverlet.console'
   'microsoft.tye' 'sourcelink' 'swashbuckle.aspnetcore.cli' 'wyam.tool' 'nbgv' 't-rex' 'microsoft.dotnet-try'
-  'dotnet-script' 'microsoft.dotnet-interactive' 'dotnet-reportgenerator-globaltool' 'dotnet-outdated'
+  'dotnet-script' 'microsoft.dotnet-interactive' 'dotnet-reportgenerator-globaltool' 'dotnet-outdated-tool'
   'dotnet-depends' 'dotnet-sonarscanner' 'dotnet-format' 'dotnet-templating' 'dotnet-gcdump' 'dotnet-gcdump-analyzer'
   'dotnet-retire' 'dotnet-trace' 'dotnet-counters' 'dotnet-dump' 'dotnet-symbol' 'dotnet-monitor' 'dotnet-sos'
   'dotnet-sql-cache' 'dotnet-apidoc' 'dotnet-config' 'dotnet-credentials' 'dotnet-grpc' 'dotnet-dev-certs'
