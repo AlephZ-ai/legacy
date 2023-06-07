@@ -59,10 +59,10 @@ for tool in "${tools[@]}"; do
 
   if [ "$installed_prerelease_version" != "$latest_prerelease_version" ]; then
     if [[ -z "$installed_prerelease_version" ]]; then
-      echo "Installing $tool"
+      echo "Installing prerelease $tool"
       dotnet tool install --tool-path "$HOME/.dotnet/tools/preview" "$tool" --version "$latest_prerelease_version"
     elif [[ "$installed_prerelease_version" != "$latest_prerelease_version" ]]; then
-      echo "Updating $tool from version $installed_prerelease_version to version $latest_prerelease_version"
+      echo "Updating $tool from version $installed_prerelease_version to prerelease $latest_prerelease_version"
       dotnet tool update --tool-path "$HOME/.dotnet/tools/preview" "$tool" --version "$latest_prerelease_version"
     fi
   fi
