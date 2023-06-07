@@ -35,14 +35,12 @@ echo "$dotnet_latest_major_global" >"$HOME/.dotnet/tools/preview/global.json"
 tools=('powershell' 'git-credential-manager' 'mlnet' 'microsoft.quantum.iqsharp' 'dotnet-ef' 'cake.tool'
   'microsoft.dotnet-httprepl' 'paket' 'benchmarkdotnet.tool' 'gitversion.tool' 'minver-cli' 'coverlet.console'
   'microsoft.tye' 'sourcelink' 'swashbuckle.aspnetcore.cli' 'wyam.tool' 'nbgv' 't-rex' 'microsoft.dotnet-try'
-  'dotnet-script' 'microsoft.dotnet-interactive' 'dotnet-reportgenerator-globaltool' 'dotnet-outdated-tool'
-  'dotnet-depends' 'dotnet-sonarscanner' 'dotnet-format' 'dotnet-templating' 'dotnet-gcdump' 'dotnet-gcdump-analyzer'
-  'dotnet-retire' 'dotnet-trace' 'dotnet-counters' 'dotnet-dump' 'dotnet-symbol' 'dotnet-monitor' 'dotnet-sos'
-  'dotnet-sql-cache' 'dotnet-apidoc' 'dotnet-config' 'dotnet-credentials' 'dotnet-grpc' 'dotnet-dev-certs'
-  'dotnet-user-secrets' 'dotnet-watch' 'dotnet-new' 'dotnet-test' 'dotnet-publish' 'dotnet-pack'
-  'dotnet-add-package' 'dotnet-add-reference' 'dotnet-remove-package' 'dotnet-remove-reference' 'dotnet-list-package'
-  'dotnet-list-reference' 'dotnet-restore' 'dotnet-build' 'dotnet-run' 'dotnet-clean' 'dotnet-sln' 'dotnet-vstest'
-  'dotnet-bundler' 'dotnet-lambda' 'dotnet-serve' 'dotnet-xdt' 'xunit.cli' 'nUnit.consolerunner.tool')
+  'dotnet-script' 'microsoft.dotnet-interactive' 'dotnet-reportgenerator-globaltool' 'dotnet-outdated-tool' 'dotnet-depends'
+  'dotnet-sonarscanner' 'dotnet-format' 'dotnet-t4' 'texttemplating.tool' 'dotnet-vstemplate' 'dotnet-codegencs' 'simplet'
+  'dotnet-gcdump' 'dotnet-retire' 'dotnet-trace' 'dotnet-counters' 'dotnet-dump' 'dotnet-symbol'
+  'dotnet-monitor' 'dotnet-sos' 'dotnet-sql-cache' 'dotnet-config' 'dotnet-grpc'
+  'dotnet-dev-certs' 'dotnet-user-secrets' 'dotnet-watch' 'bundlerminifier.core.tool' 'amazon.lambda.tools'
+  'dotnet-serve' 'dotnet-xdt' 'xunit.cli' 'nUnit.consolerunner.tool')
 # shellcheck disable=SC2143
 for tool in "${tools[@]}"; do
   installed_version=$(dotnet tool list -g | awk -v tool="$tool" '$1 == tool { print $2 }')
