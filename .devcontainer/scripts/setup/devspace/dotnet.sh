@@ -28,9 +28,9 @@ dotnet workload repair
 source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'PATH="$HOME/.dotnet/tools:$PATH"'
 mkdir -p "$HOME/.dotnet/tools"
 echo "$dotnet_latest_major_global" >"$HOME/.dotnet/tools/global.json"
-tools=('powershell' 'git-credential-manager' 'mlnet' 'Microsoft.Quantum.IQSharp' 'dotnet-ef' 'dotnet-try' 'cake.tool'
-  'Microsoft.dotnet-httprepl' 'paket' 'BenchmarkDotNet.Tool' 'flubu' 'dotnet-gitversion' 'minver-cli' 'coverlet.console'
-  'Scripty' 'microsoft.tye' 'dotnet-fdos' 'sourcelink' 'swashbuckle.aspnetcore.cli' 'Wyam.Tool' 'nbgv' 't-rex'
+tools=('powershell' 'git-credential-manager' 'mlnet' 'microsoft.quantum.iqsharp' 'dotnet-ef' 'dotnet-try' 'cake.tool'
+  'microsoft.dotnet-httprepl' 'paket' 'benchmarkdotnet.tool' 'flubu' 'dotnet-gitversion' 'minver-cli' 'coverlet.console'
+  'scripty' 'microsoft.tye' 'dotnet-fdos' 'sourcelink' 'swashbuckle.aspnetcore.cli' 'wyam.Tool' 'nbgv' 't-rex'
   'dotnet-bump' 'sharpen' 'dotnet-script' 'dotnet-interactive' 'dotnet-reportgenerator-globaltool' 'dotnet-outdated'
   'dotnet-depends' 'dotnet-sonarscanner' 'dotnet-format' 'dotnet-templating' 'dotnet-gcdump' 'dotnet-gcdump-analyzer'
   'dotnet-retire' 'dotnet-trace' 'dotnet-counters' 'dotnet-dump' 'dotnet-symbol' 'dotnet-monitor' 'dotnet-sos'
@@ -38,11 +38,11 @@ tools=('powershell' 'git-credential-manager' 'mlnet' 'Microsoft.Quantum.IQSharp'
   'dotnet-user-secrets' 'dotnet-watch' 'dotnet-new' 'dotnet-test' 'dotnet-publish' 'dotnet-pack' 'dotnet-nuget'
   'dotnet-add-package' 'dotnet-add-reference' 'dotnet-remove-package' 'dotnet-remove-reference' 'dotnet-list-package'
   'dotnet-list-reference' 'dotnet-restore' 'dotnet-build' 'dotnet-run' 'dotnet-clean' 'dotnet-sln' 'dotnet-vstest'
-  'dotnet-bundler' 'dotnet-lambda' 'dotnet-serve' 'dotnet-xdt' 'xunit.cli' 'NUnit.ConsoleRunner.Tool')
+  'dotnet-bundler' 'dotnet-lambda' 'dotnet-serve' 'dotnet-xdt' 'xunit.cli' 'nUnit.consolerunner.tool')
 # shellcheck disable=SC2143
 for tool in "${tools[@]}"; do
   installed_version=$(dotnet tool list -g | awk -v tool="$tool" '$1 == tool { print $2 }')
-  latest_version=$(dotnet tool search "$tool" --prerelease | grep "$tool" | awk '{print $2}')
+  latest_version=$(dotnet tool search "$tool" --prerelease | grep -w "$tool " | awk '{print $2}')
   if [[ -z "$installed_version" ]]; then
     echo "Installing $tool"
     dotnet tool install -g "$tool"

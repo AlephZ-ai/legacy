@@ -15,6 +15,19 @@ updaterc() {
     touch "$rc"
   fi
 
+  if [[ -n "$cmd" ]]; then
+    # Remove duplicates with awk
+    # shellcheck disable=SC2016
+    seen='!seen[$0]++'
+    if $sudo; then
+      sudo awk "$seen" "$rc" | sudo tee "/tmp/rc_tmp" >/dev/null
+      sudo mv "/tmp/rc_tmp" "$rc"
+    else
+      awk "$seen" "$rc" >"/tmp/rc_tmp"
+      mv "/tmp/rc_tmp" "$rc"
+    fi
+  fi
+
   if [[ -n "$prefix" ]]; then
     if $sudo; then
       sudo awk -v p="$prefix" -v c="$cmd" "$template" "$rc" | sudo tee "/tmp/rc_tmp" >/dev/null

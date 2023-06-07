@@ -7,9 +7,14 @@ source "$HOME/.bashrc"
 os=$(uname -s)
 if [ "$os" = "Linux" ]; then
   # Install Miniconda
-  # TODO: Get Latest
-  bash -c "$(curl -fsSL https://repo.anaconda.com/miniconda/Miniconda3-py310_23.3.1-0-Linux-x86_64.sh)"
+  MINICONDA_VERSION=$(wget -qO- https://repo.anaconda.com/miniconda/ | grep -oP 'Miniconda3[^"]*Linux-x86_64.sh' | sort -V | tail -n 1)
+  MINICONDA_INSTALLER_LINK="https://repo.anaconda.com/miniconda/$MINICONDA_VERSION"
+  echo "Installing $MINICONDA_INSTALLER_LINK"
+  bash -c "$(curl -fsSL $MINICONDA_INSTALLER_LINK)"
+
   # Install Anaconda
-  # TODO: Get Latest
-  bash -c "$(curl -fsSL https://repo.anaconda.com/archive/Anaconda3-2023.03-1-Linux-x86_64.sh)"
+  ANACONDA_VERSION=$(wget -qO- https://repo.anaconda.com/archive/ | grep -oP 'Anaconda3[^"]*Linux-x86_64.sh' | sort -V | tail -n 1)
+  ANACONDA_INSTALLER_LINK="https://repo.anaconda.com/archive/$ANACONDA_VERSION"
+  echo "Installing $ANACONDA_INSTALLER_LINK"
+  bash -c "$(curl -fsSL $ANACONDA_INSTALLER_LINK)"
 fi
