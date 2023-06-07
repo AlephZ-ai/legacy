@@ -34,8 +34,8 @@ echo "$dotnet_latest_major_global" >"$HOME/.dotnet/tools/global.json"
 echo "$dotnet_latest_major_global" >"$HOME/.dotnet/tools/preview/global.json"
 tools=('powershell' 'git-credential-manager' 'mlnet' 'microsoft.quantum.iqsharp' 'dotnet-ef' 'cake.tool'
   'microsoft.dotnet-httprepl' 'paket' 'benchmarkdotnet.tool' 'gitversion.tool' 'minver-cli' 'coverlet.console'
-  'microsoft.tye' 'sourcelink' 'swashbuckle.aspnetcore.cli' 'wyam.Tool' 'nbgv' 't-rex' 'microsoft.dotnet-try'
-  'sharpen' 'dotnet-script' 'dotnet-interactive' 'dotnet-reportgenerator-globaltool' 'dotnet-outdated'
+  'microsoft.tye' 'sourcelink' 'swashbuckle.aspnetcore.cli' 'wyam.tool' 'nbgv' 't-rex' 'microsoft.dotnet-try'
+  'dotnet-script' 'microsoft.dotnet-interactive' 'dotnet-reportgenerator-globaltool' 'dotnet-outdated'
   'dotnet-depends' 'dotnet-sonarscanner' 'dotnet-format' 'dotnet-templating' 'dotnet-gcdump' 'dotnet-gcdump-analyzer'
   'dotnet-retire' 'dotnet-trace' 'dotnet-counters' 'dotnet-dump' 'dotnet-symbol' 'dotnet-monitor' 'dotnet-sos'
   'dotnet-sql-cache' 'dotnet-apidoc' 'dotnet-config' 'dotnet-credentials' 'dotnet-grpc' 'dotnet-dev-certs'
@@ -49,8 +49,10 @@ for tool in "${tools[@]}"; do
   latest_version=$(dotnet tool search "$tool" | awk -v tool="$tool" '$1 == tool' | awk '{print $2}')
   installed_prerelease_version=$(dotnet tool list --tool-path "$HOME/.dotnet/tools/preview" | awk -v tool="$tool" '$1 == tool { print $2 }')
   latest_prerelease_version=$(dotnet tool search "$tool" --prerelease | awk -v tool="$tool" '$1 == tool' | awk '{print $2}')
+  found=true
   if [[ -z "$latest_version" ]]; then
     echo "Latest version of $tool not found, skipping..."
+    found=false
   else
     if [[ -z "$installed_version" ]]; then
       echo "Installing $tool"
@@ -61,10 +63,12 @@ for tool in "${tools[@]}"; do
     fi
   fi
 
+  found_prerelease=true
   if [[ -z "$latest_prerelease_version" ]]; then
+    found_prerelease=false
     echo "Latest prerelease version of $tool not found, skipping..."
   else
-    if [ "$latest_version" != "$latest_prerelease_version" ] || [ "$installed_prerelease_version" != "$latest_prerelease_version" ]; then
+    if [ "$latest_version" != "$latest_prerelease_version" ] && [ "$installed_prerelease_version" != "$latest_prerelease_version" ]; then
       if [[ -z "$installed_prerelease_version" ]]; then
         echo "Installing prerelease $tool"
         dotnet tool install --tool-path "$HOME/.dotnet/tools/preview" "$tool" --version "$latest_prerelease_version"
@@ -74,4 +78,10 @@ for tool in "${tools[@]}"; do
       fi
     fi
   fi
+
+  if ! $found && ! $found_prerelease; then
+    echo "Error: No versions found for $tool"
+    exit 1
+  fi
+
 done
