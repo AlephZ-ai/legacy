@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# shellcheck shell=bash
 # init
 set -e
 # shellcheck source=/dev/null
@@ -21,7 +22,8 @@ dotnet workload clean
 dotnet workload update
 dotnet workload repair
 # Setup dotnet tools
-tools=('powershell' 'git-credential-manager')
+tools=('powershell' 'git-credential-manager' 'mlnet' 'Microsoft.Quantum.IQSharp')
+# shellcheck disable=SC2143
 for tool in "${tools[@]}"; do if [ -z "$(dotnet tool list -g | grep -q "$tool")" ]; then dotnet tool update -g "$tool"; else dotnet tool install -g "$tool"; fi; done
 # shellcheck source=/dev/null
 # shellcheck disable=SC2016

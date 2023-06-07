@@ -1,9 +1,8 @@
-#!/usr/bin/env zsh
-#shellcheck shell=bash
+#!/usr/bin/env bash
 # init
 set -e
 # shellcheck source=/dev/null
-source "$HOME/.zshrc"
+source "$HOME/.bashrc"
 # Repair and Update if needed
 brew update
 brew tap --repair
@@ -14,7 +13,7 @@ brew upgrade
 brew update --cask
 brew upgrade --cask
 # Install xquartz
-brew install --cask microsoft-openjdk iterm2 microsoft-edge xquartz
+brew install --cask microsoft-openjdk iterm2 microsoft-edge xquartz miniconda anaconda
 # Setup post hombrew packages
 sudo ln -sfn "$HOMEBREW_PREFIX/opt/openjdk/libexec/openjdk.jdk" /Library/Java/JavaVirtualMachines/openjdk.jdk
 sudo ln -sfn "$HOMEBREW_PREFIX/opt/openjdk@8/libexec/openjdk.jdk" /Library/Java/JavaVirtualMachines/openjdk-8.jdk

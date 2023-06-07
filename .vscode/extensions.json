@@ -73,6 +73,12 @@
     "adrianwilczynski.namespace",
     "josefpihrt-vscode.roslynator",
     "sonarsource.sonarlint-vscode",
-    "foxundermoon.shell-format"
+    "foxundermoon.shell-format",
+    "quantum.quantum-devkit-vscode",
+    "ionide.ionide-fsharp",
+    "ms-dotnettools.vscode-dotnet-pack",
+    "formulahendry.dotnet",
+    "pflannery.vscode-versionlens",
+    "mnxn.fsharp-fsl-fsy"
   ]
 }

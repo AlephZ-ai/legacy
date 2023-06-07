@@ -1,11 +1,12 @@
 #!/usr/bin/env bash
+# shellcheck shell=bash
 # init
 set -e
 # shellcheck source=/dev/null
 source "$HOME/.bashrc"
 os=$(uname -s)
 # Make Edge the default browser if installed
-if [ "$os" == "Linux" ]; then
+if [ "$os" = "Linux" ]; then
   browser='/usr/bin/microsoft-edge-stable'
   cmds=("alias xdg-open=$browser" "export BROWSER=$browser")
   # shellcheck disable=SC2068

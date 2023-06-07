@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# shellcheck shell=bash
 # init
 set -e
 # shellcheck source=/dev/null
@@ -9,9 +10,12 @@ asdf plugin update --all
 preview="$(asdf list all dotnet-core 8)"
 current="$(asdf list all dotnet-core 7)"
 lts="$(asdf list all dotnet-core 6)"
-asdf install dotnet-core "$preview"
-asdf install dotnet-core "$current"
-asdf install dotnet-core "$lts"
-asdf global dotnet-core "$preview"
-asdf reshim
-asdf info
+versions=("$preview" "$current" "$lts" "$preview")
+# shellcheck disable=SC2143
+for version in "${versions[@]}"; do
+  asdf install dotnet-core "$version"
+  asdf global dotnet-core "$preview"
+  asdf reshim
+  dotnet --version
+  asdf into
+done

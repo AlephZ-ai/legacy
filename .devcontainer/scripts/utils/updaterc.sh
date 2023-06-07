@@ -1,4 +1,4 @@
-# shellcheck shell=bash
+#!/usr/bin/env bash
 set -e
 
 updaterc() {
@@ -6,7 +6,6 @@ updaterc() {
   local rc="$2"
   local sudo="$3"
 
-  echo "Updating $rc"
   local prefix="${cmd%%=*}="
   # shellcheck disable=SC2016
   local template='!index($0, p) {print $0} index($0, p) {print c}'
@@ -54,6 +53,7 @@ rcs=()
 if $sudo || [[ $(id -u) -eq 0 ]] && [[ "$files" = "$defaultFiles" ]]; then
   rcs=("/etc/bash.bashrc" "/etc/zsh/zshrc")
 else
+  # bash-specific code here
   IFS=';' read -ra rcs <<<"$files"
 fi
 

@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# shellcheck shell=bash
 # init
 set -e
 # desktop-lite fix for versions > 1.2.0

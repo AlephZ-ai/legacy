@@ -6,7 +6,7 @@ dotnet workload update | Write-Host
 dotnet workload repair | Write-Host
 
 # dotnet tools
-$modules = @('powershell', 'git-credential-manager')
+$modules = @('powershell', 'git-credential-manager', 'mlnet')
 foreach ($module in $modules) {
   try {
     dotnet tool install -g "$module" | Write-Host

@@ -7,7 +7,7 @@ USERNAME="${USERNAME:-$(whoami)}"
 os=$(uname -s)
 # Setup ohmyzsh and make zsh default shell
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended || true
-if [ "$os" == "Linux" ]; then
+if [ "$os" = "Linux" ]; then
   sudo chsh "$USERNAME" -s "$(which zsh)"
 fi
 

@@ -1,4 +1,5 @@
-#!/bin/bash
+#!/usr/bin/env bash
+# shellcheck shell=bash
 # init
 set -e
 # shellcheck source=/dev/null
@@ -22,30 +23,28 @@ brew update
 brew tap --repair
 # Install Homebrew packages
 # linux only brews
-if [ "$os" == "Linux" ]; then HOMEBREW_ACCEPT_EULA=Y brew install procps systemd wayland wayland-protocols; fi
+if [ "$os" = "Linux" ]; then HOMEBREW_ACCEPT_EULA=Y brew install procps systemd wayland wayland-protocols; fi
 # These work on all brew platforms
 while ! (
-  sudo echo "cache sudo"
   HOMEBREW_ACCEPT_EULA=Y brew install sevenzip p7zip awk ca-certificates bash zsh oh-my-posh file-formula gnu-sed coreutils grep curl wget bzip2 swig less lesspipe
   HOMEBREW_ACCEPT_EULA=Y brew install zlib zlib-ng buf protobuf grpc dos2unix git git-lfs sigstore/tap/gitsign-credential-cache sigstore/tap/gitsign gh asdf
-  HOMEBREW_ACCEPT_EULA=Y brew install jq moreutils bash-completion@2 gcc make cmake cmake-docs llvm dotnet dotnet@6 mono go setuptools-rust rust python@3.11 nss openssl@3 openssl@1.1
+  HOMEBREW_ACCEPT_EULA=Y brew install jq moreutils bash-completion@2 gcc make cmake cmake-docs z3 llvm dotnet dotnet@6 mono go rust python@3.11 nss openssl@3 openssl@1.1
   HOMEBREW_ACCEPT_EULA=Y brew install openssh age nghttp2 mkcert shellcheck speedtest-cli mono-libgdiplus chezmoi sqlite sqlite-utils postgresql@15 azure-cli awscli
   HOMEBREW_ACCEPT_EULA=Y brew install msodbcsql18 mssql-tools18 gedit kubernetes-cli helm minikube kind k3d argocd derailed/k9s/k9s kustomize skaffold vcluster
   HOMEBREW_ACCEPT_EULA=Y brew install terraform openjdk openjdk@8 openjdk@11 openjdk@17 maven groovy gradle scala sbt yarn pygobject3 gtk+3 gtk+4 libffi libyaml
-  HOMEBREW_ACCEPT_EULA=Y brew install ffmpeg libsndfile libasound2-plugins libasound2-data libasound2 libasound2-dev libasound2-doc libasound2-plugins
-  HOMEBREW_ACCEPT_EULA=Y brew install openmpi
+  HOMEBREW_ACCEPT_EULA=Y brew install ffmpeg libsndfile libsoundio openmpi pyenv pipx
 ); do echo "Retrying"; done
 
 # Upgrade all packages
 brew update
 brew upgrade
 # Setup post hombrew packages
-if [ "$os" == "Linux" ]; then
+if [ "$os" = "Linux" ]; then
   sudo chsh "$USERNAME" -s "$(which zsh)"
   brew link --force --overwrite openssl@3
 fi
 
-brew link --force --overwrite python@3.11 postgresql@15
+brew link --force --overwrite postgresql@15
 # shellcheck source=/dev/null
 source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "[[ -r \"$HOMEBREW_PREFIX/etc/profile.d/bash_completion.sh\" ]] && source \"$HOMEBREW_PREFIX/etc/profile.d/bash_completion.sh\"" "$HOME/.bashrc"
 # shellcheck source=/dev/null
@@ -98,6 +97,10 @@ source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export LDFLAGS=\"-L$HOMEB
 source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export CPPFLAGS=\"-I$HOMEBREW_PREFIX/opt/llvm/include\${CPPFLAGS:+ }\$CPPFLAGS\""
 # shellcheck source=/dev/null
 source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export CPPFLAGS=\"-I$HOMEBREW_PREFIX/opt/openjdk/include\${CPPFLAGS:+ }\$CPPFLAGS\""
+# shellcheck source=/dev/null
+source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export LDFLAGS=\"-L$HOMEBREW_PREFIX/opt/libffi/lib\${LDFLAGS:+ }\$LDFLAGS\""
+# shellcheck source=/dev/null
+source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export CPPFLAGS=\"-I$HOMEBREW_PREFIX/opt/libffi/include\${CPPFLAGS:+ }\$CPPFLAGS\""
 # shellcheck source=/dev/null
 source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export LDFLAGS=\"-L$HOMEBREW_PREFIX/opt/postgresql@15/lib\${LDFLAGS:+ }\$LDFLAGS\""
 # shellcheck source=/dev/null

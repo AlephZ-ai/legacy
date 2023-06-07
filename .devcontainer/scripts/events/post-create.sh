@@ -4,7 +4,7 @@
 source "$HOME/.zshrc"
 rm -f nohup.out
 rm -f gcm-diagnose.log
-if [[ $- == *i* ]]; then
+if [[ $- = *i* ]]; then
   # Interactive commands...
   # Login to GitHub
   # shellcheck source=/dev/null

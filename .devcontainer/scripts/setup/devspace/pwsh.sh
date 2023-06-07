@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# shellcheck shell=bash
 # init
 set -e
 # shellcheck source=/dev/null
