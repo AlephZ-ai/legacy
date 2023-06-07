@@ -16,7 +16,7 @@ source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export DOTNET_ROOT=\"\$HO
 # shellcheck source=/dev/null
 source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "$HOME/.asdf/plugins/dotnet-core/set-dotnet-home.bash"
 # Setup dotnet workloads
-dotnet workload install --include-previews wasm-tools wasm-tools-net6 wasi-experimental android ios maccatalyst macos \
+dotnet workload install wasm-tools wasm-tools-net6 wasi-experimental android ios maccatalyst macos \
   maui maui-android maui-desktop maui-ios maui-maccatalyst maui-mobile maui-tizen tvos
 # Clean, repair, and update
 dotnet workload clean
@@ -26,11 +26,15 @@ dotnet workload repair
 # shellcheck source=/dev/null
 # shellcheck disable=SC2016
 source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'PATH="$HOME/.dotnet/tools:$PATH"'
-mkdir -p "$HOME/.dotnet/tools"
+# shellcheck source=/dev/null
+# shellcheck disable=SC2016
+source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'PATH="$HOME/.dotnet/tools/preview:$PATH"'
+mkdir -p "$HOME/.dotnet/tools/preview"
 echo "$dotnet_latest_major_global" >"$HOME/.dotnet/tools/global.json"
+echo "$dotnet_latest_major_global" >"$HOME/.dotnet/tools/preview/global.json"
 tools=('powershell' 'git-credential-manager' 'mlnet' 'microsoft.quantum.iqsharp' 'dotnet-ef' 'dotnet-try' 'cake.tool'
-  'microsoft.dotnet-httprepl' 'paket' 'benchmarkdotnet.tool' 'flubu' 'dotnet-gitversion' 'minver-cli' 'coverlet.console'
-  'scripty' 'microsoft.tye' 'dotnet-fdos' 'sourcelink' 'swashbuckle.aspnetcore.cli' 'wyam.Tool' 'nbgv' 't-rex'
+  'microsoft.dotnet-httprepl' 'paket' 'benchmarkdotnet.tool' 'gitversion.tool' 'minver-cli' 'coverlet.console'
+  'microsoft.tye' 'dotnet-fdos' 'sourcelink' 'swashbuckle.aspnetcore.cli' 'wyam.Tool' 'nbgv' 't-rex'
   'dotnet-bump' 'sharpen' 'dotnet-script' 'dotnet-interactive' 'dotnet-reportgenerator-globaltool' 'dotnet-outdated'
   'dotnet-depends' 'dotnet-sonarscanner' 'dotnet-format' 'dotnet-templating' 'dotnet-gcdump' 'dotnet-gcdump-analyzer'
   'dotnet-retire' 'dotnet-trace' 'dotnet-counters' 'dotnet-dump' 'dotnet-symbol' 'dotnet-monitor' 'dotnet-sos'
@@ -42,12 +46,24 @@ tools=('powershell' 'git-credential-manager' 'mlnet' 'microsoft.quantum.iqsharp'
 # shellcheck disable=SC2143
 for tool in "${tools[@]}"; do
   installed_version=$(dotnet tool list -g | awk -v tool="$tool" '$1 == tool { print $2 }')
-  latest_version=$(dotnet tool search "$tool" --prerelease | grep -w "$tool " | awk '{print $2}')
+  latest_version=$(dotnet tool search "$tool" | grep -w "$tool " | awk '{print $2}')
+  installed_prerelease_version=$(dotnet tool list --tool-path "$HOME/.dotnet/tools/preview" | awk -v tool="$tool" '$1 == tool { print $2 }')
+  latest_prerelease_version=$(dotnet tool search "$tool" --prerelease | grep -w "$tool " | awk '{print $2}')
   if [[ -z "$installed_version" ]]; then
     echo "Installing $tool"
-    dotnet tool install -g "$tool"
+    dotnet tool install -g "$tool" --version "$latest_version"
   elif [[ "$installed_version" != "$latest_version" ]]; then
     echo "Updating $tool from version $installed_version to version $latest_version"
-    dotnet tool update -g "$tool"
+    dotnet tool update -g "$tool" --version "$latest_version"
+  fi
+
+  if [ "$installed_prerelease_version" != "$latest_prerelease_version" ]; then
+    if [[ -z "$installed_prerelease_version" ]]; then
+      echo "Installing $tool"
+      dotnet tool install --tool-path "$HOME/.dotnet/tools/preview" "$tool" --version "$latest_prerelease_version"
+    elif [[ "$installed_prerelease_version" != "$latest_prerelease_version" ]]; then
+      echo "Updating $tool from version $installed_prerelease_version to version $latest_prerelease_version"
+      dotnet tool update --tool-path "$HOME/.dotnet/tools/preview" "$tool" --version "$latest_prerelease_version"
+    fi
   fi
 done
