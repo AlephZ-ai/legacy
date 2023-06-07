@@ -39,7 +39,7 @@ tools=('powershell' 'git-credential-manager' 'mlnet' 'microsoft.quantum.iqsharp'
   'dotnet-depends' 'dotnet-sonarscanner' 'dotnet-format' 'dotnet-templating' 'dotnet-gcdump' 'dotnet-gcdump-analyzer'
   'dotnet-retire' 'dotnet-trace' 'dotnet-counters' 'dotnet-dump' 'dotnet-symbol' 'dotnet-monitor' 'dotnet-sos'
   'dotnet-sql-cache' 'dotnet-apidoc' 'dotnet-config' 'dotnet-credentials' 'dotnet-grpc' 'dotnet-dev-certs'
-  'dotnet-user-secrets' 'dotnet-watch' 'dotnet-new' 'dotnet-test' 'dotnet-publish' 'dotnet-pack' 'dotnet-nuget'
+  'dotnet-user-secrets' 'dotnet-watch' 'dotnet-new' 'dotnet-test' 'dotnet-publish' 'dotnet-pack'
   'dotnet-add-package' 'dotnet-add-reference' 'dotnet-remove-package' 'dotnet-remove-reference' 'dotnet-list-package'
   'dotnet-list-reference' 'dotnet-restore' 'dotnet-build' 'dotnet-run' 'dotnet-clean' 'dotnet-sln' 'dotnet-vstest'
   'dotnet-bundler' 'dotnet-lambda' 'dotnet-serve' 'dotnet-xdt' 'xunit.cli' 'nUnit.consolerunner.tool')

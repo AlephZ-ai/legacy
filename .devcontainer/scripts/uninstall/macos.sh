@@ -8,9 +8,12 @@ if nvm --version &>/dev/null && npm --version &>/dev/null; then
 fi
 
 if brew --version &>/dev/null; then
-  brew list --cask | xargs brew uninstall --cask --force --ignore-dependencies
   brew uninstall --force --ignore-dependencies bash
   "$DEVCONTAINER_SCRIPTS_ROOT/uninstall/brew.sh"
+fi
+
+if [[ $(brew list --cask &>/dev/null) ]]; then
+  brew list --cask | xargs -I {} brew uninstall --cask "{}"
 fi
 
 # Remove autogenerate section from rc files

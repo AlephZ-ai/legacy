@@ -7,6 +7,8 @@ source "$HOME/.bashrc"
 os=$(uname -s)
 # Setup pip
 PYTHON_VERSION=$(python -c 'import sys; print(f"{sys.version_info.major}.{sys.version_info.minor}")')
+# shellcheck source=/dev/null
+source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'export PIP_NO_CACHE_DIR=false'
 if [ "$os" = "Linux" ]; then
   # shellcheck source=/dev/null
   source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export PATH=\"\$HOME/.local/bin:\$PATH\""
@@ -90,7 +92,8 @@ pip install --no-input --user --upgrade \
   microsoft-bing-websearch microsoft-bing-spellcheck microsoft-bing-videosearch microsoft-bing-imagesearch \
   microsoft-bing-customimagesearch microsoft-bing-visualsearch microsoft-bing-entitysearch microsoft-bing-customwebsearch \
   microsoft-bing-newssearch microsoft-bing-autosuggest google google-cloud google-benchmark
-"$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'no-cache-dir = false' "$HOME/.pip/pip.conf"
+files=("$HOME/.pip/pip.conf" "$HOME/.config/pip/pip.conf")
+for file in "${files[@]}"; do if [ -e "$file" ]; then sed -i '.bak' '/no-cache-dir = .*/d' "$file"; fi; done
 mkdir -p "$HOME/source/repos"
 pushd "$HOME/source/repos"
 rm -rf apex

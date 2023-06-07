@@ -13,7 +13,7 @@ brew upgrade
 brew update --cask
 brew upgrade --cask
 # Install xquartz
-brew install --cask microsoft-openjdk iterm2 microsoft-edge xquartz miniconda anaconda
+brew reinstall --include-test --debug-symbols --force --cask --zap microsoft-openjdk iterm2 microsoft-edge xquartz miniconda anaconda
 # Setup post hombrew packages
 sudo ln -sfn "$HOMEBREW_PREFIX/opt/openjdk/libexec/openjdk.jdk" /Library/Java/JavaVirtualMachines/openjdk.jdk
 sudo ln -sfn "$HOMEBREW_PREFIX/opt/openjdk@8/libexec/openjdk.jdk" /Library/Java/JavaVirtualMachines/openjdk-8.jdk
