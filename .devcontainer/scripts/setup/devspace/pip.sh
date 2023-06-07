@@ -31,7 +31,7 @@ fi
 # https://aka.ms/azsdk/python/all
 # TODO: Check for Python 11 support:
 #   cntk ml-agents espnet2 gym-retro fastchan TensorFlowTTS triton-model-navigator nvidia-pytriton trimm trimm-viz rliable
-#   masl msal-extensions
+#   masl msal-extensions pytest-azurepipelines
 # TODO: Keep a check on huggingface_sb3 it has huggingface-hub pinned to 0.8.1
 # https://github.com/huggingface/huggingface_sb3/issues/27
 # TODO: Keep a check on asteroid and see when it will allow upgrading torchmetrics>=0.11.0, currently torchmetrics<0.8.0
@@ -66,7 +66,7 @@ pip install --no-input --user --upgrade \
   "gymnasium[accept-rom-license,all]" "gym[accept-rom-license,all]==0.26" panda-gym gym-super-mario-bros \
   "gym-minigrid>=1.2.2" flappy-bird-gymnasium "stable-baselines3[extra,tests,docs]>=1.8.0" "stable-baselines[mpi,tests,docs]" "sb3-contrib>=1.8.0" \
   "sample-factory[dev,atari,envpool,mujoco,vizdoom]" "espnet>=202304" "paddlenlp>=2.5.2" \
-  azure-cli azure-identity azure_devtools pytest-azurepipelines \
+  azure-cli azure-identity azure_devtools \
   azureml-responsibleai azureml-dataprep azureml-dataprep-native semantic-kernel \
   batch-inference pytket pennylane qdk "azure-quantum[all]" quantum-viz knack qsharp qsharp-chemistry pytket-qsharp pennylane-qsharp \
   presidio-cli presidio-analyzer presidio-anonymizer presidio-evaluator presidio-image-redactor msticpy msticnb \

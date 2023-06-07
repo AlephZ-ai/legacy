@@ -17,5 +17,5 @@ for version in "${versions[@]}"; do
   asdf global dotnet-core "$preview"
   asdf reshim
   dotnet --version
-  asdf into
+  asdf info
 done
