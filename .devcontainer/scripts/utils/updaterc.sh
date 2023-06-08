@@ -1,88 +1,87 @@
 # shellcheck shell=bash
 # init
 set -euo pipefail
-updaterc() {
-  local cmd="$1"
-  local rc="$2"
-  local sudo="$3"
-  local prefix="${cmd%%=*}="
-  # shellcheck disable=SC2155
-  local var="$(echo "$cmd" | awk -F "=" '{print $1}')"
-  # shellcheck disable=SC2155
-  local update=$(echo "$cmd" | awk -F "=" '{print $2}' | grep -q "\$$var" && echo false || echo true)
-  # shellcheck disable=SC2155
-  local rc_dir="$(dirname "$rc")"
-  if $sudo; then
-    sudo mkdir -p "$rc_dir"
-    sudo touch "$rc"
-  else
-    mkdir -p "$rc_dir"
-    touch "$rc"
-  fi
+zsh_ver=${ZSH_VERSION:-}
+user_files="$HOME/.bashrc;$HOME/.zshrc"
+sudo_files="/etc/bash.bashrc;/etc/zsh/zshrc"
+delimiters=('/' '#' '@' '%' '_' '+' '-' ',')
+toarray() {
+  local resultvar="$1"
+  local input="$2"
+  local delim="${3:-;}"
+  local result=()
+  set -f
+  IFS="$delim"
+  # shellcheck disable=SC2086
+  set -- $input
+  IFS=' '
+  # shellcheck disable=SC2034
+  result=("$@")
+  eval "$resultvar=(\"\${result[@]}\")"
+}
 
-  # Remove duplicates with awk, keep just the first occurrence
-  # shellcheck disable=SC2016
-  local seen='!seen[$0]++'
-  if $sudo; then
-    # shellcheck disable=SC2155
-    local tmp_rc="$(sudo mktemp)"
-    sudo awk "$seen" "$rc" | sudo tee "$tmp_rc" >/dev/null
-    sudo mv "$tmp_rc" "$rc"
-  else
-    # shellcheck disable=SC2155
-    local tmp_rc="$(mktemp)"
-    awk "$seen" "$rc" >"$tmp_rc"
-    mv "$tmp_rc" "$rc"
-  fi
-
+seddelim() {
+  prefix="$1"
+  cmd="$2"
   # Select a delimiter not present in either $cmd or $prefix
-  local delimiters=('/' '#' '@' '%' '_' '+' '-' ',')
-  local delimiter
-  for d in "${delimiters[@]}"; do
-    if [[ "$cmd" != *$d* && "$prefix" != *$d* ]]; then
-      delimiter=$d
+  local delim
+  for d in "${delims[@]}"; do
+    if [[ "$prefix" != *$d* && "$cmd" != *$d* ]]; then
+      delim=$d
       break
     fi
   done
 
-  if [ -z "$delimiter" ]; then
-    echo "No delimiter found for $cmd"
+  if [ -z "$delim" ]; then
+    echo "No delimiter found for prefix: '$prefix'; cmd: '$cmd'"
     exit 1
   fi
 
-  # update var if it exists
-  if $update && [[ -n "$prefix" ]]; then
-    local search="$prefix.*"
-    local replace="$cmd"
-    local sed="s$delimiter^$search$delimiter$replace$delimiter"
-    # echo "sed \"$sed_cmd\" \"$rc\""
-    if $sudo; then
-      sudo sed -i.bak "$sed" "$rc"
-    else
-      sed -i.bak "$sed" "$rc"
-    fi
-  fi
+  echo "$delim"
+}
 
-  # add cmd if it doesn't exist
-  if $sudo; then
-    if ! sudo grep -Fxq "$cmd" "$rc" >/dev/null; then
-      echo -e "$cmd" | sudo tee -a "$rc" >/dev/null
+updaterc() {
+  local cmd="$1"
+  local rc="$2"
+  local sudo="${3:-false}"
+  local prefix="${cmd%%=*}="
+  # shellcheck disable=SC2155
+  local var="$(echo "$prefix" | awk '{print $NF}')"
+  # shellcheck disable=SC2155
+  local update=$(if [ -z "$var" ]; then echo false; else echo true; fi)
+  # shellcheck disable=SC2155
+  local rc_dir="$(dirname "$rc")"
+  run() { if "$sudo"; then sudo "$@"; else "$@"; fi; }
+  run mkdir -p "$rc_dir"
+  run touch "$rc"
+  # Remove duplicates with awk, keep just the first occurrence
+  # shellcheck disable=SC2016
+  local seen='!seen[$0]++'
+  # shellcheck disable=SC2155
+  local tmp_rc="$(run mktemp)"
+  run awk "$seen" "$rc" | run tee "$tmp_rc" >/dev/null
+  run mv "$tmp_rc" "$rc"
+  # Select a delimiter not present in either $cmd or $prefix
+  # shellcheck disable=SC2155
+  local delim=$(seddelim "$prefix" "$cmd")
+  if run grep -Fxq "$cmd" "$rc" >/dev/null; then
+    if $update && [[ -n "$prefix" ]]; then
+      local search="$prefix.*"
+      local replace="$cmd"
+      local sed="s$delim^$search$delim$replace$delim"
+      echo "Updating '$rc' to include '$cmd'"
+      run sed -i.bak "$sed" "$rc"
     fi
   else
-    if ! grep -Fxq "$cmd" "$rc"; then
-      echo -e "$cmd" >>"$rc"
-    fi
+    echo "Adding '$cmd' into '$rc'"
+    echo -e "$cmd" | run tee -a "$rc" >/dev/null
   fi
 }
 
-bash_ver=${BASH_VERSION:-}
-zsh_ver=${ZSH_VERSION:-}
-user_files="$HOME/.bashrc;$HOME/.zshrc"
-sudo_files="/etc/bash.bashrc;/etc/zsh/zshrc"
-sudo=$([[ $(id -u) -eq 0 ]] && echo true || echo false)
-sudo_too=false
 cmd="$1"
 files="${2:-"$user_files"}"
+sudo=$([[ $(id -u) -eq 0 ]] && echo true || echo false)
+sudo_too=false
 if [ "$files" = "user" ]; then
   files="$user_files"
 elif [ "$files" = "sudo" ]; then
@@ -93,41 +92,21 @@ elif [ "$files" = "all" ]; then
   files="$user_files"
 fi
 
-set -f
-# shellcheck disable=SC2086
-set -- $cmd
-# update sudo if needed
 cmd_parts=()
-sudo_index=1
-if [ -n "$zsh_ver" ]; then
-  eval 'cmd_parts=("${(@s/ /)cmd}")'
-elif [ -n "$bash_ver" ]; then
-  sudo_index=0
-  cmd_parts=("$@")
-else
-  echo "Unknown shell: '$0'"
-  exit 1
-fi
-
+toarray cmd_parts "$cmd" " "
+sudo_index=0
+if [ -n "$zsh_ver" ]; then sudo_index=1; fi
 if [[ "${cmd_parts[$sudo_index]}" = 'sudo' ]]; then
   sudo=true
   next_index=$((sudo_index + 1))
   cmd="${cmd_parts[*]:$next_index}"
+  files="$sudo_files"
 fi
 
-# update files if in sudo mode
-if $sudo && [[ "$files" = "$user_files" ]]; then files="$sudo_files"; fi
 rcs=()
-if [ -n "$zsh_ver" ]; then
-  eval 'rcs=("${(@s/;/)files}")'
-elif [ -n "$bash_ver" ]; then
-  IFS=';' read -ra rcs <<<"$files"
-fi
-
-# evaluate $cmd
+toarray rcs "$files"
 eval "$cmd" &>/dev/null || true
 for rc in "${rcs[@]}"; do
-  echo "Updating $rc with $cmd"
   updaterc "$cmd" "$rc" "$sudo"
 done
 
