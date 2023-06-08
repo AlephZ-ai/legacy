@@ -12,6 +12,8 @@ updaterc() {
   local update=$(echo "$cmd" | awk -F "=" '{print $2}' | grep -q "\$$var" && echo false || echo true)
   # shellcheck disable=SC2155
   local rc_dir="$(dirname "$rc")"
+  local sed=BSD
+  if sed --version >/dev/null 2>&1; then sed=GNU; fi
   if $sudo; then
     sudo mkdir -p "$rc_dir"
     sudo touch "$rc"
@@ -20,25 +22,23 @@ updaterc() {
     touch "$rc"
   fi
 
-  if [[ -n "$cmd" ]]; then
-    # Remove duplicates with awk, keep just the first occurrence
-    # shellcheck disable=SC2016
-    local seen='!seen[$0]++'
-    if $sudo; then
-      # shellcheck disable=SC2155
-      local tmp_rc="$(sudo mktemp)"
-      sudo awk "$seen" "$rc" | sudo tee "$tmp_rc" >/dev/null
-      sudo mv "$tmp_rc" "$rc"
-    else
-      # shellcheck disable=SC2155
-      local tmp_rc="$(mktemp)"
-      awk "$seen" "$rc" >"$tmp_rc"
-      mv "$tmp_rc" "$rc"
-    fi
+  # Remove duplicates with awk, keep just the first occurrence
+  # shellcheck disable=SC2016
+  local seen='!seen[$0]++'
+  if $sudo; then
+    # shellcheck disable=SC2155
+    local tmp_rc="$(sudo mktemp)"
+    sudo awk "$seen" "$rc" | sudo tee "$tmp_rc" >/dev/null
+    sudo mv "$tmp_rc" "$rc"
+  else
+    # shellcheck disable=SC2155
+    local tmp_rc="$(mktemp)"
+    awk "$seen" "$rc" >"$tmp_rc"
+    mv "$tmp_rc" "$rc"
   fi
 
   # Select a delimiter not present in either $cmd or $prefix
-  local delimiters=('#' ':' '@' '%' '_' '|' '&' '/')
+  local delimiters=('/' ':' '|' '!' '#' '&' '@' '%' '_' '+' '-' '`' '~' ',' '.' ';')
   local delimiter
   for d in "${delimiters[@]}"; do
     if [[ "$cmd" != *$d* && "$prefix" != *$d* ]]; then
@@ -54,11 +54,20 @@ updaterc() {
 
   # update var if it exists
   if $update && [[ -n "$prefix" ]]; then
-    local sed="$delimiter^$prefix${delimiter}$cmd$delimiter"
+    local sed_cmd="s$delimiter^$prefix.*$delimiter$cmd$delimiter"
+    # echo "sed \"$sed_cmd\" \"$rc\""
     if $sudo; then
-      sudo sed -i '' "$sed" "$rc" &>/dev/null
+      if [ $sed = "GNU" ]; then
+        sudo sed -i "$sed_cmd" "$rc"
+      else
+        sudo sed -i '' "$sed_cmd" "$rc"
+      fi
     else
-      sed -i '' "$sed" "$rc" &>/dev/null
+      if [ $sed = "GNU" ]; then
+        sed -i "$sed_cmd" "$rc"
+      else
+        sed -i '' "$sed_cmd" "$rc"
+      fi
     fi
   fi
 
@@ -68,7 +77,7 @@ updaterc() {
       echo -e "$cmd" | sudo tee -a "$rc" >/dev/null
     fi
   else
-    if ! grep -Fxq "$cmd" "$rc" >/dev/null; then
+    if ! grep -Fxq "$cmd" "$rc"; then
       echo -e "$cmd" >>"$rc"
     fi
   fi

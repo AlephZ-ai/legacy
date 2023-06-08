@@ -100,7 +100,7 @@ pip install --no-input --user --upgrade \
 files=("$HOME/.pip/pip.conf" "$HOME/.config/pip/pip.conf")
 for file in "${files[@]}"; do
   if [ -e "$file" ]; then
-    sed -i '.bak' '/no-cache-dir = .*/d' "$file" &>/dev/null
+    sed -i '.bak' '/no-cache-dir = .*/d' "$file"
     echo "$file"
   fi
 done
