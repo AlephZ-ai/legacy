@@ -19,7 +19,7 @@ rm -rf "$HOME/.config/iterm2"
 files=("$HOME/.bashrc" "$HOME/.zshrc")
 for file in "${files[@]}"; do
   if [ -f "$file" ]; then
-    sed -i '' '/# ------- auto-generated below this line -------/,$d' "$file" &>/dev/null
+    sed -i.bak '/# ------- auto-generated below this line -------/,$d' "$file"
   fi
 done
 

@@ -12,8 +12,6 @@ updaterc() {
   local update=$(echo "$cmd" | awk -F "=" '{print $2}' | grep -q "\$$var" && echo false || echo true)
   # shellcheck disable=SC2155
   local rc_dir="$(dirname "$rc")"
-  local sed=BSD
-  if sed --version >/dev/null 2>&1; then sed=GNU; fi
   if $sudo; then
     sudo mkdir -p "$rc_dir"
     sudo touch "$rc"
@@ -54,20 +52,14 @@ updaterc() {
 
   # update var if it exists
   if $update && [[ -n "$prefix" ]]; then
-    local sed_cmd="s$delimiter^$prefix.*$delimiter$cmd$delimiter"
+    local search="$prefix.*"
+    local replace="$cmd"
+    local sed="s$delimiter^$search$delimiter$replace$delimiter"
     # echo "sed \"$sed_cmd\" \"$rc\""
     if $sudo; then
-      if [ $sed = "GNU" ]; then
-        sudo sed -i "$sed_cmd" "$rc"
-      else
-        sudo sed -i '' "$sed_cmd" "$rc"
-      fi
+      sudo sed -i.bak "$sed" "$rc"
     else
-      if [ $sed = "GNU" ]; then
-        sed -i "$sed_cmd" "$rc"
-      else
-        sed -i '' "$sed_cmd" "$rc"
-      fi
+      sed -i.bak "$sed" "$rc"
     fi
   fi
 
