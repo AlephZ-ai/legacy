@@ -3,6 +3,10 @@
 # init
 set -euo pipefail
 zsh_ver=${ZSH_VERSION:-}
+# if [ -n "$zsh_ver" ]; then
+#   setopt localoptions ksharrays
+# fi
+
 user_files="$HOME/.bashrc;$HOME/.zshrc"
 sudo_files="/etc/bash.bashrc;/etc/zsh/zshrc"
 delimiters=('/' '#' '@' '%' '_' '+' '-' ',')
@@ -10,20 +14,21 @@ toarray() {
   local resultvar="$1"
   local input="$2"
   local delim="${3:-;}"
-  local result=()
-  set -f
-  IFS="$delim"
-  # shellcheck disable=SC2086
-  set -- $input
-  IFS=' '
-  # shellcheck disable=SC2034
-  result=("$@")
-  eval "$resultvar=(\"\${result[@]}\")"
+  local array=()
+  if [[ -n $zsh_ver ]]; then
+    # shellcheck disable=SC2016
+    IFS="$delim" read -rA array <<<"$input"
+  else
+    # shellcheck disable=SC2016,SC2034
+    IFS="$delim" read -ra array <<<"$input"
+  fi
+
+  eval "$resultvar=(\"\${array[@]}\")"
 }
 
 seddelim() {
-  prefix="$1"
-  cmd="$2"
+  local prefix="$1"
+  local cmd="$2"
   # Select a delimiter not present in either $cmd or $prefix
   local delim
   for d in "${delimiters[@]}"; do
@@ -70,10 +75,12 @@ updaterc() {
     local replace="$cmd"
     local sed="s$delim^$search$delim$replace$delim"
     echo "Updating '$cmd' in '$rc'"
+    # echo "sed -i.bak '$sed' '$rc'"
     run sed -i.bak "$sed" "$rc"
   else
     echo "Adding '$cmd' into '$rc'"
-    echo -e "$cmd" | run tee -a "$rc" >/dev/null
+    # echo "echo '$cmd' | run tee -a '$rc' >/dev/null"
+    echo "$cmd" | run tee -a "$rc" >/dev/null
   fi
 }
 

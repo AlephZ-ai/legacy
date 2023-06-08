@@ -5,24 +5,16 @@
 set -euo pipefail
 os=$(uname -s)
 # Setup pip
-PYTHON_VERSION=$(python -c 'import sys; print(f"{sys.version_info.major}.{sys.version_info.minor}")')
-source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'export PIP_NO_CACHE_DIR=false'
-if [ "$os" != "Linux" ]; then
-  source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export PATH=\"\$HOME/Library/Python/$PYTHON_VERSION/bin:\$PATH\""
-  source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export PATH=\"\$HOME/usr/local/opt/python@$PYTHON_VERSION/bin:\$PATH\""
-fi
-
 python -m ensurepip --upgrade
 python -m pip install --no-input --upgrade pip setuptools wheel
+python -m pip install --no-input --upgrade pygobject pycairo pipx virtualenv sphinx sphinx-multiversion \
+  openvino onnxruntime Cython cataclysm
 if [ "$os" = "Linux" ]; then
   pip install --no-input --upgrade \
     nvidia-cudnn-cu11 cudf-cu11 dask_cudf_cu11 cuml-cu11 cugraph-cu11 cucim nvidia-dali-cuda110 nvidia-dali-tf-plugin-cuda110 \
-    nvtabular "transformers4rec[pytorch,nvtabular,docs,dev]" triton-model-analyzer
+    nvtabular 'transformers4rec[pytorch,nvtabular,docs,dev]' triton-model-analyzer
   pip install --no-input --upgrade git+https://github.com/NVIDIA/TransformerEngine.git@stable
 fi
-
-python -m pip install --no-input --upgrade pygobject pycairo pipx virtualenv sphinx sphinx-multiversion \
-  openvino onnxruntime Cython cataclysm
 
 # https://huggingface.co/models?other=stable-baselines3
 # https://github.com/DLR-RM/rl-trained-agents/tree/master
@@ -53,30 +45,30 @@ pip install --no-input --user --upgrade \
   pygments flake8 tqdm rich ruff pytest pytest-sugar pytest-cov pytest-xdist pytest-xprocess pytest-mock pytest-benchmark \
   autopep8 aiosqlite absl-py astunparse flatbuffers gast google-pasta grpcio h5py jax libclang opt-einsum protobuf \
   blis catalogue confection cymem murmurhash preshed black yapf pydantic jinja2 langcodes murmurhash filelock tokenizers \
-  "openvino-dev[caffe,kaldi,mxnet,onnx,pytorch,tensorflow,tensorflow2]" openvino-workbench \
+  'openvino-dev[caffe,kaldi,mxnet,onnx,pytorch,tensorflow,tensorflow2]' openvino-workbench \
   mtcnn-onnxruntime onnxruntime-tools scikit-onnxruntime torch-ort torch-ort-infer \
   keras opencv-python imageio lazy_loader networkx pillow wrapt py moreutils pylint mypy pandas moviepy \
-  matplotlib scipy seaborn "skops>=0.6.0" scikit-learn scikit-image scikit-optimize box2d-py pybullet "optuna>=3.2.0" \
-  cloudpickle tensorflow "tensorflow-addons[tensorflow]" tensorboard "wandb>=0.15.3" chromadb pytablewriter pyyaml boto3 \
-  plotly torch torchvision torchaudio fire "pytorch-lightning>==1.9.4" nltk poetry span_marker "speechbrain>=0.5.14" \
-  "huggingface-hub>=0.15.1" "transformers>=4.29.2" "diffusers>=0.16.1" "adapter-transformers>=3.2.1" rouge_score \
-  "sentence-transformers>=2.2.2" "flair>=0.12.2" gensim spacy "fastai>=2.7.12" "agents>=1.4.0" "lupyne[graphql,rest]" plush lucene-querybuilder \
-  "nemo_toolkit[common,asr,nlp,tts,slu,test]>=1.18.0" "nemo_text_processing>=0.1.7rc0" shot-scraper \
-  "bertopic[test,docs,dev,flair,spacy,use,gensim,vision]>=0.15.0" openai openai-whisper tiktoken ttok strip-tags llm llama-index \
+  matplotlib scipy seaborn 'skops>=0.6.0' scikit-learn scikit-image scikit-optimize box2d-py pybullet 'optuna>=3.2.0' \
+  cloudpickle tensorflow 'tensorflow-addons[tensorflow]' tensorboard 'wandb>=0.15.3' chromadb pytablewriter pyyaml boto3 \
+  plotly torch torchvision torchaudio fire 'pytorch-lightning>==1.9.4' nltk poetry span_marker 'speechbrain>=0.5.14' \
+  'huggingface-hub>=0.15.1' 'transformers>=4.29.2' 'diffusers>=0.16.1' 'adapter-transformers>=3.2.1' rouge_score \
+  'sentence-transformers>=2.2.2' 'flair>=0.12.2' gensim spacy 'fastai>=2.7.12' 'agents>=1.4.0' 'lupyne[graphql,rest]' plush lucene-querybuilder \
+  'nemo_toolkit[common,asr,nlp,tts,slu,test]>=1.18.0' 'nemo_text_processing>=0.1.7rc0' shot-scraper \
+  'bertopic[test,docs,dev,flair,spacy,use,gensim,vision]>=0.15.0' openai openai-whisper tiktoken ttok strip-tags llm llama-index \
   merlin-models merlin-systems merlin-dataloader merlin-sok fairscale sentencepiece langchain \
-  "tritonclient>=2.34.0" pyctcdecode "pythae>=0.1.1" "rl_zoo3>=1.8.0" loralib "dask>=2023.5.1" \
+  'tritonclient>=2.34.0' pyctcdecode 'pythae>=0.1.1' 'rl_zoo3>=1.8.0' loralib 'dask>=2023.5.1' \
   notebook jupyter-client jupyter-core jupyter jupyter-lsp jupyterlab jupyterlab-fonts jupyterlab-git jupyterlab-markup \
   jupyterlab_widgets jupyterlab-commands jupyterlab_code_formatter jupyterlab-black jupyterlab-requirements \
   jupyterlab-sparksql jupyterlab-drawio jupyterlab-powerpoint jupyterlab-github jupyterlab-flake8 jupyterlab-lsp \
   jupyterlab-graph-lsp jupyterlab-telemetry jupyterlab-kernelspy jupyterlab-system-monitor jupyterlab-topbar \
   jupyterlab-quickopen jupyter_contrib_core jupyter-contrib-nbextensions mlflow \
-  "gymnasium[accept-rom-license,atari,box2d,classic-control,mujoco,mujoco-py,toy-text,jax,other,testing]" \
+  'gymnasium[accept-rom-license,atari,box2d,classic-control,mujoco,mujoco-py,toy-text,jax,other,testing]' \
   panda-gym gym-super-mario-bros flappy-bird-gymnasium \
-  "stable-baselines3[extra,tests,docs]>=1.8.0" "stable-baselines[mpi,tests,docs]" "sb3-contrib>=1.8.0" \
-  "sample-factory[dev,atari,envpool,mujoco,vizdoom]" "espnet>=202304" "paddlenlp>=2.5.2" \
+  'stable-baselines3[extra,tests,docs]>=1.8.0' 'stable-baselines[mpi,tests,docs]' 'sb3-contrib>=1.8.0' \
+  'sample-factory[dev,atari,envpool,mujoco,vizdoom]' 'espnet>=202304' 'paddlenlp>=2.5.2' \
   azure-cli azure-identity azure-keyvault azure-cli-keyvault azure-keyvault-certificates azure-keyvault-secrets azure-keyvault-browser azure-keyvault-administration \
   azure_devtools azureml-dataprep semantic-kernel \
-  batch-inference pytket pennylane qdk "azure-quantum[all]" quantum-viz knack qsharp qsharp-chemistry pytket-qsharp pennylane-qsharp \
+  batch-inference pytket pennylane qdk 'azure-quantum[all]' quantum-viz knack qsharp qsharp-chemistry pytket-qsharp pennylane-qsharp \
   presidio-cli presidio-analyzer presidio-anonymizer presidio-evaluator presidio-image-redactor msticpy msticnb \
   textworld botbuilder-ai botbuilder-applicationinsights botbuilder-azure botbuilder-core botbuilder-dialogs botbuilder-schema botframework-connector \
   onefuzz ptgnn deepgnn-ge deepgnn-torch deepgnn-tf rapidocr-openvino rapidocr-onnxruntime \
