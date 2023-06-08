@@ -1,5 +1,6 @@
 #!/usr/bin/env zsh
 # shellcheck shell=bash
+# shellcheck source=/dev/null
 # init
 set -euo pipefail
 os=$(uname -s)
@@ -9,7 +10,6 @@ if [ "$os" = "Linux" ]; then
   cmds=("alias xdg-open=$browser" "export BROWSER=$browser")
   for i in "${!cmds[@]}"; do
     cmd="${cmds[$i]}"
-    # shellcheck source=/dev/null
     source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "$cmd"
   done
 fi

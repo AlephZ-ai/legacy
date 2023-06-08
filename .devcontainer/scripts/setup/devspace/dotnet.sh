@@ -1,17 +1,15 @@
 #!/usr/bin/env zsh
 # shellcheck shell=bash
+# shellcheck source=/dev/null
 # init
 set -euo pipefail
 # Setup dotnet
 preview="$(asdf list all dotnet-core 8 | tail -1)"
 dotnet_latest_major_global='{ "sdk": { "rollForward": "latestmajor" } }'
-# shellcheck source=/dev/null
 source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'export DOTNET_ROLL_FORWARD=LatestMajor'
 echo "$dotnet_latest_major_global" >"$HOME/global.json"
 # Update rc files
-# shellcheck source=/dev/null
 source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export DOTNET_ROOT=\"\$HOME/.asdf/installs/dotnet-core/$preview\""
-# shellcheck source=/dev/null
 source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "$HOME/.asdf/plugins/dotnet-core/set-dotnet-home.bash"
 # Setup dotnet workloads
 dotnet workload install --include-previews wasm-tools wasm-tools-net6 wasi-experimental android ios maccatalyst macos \
@@ -21,10 +19,8 @@ dotnet workload clean
 dotnet workload update
 dotnet workload repair
 # Setup dotnet tools
-# shellcheck source=/dev/null
 # shellcheck disable=SC2016
 source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'PATH="$HOME/.dotnet/tools:$PATH"'
-# shellcheck source=/dev/null
 # shellcheck disable=SC2016
 source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'PATH="$HOME/.dotnet/tools/preview:$PATH"'
 mkdir -p "$HOME/.dotnet/tools/preview"

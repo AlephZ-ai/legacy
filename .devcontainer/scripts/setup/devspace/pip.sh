@@ -1,16 +1,14 @@
 #!/usr/bin/env zsh
 # shellcheck shell=bash
+# shellcheck source=/dev/null
 # init
 set -euo pipefail
 os=$(uname -s)
 # Setup pip
 PYTHON_VERSION=$(python -c 'import sys; print(f"{sys.version_info.major}.{sys.version_info.minor}")')
-# shellcheck source=/dev/null
 source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'export PIP_NO_CACHE_DIR=false'
 if [ "$os" != "Linux" ]; then
-  # shellcheck source=/dev/null
   source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export PATH=\"\$HOME/Library/Python/$PYTHON_VERSION/bin:\$PATH\""
-  # shellcheck source=/dev/null
   source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export PATH=\"\$HOME/usr/local/opt/python@$PYTHON_VERSION/bin:\$PATH\""
 fi
 

@@ -1,4 +1,5 @@
 # shellcheck shell=bash
+# shellcheck source=/dev/null
 # init
 set -euo pipefail
 zsh_ver=${ZSH_VERSION:-}
@@ -114,6 +115,5 @@ if $sudo_too; then
   sudo=true
   sudo_too=false
   files="$sudo_files"
-  # shellcheck source=/dev/null
   source "$0" "$cmd" sudo
 fi

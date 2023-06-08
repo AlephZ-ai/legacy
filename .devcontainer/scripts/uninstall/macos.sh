@@ -1,17 +1,15 @@
 #!/bin/zsh
+# shellcheck source=/dev/null
 # shellcheck shell=bash
 set -euo pipefail
 unsafe_level="$1"
-# shellcheck source=/dev/null
 "$DEVCONTAINER_SCRIPTS_ROOT/uninstall/nvm.sh"
 if brew --version &>/dev/null; then
   brew uninstall --force --ignore-dependencies bash
   brew list --cask | xargs -I {} brew uninstall --cask "{}"
 fi
 
-# shellcheck source=/dev/null
 "$DEVCONTAINER_SCRIPTS_ROOT/uninstall/brew.sh"
-# shellcheck source=/dev/null
 "$DEVCONTAINER_SCRIPTS_ROOT/uninstall/zsh.sh"
 rm -rf "$HOME/.iterm2"
 rm -rf "$HOME/.config/iterm2"

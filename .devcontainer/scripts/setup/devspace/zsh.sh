@@ -1,5 +1,6 @@
 #!/usr/bin/env zsh
 # shellcheck shell=bash
+# shellcheck source=/dev/null
 # init
 set -euo pipefail
 USERNAME="${USERNAME:-$(whoami)}"
@@ -9,5 +10,4 @@ if [ ! -e "$HOME/.oh-my-zsh" ]; then
 fi
 
 # Setup powerlevel10k zsh theme
-# shellcheck source=/dev/null
 source "$DEVCONTAINER_SCRIPTS_ROOT/setup/devspace/zsh/powerlevel10k.sh"

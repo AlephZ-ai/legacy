@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-#shellcheck source=/dev/null
+# shellcheck source=/dev/null
 
 set -euo pipefail
 

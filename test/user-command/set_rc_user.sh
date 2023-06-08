@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #shellcheck disable=SC2016
-#shellcheck source=/dev/null
+# shellcheck source=/dev/null
 
 set -euo pipefail
 
