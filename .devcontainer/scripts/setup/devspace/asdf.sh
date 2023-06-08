@@ -12,7 +12,7 @@ versions=("$preview" "$current" "$lts" "$preview")
 # shellcheck disable=SC2143
 for version in "${versions[@]}"; do
   asdf install dotnet-core "$version"
-  asdf global dotnet-core "$preview"
+  asdf global dotnet-core "$version"
   asdf reshim
   dotnet --version
   asdf info

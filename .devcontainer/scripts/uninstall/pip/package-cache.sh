@@ -9,5 +9,5 @@ if command -v pip --version >/dev/null 2>&1; then
     fi
   done
 
-  pip cache purge --no-input || true
+  pip cache purge --no-input
 fi
