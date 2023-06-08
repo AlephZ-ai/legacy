@@ -4,15 +4,9 @@
 # init
 set -euo pipefail
 # Setup dotnet
-preview="$(asdf list all dotnet-core 8 | tail -1)"
 dotnet_latest_major_global='{ "sdk": { "rollForward": "latestmajor" } }'
 source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'export DOTNET_ROLL_FORWARD=LatestMajor'
 echo "$dotnet_latest_major_global" >"$HOME/global.json"
-# Update rc files
-# shellcheck disable=SC2016
-source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'export PATH="$HOME/.asdf/shims:$PATH"'
-source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export DOTNET_ROOT=\"\$HOME/.asdf/installs/dotnet-core/$preview\""
-source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "$HOME/.asdf/plugins/dotnet-core/set-dotnet-home.bash"
 # Setup dotnet workloads
 dotnet workload install --include-previews wasm-tools wasm-tools-net6 wasi-experimental android ios maccatalyst macos \
   maui maui-android maui-desktop maui-ios maui-maccatalyst maui-mobile maui-tizen tvos

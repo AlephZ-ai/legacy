@@ -41,7 +41,7 @@ while ! (
 brew update
 brew upgrade
 # Setup post hombrew packages
-links=('python@3.10' 'python-tk@3.10' 'postgresql@15')
+links=('dotnet' 'python@3.10' 'python-tk@3.10' 'postgresql@15')
 if [ "$os" = "Linux" ]; then
   links+=('file-formula' 'curl' 'bzip2' 'zlib' 'libffi' 'llvm' 'openjdk' 'sqlite' 'openssl@3')
   sudo chsh "$USERNAME" -s "$(which zsh)"
@@ -54,7 +54,6 @@ source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export LESSOPEN=\"|$HOMEB
 source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export MONO_GAC_PREFIX=\"$HOMEBREW_PREFIX\""
 source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export GROOVY_HOME=\"$HOMEBREW_PREFIX/opt/groovy/libexec\""
 source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export SCALA_HOME=\"$HOMEBREW_PREFIX/opt/scala/idea\""
-source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "source \"$HOMEBREW_PREFIX/opt/asdf/libexec/asdf.sh\""
 brews=('gnu-sed' 'grep' 'make' 'coreutils' 'curl' 'bzip2' 'zlib' 'llvm' 'libffi' 'openjdk' 'sqlite' 'openssl@3' 'python@3.10' 'python-tk@3.10' 'postgresql@15')
 for brew in "${brews[@]}"; do
   brew_dir="$HOMEBREW_PREFIX/opt/$brew"
@@ -76,11 +75,6 @@ for brew in "${brews[@]}"; do
   if [ -e "$brew_pkgconfig_dir" ]; then source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export PKG_CONFIG_PATH=\"$brew_pkgconfig_dir\${PKG_CONFIG_PATH:+:}\$PKG_CONFIG_PATH\""; fi
 done
 
-env
-python --version
-pip --version
-which python
-which pip
 # Run Homebrew cleanup and doctor to check for errors
 brew cleanup
 brew doctor || true
