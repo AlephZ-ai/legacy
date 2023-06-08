@@ -30,11 +30,15 @@ packages=('npm' 'npx' 'npm-check-updates' 'corepack' '@npmcli/fs' '@devcontainer
   'prettier' 'http-server' 'serve' 'forever' 'concurrently' 'cross-env' 'newman' 'lerna' 'yeoman' 'knex' 'husky'
   'commitizen' 'ava' 'jest' 'storybook' 'apidoc' 'coffeescript' 'node-gyp' 'node-pre-gyp' 'node-sass')
 for node in "${nodes[@]}"; do
+  echo -e "Installing Node.js $node"
   nvm install "$node"
   nvm use "$node"
   node --version
-  npm update -g npm
+  echo -e "Installing npm packages in $node"
   npm i -g "${packages[@]}"
-  ncu -u
+  echo -e "Updating npm packages in $node"
+  ncu -u -g
+  npm update -g
 done
+
 sudo rm -rf $package_json

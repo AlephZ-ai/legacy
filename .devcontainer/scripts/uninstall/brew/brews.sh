@@ -1,13 +1,7 @@
 #!/bin/bash
 set -e
-files=("$HOME/.pip/pip.conf" "$HOME/.config/pip/pip.conf")
-for file in "${files[@]}"; do if [ -e "$file" ]; then
-  sed -i '.bak' '/no-cache-dir = .*/d' "$file"
-  echo "$file"
-fi; done
-
 if command -v brew --version >/dev/null 2>&1; then
-  brew uninstall --force --ignore-dependencies pycairo py3cairo pygobject3 pyenv pipx
+  brew uninstall --force --ignore-dependencies pycairo py3cairo pygobject3 pyenv pipx virtualenv
 fi
 
 "$DEVCONTAINER_SCRIPTS_ROOT/uninstall/pip/packages.sh"
@@ -20,3 +14,12 @@ if command -v brew --version >/dev/null 2>&1; then
     done
   done
 fi
+
+rm -rf "$HOME/.kube"
+rm -rf "$HOME/.minikube"
+rm -rf "$HOME/.mono"
+rm -rf "$HOME/.cache/powershell"
+rm -rf "$HOME/.config/powershell"
+rm -rf "$HOME/.local/share/powershell"
+rm -rf "$HOME/postgres-data"
+rm -rf "$HOME/go"

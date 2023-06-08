@@ -14,4 +14,5 @@ if command -v dotnet --version >/dev/null 2>&1; then
   fi
 fi
 
+rm -rf "$HOME/.aspnet"
 rm -rf "$HOME/.dotnet"

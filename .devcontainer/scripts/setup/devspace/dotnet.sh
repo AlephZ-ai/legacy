@@ -49,36 +49,40 @@ for tool in "${tools[@]}"; do
   latest_prerelease_version=$(dotnet tool search "$tool" --prerelease | awk -v tool="$tool" '$1 == tool' | awk '{print $2}')
   found=true
   if [[ -z "$latest_version" ]]; then
-    echo "Latest version of $tool not found, skipping..."
+    echo -e "Latest version of $tool not found, skipping..."
     found=false
   else
     if [[ -z "$installed_version" ]]; then
-      echo "Installing $tool"
+      echo -e "Installing $tool"
       dotnet tool install -g "$tool" --version "$latest_version"
     elif [[ "$installed_version" != "$latest_version" ]]; then
-      echo "Updating $tool from version $installed_version to version $latest_version"
+      echo -e "Updating $tool from version $installed_version to version $latest_version"
       dotnet tool update -g "$tool" --version "$latest_version"
+    else
+      echo -e "Latest version of $tool already installed"
     fi
   fi
 
   found_prerelease=true
   if [[ -z "$latest_prerelease_version" ]]; then
     found_prerelease=false
-    echo "Latest prerelease version of $tool not found, skipping..."
+    echo -e "Latest prerelease version of $tool not found, skipping..."
   else
-    if [ "$latest_version" != "$latest_prerelease_version" ] && [ "$installed_prerelease_version" != "$latest_prerelease_version" ]; then
+    if [ "$latest_version" != "$latest_prerelease_version" ]; then
       if [[ -z "$installed_prerelease_version" ]]; then
-        echo "Installing prerelease $tool"
+        echo -e "Installing prerelease $tool"
         dotnet tool install --tool-path "$HOME/.dotnet/tools/preview" "$tool" --version "$latest_prerelease_version"
       elif [[ "$installed_prerelease_version" != "$latest_prerelease_version" ]]; then
-        echo "Updating $tool from version $installed_prerelease_version to prerelease $latest_prerelease_version"
+        echo -e "Updating $tool from version $installed_prerelease_version to prerelease $latest_prerelease_version"
         dotnet tool update --tool-path "$HOME/.dotnet/tools/preview" "$tool" --version "$latest_prerelease_version"
+      else
+        echo -e "Latest prerelease version of $tool already installed"
       fi
     fi
   fi
 
   if ! $found && ! $found_prerelease; then
-    echo "Error: No versions found for $tool"
+    echo -e "Error: No versions found for $tool"
     exit 1
   fi
 

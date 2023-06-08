@@ -5,18 +5,28 @@ set -e
 # shellcheck source=/dev/null
 source "$HOME/.bashrc"
 # Setup pwsh modules
+echo "Setting up PowerShell modules, this can take a while..."
 pwsh_modules=('Pester' 'Set-PsEnv' 'posh-docker' 'posh-git' 'lazy-posh-git' 'Az' 'AWS.Tools.Installer' 'PSReadLine'
-  'SqlServer' 'ImportExcel' 'PSScriptAnalyzer' 'dbatools')
+  'SqlServer' 'PSScriptAnalyzer' 'dbatools')
 # shellcheck disable=SC2016
-pwsh_update='if (!(Test-Path $PROFILE)) { New-Item -ItemType File -Path $PROFILE -Force; }; Install-Module PowerShellGet -ErrorAction Stop -Force -SkipPublisherCheck -AllowClobber; Install-Module PackageManagement -ErrorAction Stop -Force -SkipPublisherCheck -AllowClobber; Update-Module; Install-Module PowerShellGet -ErrorAction Stop -Force -SkipPublisherCheck -AllowClobber -AllowPrerelease; Set-Alias -Name awk -Value gawk'
+pwsh_update='if (!(Test-Path $PROFILE)) { New-Item -ItemType File -Path $PROFILE -Force; }; Install-Module PowerShellGet -ErrorAction Stop -SkipPublisherCheck; Install-Module PackageManagement -ErrorAction Stop -SkipPublisherCheck; Set-PSRepository -Name PSGallery -InstallationPolicy Trusted; Update-Module; Set-Alias -Name awk -Value gawk'
 # shellcheck disable=SC2016
-pwsh_install_module='Install-Module $module -ErrorAction Stop -Force -SkipPublisherCheck -AllowClobber;'
+pwsh_install_module='Install-Module $module -ErrorAction Stop -SkipPublisherCheck;'
+pwsh_post_install='Get-PSRepository | Set-PSRepository -InstallationPolicy Trusted; Update-Module;'
 # shellcheck disable=SC2034
 install_modules() {
   local pwsh=$1
+  echo "Updating modules in $pwsh..."
   "$pwsh" -Command "$pwsh_update"
-  for module in "${pwsh_modules[@]}"; do $pwsh -Command "$(eval echo "$pwsh_install_module")"; done
+  for module in "${pwsh_modules[@]}"; do
+    echo "Installing $module in $pwsh..."
+    $pwsh -Command "$(eval echo "$pwsh_install_module")"
+  done
+
+  echo "Updating modules in $pwsh..."
+  "$pwsh" -Command "$pwsh_post_install"
 }
+
 # PowerShell Core (pwsh)
 if command -v pwsh >/dev/null; then install_modules "pwsh"; else echo "PowerShell Core is not installed"; fi
 # PowerShell Core Preview (pwsh-preview)

@@ -17,4 +17,5 @@ choco install -y vcredist-all | Write-Host
 choco install -y psqlodbc | Write-Host
 choco install -y sqlserver-odbcdriver | Write-Host
 choco install -y sql-server-management-studio | Write-Host
+choco install -y boost-msvc-14.3 | Write-Host
 cup all -y | Write-Host

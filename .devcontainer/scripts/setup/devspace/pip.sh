@@ -18,7 +18,7 @@ else
 fi
 
 python -m ensurepip --upgrade
-python -m pip install --no-input --upgrade pip setuptools wheel nvidia-pyindex pipx sphinx sphinx-multiversion Cython
+python -m pip install --no-input --upgrade pip setuptools wheel
 if [ "$os" = "Linux" ]; then
   pip install --no-input --upgrade \
     nvidia-cudnn-cu11 cudf-cu11 dask_cudf_cu11 cuml-cu11 cugraph-cu11 cucim nvidia-dali-cuda110 nvidia-dali-tf-plugin-cuda110 \
@@ -26,14 +26,20 @@ if [ "$os" = "Linux" ]; then
   pip install --no-input --upgrade git+https://github.com/NVIDIA/TransformerEngine.git@stable
 fi
 
+python -m pip install --no-input --upgrade pygobject pycairo pipx virtualenv sphinx sphinx-multiversion \
+  openvino onnxruntime Cython
+
 # https://huggingface.co/models?other=stable-baselines3
 # https://github.com/DLR-RM/rl-trained-agents/tree/master
 # https://github.com/facebookresearch/llama
 # https://github.com/tatsu-lab/stanford_alpaca
 # https://aka.ms/azsdk/python/all
-# TODO: Check for Python 11 support:
+# TODO: Check for Python 3.11 support:
 #   cntk ml-agents espnet2 gym-retro fastchan TensorFlowTTS triton-model-navigator nvidia-pytriton trimm trimm-viz rliable
-#   masl msal-extensions pytest-azurepipelines azureml-responsibleai
+#   masl msal-extensions pytest-azurepipelines azureml-responsibleai azureml-dataprep-native azure-mlflow onnxruntime-extensions
+#   torch-directml onnxruntime-silicon onnxruntime-openmp onnxruntime-directml onnxruntime-training onnxruntime-gpu
+#   onnxruntime-cann onnxruntime-noopenmp onnxruntime-azure onnxruntime-openvino onnxruntime-coreml onnxruntime-powerpc64le
+#   model-perf azure-ai-vision
 # TODO: Keep a check on huggingface_sb3 it has huggingface-hub pinned to 0.8.1
 # https://github.com/huggingface/huggingface_sb3/issues/27
 # TODO: Keep a check on asteroid and see when it will allow upgrading torchmetrics>=0.11.0, currently torchmetrics<0.8.0
@@ -43,13 +49,17 @@ fi
 # TODO: Keep a check on nemo-toolkit[asr] it will allow upgrading pytorch-lightning>=1.9.0,<=1.9.4 in the future
 # TODO: Keep a check on rl-agents it only supports gym<0.18.0 and >=0.17.2
 # TODO: Keep a check on gym-minigrid it only supports gym<=0.26 and >=0.22
+# TODO: Keep a check on stable-baselines3[docs,extra,tests] 1.8.0 depends on gym==0.21
+# TODO: Keep a check on dlltracer, it throws an error on install on Mac
 # pytorch-lightning>=1.9.0,<=1.9.4
-# gym[accept-rom-license,all]<=0.26,>=0.22
+# gym[accept-rom-license,atari,box2d,classic_control,mujoco,robotics,toy_text,other]<=0.26,>=0.22
 pip install --no-input --user --upgrade \
-  pygobject pycairo platformdirs dill isort mccabe ipykernel ipython-genutils packaging docker-pycreds flask pathy \
+  platformdirs dill isort mccabe ipykernel ipython-genutils packaging docker-pycreds flask pathy numpy \
   pygments flake8 tqdm rich ruff pytest pytest-sugar pytest-cov pytest-xdist pytest-xprocess pytest-mock pytest-benchmark \
-  autopep8 aiosqlite absl-py astunparse flatbuffers gast google-pasta grpcio h5py jax libclang numpy opt-einsum protobuf \
+  autopep8 aiosqlite absl-py astunparse flatbuffers gast google-pasta grpcio h5py jax libclang opt-einsum protobuf \
   blis catalogue confection cymem murmurhash preshed black yapf pydantic jinja2 langcodes murmurhash filelock tokenizers \
+  "openvino-dev[caffe,kaldi,mxnet,onnx,pytorch,tensorflow,tensorflow2]" openvino-workbench \
+  mtcnn-onnxruntime onnxruntime-tools scikit-onnxruntime torch-ort torch-ort-infer \
   keras opencv-python imageio lazy_loader networkx pillow wrapt py moreutils pylint mypy pandas moviepy \
   matplotlib scipy seaborn "skops>=0.6.0" scikit-learn scikit-image scikit-optimize box2d-py pybullet "optuna>=3.2.0" \
   cloudpickle tensorflow "tensorflow-addons[tensorflow]" tensorboard "wandb>=0.15.3" chromadb pytablewriter pyyaml boto3 \
@@ -65,20 +75,18 @@ pip install --no-input --user --upgrade \
   jupyterlab-sparksql jupyterlab-drawio jupyterlab-powerpoint jupyterlab-github jupyterlab-flake8 jupyterlab-lsp \
   jupyterlab-graph-lsp jupyterlab-telemetry jupyterlab-kernelspy jupyterlab-system-monitor jupyterlab-topbar \
   jupyterlab-quickopen jupyter_contrib_core jupyter-contrib-nbextensions mlflow \
-  "gymnasium[accept-rom-license,all]" "gym[accept-rom-license,all]==0.26" panda-gym gym-super-mario-bros \
-  "gym-minigrid>=1.2.2" flappy-bird-gymnasium "stable-baselines3[extra,tests,docs]>=1.8.0" "stable-baselines[mpi,tests,docs]" "sb3-contrib>=1.8.0" \
+  "gymnasium[accept-rom-license,atari,box2d,classic-control,mujoco,mujoco-py,toy-text,jax,other,testing]" \
+  panda-gym gym-super-mario-bros flappy-bird-gymnasium \
+  "stable-baselines3[extra,tests,docs]>=1.8.0" "stable-baselines[mpi,tests,docs]" "sb3-contrib>=1.8.0" \
   "sample-factory[dev,atari,envpool,mujoco,vizdoom]" "espnet>=202304" "paddlenlp>=2.5.2" \
   azure-cli azure-identity azure-keyvault azure-cli-keyvault azure-keyvault-certificates azure-keyvault-secrets azure-keyvault-browser azure-keyvault-administration \
-  azure_devtools azureml-dataprep azureml-dataprep-native semantic-kernel azure-mlflow \
+  azure_devtools azureml-dataprep semantic-kernel \
   batch-inference pytket pennylane qdk "azure-quantum[all]" quantum-viz knack qsharp qsharp-chemistry pytket-qsharp pennylane-qsharp \
   presidio-cli presidio-analyzer presidio-anonymizer presidio-evaluator presidio-image-redactor msticpy msticnb \
   textworld botbuilder-ai botbuilder-applicationinsights botbuilder-azure botbuilder-core botbuilder-dialogs botbuilder-schema botframework-connector \
-  onefuzz onnxruntime onnxruntime-extensions mtcnn-onnxruntime scikit-onnxruntime \
-  torch-ort torch-ort-infer torch-directml ptgnn deepgnn-ge deepgnn-torch deepgnn-tf \
-  onnxruntime-silicon onnxruntime-openmp onnxruntime-directml onnxruntime-training onnxruntime-gpu onnxruntime-cann \
-  onnxruntime-noopenmp onnxruntime-azure onnxruntime-openvino onnxruntime-tools rapidocr-onnxruntime onnxruntime-coreml \
-  onnxruntime-powerpc64le model-perf graspologic olive-ai azure-cosmos dlltracer msrest import-mocker \
-  azure-ai-ml azure-ai-contentsafety azure-ai-mlmonitoring azure-ai-textanalytics azure-ai-formrecognizer azure-ai-vision \
+  onefuzz ptgnn deepgnn-ge deepgnn-torch deepgnn-tf rapidocr-openvino rapidocr-onnxruntime \
+  graspologic olive-ai azure-cosmos msrest import-mocker \
+  azure-ai-ml azure-ai-contentsafety azure-ai-mlmonitoring azure-ai-textanalytics azure-ai-formrecognizer \
   azure-ai-anomalydetector azure-ai-metricsadvisor azureml-rai-utils azure-ai-translation-text azure-ai-translation-document \
   azure-ai-language-questionanswering azure-ai-language-conversations azure-cli-cognitiveservices azure-cognitiveservices-speech \
   azure-cognitiveservices-inkrecognizer azure-cognitiveservices-personalizer azure-cognitiveservices-anomalydetector \
@@ -93,7 +101,13 @@ pip install --no-input --user --upgrade \
   microsoft-bing-customimagesearch microsoft-bing-visualsearch microsoft-bing-entitysearch microsoft-bing-customwebsearch \
   microsoft-bing-newssearch microsoft-bing-autosuggest google google-cloud google-benchmark
 files=("$HOME/.pip/pip.conf" "$HOME/.config/pip/pip.conf")
-for file in "${files[@]}"; do if [ -e "$file" ]; then sed -i '.bak' '/no-cache-dir = .*/d' "$file"; fi; done
+for file in "${files[@]}"; do
+  if [ -e "$file" ]; then
+    sed -i '.bak' '/no-cache-dir = .*/d' "$file"
+    echo "$file"
+  fi
+done
+
 mkdir -p "$HOME/source/repos"
 pushd "$HOME/source/repos"
 rm -rf apex

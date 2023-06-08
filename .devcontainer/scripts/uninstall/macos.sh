@@ -16,6 +16,8 @@ if [[ $(brew list --cask &>/dev/null) ]]; then
   brew list --cask | xargs -I {} brew uninstall --cask "{}"
 fi
 
+rm -rf "$HOME/.iterm2"
+rm -rf "$HOME/.config/iterm2"
 # Remove autogenerate section from rc files
 sed -i '' '/# ------- auto-generated below this line -------/,$d' "$HOME/.bashrc"
 sed -i '' '/# ------- auto-generated below this line -------/,$d' "$HOME/.zshrc"

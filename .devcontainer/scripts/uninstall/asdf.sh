@@ -7,3 +7,5 @@ if command -v asdf --version >/dev/null 2>&1; then
     asdf plugin remove "$plugin"
   done
 fi
+
+rm -rf "$HOME/.asdf"
