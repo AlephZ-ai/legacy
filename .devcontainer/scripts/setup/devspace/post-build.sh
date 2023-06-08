@@ -41,4 +41,4 @@ source "$DEVCONTAINER_SCRIPTS_ROOT/setup/devspace/gh.sh"
 # Setup desktop-list
 source "$DEVCONTAINER_SCRIPTS_ROOT/setup/devspace/desktop-lite.sh"
 # Setup ohmyzsh plugins
-source "$DEVCONTAINER_SCRIPTS_ROOT/setup/devspace/omz.sh"
+source "$DEVCONTAINER_SCRIPTS_ROOT/setup/devspace/zsh/oh-my-zsh.sh"

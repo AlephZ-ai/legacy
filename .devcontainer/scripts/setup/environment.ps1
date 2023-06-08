@@ -39,8 +39,6 @@ try {
       $env:XDG_RUNTIME_DIR=wsl --distribution Ubuntu echo '$XDG_RUNTIME_DIR'
     } catch {
       Write-Host "Ubuntu WSLg distribution not found"
-      # TODO: Does trailing / cause an issue?
-      # /run/user/1000/:/run/user/1000
       $env:XDG_RUNTIME_DIR="$DEFAULT_XDG"
     }
   }

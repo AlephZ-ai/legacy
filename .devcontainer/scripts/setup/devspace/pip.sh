@@ -95,8 +95,9 @@ for file in "${files[@]}"; do
   fi
 done
 
-mkdir -p "$HOME/source/repos"
-pushd "$HOME/source/repos"
+path="$HOME/.nvidia/pip"
+mkdir -p "$path"
+pushd "$path"
 rm -rf apex
 git clone https://github.com/NVIDIA/apex.git
 pushd apex
