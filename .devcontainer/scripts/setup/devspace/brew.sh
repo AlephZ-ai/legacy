@@ -2,7 +2,7 @@
 # shellcheck shell=bash
 # shellcheck source=/dev/null
 # init
-set -euo pipefailuo pipefail
+set -euo pipefail
 HOMEBREW_PREFIX=${HOMEBREW_PREFIX:-/home/linuxbrew/.linuxbrew}
 os=$(uname -s)
 # Add autogenerate line

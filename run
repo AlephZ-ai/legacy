@@ -1,7 +1,6 @@
-#!/usr/bin/env bash
-#shellcheck shell=bash
-#shellcheck source=/dev/null
-projectRoot="$(cd -- "$(dirname -- "${BASH_SOURCE-$0}")" &> /dev/null && pwd)"
+# shellcheck shell=bash
+# shellcheck source=/dev/null
+projectRoot="$(cd -- "$(dirname -- "${BASH_SOURCE-$0}")" &>/dev/null && pwd)"
 scriptsRoot="$projectRoot/.devcontainer/scripts"
 source "$scriptsRoot/setup/environment.sh"
 if [ "$1" = "-id" ] || [ "$1" = "--in-dependency" ]; then
@@ -23,6 +22,7 @@ else
   commandPath="${3:-}"
   command="${4:-}"
 fi
+
 if [ "$scriptPath" = "-h" ] || [ "$scriptPath" = "--help" ]; then
   echo "Run will run a script from in the src directory with the correct env variables setup."
   echo "Usage: ./run <script> <command>"
@@ -38,6 +38,6 @@ if [ "$scriptPath" = "-h" ] || [ "$scriptPath" = "--help" ]; then
 fi
 
 executionRoot="$scriptsRoot/$scriptPath"
-pushd "$executionRoot" 1> /dev/null || exit 1
-  "./$script.sh" "$commandPath" "$command"
-popd 1> /dev/null || exit
+pushd "$executionRoot" 1>/dev/null || exit 1
+"./$script.sh" "$commandPath" "$command"
+popd 1>/dev/null || exit

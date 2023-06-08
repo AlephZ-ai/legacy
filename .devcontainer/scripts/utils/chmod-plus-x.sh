@@ -1,5 +1,5 @@
 # shellcheck shell=bash
-set -euo pipefailuo pipefail
+set -euo pipefail
 git update-index --add --chmod=+x "$DEVCONTAINER_FEATURES_PROJECT_ROOT/run"
 chmod +x "$DEVCONTAINER_FEATURES_PROJECT_ROOT/run"
 git update-index --add --chmod=+x "$DEVCONTAINER_FEATURES_PROJECT_ROOT/.devcontainer/init"

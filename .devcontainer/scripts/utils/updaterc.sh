@@ -74,13 +74,15 @@ updaterc() {
   fi
 }
 
+bash_ver=${BASH_VERSION:-}
+zsh_ver=${ZSH_VERSION:-}
 user_files="$HOME/.bashrc;$HOME/.zshrc"
 sudo_files="/etc/bash.bashrc;/etc/zsh/zshrc"
 sudo=$([[ $(id -u) -eq 0 ]] && echo true || echo false)
 sudo_too=false
 cmd="$1"
-files="$2"
-if [ -z "$files" ] || [ "$files" = "user" ]; then
+files="${2:-"$user_files"}"
+if [ "$files" = "user" ]; then
   files="$user_files"
 elif [ "$files" = "sudo" ]; then
   sudo=true
@@ -93,24 +95,32 @@ fi
 set -f
 # shellcheck disable=SC2086
 set -- $cmd
-cmd_parts=("$@")
-
 # update sudo if needed
-if [[ "${cmd_parts[0]}" = 'sudo' ]]; then
+cmd_parts=()
+sudo_index=1
+if [ -n "$zsh_ver" ]; then
+  eval 'cmd_parts=("${(@s/ /)cmd}")'
+elif [ -n "$bash_ver" ]; then
+  sudo_index=0
+  cmd_parts=("$@")
+else
+  echo "Unknown shell: '$0'"
+  exit 1
+fi
+
+if [[ "${cmd_parts[$sudo_index]}" = 'sudo' ]]; then
   sudo=true
-  cmd="${cmd_parts[*]:1}"
+  next_index=$((sudo_index + 1))
+  cmd="${cmd_parts[*]:$next_index}"
 fi
 
 # update files if in sudo mode
 if $sudo && [[ "$files" = "$user_files" ]]; then files="$sudo_files"; fi
 rcs=()
-if [ -n "$BASH_VERSION" ]; then
-  IFS=';' read -ra rcs <<<"$files"
-elif [ -n "$ZSH_VERSION" ]; then
+if [ -n "$zsh_ver" ]; then
   eval 'rcs=("${(@s/;/)files}")'
-else
-  echo "Unknown shell: '$0'"
-  exit 1
+elif [ -n "$bash_ver" ]; then
+  IFS=';' read -ra rcs <<<"$files"
 fi
 
 # evaluate $cmd

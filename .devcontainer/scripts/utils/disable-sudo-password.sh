@@ -1,6 +1,6 @@
 # shellcheck shell=bash
 # init
-set -euo pipefailuo pipefail
+set -euo pipefail
 USERNAME=${USERNAME:-$(whoami)}
 # Disable needing password for sudo
 # shellcheck source=/dev/null
