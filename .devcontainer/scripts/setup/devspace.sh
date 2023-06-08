@@ -2,8 +2,6 @@
 #shellcheck shell=bash
 # init
 set -e
-# shellcheck source=/dev/null
-source "$HOME/.zshrc"
 # Test all tools are installed
 docker --version
 docker-compose --version

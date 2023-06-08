@@ -1,8 +1,6 @@
 #!/usr/bin/env bash
 # init
 set -e
-# shellcheck source=/dev/null
-source /etc/bash.bashrc
 # Install Microsoft Edge
 wget -O /tmp/GPG-PUB-KEY-INTEL-SW-PRODUCTS.PUB https://apt.repos.intel.com/intel-gpg-keys/GPG-PUB-KEY-INTEL-SW-PRODUCTS.PUB
 sudo apt-key add /tmp/GPG-PUB-KEY-INTEL-SW-PRODUCTS.PUB

@@ -1,8 +1,6 @@
 #!/usr/bin/env bash
 # init
 set -e
-# shellcheck source=/dev/null
-source /etc/bash.bashrc
 # Install Microsoft Edge
 curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor >/tmp/microsoft.gpg
 install -o root -g root -m 644 /tmp/microsoft.gpg /usr/share/keyrings/

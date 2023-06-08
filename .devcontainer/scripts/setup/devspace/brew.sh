@@ -1,23 +1,19 @@
-#!/usr/bin/env bash
+#!/usr/bin/env zsh
 # shellcheck shell=bash
 # init
 set -e
-# shellcheck source=/dev/null
-source "$HOME/.bashrc"
 HOMEBREW_PREFIX=${HOMEBREW_PREFIX:-/home/linuxbrew/.linuxbrew}
 os=$(uname -s)
 # Add autogenerate line
 # shellcheck source=/dev/null
-source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" '# ------- pre-generated above this line -------'
+source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" '# ------- pre-generated above this line -------' all
 # shellcheck source=/dev/null
-source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" '# ------- manual entry goes here -------'
+source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" '# ------- manual entry goes here -------' all
 # shellcheck source=/dev/null
-source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" '# ------- auto-generated below this line -------'
+source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" '# ------- auto-generated below this line -------' all
 # Setup Homebrew
 sudo echo "sudo cached"
-# NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
-# shellcheck source=/dev/null
-source "$HOME/.bashrc"
+NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
 # shellcheck source=/dev/null
 source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "eval \"\$(\"$HOMEBREW_PREFIX/bin/brew\" shellenv)\""
 # Install taps

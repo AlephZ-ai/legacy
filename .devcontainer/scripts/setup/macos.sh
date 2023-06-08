@@ -1,9 +1,7 @@
-#!/bin/zsh
+#!/usr/bin/env zsh
 #shellcheck shell=bash
 # init
 set -e
-# shellcheck source=/dev/null
-source "$HOME/.zshrc"
 # Disable needing password for sudo
 # shellcheck source=/dev/null
 source "$DEVCONTAINER_SCRIPTS_ROOT/utils/disable-sudo-password.sh"
@@ -12,9 +10,8 @@ if ! (bash --version && git --version); then sudo xcode-select --install; fi
 # build commands
 # shellcheck source=/dev/null
 export HOMEBREW_PREFIX="/usr/local"
-bash -l -c "$DEVCONTAINER_SCRIPTS_ROOT/setup/devspace/post-build-user.sh"
 # shellcheck source=/dev/null
-source "$HOME/.zshrc"
+source "$DEVCONTAINER_SCRIPTS_ROOT/setup/devspace/post-build.sh"
 # Add docker path
 # shellcheck source=/dev/null
 # shellcheck disable=SC2016

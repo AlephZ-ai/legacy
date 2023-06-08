@@ -1,8 +1,6 @@
 #!/usr/bin/env bash
 # init
 set -e
-# shellcheck source=/dev/null
-source /etc/bash.bashrc
 # Update apt-packages
 while ! (
   apt update

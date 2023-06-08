@@ -1,8 +1,6 @@
-#!/usr/bin/env bash
+#!/usr/bin/env zsh
 # shellcheck shell=bash
 # init
 set -e
-# shellcheck source=/dev/null
-source "$HOME/.bashrc"
 # Adding quantum extension
 az extension add --upgrade -n quantum

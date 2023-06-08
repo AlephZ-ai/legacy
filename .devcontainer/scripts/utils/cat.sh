@@ -1,4 +1,5 @@
-#!/usr/bin/env bash
+# shellcheck shell=bash
+# init
 set -e
 echo -e "--- file: $DEVCONTAINER_FEATURES_PROJECT_ROOT/run ---"
 cat "$DEVCONTAINER_FEATURES_PROJECT_ROOT/run"

@@ -1,9 +1,7 @@
-#!/usr/bin/env bash
+#!/usr/bin/env zsh
 # shellcheck shell=bash
 # init
 set -e
-# shellcheck source=/dev/null
-source "$HOME/.bashrc"
 # Setup asdf
 asdf plugin list | grep -q dotnet-core || asdf plugin add dotnet-core https://github.com/emersonsoares/asdf-dotnet-core.git
 asdf plugin update --all

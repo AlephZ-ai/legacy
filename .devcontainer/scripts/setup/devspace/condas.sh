@@ -1,9 +1,7 @@
-#!/usr/bin/env bash
+#!/usr/bin/env zsh
 # shellcheck shell=bash
 # init
 set -e
-# shellcheck source=/dev/null
-source "$HOME/.bashrc"
 os=$(uname -s)
 if [ "$os" = "Linux" ]; then
   # Install Miniconda

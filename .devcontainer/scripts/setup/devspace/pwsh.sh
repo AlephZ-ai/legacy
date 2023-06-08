@@ -1,9 +1,7 @@
-#!/usr/bin/env bash
+#!/usr/bin/env zsh
 # shellcheck shell=bash
 # init
 set -e
-# shellcheck source=/dev/null
-source "$HOME/.bashrc"
 # Setup pwsh modules
 echo "Setting up PowerShell modules, this can take a while..."
 pwsh_modules=('Pester' 'Set-PsEnv' 'posh-docker' 'posh-git' 'lazy-posh-git' 'Az' 'AWS.Tools.Installer' 'PSReadLine'

@@ -9,5 +9,16 @@ if command -v pip --version >/dev/null 2>&1; then
     fi
   done
 
-  pip freeze | xargs -I {} pip uninstall -y "{}"
+  # function to uninstall python packages
+  uninstall_python_packages() {
+    local user="$1"
+    # shellcheck disable=SC2086
+    pip freeze $user | xargs -I {} pip uninstall -y $user "{}" &>/dev/null
+  }
+
+  # uninstall global python packages
+  echo "Uninstalling user Python packages..."
+  uninstall_python_packages "--user"
+  echo "Uninstalling global Python packages..."
+  uninstall_python_packages
 fi

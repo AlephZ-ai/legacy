@@ -1,11 +1,15 @@
-#!/usr/bin/env bash
+#!/usr/bin/env zsh
+# shellcheck shell=bash
 # init
-# shellcheck source=/dev/null
 set -e
-source "$HOME/.bashrc"
 HOMEBREW_PREFIX=${HOMEBREW_PREFIX:-/home/linuxbrew/.linuxbrew}
 USERNAME="${USERNAME:-$(whoami)}"
+os=$(uname -s)
 # Setup ohmyzsh and make zsh default shell
+if [ "$os" = "Linux" ]; then
+  sudo chsh "$USERNAME" -s "$(which zsh)"
+fi
+
 # shellcheck source=/dev/null
 source "$DEVCONTAINER_SCRIPTS_ROOT/setup/devspace/zsh.sh"
 # Setup Condas
@@ -14,6 +18,10 @@ source "$DEVCONTAINER_SCRIPTS_ROOT/setup/devspace/condas.sh"
 # Setup Homebrew
 # shellcheck source=/dev/null
 source "$DEVCONTAINER_SCRIPTS_ROOT/setup/devspace/brew.sh"
+if [ "$os" = "Linux" ]; then
+  sudo chsh "$USERNAME" -s "$(which zsh)"
+fi
+
 # Make Edge the default browser if installed
 # shellcheck source=/dev/null
 source "$DEVCONTAINER_SCRIPTS_ROOT/setup/devspace/edge-default.sh"

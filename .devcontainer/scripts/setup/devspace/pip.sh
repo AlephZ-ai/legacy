@@ -1,20 +1,17 @@
-#!/usr/bin/env bash
+#!/usr/bin/env zsh
 # shellcheck shell=bash
 # init
 set -e
-# shellcheck source=/dev/null
-source "$HOME/.bashrc"
 os=$(uname -s)
 # Setup pip
 PYTHON_VERSION=$(python -c 'import sys; print(f"{sys.version_info.major}.{sys.version_info.minor}")')
 # shellcheck source=/dev/null
 source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'export PIP_NO_CACHE_DIR=false'
-if [ "$os" = "Linux" ]; then
-  # shellcheck source=/dev/null
-  source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export PATH=\"\$HOME/.local/bin:\$PATH\""
-else
+if [ "$os" != "Linux" ]; then
   # shellcheck source=/dev/null
   source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export PATH=\"\$HOME/Library/Python/$PYTHON_VERSION/bin:\$PATH\""
+  # shellcheck source=/dev/null
+  source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export PATH=\"\$HOME/usr/local/opt/python@$PYTHON_VERSION/bin:\$PATH\""
 fi
 
 python -m ensurepip --upgrade
@@ -27,7 +24,7 @@ if [ "$os" = "Linux" ]; then
 fi
 
 python -m pip install --no-input --upgrade pygobject pycairo pipx virtualenv sphinx sphinx-multiversion \
-  openvino onnxruntime Cython
+  openvino onnxruntime Cython cataclysm
 
 # https://huggingface.co/models?other=stable-baselines3
 # https://github.com/DLR-RM/rl-trained-agents/tree/master
@@ -66,7 +63,7 @@ pip install --no-input --user --upgrade \
   plotly torch torchvision torchaudio fire "pytorch-lightning>==1.9.4" nltk poetry span_marker "speechbrain>=0.5.14" \
   "huggingface-hub>=0.15.1" "transformers>=4.29.2" "diffusers>=0.16.1" "adapter-transformers>=3.2.1" rouge_score \
   "sentence-transformers>=2.2.2" "flair>=0.12.2" gensim spacy "fastai>=2.7.12" "agents>=1.4.0" "lupyne[graphql,rest]" plush lucene-querybuilder \
-  "nemo_toolkit[common,asr,nlp,tts,slu,test]>=1.18.0" "nemo_text_processing>=0.1.7rc0" cataclysm shot-scraper \
+  "nemo_toolkit[common,asr,nlp,tts,slu,test]>=1.18.0" "nemo_text_processing>=0.1.7rc0" shot-scraper \
   "bertopic[test,docs,dev,flair,spacy,use,gensim,vision]>=0.15.0" openai openai-whisper tiktoken ttok strip-tags llm llama-index \
   merlin-models merlin-systems merlin-dataloader merlin-sok fairscale sentencepiece langchain \
   "tritonclient>=2.34.0" pyctcdecode "pythae>=0.1.1" "rl_zoo3>=1.8.0" loralib "dask>=2023.5.1" \
@@ -103,7 +100,7 @@ pip install --no-input --user --upgrade \
 files=("$HOME/.pip/pip.conf" "$HOME/.config/pip/pip.conf")
 for file in "${files[@]}"; do
   if [ -e "$file" ]; then
-    sed -i '.bak' '/no-cache-dir = .*/d' "$file"
+    sed -i '.bak' '/no-cache-dir = .*/d' "$file" &>/dev/null
     echo "$file"
   fi
 done

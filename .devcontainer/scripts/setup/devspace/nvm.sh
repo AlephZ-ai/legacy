@@ -1,9 +1,7 @@
-#!/usr/bin/env bash
+#!/usr/bin/env zsh
 # shellcheck shell=bash
 # init
 set -e
-# shellcheck source=/dev/null
-source "$HOME/.bashrc"
 # Setup nvm
 # shellcheck source=/dev/null
 source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'export NVM_SYMLINK_CURRENT="true"'
@@ -28,7 +26,7 @@ packages=('npm' 'npx' 'npm-check-updates' 'corepack' '@npmcli/fs' '@devcontainer
   'vue-cli' 'angular-cli' 'react-native-cli' 'babel-cli' 'gulp-cli' 'webpack-cli' 'sequelize-cli' 'generator-angular'
   'mocha' 'eslint' 'jshint' 'standard' 'tslint' 'pm2' 'cordova' 'ionic' 'karma' 'browserify' 'rollup' 'less' 'sass'
   'prettier' 'http-server' 'serve' 'forever' 'concurrently' 'cross-env' 'newman' 'lerna' 'yeoman' 'knex' 'husky'
-  'commitizen' 'ava' 'jest' 'storybook' 'apidoc' 'coffeescript' 'node-gyp' 'node-pre-gyp' 'node-sass')
+  'commitizen' 'ava' 'jest' 'storybook' 'apidoc' 'coffeescript' 'node-gyp' 'node-pre-gyp' 'node-sass' 'gitmoji-cli')
 for node in "${nodes[@]}"; do
   echo -e "Installing Node.js $node"
   nvm install "$node"

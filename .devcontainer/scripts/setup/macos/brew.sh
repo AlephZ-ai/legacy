@@ -1,8 +1,6 @@
 #!/usr/bin/env bash
 # init
 set -e
-# shellcheck source=/dev/null
-source "$HOME/.bashrc"
 # Repair and Update if needed
 brew update
 brew tap --repair

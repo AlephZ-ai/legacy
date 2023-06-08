@@ -1,18 +1,13 @@
-#!/usr/bin/env bash
+#!/usr/bin/env zsh
+# shellcheck shell=bash
 # init
 set -e
-# shellcheck source=/dev/null
-source "$HOME/.bashrc"
 USERNAME="${USERNAME:-$(whoami)}"
-os=$(uname -s)
 # Setup ohmyzsh and make zsh default shell
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended || true
-if [ "$os" = "Linux" ]; then
-  sudo chsh "$USERNAME" -s "$(which zsh)"
+if [ ! -e "$HOME/.oh-my-zsh" ]; then
+  sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
 fi
 
-# powerlevel10k not working in wsl
-# git clone --depth=1 https://github.com/romkatv/powerlevel10k.git "$HOME/powerlevel10k" || true
-#   rcFile="$HOME/.zshrc"
-#   rcLine='source ~/powerlevel10k/powerlevel10k.zsh-theme'
-#   grep -qxF "$rcLine" "$rcFile" || echo "$rcLine" >> "$rcFile"
+# Setup powerlevel10k zsh theme
+# shellcheck source=/dev/null
+source "$DEVCONTAINER_SCRIPTS_ROOT/setup/devspace/zsh/powerlevel10k.sh"
