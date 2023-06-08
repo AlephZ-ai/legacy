@@ -60,13 +60,13 @@ updaterc() {
   run() { if "$sudo"; then sudo "$@"; else "$@"; fi; }
   run mkdir -p "$rc_dir"
   run touch "$rc"
-  # Remove duplicates with awk, keep just the first occurrence
-  # shellcheck disable=SC2016
-  local seen='!seen[$0]++'
-  # shellcheck disable=SC2155
-  local tmp_rc="$(run mktemp)"
-  run awk "$seen" "$rc" | run tee "$tmp_rc" >/dev/null
-  run mv "$tmp_rc" "$rc"
+  # # Remove duplicates with awk, keep just the first occurrence
+  # # shellcheck disable=SC2016
+  # local seen='!seen[$0]++'
+  # # shellcheck disable=SC2155
+  # local tmp_rc="$(run mktemp)"
+  # run awk "$seen" "$rc" | run tee "$tmp_rc" >/dev/null
+  # run mv "$tmp_rc" "$rc"
   # Select a delimiter not present in either $cmd or $prefix
   # shellcheck disable=SC2155
   local delim=$(seddelim "$prefix" "$cmd")

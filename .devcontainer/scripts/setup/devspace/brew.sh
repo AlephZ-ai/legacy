@@ -41,7 +41,7 @@ while ! (
 brew update
 brew upgrade
 # Setup post hombrew packages
-links=('dotnet' 'python@3.10' 'python-tk@3.10' 'postgresql@15')
+links=('python@3.10' 'python-tk@3.10' 'postgresql@15')
 if [ "$os" = "Linux" ]; then
   links+=('file-formula' 'curl' 'bzip2' 'zlib' 'libffi' 'llvm' 'openjdk' 'sqlite' 'openssl@3')
   sudo chsh "$USERNAME" -s "$(which zsh)"
@@ -52,11 +52,10 @@ for link in "${links[@]}"; do brew link --force --overwrite "$link"; done
 source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "[[ -r \"$HOMEBREW_PREFIX/etc/profile.d/bash_completion.sh\" ]] && source \"$HOMEBREW_PREFIX/etc/profile.d/bash_completion.sh\"" "$HOME/.bashrc"
 source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export LESSOPEN=\"|$HOMEBREW_PREFIX/bin/lesspipe.sh %s\""
 source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export MONO_GAC_PREFIX=\"$HOMEBREW_PREFIX\""
-source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export DOTNET_ROOT=\"$HOMEBREW_PREFIX/opt/dotnet/libexec\""
 source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export GROOVY_HOME=\"$HOMEBREW_PREFIX/opt/groovy/libexec\""
 source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export SCALA_HOME=\"$HOMEBREW_PREFIX/opt/scala/idea\""
 source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "source \"$HOMEBREW_PREFIX/opt/asdf/libexec/asdf.sh\""
-brews=('gnu-sed' 'grep' 'make' 'coreutils' 'curl' 'bzip2' 'zlib' 'llvm' 'libffi' 'openjdk' 'sqlite' 'dotnet' 'openssl@3' 'python@3.10' 'python-tk@3.10' 'postgresql@15')
+brews=('gnu-sed' 'grep' 'make' 'coreutils' 'curl' 'bzip2' 'zlib' 'llvm' 'libffi' 'openjdk' 'sqlite' 'openssl@3' 'python@3.10' 'python-tk@3.10' 'postgresql@15')
 for brew in "${brews[@]}"; do
   brew_dir="$HOMEBREW_PREFIX/opt/$brew"
   brew_bin_dir="$brew_dir/bin"

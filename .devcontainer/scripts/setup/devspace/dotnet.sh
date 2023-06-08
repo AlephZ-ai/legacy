@@ -9,6 +9,8 @@ dotnet_latest_major_global='{ "sdk": { "rollForward": "latestmajor" } }'
 source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'export DOTNET_ROLL_FORWARD=LatestMajor'
 echo "$dotnet_latest_major_global" >"$HOME/global.json"
 # Update rc files
+# shellcheck disable=SC2016
+source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'export PATH="$HOME/.asdf/shims:$PATH"'
 source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export DOTNET_ROOT=\"\$HOME/.asdf/installs/dotnet-core/$preview\""
 source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "$HOME/.asdf/plugins/dotnet-core/set-dotnet-home.bash"
 # Setup dotnet workloads
@@ -19,11 +21,11 @@ dotnet workload clean
 dotnet workload update
 dotnet workload repair
 # Setup dotnet tools
+mkdir -p "$HOME/.dotnet/tools/preview"
 # shellcheck disable=SC2016
 source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'PATH="$HOME/.dotnet/tools:$PATH"'
 # shellcheck disable=SC2016
 source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'PATH="$HOME/.dotnet/tools/preview:$PATH"'
-mkdir -p "$HOME/.dotnet/tools/preview"
 echo "$dotnet_latest_major_global" >"$HOME/.dotnet/tools/global.json"
 echo "$dotnet_latest_major_global" >"$HOME/.dotnet/tools/preview/global.json"
 tools=('powershell' 'git-credential-manager' 'mlnet' 'microsoft.quantum.iqsharp' 'dotnet-ef' 'cake.tool'
