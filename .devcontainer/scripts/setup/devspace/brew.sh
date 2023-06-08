@@ -41,7 +41,7 @@ if [ "$os" = "Linux" ]; then
   brew link --force --overwrite file-formula curl bzip2 zlib libffi llvm openjdk sqlite openssl@3
 fi
 
-(brew link --force --overwrite dotnet python@3.10 postgresql@15) || true
+brew link --force --overwrite dotnet python@3.10 postgresql@15 || true
 source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "[[ -r \"$HOMEBREW_PREFIX/etc/profile.d/bash_completion.sh\" ]] && source \"$HOMEBREW_PREFIX/etc/profile.d/bash_completion.sh\"" "$HOME/.bashrc"
 source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export LESSOPEN=\"|$HOMEBREW_PREFIX/bin/lesspipe.sh %s\""
 source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export MONO_GAC_PREFIX=\"$HOMEBREW_PREFIX\""

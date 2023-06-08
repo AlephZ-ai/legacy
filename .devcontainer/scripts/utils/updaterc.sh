@@ -126,6 +126,7 @@ fi
 # evaluate $cmd
 eval "$cmd" &>/dev/null || true
 for rc in "${rcs[@]}"; do
+  echo "Updating $rc with $cmd"
   updaterc "$cmd" "$rc" "$sudo"
 done
 
