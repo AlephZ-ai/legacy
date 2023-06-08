@@ -11,7 +11,7 @@ if command -v dotnet --version >/dev/null 2>&1; then
     list=$(dotnet workload list | awk 'NR>2 {print $1}')
     if [ -n "$list" ]; then
       for workload in $list; do
-        dotnet workload uninstall "$workload" &>/dev/null || true
+        dotnet workload uninstall "$workload" || true
       done
     fi
   fi

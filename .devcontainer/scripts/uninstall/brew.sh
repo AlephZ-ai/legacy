@@ -1,5 +1,12 @@
 #!/bin/bash
 set -euo pipefail
+os=$(uname -s)
+if [ "$os" = "Linux" ]; then
+  export HOMEBREW_PREFIX="/home/linuxbrew/.linuxbrew"
+else
+  export HOMEBREW_PREFIX="/usr/local"
+fi
+
 "$DEVCONTAINER_SCRIPTS_ROOT/uninstall/brew/brews.sh"
 if command -v brew --version >/dev/null 2>&1; then
   NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/uninstall.sh)"
