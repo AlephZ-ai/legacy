@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # init
-set -e
+set -euo pipefail
 USERNAME=${USERNAME:-}
 # Update apt-packages
 # shellcheck source=/dev/null

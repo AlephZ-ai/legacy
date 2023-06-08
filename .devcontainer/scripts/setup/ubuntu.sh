@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # init
-set -e
+set -euo pipefailuo pipefail
 current_user="$(whoami)"
 # Disable needing password for sudo
 # shellcheck source=/dev/null

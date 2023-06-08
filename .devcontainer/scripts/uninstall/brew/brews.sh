@@ -1,5 +1,5 @@
 #!/bin/bash
-set -e
+set -euo pipefail
 "$DEVCONTAINER_SCRIPTS_ROOT/uninstall/pip.sh"
 "$DEVCONTAINER_SCRIPTS_ROOT/uninstall/asdf.sh"
 if command -v brew --version >/dev/null 2>&1; then

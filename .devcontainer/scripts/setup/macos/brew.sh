@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # init
-set -e
+set -euo pipefail
 # Repair and Update if needed
 brew update
 brew tap --repair

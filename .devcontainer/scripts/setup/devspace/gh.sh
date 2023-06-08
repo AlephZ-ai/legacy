@@ -1,7 +1,7 @@
 #!/usr/bin/env zsh
 # shellcheck shell=bash
 # init
-set -e
+set -euo pipefail
 # Adding GH .ssh known hosts
 mkdir -p "$HOME/.ssh/"
 touch "$HOME/.ssh/known_hosts"

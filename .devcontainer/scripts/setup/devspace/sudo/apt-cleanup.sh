@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # init
-set -e
+set -euo pipefail
 # Cleanup apt-packages
 apt autoclean -y
 apt autoremove -y

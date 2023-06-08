@@ -1,6 +1,6 @@
 # shellcheck shell=bash
 # init
-set -e
+set -euo pipefailuo pipefail
 echo -e "--- file: $DEVCONTAINER_FEATURES_PROJECT_ROOT/run ---"
 cat "$DEVCONTAINER_FEATURES_PROJECT_ROOT/run"
 echo -e "--- file: $DEVCONTAINER_FEATURES_PROJECT_ROOT/.devcontainer/init ---"

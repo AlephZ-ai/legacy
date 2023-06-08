@@ -1,3 +1,3 @@
 #shellcheck shell=bash
-set -e
+set -euo pipefail
 exec "$@"

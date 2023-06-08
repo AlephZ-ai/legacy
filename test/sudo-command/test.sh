@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 #shellcheck source=/dev/null
 
-set -e
+set -euo pipefail
 
 source dev-container-features-test-lib
 

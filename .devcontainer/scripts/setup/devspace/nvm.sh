@@ -1,7 +1,7 @@
 #!/usr/bin/env zsh
 # shellcheck shell=bash
 # init
-set -e
+set -euo pipefail
 # Setup nvm
 # shellcheck source=/dev/null
 source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'export NVM_SYMLINK_CURRENT="true"'

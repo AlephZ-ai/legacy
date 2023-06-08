@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # init
-set -e
+set -euo pipefail
 # Install docker completions
 rm -rf /etc/bash_completion.d/docker.sh || true
 mkdir -p /etc/bash_completion.d

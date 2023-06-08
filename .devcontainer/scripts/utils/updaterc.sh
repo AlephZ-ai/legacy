@@ -1,6 +1,6 @@
 # shellcheck shell=bash
 # init
-set -e
+set -euo pipefail
 updaterc() {
   local cmd="$1"
   local rc="$2"

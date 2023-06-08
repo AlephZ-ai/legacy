@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-set -e
+set -euo pipefail
 if command -v pip --version >/dev/null 2>&1; then
   files=("$HOME/.pip/pip.conf" "$HOME/.config/pip/pip.conf")
   for file in "${files[@]}"; do

@@ -1,7 +1,7 @@
 #!/usr/bin/env zsh
 # shellcheck shell=bash
 # init
-set -e
+set -euo pipefail
 os=$(uname -s)
 if [ "$os" = "Linux" ]; then
   # Install Miniconda

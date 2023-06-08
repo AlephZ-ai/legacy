@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-set -e
+set -euo pipefail
 if command -v nvm --version --version >/dev/null 2>&1; then
   nodes=('node' '--lts')
   for node in "${nodes[@]}"; do

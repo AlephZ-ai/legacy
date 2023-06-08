@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-set -e
+set -euo pipefail
 "$DEVCONTAINER_SCRIPTS_ROOT/uninstall/dotnet.sh"
 if command -v asdf --version >/dev/null 2>&1; then
   for plugin in $(asdf plugin list); do

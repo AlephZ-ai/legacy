@@ -1,7 +1,7 @@
 #!/usr/bin/env zsh
 # shellcheck shell=bash
 # init
-set -e
+set -euo pipefail
 # Setup dotnet
 preview="$(asdf list all dotnet-core 8 | tail -1)"
 dotnet_latest_major_global='{ "sdk": { "rollForward": "latestmajor" } }'

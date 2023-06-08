@@ -2,7 +2,7 @@
 #shellcheck disable=SC2016
 #shellcheck source=/dev/null
 
-set -e
+set -euo pipefail
 
 source dev-container-features-test-lib
 

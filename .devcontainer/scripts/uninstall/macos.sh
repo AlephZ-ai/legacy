@@ -1,6 +1,6 @@
 #!/bin/zsh
 # shellcheck shell=bash
-set -e
+set -euo pipefail
 unsafe_level="$1"
 # shellcheck source=/dev/null
 "$DEVCONTAINER_SCRIPTS_ROOT/uninstall/nvm.sh"

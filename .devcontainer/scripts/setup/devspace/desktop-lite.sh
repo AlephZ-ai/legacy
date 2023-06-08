@@ -1,7 +1,7 @@
 #!/usr/bin/env zsh
 # shellcheck shell=bash
 # init
-set -e
+set -euo pipefail
 # desktop-lite fix for versions > 1.2.0
 # Find the version number by looking at the directory names
 NOVNC_VERSION=$(basename "$(find /usr/local/novnc -type d -name 'noVNC-*' | head -n 1)") || true

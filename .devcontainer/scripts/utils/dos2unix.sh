@@ -1,5 +1,5 @@
 # shellcheck shell=bash
-set -e
+set -euo pipefailuo pipefail
 dos2unix "$DEVCONTAINER_FEATURES_PROJECT_ROOT/run" || true
 dos2unix "$DEVCONTAINER_FEATURES_PROJECT_ROOT/.devcontainer/init" || true
 find "$DEVCONTAINER_FEATURES_PROJECT_ROOT/.devcontainer/scripts" -type f -iname "*.sh" -exec dos2unix "{}" \; || true

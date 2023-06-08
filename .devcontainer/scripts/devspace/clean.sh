@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-set -e
+set -euo pipefail
 # shellcheck disable=SC2034
 for j in {1..5}; do
   containerid=$(docker container ls --all --quiet --filter name="$DEVCONTAINER_FEATURES_PROJECT_NAME-devspace")

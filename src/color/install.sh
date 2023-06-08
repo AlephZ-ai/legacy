@@ -1,5 +1,5 @@
 #!/bin/sh
-set -e
+set -euo pipefail
 
 echo "Activating feature 'color'"
 echo "The provided favorite color is: ${FAVORITE}"

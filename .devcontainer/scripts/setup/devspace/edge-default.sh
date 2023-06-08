@@ -1,7 +1,7 @@
 #!/usr/bin/env zsh
 # shellcheck shell=bash
 # init
-set -e
+set -euo pipefail
 os=$(uname -s)
 # Make Edge the default browser if installed
 if [ "$os" = "Linux" ]; then

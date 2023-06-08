@@ -1,7 +1,7 @@
 #!/usr/bin/env zsh
 # shellcheck shell=bash
 # init
-set -e
+set -euo pipefail
 USERNAME="${USERNAME:-$(whoami)}"
 # Setup ohmyzsh and make zsh default shell
 if [ ! -e "$HOME/.oh-my-zsh" ]; then

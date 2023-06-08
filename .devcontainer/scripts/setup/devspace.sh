@@ -1,7 +1,7 @@
 #!/usr/bin/env zsh
 #shellcheck shell=bash
 # init
-set -e
+set -euo pipefail
 # Test all tools are installed
 docker --version
 docker-compose --version

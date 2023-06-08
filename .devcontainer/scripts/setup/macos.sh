@@ -1,7 +1,7 @@
 #!/usr/bin/env zsh
 #shellcheck shell=bash
 # init
-set -e
+set -euo pipefailuo pipefail
 # Disable needing password for sudo
 # shellcheck source=/dev/null
 source "$DEVCONTAINER_SCRIPTS_ROOT/utils/disable-sudo-password.sh"
