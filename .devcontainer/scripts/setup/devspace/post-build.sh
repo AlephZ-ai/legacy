@@ -25,9 +25,6 @@ fi
 # Make Edge the default browser if installed
 # shellcheck source=/dev/null
 source "$DEVCONTAINER_SCRIPTS_ROOT/setup/devspace/edge-default.sh"
-# Setup java
-# shellcheck source=/dev/null
-source "$DEVCONTAINER_SCRIPTS_ROOT/setup/devspace/java.sh"
 # Setup adsf
 # shellcheck source=/dev/null
 source "$DEVCONTAINER_SCRIPTS_ROOT/setup/devspace/asdf.sh"
