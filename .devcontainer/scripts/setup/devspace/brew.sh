@@ -1,20 +1,17 @@
 #!/usr/bin/env zsh
 # shellcheck shell=bash
+# shellcheck source=/dev/null
 # init
 set -e
 HOMEBREW_PREFIX=${HOMEBREW_PREFIX:-/home/linuxbrew/.linuxbrew}
 os=$(uname -s)
 # Add autogenerate line
-# shellcheck source=/dev/null
 source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" '# ------- pre-generated above this line -------' all
-# shellcheck source=/dev/null
 source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" '# ------- manual entry goes here -------' all
-# shellcheck source=/dev/null
 source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" '# ------- auto-generated below this line -------' all
 # Setup Homebrew
 sudo echo "sudo cached"
 NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
-# shellcheck source=/dev/null
 source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "eval \"\$(\"$HOMEBREW_PREFIX/bin/brew\" shellenv)\""
 # Install taps
 brew tap microsoft/mssql-release https://github.com/Microsoft/homebrew-mssql-release
@@ -41,73 +38,57 @@ brew upgrade
 # Setup post hombrew packages
 if [ "$os" = "Linux" ]; then
   sudo chsh "$USERNAME" -s "$(which zsh)"
-  brew link --force --overwrite openssl@3
+  brew link --force --overwrite file-formula curl bzip2 zlib libffi llvm openjdk sqlite openssl@3
 fi
 
-brew link --force --overwrite python@3.10 postgresql@15
-# shellcheck source=/dev/null
+set +e
+brew link --force --overwrite dotnet python@3.10 postgresql@15
+set -e
 source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "[[ -r \"$HOMEBREW_PREFIX/etc/profile.d/bash_completion.sh\" ]] && source \"$HOMEBREW_PREFIX/etc/profile.d/bash_completion.sh\"" "$HOME/.bashrc"
-# shellcheck source=/dev/null
-source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "source \"$HOMEBREW_PREFIX/opt/asdf/libexec/asdf.sh\""
-# shellcheck source=/dev/null
-source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export MONO_GAC_PREFIX=\"$HOMEBREW_PREFIX\""
-# shellcheck source=/dev/null
-source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export DOTNET_ROOT=\"$HOMEBREW_PREFIX/opt/dotnet/libexec\""
-# shellcheck source=/dev/null
-source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export GROOVY_HOME=\"$HOMEBREW_PREFIX/opt/groovy/libexec\""
-# shellcheck source=/dev/null
-source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export SCALA_HOME=\"$HOMEBREW_PREFIX/opt/scala/idea\""
-# shellcheck source=/dev/null
-source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export PATH=\"$HOMEBREW_PREFIX/opt/python/libexec/bin:\$PATH\""
-# shellcheck source=/dev/null
-source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export PATH=\"$HOMEBREW_PREFIX/opt/coreutils/libexec/gnubin:\$PATH\""
-# shellcheck source=/dev/null
-source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export PATH=\"$HOMEBREW_PREFIX/opt/gnu-sed/libexec/gnubin:\$PATH\""
-# shellcheck source=/dev/null
-source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export PATH=\"$HOMEBREW_PREFIX/opt/grep/libexec/gnubin:\$PATH\""
-# shellcheck source=/dev/null
-source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export PATH=\"$HOMEBREW_PREFIX/opt/make/libexec/gnubin:\$PATH\""
-# shellcheck source=/dev/null
-source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export MANPATH=\"$HOMEBREW_PREFIX/opt/coreutils/libexec/gnuman:\$MANPATH\""
-# shellcheck source=/dev/null
-source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export MANPATH=\"$HOMEBREW_PREFIX/opt/gnu-sed/libexec/gnuman:\$MANPATH\""
-# shellcheck source=/dev/null
-source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export MANPATH=\"$HOMEBREW_PREFIX/opt/grep/libexec/gnuman:\$MANPATH\""
-# shellcheck source=/dev/null
-source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export MANPATH=\"$HOMEBREW_PREFIX/opt/make/libexec/gnuman:\$MANPATH\""
-# shellcheck source=/dev/null
 source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export LESSOPEN=\"|$HOMEBREW_PREFIX/bin/lesspipe.sh %s\""
-# shellcheck source=/dev/null
-source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export LDFLAGS=\"-L$HOMEBREW_PREFIX/opt/curl/lib\${LDFLAGS:+ }\$LDFLAGS\""
-# shellcheck source=/dev/null
+source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export MONO_GAC_PREFIX=\"$HOMEBREW_PREFIX\""
+source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export DOTNET_ROOT=\"$HOMEBREW_PREFIX/opt/dotnet/libexec\""
+source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export GROOVY_HOME=\"$HOMEBREW_PREFIX/opt/groovy/libexec\""
+source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export SCALA_HOME=\"$HOMEBREW_PREFIX/opt/scala/idea\""
+source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "source \"$HOMEBREW_PREFIX/opt/asdf/libexec/asdf.sh\""
+source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export PATH=\"$HOMEBREW_PREFIX/opt/curl/bin:\$PATH\""
+source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export PATH=\"$HOMEBREW_PREFIX/opt/bzip2/bin:\$PATH\""
+source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export PATH=\"$HOMEBREW_PREFIX/opt/llvm/bin:\$PATH\""
+source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export PATH=\"$HOMEBREW_PREFIX/opt/openjdk/bin:\$PATH\""
+source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export PATH=\"$HOMEBREW_PREFIX/opt/sqlite/bin:\$PATH\""
+source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export PATH=\"$HOMEBREW_PREFIX/opt/openssl@3/bin:\$PATH\""
+source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export PATH=\"$HOMEBREW_PREFIX/opt/coreutils/libexec/gnubin:\$PATH\""
+source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export PATH=\"$HOMEBREW_PREFIX/opt/gnu-sed/libexec/gnubin:\$PATH\""
+source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export PATH=\"$HOMEBREW_PREFIX/opt/grep/libexec/gnubin:\$PATH\""
+source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export PATH=\"$HOMEBREW_PREFIX/opt/make/libexec/gnubin:\$PATH\""
+source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export MANPATH=\"$HOMEBREW_PREFIX/opt/coreutils/libexec/gnuman:\$MANPATH\""
+source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export MANPATH=\"$HOMEBREW_PREFIX/opt/gnu-sed/libexec/gnuman:\$MANPATH\""
+source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export MANPATH=\"$HOMEBREW_PREFIX/opt/grep/libexec/gnuman:\$MANPATH\""
+source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export MANPATH=\"$HOMEBREW_PREFIX/opt/make/libexec/gnuman:\$MANPATH\""
 source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export CPPFLAGS=\"-I$HOMEBREW_PREFIX/opt/curl/include\${CPPFLAGS:+ }\$CPPFLAGS\""
-# shellcheck source=/dev/null
-source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export LDFLAGS=\"-L$HOMEBREW_PREFIX/opt/bzip2/lib\${LDFLAGS:+ }\$LDFLAGS\""
-# shellcheck source=/dev/null
 source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export CPPFLAGS=\"-I$HOMEBREW_PREFIX/opt/bzip2/include\${CPPFLAGS:+ }\$CPPFLAGS\""
-# shellcheck source=/dev/null
-source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export LDFLAGS=\"-L$HOMEBREW_PREFIX/opt/zlib/lib\${LDFLAGS:+ }\$LDFLAGS\""
-# shellcheck source=/dev/null
 source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export CPPFLAGS=\"-I$HOMEBREW_PREFIX/opt/zlib/include\${CPPFLAGS:+ }\$CPPFLAGS\""
-# shellcheck source=/dev/null
-source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export LDFLAGS=\"-L$HOMEBREW_PREFIX/opt/llvm/lib/c++ -Wl,-rpath,$HOMEBREW_PREFIX/opt/llvm/lib/c++\${LDFLAGS:+ }\$LDFLAGS\""
-# shellcheck source=/dev/null
-source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export LDFLAGS=\"-L$HOMEBREW_PREFIX/opt/llvm/lib\${LDFLAGS:+ }\$LDFLAGS\""
-# shellcheck source=/dev/null
 source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export CPPFLAGS=\"-I$HOMEBREW_PREFIX/opt/llvm/include\${CPPFLAGS:+ }\$CPPFLAGS\""
-# shellcheck source=/dev/null
-source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export CPPFLAGS=\"-I$HOMEBREW_PREFIX/opt/openjdk/include\${CPPFLAGS:+ }\$CPPFLAGS\""
-# shellcheck source=/dev/null
-source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export LDFLAGS=\"-L$HOMEBREW_PREFIX/opt/libffi/lib\${LDFLAGS:+ }\$LDFLAGS\""
-# shellcheck source=/dev/null
 source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export CPPFLAGS=\"-I$HOMEBREW_PREFIX/opt/libffi/include\${CPPFLAGS:+ }\$CPPFLAGS\""
-# shellcheck source=/dev/null
-source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export LDFLAGS=\"-L$HOMEBREW_PREFIX/opt/postgresql@15/lib\${LDFLAGS:+ }\$LDFLAGS\""
-# shellcheck source=/dev/null
+source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export CPPFLAGS=\"-I$HOMEBREW_PREFIX/opt/openjdk/include\${CPPFLAGS:+ }\$CPPFLAGS\""
+source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export CPPFLAGS=\"-I$HOMEBREW_PREFIX/opt/sqlite/include\${CPPFLAGS:+ }\$CPPFLAGS\""
+source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export CPPFLAGS=\"-I$HOMEBREW_PREFIX/opt/openssl@3/include\${CPPFLAGS:+ }\$CPPFLAGS\""
 source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export CPPFLAGS=\"-I$HOMEBREW_PREFIX/opt/postgresql@15/include\${CPPFLAGS:+ }\$CPPFLAGS\""
-# shellcheck source=/dev/null
+source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export LDFLAGS=\"-L$HOMEBREW_PREFIX/opt/curl/lib\${LDFLAGS:+ }\$LDFLAGS\""
+source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export LDFLAGS=\"-L$HOMEBREW_PREFIX/opt/bzip2/lib\${LDFLAGS:+ }\$LDFLAGS\""
+source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export LDFLAGS=\"-L$HOMEBREW_PREFIX/opt/zlib/lib\${LDFLAGS:+ }\$LDFLAGS\""
+source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export LDFLAGS=\"-L$HOMEBREW_PREFIX/opt/llvm/lib/c++ -Wl,-rpath,$HOMEBREW_PREFIX/opt/llvm/lib/c++\${LDFLAGS:+ }\$LDFLAGS\""
+source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export LDFLAGS=\"-L$HOMEBREW_PREFIX/opt/llvm/lib\${LDFLAGS:+ }\$LDFLAGS\""
+source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export LDFLAGS=\"-L$HOMEBREW_PREFIX/opt/libffi/lib\${LDFLAGS:+ }\$LDFLAGS\""
+source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export LDFLAGS=\"-L$HOMEBREW_PREFIX/opt/sqlite/lib\${LDFLAGS:+ }\$LDFLAGS\""
+source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export LDFLAGS=\"-L$HOMEBREW_PREFIX/opt/openssl@3/lib\${LDFLAGS:+ }\$LDFLAGS\""
+source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export LDFLAGS=\"-L$HOMEBREW_PREFIX/opt/postgresql@15/lib\${LDFLAGS:+ }\$LDFLAGS\""
+source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export PKG_CONFIG_PATH=\"$HOMEBREW_PREFIX/opt/curl/lib/pkgconfig\${PKG_CONFIG_PATH:+:}\$PKG_CONFIG_PATH\""
+source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export PKG_CONFIG_PATH=\"$HOMEBREW_PREFIX/opt/zlib/lib/pkgconfig\${PKG_CONFIG_PATH:+:}\$PKG_CONFIG_PATH\""
+source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export PKG_CONFIG_PATH=\"$HOMEBREW_PREFIX/opt/libffi/lib/pkgconfig\${PKG_CONFIG_PATH:+:}\$PKG_CONFIG_PATH\""
+source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export PKG_CONFIG_PATH=\"$HOMEBREW_PREFIX/opt/sqlite/lib/pkgconfig\${PKG_CONFIG_PATH:+:}\$PKG_CONFIG_PATH\""
+source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export PKG_CONFIG_PATH=\"$HOMEBREW_PREFIX/opt/openssl@3/lib/pkgconfig\${PKG_CONFIG_PATH:+:}\$PKG_CONFIG_PATH\""
 source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export PKG_CONFIG_PATH=\"$HOMEBREW_PREFIX/opt/postgresql@15/lib/pkgconfig\${PKG_CONFIG_PATH:+:}\$PKG_CONFIG_PATH\""
-
 # Run Homebrew cleanup and doctor to check for errors
 brew cleanup
-brew doctor || true
+brew doctor

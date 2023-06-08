@@ -22,5 +22,3 @@ if ! uname -r | grep -q microsoft; then
   # shellcheck source=/dev/null
   source "$DEVCONTAINER_SCRIPTS_ROOT/utils/docker-login.sh"
 fi
-# Done
-echo "Please restart shell to get latest environment variables"

@@ -28,5 +28,3 @@ source "$DEVCONTAINER_SCRIPTS_ROOT/utils/gh-login.sh"
 # Login to Docker
 # shellcheck source=/dev/null
 source "$DEVCONTAINER_SCRIPTS_ROOT/utils/docker-login.sh"
-# Done
-echo "Please restart shell to get latest environment variables"

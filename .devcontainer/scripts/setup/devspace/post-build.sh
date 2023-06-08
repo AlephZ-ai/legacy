@@ -58,5 +58,3 @@ source "$DEVCONTAINER_SCRIPTS_ROOT/setup/devspace/desktop-lite.sh"
 # Setup ohmyzsh plugins
 # shellcheck source=/dev/null
 source "$DEVCONTAINER_SCRIPTS_ROOT/setup/devspace/omz.sh"
-# Done
-echo "Please restart shell to get latest environment variables"

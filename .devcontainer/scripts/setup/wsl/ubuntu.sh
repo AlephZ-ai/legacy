@@ -24,5 +24,3 @@ source "$DEVCONTAINER_SCRIPTS_ROOT/utils/gh-login.sh"
 source "$DEVCONTAINER_SCRIPTS_ROOT/utils/docker-login.sh"
 # WSLg GPU acceleration
 # glxinfo
-# Done
-echo "Please restart shell to get latest environment variables"
