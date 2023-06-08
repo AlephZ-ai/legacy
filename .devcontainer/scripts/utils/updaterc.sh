@@ -101,7 +101,9 @@ if [[ "${cmd_parts[$sudo_index]}" = 'sudo' ]]; then
   sudo=true
   next_index=$((sudo_index + 1))
   cmd="${cmd_parts[*]:$next_index}"
-  files="$sudo_files"
+  if [ "$files" = "$user_files" ]; then
+    files="$sudo_files"
+  fi
 fi
 
 rcs=()

@@ -7,7 +7,7 @@ echo "Setting up PowerShell modules, this can take a while..."
 pwsh_modules=('Pester' 'Set-PsEnv' 'posh-docker' 'posh-git' 'lazy-posh-git' 'Az' 'AWS.Tools.Installer' 'PSReadLine'
   'SqlServer' 'PSScriptAnalyzer' 'dbatools')
 # shellcheck disable=SC2016
-pwsh_update='if (!(Test-Path $PROFILE)) { New-Item -ItemType File -Path $PROFILE -Force; }; Install-Module PowerShellGet -ErrorAction Stop -SkipPublisherCheck; Install-Module PackageManagement -ErrorAction Stop -SkipPublisherCheck; Set-PSRepository -Name PSGallery -InstallationPolicy Trusted; Update-Module; Set-Alias -Name awk -Value gawk'
+pwsh_update='if (!(Test-Path $PROFILE)) { New-Item -ItemType File -Path $PROFILE -Force; }; Set-PSRepository -Name PSGallery -InstallationPolicy Trusted; Install-Module PowerShellGet -ErrorAction Stop -SkipPublisherCheck; Install-Module PackageManagement -ErrorAction Stop -SkipPublisherCheck; Update-Module; Set-Alias -Name awk -Value gawk'
 # shellcheck disable=SC2016
 pwsh_install_module='Install-Module $module -ErrorAction Stop -SkipPublisherCheck;'
 pwsh_post_install='Get-PSRepository | Set-PSRepository -InstallationPolicy Trusted; Update-Module;'
