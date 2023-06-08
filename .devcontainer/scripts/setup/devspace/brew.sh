@@ -49,44 +49,30 @@ source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export DOTNET_ROOT=\"$HOM
 source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export GROOVY_HOME=\"$HOMEBREW_PREFIX/opt/groovy/libexec\""
 source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export SCALA_HOME=\"$HOMEBREW_PREFIX/opt/scala/idea\""
 source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "source \"$HOMEBREW_PREFIX/opt/asdf/libexec/asdf.sh\""
-source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export PATH=\"$HOMEBREW_PREFIX/opt/curl/bin:\$PATH\""
-source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export PATH=\"$HOMEBREW_PREFIX/opt/bzip2/bin:\$PATH\""
-source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export PATH=\"$HOMEBREW_PREFIX/opt/llvm/bin:\$PATH\""
-source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export PATH=\"$HOMEBREW_PREFIX/opt/openjdk/bin:\$PATH\""
-source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export PATH=\"$HOMEBREW_PREFIX/opt/sqlite/bin:\$PATH\""
-source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export PATH=\"$HOMEBREW_PREFIX/opt/openssl@3/bin:\$PATH\""
-source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export PATH=\"$HOMEBREW_PREFIX/opt/coreutils/libexec/gnubin:\$PATH\""
-source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export PATH=\"$HOMEBREW_PREFIX/opt/gnu-sed/libexec/gnubin:\$PATH\""
-source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export PATH=\"$HOMEBREW_PREFIX/opt/grep/libexec/gnubin:\$PATH\""
-source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export PATH=\"$HOMEBREW_PREFIX/opt/make/libexec/gnubin:\$PATH\""
-source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export MANPATH=\"$HOMEBREW_PREFIX/opt/coreutils/libexec/gnuman:\$MANPATH\""
-source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export MANPATH=\"$HOMEBREW_PREFIX/opt/gnu-sed/libexec/gnuman:\$MANPATH\""
-source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export MANPATH=\"$HOMEBREW_PREFIX/opt/grep/libexec/gnuman:\$MANPATH\""
-source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export MANPATH=\"$HOMEBREW_PREFIX/opt/make/libexec/gnuman:\$MANPATH\""
-source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export CPPFLAGS=\"-I$HOMEBREW_PREFIX/opt/curl/include\${CPPFLAGS:+ }\$CPPFLAGS\""
-source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export CPPFLAGS=\"-I$HOMEBREW_PREFIX/opt/bzip2/include\${CPPFLAGS:+ }\$CPPFLAGS\""
-source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export CPPFLAGS=\"-I$HOMEBREW_PREFIX/opt/zlib/include\${CPPFLAGS:+ }\$CPPFLAGS\""
-source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export CPPFLAGS=\"-I$HOMEBREW_PREFIX/opt/llvm/include\${CPPFLAGS:+ }\$CPPFLAGS\""
-source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export CPPFLAGS=\"-I$HOMEBREW_PREFIX/opt/libffi/include\${CPPFLAGS:+ }\$CPPFLAGS\""
-source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export CPPFLAGS=\"-I$HOMEBREW_PREFIX/opt/openjdk/include\${CPPFLAGS:+ }\$CPPFLAGS\""
-source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export CPPFLAGS=\"-I$HOMEBREW_PREFIX/opt/sqlite/include\${CPPFLAGS:+ }\$CPPFLAGS\""
-source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export CPPFLAGS=\"-I$HOMEBREW_PREFIX/opt/openssl@3/include\${CPPFLAGS:+ }\$CPPFLAGS\""
-source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export CPPFLAGS=\"-I$HOMEBREW_PREFIX/opt/postgresql@15/include\${CPPFLAGS:+ }\$CPPFLAGS\""
-source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export LDFLAGS=\"-L$HOMEBREW_PREFIX/opt/curl/lib\${LDFLAGS:+ }\$LDFLAGS\""
-source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export LDFLAGS=\"-L$HOMEBREW_PREFIX/opt/bzip2/lib\${LDFLAGS:+ }\$LDFLAGS\""
-source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export LDFLAGS=\"-L$HOMEBREW_PREFIX/opt/zlib/lib\${LDFLAGS:+ }\$LDFLAGS\""
-source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export LDFLAGS=\"-L$HOMEBREW_PREFIX/opt/llvm/lib/c++ -Wl,-rpath,$HOMEBREW_PREFIX/opt/llvm/lib/c++\${LDFLAGS:+ }\$LDFLAGS\""
-source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export LDFLAGS=\"-L$HOMEBREW_PREFIX/opt/llvm/lib\${LDFLAGS:+ }\$LDFLAGS\""
-source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export LDFLAGS=\"-L$HOMEBREW_PREFIX/opt/libffi/lib\${LDFLAGS:+ }\$LDFLAGS\""
-source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export LDFLAGS=\"-L$HOMEBREW_PREFIX/opt/sqlite/lib\${LDFLAGS:+ }\$LDFLAGS\""
-source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export LDFLAGS=\"-L$HOMEBREW_PREFIX/opt/openssl@3/lib\${LDFLAGS:+ }\$LDFLAGS\""
-source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export LDFLAGS=\"-L$HOMEBREW_PREFIX/opt/postgresql@15/lib\${LDFLAGS:+ }\$LDFLAGS\""
-source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export PKG_CONFIG_PATH=\"$HOMEBREW_PREFIX/opt/curl/lib/pkgconfig\${PKG_CONFIG_PATH:+:}\$PKG_CONFIG_PATH\""
-source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export PKG_CONFIG_PATH=\"$HOMEBREW_PREFIX/opt/zlib/lib/pkgconfig\${PKG_CONFIG_PATH:+:}\$PKG_CONFIG_PATH\""
-source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export PKG_CONFIG_PATH=\"$HOMEBREW_PREFIX/opt/libffi/lib/pkgconfig\${PKG_CONFIG_PATH:+:}\$PKG_CONFIG_PATH\""
-source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export PKG_CONFIG_PATH=\"$HOMEBREW_PREFIX/opt/sqlite/lib/pkgconfig\${PKG_CONFIG_PATH:+:}\$PKG_CONFIG_PATH\""
-source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export PKG_CONFIG_PATH=\"$HOMEBREW_PREFIX/opt/openssl@3/lib/pkgconfig\${PKG_CONFIG_PATH:+:}\$PKG_CONFIG_PATH\""
-source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export PKG_CONFIG_PATH=\"$HOMEBREW_PREFIX/opt/postgresql@15/lib/pkgconfig\${PKG_CONFIG_PATH:+:}\$PKG_CONFIG_PATH\""
+brews=('curl' 'bzip2' 'zlib' 'llvm' 'libffi' 'openjdk' 'sqlite' 'openssl@3')
+for brew in "${brews[@]}"; do
+  brew_dir="$HOMEBREW_PREFIX/opt/$brew"
+  brew_bin_dir="$brew_dir/bin"
+  brew_include_dir="$brew_dir/include"
+  brew_lib_dir="$brew_dir/lib"
+  brew_pkgconfig_dir="$brew_lib_dir/pkgconfig"
+  if [ -e "$brew_bin_dir" ]; then source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export PATH=\"$brew_bin_dir:\$PATH\""; fi
+  if [ -e "$brew_include_dir" ]; then source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export CPPFLAGS=\"-I$brew_include_dir\${CPPFLAGS:+ }\$CPPFLAGS\""; fi
+  if [ -e "$brew_lib_dir" ]; then source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export LDFLAGS=\"-L$brew_lib_dir\${LDFLAGS:+ }\$LDFLAGS\""; fi
+  if [ -e "$brew_pkgconfig_dir" ]; then source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export PKG_CONFIG_PATH=\"$brew_pkgconfig_dir\${PKG_CONFIG_PATH:+:}\$PKG_CONFIG_PATH\""; fi
+done
+
+gnubrews=('coreutils' 'gnu-sed' 'grep' 'make')
+for gnubrew in "${gnubrews[@]}"; do
+  brew_libexec_dir="$HOMEBREW_PREFIX/opt/$gnubrew/libexec"
+  brew_gnubin_dir="$brew_libexec_dir/gnubin"
+  brew_gnuman_dir="$brew_libexec_dir/gnuman"
+  if [ -e "$brew_bin_dir" ]; then source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export PATH=\"$brew_gnubin_dir:\$PATH\""; fi
+  if [ -e "$brew_bin_dir" ]; then source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export MANPATH=\"$brew_gnuman_dir:\$MANPATH\""; fi
+done
+
+brew_lib_dir="$HOMEBREW_PREFIX/opt/llvm/lib"
+source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export LDFLAGS=\"-L$brew_lib_dir/c++ -Wl,-rpath,$brew_lib_dir/c++\${LDFLAGS:+ }\$LDFLAGS\""
 # Run Homebrew cleanup and doctor to check for errors
 brew cleanup
-brew doctor
+brew doctor || true
