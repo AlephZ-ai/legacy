@@ -50,14 +50,18 @@ updaterc() {
   local cmd="$1"
   local rc="$2"
   local sudo="${3:-false}"
-  local prefix="${cmd%%=*}="
-  # shellcheck disable=SC2155
-  local var="$(echo "$prefix" | awk '{print $NF}')"
-  # shellcheck disable=SC2155
-  local update=$(echo "$cmd" | awk -F "=" '{print $2}' | grep -q "\$$var" && echo false || echo true)
+  # Extract the variable name from the prefix
+  local var="${prefix%%=*}"
+  # Define run function based on sudo status
+  run() { if "$sudo"; then sudo "$@"; else "$@"; fi; }
   # shellcheck disable=SC2155
   local rc_dir="$(dirname "$rc")"
-  run() { if "$sudo"; then sudo "$@"; else "$@"; fi; }
+  # Check if the command already exists in the rc file
+  # shellcheck disable=SC2155
+  local exists=$(run grep -Fxq "$prefix" "$rc" >/dev/null && echo true || echo false)
+  # Check if the command is self-referencing
+  # shellcheck disable=SC2155
+  local self_ref=$(echo "$cmd" | awk -F "=" '{print $2}' | grep -q "\$$var" && echo true || echo false)
   run mkdir -p "$rc_dir"
   run touch "$rc"
   # # Remove duplicates with awk, keep just the first occurrence
@@ -67,20 +71,20 @@ updaterc() {
   # local tmp_rc="$(run mktemp)"
   # run awk "$seen" "$rc" | run tee "$tmp_rc" >/dev/null
   # run mv "$tmp_rc" "$rc"
-  # Select a delimiter not present in either $cmd or $prefix
-  # shellcheck disable=SC2155
-  local delim=$(seddelim "$prefix" "$cmd")
-  if $update && run grep -Fxq "$cmd" "$rc" >/dev/null; then
+  # Check if the variable does not exist or it's self-referencing
+  if ! $exists || $self_ref; then
+    echo "Adding '$cmd' into '$rc'"
+    echo "$cmd" | run tee -a "$rc" >/dev/null
+  else
+    # If the variable does exist and it is not self-referencing, we update it.
+    # Select a delimiter not present in either $cmd or $prefix
+    # shellcheck disable=SC2155
+    local delim=$(seddelim "$prefix" "$cmd")
     local search="$prefix.*"
     local replace="$cmd"
     local sed="s$delim^$search$delim$replace$delim"
     echo "Updating '$cmd' in '$rc'"
-    # echo "sed -i.bak '$sed' '$rc'"
     run sed -i.bak "$sed" "$rc"
-  else
-    echo "Adding '$cmd' into '$rc'"
-    # echo "echo '$cmd' | run tee -a '$rc' >/dev/null"
-    echo "$cmd" | run tee -a "$rc" >/dev/null
   fi
 }
 
