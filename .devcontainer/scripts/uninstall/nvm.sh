@@ -10,6 +10,6 @@ if command -v nvm --version --version >/dev/null 2>&1; then
 fi
 
 rm -rf "$HOME/.npm" "$HOME/.bower"
-if [[ -n "${NVM_DIR}" ]]; then
+if [[ -n "${NVM_DIR:-}" ]]; then
   rm -rf "$NVM_DIR"
 fi

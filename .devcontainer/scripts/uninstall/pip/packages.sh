@@ -11,9 +11,9 @@ if command -v pip --version >/dev/null 2>&1; then
 
   # function to uninstall python packages
   uninstall_python_packages() {
-    local user="$1"
+    local user="${1-}"
     # shellcheck disable=SC2086
-    pip freeze $user | xargs -I {} pip uninstall -y $user "{}" &>/dev/null
+    eval "pip freeze $user | xargs -I {} pip uninstall -y $user '{}'"
   }
 
   # uninstall global python packages

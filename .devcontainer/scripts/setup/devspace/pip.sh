@@ -6,7 +6,7 @@ set -euo pipefail
 os=$(uname -s)
 # Setup pip
 python -m ensurepip --upgrade
-python -m pip install --no-input --upgrade pip setuptools wheel
+python -m pip install --no-input --upgrade pip setuptools wheel distribute
 python -m pip install --no-input --upgrade pygobject pycairo pipx virtualenv sphinx sphinx-multiversion \
   openvino onnxruntime Cython cataclysm
 if [ "$os" = "Linux" ]; then
