@@ -38,7 +38,7 @@ updaterc() {
   fi
 
   # Select a delimiter not present in either $cmd or $prefix
-  local delimiters=('/' ':' '|' '!' '#' '&' '@' '%' '_' '+' '-' '`' '~' ',' '.' ';')
+  local delimiters=('/' '#' '@' '%' '_' '+' '-' ',')
   local delimiter
   for d in "${delimiters[@]}"; do
     if [[ "$cmd" != *$d* && "$prefix" != *$d* ]]; then
