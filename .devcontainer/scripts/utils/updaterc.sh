@@ -49,7 +49,7 @@ updaterc() {
   # shellcheck disable=SC2155
   local var="$(echo "$prefix" | awk '{print $NF}')"
   # shellcheck disable=SC2155
-  local update=$(if [ -z "$var" ]; then echo false; else echo true; fi)
+  local update=$(echo "$cmd" | awk -F "=" '{print $2}' | grep -q "\$$var" && echo false || echo true)
   # shellcheck disable=SC2155
   local rc_dir="$(dirname "$rc")"
   run() { if "$sudo"; then sudo "$@"; else "$@"; fi; }
@@ -65,14 +65,12 @@ updaterc() {
   # Select a delimiter not present in either $cmd or $prefix
   # shellcheck disable=SC2155
   local delim=$(seddelim "$prefix" "$cmd")
-  if run grep -Fxq "$cmd" "$rc" >/dev/null; then
-    if $update && [[ -n "$prefix" ]]; then
-      local search="$prefix.*"
-      local replace="$cmd"
-      local sed="s$delim^$search$delim$replace$delim"
-      echo "Updating '$rc' to include '$cmd'"
-      run sed -i.bak "$sed" "$rc"
-    fi
+  if $update && run grep -Fxq "$cmd" "$rc" >/dev/null; then
+    local search="$prefix.*"
+    local replace="$cmd"
+    local sed="s$delim^$search$delim$replace$delim"
+    echo "Updating '$cmd' in '$rc'"
+    run sed -i.bak "$sed" "$rc"
   else
     echo "Adding '$cmd' into '$rc'"
     echo -e "$cmd" | run tee -a "$rc" >/dev/null
