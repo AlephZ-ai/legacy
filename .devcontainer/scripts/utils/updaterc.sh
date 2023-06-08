@@ -25,7 +25,7 @@ seddelim() {
   cmd="$2"
   # Select a delimiter not present in either $cmd or $prefix
   local delim
-  for d in "${delims[@]}"; do
+  for d in "${delimiters[@]}"; do
     if [[ "$prefix" != *$d* && "$cmd" != *$d* ]]; then
       delim=$d
       break
