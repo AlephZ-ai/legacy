@@ -3,6 +3,8 @@
 # shellcheck source=/dev/null
 # init
 set -euo pipefail
+fast_level="${1:-0}"
+export FAST_LEVEL="${fast_level}"
 # Disable needing password for sudo
 source "$DEVCONTAINER_SCRIPTS_ROOT/utils/disable-sudo-password.sh"
 # Setup Developer Command Line tools

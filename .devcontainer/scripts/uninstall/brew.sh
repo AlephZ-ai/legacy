@@ -1,10 +1,12 @@
 #!/bin/bash
 set -euo pipefail
 os=$(uname -s)
-if [ "$os" = "Linux" ]; then
-  export HOMEBREW_PREFIX="/home/linuxbrew/.linuxbrew"
-else
-  export HOMEBREW_PREFIX="/usr/local"
+if [ -z "${HOMEBREW_PREFIX:-}" ]; then
+  if [ "$os" = "Linux" ]; then
+    export HOMEBREW_PREFIX="/home/linuxbrew/.linuxbrew"
+  else
+    export HOMEBREW_PREFIX="/usr/local"
+  fi
 fi
 
 "$DEVCONTAINER_SCRIPTS_ROOT/uninstall/brew/brews.sh"
