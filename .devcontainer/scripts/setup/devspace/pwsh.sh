@@ -12,7 +12,7 @@ fi
 echo "PWSH_FAST_LEVEL: $PWSH_FAST_LEVEL"
 # Setup pwsh modules
 if [ "$PWSH_FAST_LEVEL" -eq 0 ]; then
-  pwshrc="$DEVCONTAINER_PROJECT_NAME/rc/default.pwshrc.ps1"
+  pwshrc="$DEVCONTAINER_PROJECT_ROOT/rc/default.pwshrc.ps1"
   pwsh_modules=('Pester' 'Set-PsEnv' 'posh-docker' 'posh-git' 'lazy-posh-git' 'Az' 'AWS.Tools.Installer' 'PSReadLine'
     'SqlServer' 'PSScriptAnalyzer' 'dbatools')
   # shellcheck disable=SC2016

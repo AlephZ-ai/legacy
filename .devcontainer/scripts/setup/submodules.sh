@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Update submodules
 init_submodules="false"
-submodule_path="$DEVCONTAINER_FEATURES_PROJECT_ROOT/.devcontainer/dependencies/devcontainers/features"
+submodule_path="$DEVCONTAINER_PROJECT_ROOT/dependencies/devcontainers/features"
 if [ -d "$submodule_path" ]; then
   directory_info=$(ls -A "$submodule_path")
   if [ -z "$directory_info" ]; then
@@ -9,7 +9,7 @@ if [ -d "$submodule_path" ]; then
   fi
 fi
 
-pushd "$DEVCONTAINER_FEATURES_PROJECT_ROOT" 1> /dev/null || exit 1
+pushd "$DEVCONTAINER_FEATURES_PROJECT_ROOT" 1>/dev/null || exit 1
 if [ "$init_submodules" = "true" ]; then
   git submodule sync --recursive
   git submodule update --init --recursive
@@ -17,4 +17,4 @@ if [ "$init_submodules" = "true" ]; then
 fi
 
 git submodule foreach --recursive git pull
-popd 1> /dev/null || exit
+popd 1>/dev/null || exit

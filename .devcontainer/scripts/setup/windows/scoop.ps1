@@ -14,7 +14,7 @@ do {
         scoop install --global gedit kubeadm kubectl helm minikube kind k3d argo-cd k9s kustomize skaffold vcluster | Write-Host
         scoop install --global terraform openjdk openjdk-ea openjdk openjdk11 openjdk17 openjdk21 openjdk8-redhat microsoft-jdk maven groovy gradle scala scala-cli sbt | Write-Host
         scoop install --global nvm vulkan fiddler speedtest gimp vlc azuredatastudio azuredatastudio-insiders | Write-Host
-        scoop install --global ffmepg msmpi miniconda3 anaconda3 opencv | Write-Host
+        scoop install --global ffmepg msmpi miniconda3 anaconda3 opencv bats | Write-Host
         if ($LASTEXITCODE -ne 0) { Write-Host "scoop install --global failed"; throw "Exit code is $LASTEXITCODE" }
         $complete = $true
     } catch [Exception] {
