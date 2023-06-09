@@ -4,13 +4,14 @@
 set -euo pipefail
 moduleInstalled=$(pwsh -Command 'Get-Module -ListAvailable -Name posh-git')
 if [ -z "$moduleInstalled" ]; then
-  PWSH_FAST_MODE=0
+  PWSH_FAST_LEVEL=0
 else
-  PWSH_FAST_MODE=${PWSH_FAST_MODE:-${FAST_MODE:-0}}
+  PWSH_FAST_LEVEL=${PWSH_FAST_LEVEL:-${FAST_LEVEL:-0}}
 fi
 
+echo "PWSH_FAST_LEVEL: $PWSH_FAST_LEVEL"
 # Setup pwsh modules
-if [ "$PWSH_FAST_MODE" -eq 0 ]; then
+if [ "$PWSH_FAST_LEVEL" -eq 0 ]; then
   pwsh_modules=('Pester' 'Set-PsEnv' 'posh-docker' 'posh-git' 'lazy-posh-git' 'Az' 'AWS.Tools.Installer' 'PSReadLine'
     'SqlServer' 'PSScriptAnalyzer' 'dbatools')
   # shellcheck disable=SC2016
