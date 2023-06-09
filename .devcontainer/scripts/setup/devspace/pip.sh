@@ -43,6 +43,8 @@ fi
 # TODO: Keep a check on dlltracer, it throws an error on install on Mac
 # TODO: openvino-dev[caffe,kaldi,mxnet,onnx,pytorch,tensorflow,tensorflow2]
 # TODO: openvino-workbench 2022.3.0 depends on requests==2.22.0
+# TODO: agents depends on gym==0.21.0 and that gym breaks with:
+#       error in gym setup command: 'extras_require' must be a dictionary whose values are strings or lists of strings containing valid project/version requirement specifiers.
 # pytorch-lightning>=1.9.0,<=1.9.4
 # gym[accept-rom-license,atari,box2d,classic_control,mujoco,robotics,toy_text,other]<=0.26,>=0.22
 pip install --no-input --user --upgrade \
@@ -57,7 +59,7 @@ pip install --no-input --user --upgrade \
   cloudpickle tensorflow 'tensorflow-addons[tensorflow]' tensorboard 'wandb>=0.15.3' chromadb pytablewriter pyyaml boto3 \
   plotly torch torchvision torchaudio fire 'pytorch-lightning>==1.9.4' nltk poetry span_marker 'speechbrain>=0.5.14' \
   'huggingface-hub>=0.15.1' 'transformers>=4.29.2' 'diffusers>=0.16.1' 'adapter-transformers>=3.2.1' rouge_score \
-  'sentence-transformers>=2.2.2' 'flair>=0.12.2' gensim spacy 'fastai>=2.7.12' 'agents>=1.4.0' 'lupyne[graphql,rest]' plush lucene-querybuilder \
+  'sentence-transformers>=2.2.2' 'flair>=0.12.2' gensim spacy 'fastai>=2.7.12' 'lupyne[graphql,rest]' plush lucene-querybuilder \
   'nemo_toolkit[common,asr,nlp,tts,slu,test]>=1.18.0' 'nemo_text_processing>=0.1.7rc0' shot-scraper \
   'bertopic[test,docs,dev,flair,spacy,use,gensim,vision]>=0.15.0' openai openai-whisper tiktoken ttok strip-tags llm llama-index \
   merlin-models merlin-systems merlin-dataloader merlin-sok fairscale sentencepiece langchain \
