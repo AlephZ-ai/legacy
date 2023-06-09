@@ -39,7 +39,8 @@ fi
 # TODO: Keep a check on nemo-toolkit[asr] it will allow upgrading pytorch-lightning>=1.9.0,<=1.9.4 in the future
 # TODO: Keep a check on rl-agents it only supports gym<0.18.0 and >=0.17.2
 # TODO: Keep a check on gym-minigrid it only supports gym<=0.26 and >=0.22
-# TODO: Keep a check on stable-baselines3[docs,extra,tests] 1.8.0 depends on gym==0.21
+# TODO: Keep a check on sb3-contrib stable-baselines3[docs,extra,tests] 1.8.0 depends on gym==0.21
+# TODO: Old? stable-baselines[mpi,tests,docs]
 # TODO: Keep a check on dlltracer, it throws an error on install on Mac
 # TODO: openvino-dev[caffe,kaldi,mxnet,onnx,pytorch,tensorflow,tensorflow2]
 # TODO: openvino-workbench 2022.3.0 depends on requests==2.22.0
@@ -64,15 +65,14 @@ pip install --no-input --user --upgrade \
   'bertopic[test,docs,dev,flair,spacy,use,gensim,vision]>=0.15.0' openai openai-whisper tiktoken ttok strip-tags llm llama-index \
   merlin-models merlin-systems merlin-dataloader merlin-sok fairscale sentencepiece langchain \
   'tritonclient>=2.34.0' pyctcdecode 'pythae>=0.1.1' 'rl_zoo3>=1.8.0' loralib 'dask>=2023.5.1' \
-  notebook jupyter-client jupyter-core jupyter jupyter-lsp jupyterlab jupyterlab-fonts jupyterlab-git jupyterlab-markup \
-  jupyterlab_widgets jupyterlab-commands jupyterlab_code_formatter jupyterlab-black jupyterlab-requirements \
+  notebook jupyter-client jupyter-core jupyter "jupyter-lsp>4.2.0" "jupyterlab>=4.0.2" jupyterlab-fonts "jupyterlab-git>=0.41.0" jupyterlab-markup \
+  jupyterlab_widgets jupyterlab-commands "jupyterlab_code_formatter>=2.2.1" jupyterlab-black jupyterlab-requirements \
   jupyterlab-sparksql jupyterlab-drawio jupyterlab-powerpoint jupyterlab-github jupyterlab-flake8 jupyterlab-lsp \
   jupyterlab-graph-lsp jupyterlab-telemetry jupyterlab-kernelspy jupyterlab-system-monitor jupyterlab-topbar \
-  jupyterlab-quickopen jupyter_contrib_core jupyter-contrib-nbextensions mlflow \
-  'gymnasium[accept-rom-license,atari,box2d,classic-control,mujoco,mujoco-py,toy-text,jax,other,testing]' \
+  jupyterlab-quickopen jupyter_contrib_core jupyter-contrib-nbextensions "mlflow>2.4.0" \
+  'gymnasium[accept-rom-license,atari,box2d,classic-control,mujoco,mujoco-py,toy-text,jax,other,testing]>=0.28.1' \
   panda-gym gym-super-mario-bros flappy-bird-gymnasium \
-  'stable-baselines3[extra,tests,docs]>=1.8.0' 'stable-baselines[mpi,tests,docs]' 'sb3-contrib>=1.8.0' \
-  'sample-factory[dev,atari,envpool,mujoco,vizdoom]' 'espnet>=202304' 'paddlenlp>=2.5.2' \
+  'sample-factory[dev,atari,envpool,mujoco,vizdoom]>=2.0.3' 'espnet>=202304' 'paddlenlp>=2.5.2' \
   azure-cli azure-identity azure-keyvault azure-cli-keyvault azure-keyvault-certificates azure-keyvault-secrets azure-keyvault-browser azure-keyvault-administration \
   azure_devtools azureml-dataprep semantic-kernel \
   batch-inference pytket pennylane qdk 'azure-quantum[all]' quantum-viz knack qsharp qsharp-chemistry pytket-qsharp pennylane-qsharp \
