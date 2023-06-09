@@ -44,7 +44,7 @@ if [ ! -f "$HOME/.bashrc" ]; then cp "$default_bashrc" "$HOME/.bashrc"; fi
 if [ ! -f "$HOME/.zshrc" ]; then cp "$default_zshrc" "$HOME/.zshrc"; fi
 source "$DEVCONTAINER_SCRIPTS_ROOT/setup/devspace/zsh.sh"
 # Restore the original ~/.zshrc
-mv "$HOME/.zshrc.pre-oh-my-zsh" "$HOME/.zshrc"
+mv "$HOME/.zshrc.pre-oh-my-zsh" "$HOME/.zshrc" 2>/dev/null || true
 # Setup Condas
 source "$DEVCONTAINER_SCRIPTS_ROOT/setup/devspace/condas.sh"
 # Setup Homebrew

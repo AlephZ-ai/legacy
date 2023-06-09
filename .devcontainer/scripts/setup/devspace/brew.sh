@@ -50,7 +50,7 @@ if [ "$BREW_FAST_LEVEL" -eq 0 ]; then
     HOMEBREW_ACCEPT_EULA=Y brew install --include-test --force nss openssl@3 openssl@1.1 openssh age nghttp2 mkcert shellcheck speedtest-cli mono-libgdiplus chezmoi sqlite sqlite-utils postgresql@15
     HOMEBREW_ACCEPT_EULA=Y brew install --include-test --force azure-cli awscli msodbcsql18 mssql-tools18 gedit kubernetes-cli helm minikube kind k3d argocd derailed/k9s/k9s kustomize skaffold vcluster
     HOMEBREW_ACCEPT_EULA=Y brew install --include-test --force terraform openjdk openjdk@8 openjdk@11 openjdk@17 maven groovy gradle scala sbt yarn pygobject3 gtk+3 gtk+4 libffi libyaml
-    HOMEBREW_ACCEPT_EULA=Y brew install --include-test --force ffmpeg libsndfile libsoundio openmpi pyenv pyenv-virtualenv pipx virtualenv boost opencv openvino bats
+    HOMEBREW_ACCEPT_EULA=Y brew install --include-test --force ffmpeg libsndfile libsoundio openmpi pyenv pyenv-virtualenv pipx virtualenv boost opencv openvino bats-core
   ); do echo "Retrying"; done
 
   # Upgrade all packages
@@ -101,6 +101,11 @@ for brew in "${brews[@]}"; do
 done
 
 if [ "$BREW_FAST_LEVEL" -eq 0 ]; then
+  # Run Homebrew post install
+  if [ -n "$BREW_POST_INSTALL" ]; then
+    source "$BREW_POST_INSTALL"
+  fi
+
   # Run Homebrew cleanup and doctor to check for errors
   brew cleanup
   brew doctor || true
