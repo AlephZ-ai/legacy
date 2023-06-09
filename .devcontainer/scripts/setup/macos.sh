@@ -10,6 +10,15 @@ echo "FAST_LEVEL=$FAST_LEVEL"
 source "$DEVCONTAINER_SCRIPTS_ROOT/utils/disable-sudo-password.sh"
 # Setup Developer Command Line tools
 if ! (bash --version && git --version); then sudo xcode-select --install; fi
+# Wait for bash and git to be available
+while true; do
+  if command -v bash >/dev/null 2>&1 && command -v git >/dev/null 2>&1; then
+    break
+  else
+    sleep 10
+  fi
+done
+
 # Setup required homebrew prefix on mac, this cannot be changed
 export HOMEBREW_PREFIX="/usr/local"
 # post build commands

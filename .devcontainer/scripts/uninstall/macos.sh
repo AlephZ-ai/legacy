@@ -45,13 +45,21 @@ fi
 
 if [ "$UNSAFE_LEVEL" -ge 2 ]; then
   echo -e "WARNING: You chose at least unsafe level 2."
-  echo -e 'Deleteing Library/Developer/CommandLineTools, /usr/local/*, /etc/zsh/zshrc, ~/.zshrc", ~/.zprofile, /etc/bash.bashrc, ~/.bashhrc, and ~/.bash_profile'
-  sudo rm -rf /Library/Developer/CommandLineTools
+  echo -e 'Deleteing /usr/local/*, /etc/zshrc, /etc/zsh/zshrc, /etc/zsh/zshenv, ~/.zprofile, ~/.zshrc", /etc/profile, /etc/bash.bashrc, ~/.bash_profile and ~/.bashhrc'
   sudo rm -rf /usr/local/* &>/dev/null || true
+  sudo rm -rf "/etc/zshrc"
   sudo rm -rf "/etc/zsh/zshrc"
+  sudo rm -rf "/etc/zsh/zshenv"
+  sudo rm -rf "/etc/profile"
   sudo rm -rf "/etc/bash.bashrc"
-  rm -rf "$HOME/.zshrc"
-  rm -rf "$HOME/.bashrc"
   rm -rf "$HOME/.zprofile"
+  rm -rf "$HOME/.zshrc"
   rm -rf "$HOME/.bash_profile"
+  rm -rf "$HOME/.bashrc"
+fi
+
+if [ "$UNSAFE_LEVEL" -ge 3 ]; then
+  echo -e "WARNING: You chose at least unsafe level 3."
+  echo -e 'Deleteing Library/Developer/CommandLineTools'
+  sudo rm -rf /Library/Developer/CommandLineTools
 fi

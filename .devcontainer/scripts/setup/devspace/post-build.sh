@@ -12,8 +12,13 @@ if [ "$os" = "Linux" ]; then
 fi
 
 # Create /etc/bash.bashrc and /etc/zsh/zshrc if they don't exist
+sudo touch /etc/profile
 sudo touch /etc/bash.bashrc
+sudo touch /etc/zshrc
 sudo touch /etc/zsh/zshrc
+sudo touch /etc/zsh/zshenv
+touch "$HOME/.bash_profile"
+touch "$HOME/.zprofile"
 # Add default setting to /etc/bash.bashrc and /etc/zsh/zshrc
 # shellcheck disable=SC2016
 source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'source "$HOME/.bashrc"' "$HOME/.bash_profile"
@@ -21,14 +26,20 @@ source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'source "$HOME/.bashrc"' "
 source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'source "$HOME/.zshrc"' "$HOME/.zprofile"
 # Define the default rc files
 if [ "$os" = "Linux" ]; then
-  default_bashrc="$(cat "$DEVCONTAINER_PROJECT_ROOT/rc/linux/default.bashrc")"
-  default_zshrc="$(cat "$DEVCONTAINER_PROJECT_ROOT/rc/linux/default.zshrc")"
+  default_profile="$DEVCONTAINER_PROJECT_ROOT/rc/linux/default.profile"
+  default_zprofile="$DEVCONTAINER_PROJECT_ROOT/rc/linux/zdefault.profile"
+  default_bashrc="$DEVCONTAINER_PROJECT_ROOT/rc/linux/default.bashrc"
+  default_zshrc="$DEVCONTAINER_PROJECT_ROOT/rc/linux/default.zshrc"
 else
-  default_bashrc="$(cat "$DEVCONTAINER_PROJECT_ROOT/rc/macos/default.bashrc")"
-  default_zshrc="$(cat "$DEVCONTAINER_PROJECT_ROOT/rc/macos/default.zshrc")"
+  default_profile="$DEVCONTAINER_PROJECT_ROOT/rc/macos/default.profile"
+  default_zprofile="$DEVCONTAINER_PROJECT_ROOT/rc/macos/zdefault.profile"
+  default_bashrc="$DEVCONTAINER_PROJECT_ROOT/rc/macos/default.bashrc"
+  default_zshrc="$DEVCONTAINER_PROJECT_ROOT/rc/macos/default.zshrc"
 fi
 
-# Add default ~/.bashrc and ~/.zshrc if they don't exist
+# Add default /etc/profile, ~/.bashrc, ~/.zshrc if they don't exist
+if [ ! -f /etc/profile ]; then sudo cp "$default_profile" /etc/profile; fi
+if [ ! -f /etc/zshrc ]; then sudo cp "$default_zprofile" /etc/zshrc; fi
 if [ ! -f "$HOME/.bashrc" ]; then cp "$default_bashrc" "$HOME/.bashrc"; fi
 if [ ! -f "$HOME/.zshrc" ]; then cp "$default_zshrc" "$HOME/.zshrc"; fi
 source "$DEVCONTAINER_SCRIPTS_ROOT/setup/devspace/zsh.sh"

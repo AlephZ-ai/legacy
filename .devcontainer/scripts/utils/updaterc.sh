@@ -66,7 +66,7 @@ updaterc() {
   local prefix_exists=$(run grep -Eq "^$prefix" "$rc" >/dev/null && echo true || echo false)
   # Check if the command is self-referencing
   # shellcheck disable=SC2155
-  local self_ref=$(echo "$cmd" | awk -F "=" '{print $2}' | grep -q "\$$var" && echo true || echo false)
+  local self_ref=$(echo "$cmd" | awk -F "=" '{print $2}' | grep -q "\$$var" >/dev/null && echo true || echo false)
   run mkdir -p "$rc_dir"
   run touch "$rc"
 
