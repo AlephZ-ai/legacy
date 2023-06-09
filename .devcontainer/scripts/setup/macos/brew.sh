@@ -9,7 +9,7 @@ brew tap --repair
 brew update
 brew upgrade
 # Install casks
-brew reinstall --include-test --force --cask --zap microsoft-openjdk iterm2 microsoft-edge xquartz miniconda anaconda google-cloud-sdk
+brew reinstall --include-test --force --cask --zap powershell-preview microsoft-openjdk iterm2 microsoft-edge xquartz miniconda anaconda google-cloud-sdk
 # Upgrade all casks
 brew update --cask
 brew upgrade --cask
