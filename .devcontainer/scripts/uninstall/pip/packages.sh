@@ -6,7 +6,7 @@ if command -v pip >/dev/null 2>&1; then
   uninstall_python_packages() {
     local user="${1-}"
     # shellcheck disable=SC2086
-    eval "pip freeze $user | xargs -I {} pip uninstall -y $user '{}'"
+    eval pip freeze $user | while read -r pkg; do pip uninstall -y $user "$pkg" || true; done
   }
 
   # uninstall global python packages

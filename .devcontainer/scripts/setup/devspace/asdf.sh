@@ -5,7 +5,7 @@
 set -euo pipefail
 # Setup asdf
 # shellcheck disable=SC2016
-source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "source \"$HOMEBREW_PREFIX/opt/asdf/libexec/asdf.sh\""
+source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'source "$(brew --prefix)/opt/asdf/libexec/asdf.sh"'
 # shellcheck disable=SC2016
 source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'PATH="$HOME/.asdf/shims:$PATH"'
 if asdf plugin list | grep -q dotnet-core; then

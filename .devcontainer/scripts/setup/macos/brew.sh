@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# shellcheck source=/dev/null
 # init
 set -euo pipefail
 # Repair and Update if needed
@@ -7,16 +8,22 @@ brew tap --repair
 # Upgrade all packages
 brew update
 brew upgrade
+# Install casks
+brew reinstall --include-test --force --cask --zap microsoft-openjdk iterm2 microsoft-edge xquartz miniconda anaconda google-cloud-sdk
 # Upgrade all casks
 brew update --cask
 brew upgrade --cask
-# Install xquartz
-brew reinstall --include-test --force --cask --zap microsoft-openjdk iterm2 microsoft-edge xquartz miniconda anaconda
 # Setup post hombrew packages
-sudo ln -sfn "$HOMEBREW_PREFIX/opt/openjdk/libexec/openjdk.jdk" /Library/Java/JavaVirtualMachines/openjdk.jdk
-sudo ln -sfn "$HOMEBREW_PREFIX/opt/openjdk@8/libexec/openjdk.jdk" /Library/Java/JavaVirtualMachines/openjdk-8.jdk
-sudo ln -sfn "$HOMEBREW_PREFIX/opt/openjdk@11/libexec/openjdk.jdk" /Library/Java/JavaVirtualMachines/openjdk-11.jdk
-sudo ln -sfn "$HOMEBREW_PREFIX/opt/openjdk@17/libexec/openjdk.jdk" /Library/Java/JavaVirtualMachines/openjdk-17.jdk
+sudo ln -sfn "$(brew --prefix)/opt/openjdk/libexec/openjdk.jdk" /Library/Java/JavaVirtualMachines/openjdk.jdk
+sudo ln -sfn "$(brew --prefix)/opt/openjdk@8/libexec/openjdk.jdk" /Library/Java/JavaVirtualMachines/openjdk-8.jdk
+sudo ln -sfn "$(brew --prefix)/opt/openjdk@11/libexec/openjdk.jdk" /Library/Java/JavaVirtualMachines/openjdk-11.jdk
+sudo ln -sfn "$(brew --prefix)/opt/openjdk@17/libexec/openjdk.jdk" /Library/Java/JavaVirtualMachines/openjdk-17.jdk
+# shellcheck disable=SC2016
+source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'source "$(brew --prefix)/share/google-cloud-sdk/path.bash.inc"' "$HOME/.bashrc"
+# shellcheck disable=SC2016
+"$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'source "$(brew --prefix)/share/google-cloud-sdk/path.zsh.inc"' "$HOME/.zshrc"
+# shellcheck disable=SC2016
+"$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'source "$(brew --prefix)/share/google-cloud-sdk/completion.zsh.inc"' "$HOME/.zshrc"
 # Run Homebrew cleanup and doctor to check for errors
 brew cleanup
 brew doctor || true

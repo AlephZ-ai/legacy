@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 # shellcheck disable=SC2016
-pwsh_uninstall_modules='Get-InstalledModule | ForEach-Object { Uninstall-Module -Name $_.Name -AllVersions -Force };'
+pwsh_uninstall_modules='Get-InstalledModule | ForEach-Object { Write-Host "Uninstalling $($_.Name)"; Uninstall-Module -Name $_.Name -AllVersions -Force };'
 uninstall_modules() {
   local pwsh=$1
   echo "Uninstalling modules in $pwsh..."

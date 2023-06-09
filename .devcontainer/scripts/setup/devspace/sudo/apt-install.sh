@@ -1,7 +1,26 @@
 #!/usr/bin/env bash
 # init
 set -euo pipefail
+echo "Adding non-free packages..."
+# Bring in ID, ID_LIKE, VERSION_ID, VERSION_CODENAME
+# shellcheck disable=SC1091
+source /etc/os-release
+# Needed for adding manpages-posix and manpages-posix-dev which are non-free packages in Debian
+# Bring in variables from /etc/os-release like VERSION_CODENAME
+sed -i -E "s/deb http:\/\/(deb|httpredir)\.debian\.org\/debian ${VERSION_CODENAME} main/deb http:\/\/\1\.debian\.org\/debian ${VERSION_CODENAME} main contrib non-free/" /etc/apt/sources.list
+sed -i -E "s/deb-src http:\/\/(deb|httredir)\.debian\.org\/debian ${VERSION_CODENAME} main/deb http:\/\/\1\.debian\.org\/debian ${VERSION_CODENAME} main contrib non-free/" /etc/apt/sources.list
+sed -i -E "s/deb http:\/\/(deb|httpredir)\.debian\.org\/debian ${VERSION_CODENAME}-updates main/deb http:\/\/\1\.debian\.org\/debian ${VERSION_CODENAME}-updates main contrib non-free/" /etc/apt/sources.list
+sed -i -E "s/deb-src http:\/\/(deb|httpredir)\.debian\.org\/debian ${VERSION_CODENAME}-updates main/deb http:\/\/\1\.debian\.org\/debian ${VERSION_CODENAME}-updates main contrib non-free/" /etc/apt/sources.list
+sed -i "s/deb http:\/\/security\.debian\.org\/debian-security ${VERSION_CODENAME}\/updates main/deb http:\/\/security\.debian\.org\/debian-security ${VERSION_CODENAME}\/updates main contrib non-free/" /etc/apt/sources.list
+sed -i "s/deb-src http:\/\/security\.debian\.org\/debian-security ${VERSION_CODENAME}\/updates main/deb http:\/\/security\.debian\.org\/debian-security ${VERSION_CODENAME}\/updates main contrib non-free/" /etc/apt/sources.list
+sed -i "s/deb http:\/\/deb\.debian\.org\/debian ${VERSION_CODENAME}-backports main/deb http:\/\/deb\.debian\.org\/debian ${VERSION_CODENAME}-backports main contrib non-free/" /etc/apt/sources.list
+sed -i "s/deb-src http:\/\/deb\.debian\.org\/debian ${VERSION_CODENAME}-backports main/deb http:\/\/deb\.debian\.org\/debian ${VERSION_CODENAME}-backports main contrib non-free/" /etc/apt/sources.list
+# Handle bullseye location for security https://www.debian.org/releases/bullseye/amd64/release-notes/ch-information.en.html
+sed -i "s/deb http:\/\/security\.debian\.org\/debian-security ${VERSION_CODENAME}-security main/deb http:\/\/security\.debian\.org\/debian-security ${VERSION_CODENAME}-security main contrib non-free/" /etc/apt/sources.list
+sed -i "s/deb-src http:\/\/security\.debian\.org\/debian-security ${VERSION_CODENAME}-security main/deb http:\/\/security\.debian\.org\/debian-security ${VERSION_CODENAME}-security main contrib non-free/" /etc/apt/sources.list
+
 # Update apt-packages
+echo "Running apt-get update..."
 while ! (
   apt update
   apt upgrade -y
@@ -19,4 +38,5 @@ while ! (
   apt install -y --install-recommends caffe-cuda-cusparse caffe-cuda-cusparse-dev caffe-cuda-npp caffe-cuda-npp-dev caffe-cuda-nvrtc caffe-cuda-nvrtc-dev
   apt install -y --install-recommends caffe-cuda-cudnn caffe-cuda-cudnn-dev caffe-cuda-cudnn8 caffe-cuda-cudnn8-dev caffe-cuda-cudnn8-doc caffe-cuda-cudnn8-samples
   apt install -y --install-recommends libgtk-3-dev libpng-dev libjpeg-dev libopenexr-dev libtiff-dev libwebp-dev libavcodec-dev libavformat-dev libswscale-dev libuv-dev libuv1-dev
+  apt install -y --install-recommends manpages-posix manpages-posix-dev
 ); do echo "Retrying apt-packages..."; done

@@ -5,10 +5,36 @@
 set -euo pipefail
 os=$(uname -s)
 # Setup pip
-python -m ensurepip --upgrade
+source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "eval \"\$(pyenv init -)\""
+source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "eval \"\$(pyenv virtualenv-init -)\""
+# Array of Python versions to upgrade
+versions=("3.9" "3.10" "3.11")
+for version in "${versions[@]}"; do
+  # Find the highest installed version and the highest available version
+  installed_version=$(pyenv versions --bare | grep -oP "$version\.\d+" | sort -V | tail -n 1)
+  latest_version=$(pyenv install --list | grep -oP "$version\.\d+" | sort -V | tail -n 1)
+  echo "Installed version: $installed_version"
+  echo "Latest version: $latest_version"
+  # If the installed version is not the latest version, uninstall it and install the latest version
+  if [[ "$installed_version" != "$latest_version" ]]; then
+    if [[ -n "$installed_version" ]]; then
+      pyenv uninstall -f "$installed_version"
+    fi
+
+    pyenv install "$latest_version"
+  fi
+done
+
+devspace=devspace
+installed_3_9=$(pyenv versions --bare | grep -oP "3.9\.\d+" | sort -V | tail -n 1)
+installed_3_11=$(pyenv versions --bare | grep -oP "3.11\.\d+" | sort -V | tail -n 1)
+pyenv global "$installed_3_11"
+pyenv virtualenv "$installed_3_9" $devspace
+source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "pyenv activate $devspace"
 python --version
-pip --version
+python -m ensurepip --upgrade
 python -m pip install --no-input --upgrade pip setuptools wheel
+pip --version
 python -m pip install --no-input --upgrade pygobject pycairo pipx virtualenv sphinx sphinx-multiversion \
   openvino onnxruntime onnxruntime-extensions Cython cataclysm
 if [ "$os" = "Linux" ]; then

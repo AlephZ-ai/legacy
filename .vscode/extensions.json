@@ -79,6 +79,7 @@
     "ms-dotnettools.vscode-dotnet-pack",
     "formulahendry.dotnet",
     "pflannery.vscode-versionlens",
-    "mnxn.fsharp-fsl-fsy"
+    "mnxn.fsharp-fsl-fsy",
+    "jetmartin.bats"
   ]
 }

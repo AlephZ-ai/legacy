@@ -5,6 +5,6 @@ set -euo pipefail
 
 source dev-container-features-test-lib
 
-check "\$TEST=42" [ "$(source "$HOME/.bashrc" && echo "$TEST")" == "42" ]
+check "\$TEST=42" [ "$(source "$HOME/.bashrc" && echo "$TEST")" = "42" ]
 
 reportResults
