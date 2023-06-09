@@ -16,7 +16,7 @@ if [ "$PWSH_FAST_LEVEL" -eq 0 ]; then
   pwsh_modules=('Pester' 'Set-PsEnv' 'posh-docker' 'posh-git' 'lazy-posh-git' 'Az' 'AWS.Tools.Installer' 'PSReadLine'
     'SqlServer' 'PSScriptAnalyzer' 'dbatools')
   # shellcheck disable=SC2016
-  pwsh_update='pwsh -Command "if ((Get-Content -Path $PROFILE -Raw) -notcontains (Get-Content -Path \"'$pwshrc'\" -Raw)) { Add-Content -Path $PROFILE -Value (Get-Content -Path \"'$pwshrc'\" -Raw) }; Get-PSRepository | Set-PSRepository -InstallationPolicy Trusted; Install-Module PowerShellGet -ErrorAction Stop -SkipPublisherCheck; Install-Module PackageManagement -ErrorAction Stop -SkipPublisherCheck; Set-Alias -Name awk -Value gawk"'
+  pwsh_update='pwsh -Command "$pwshrcContent = Get-Content -Path \"'$pwshrc'\" -Raw; if ((Get-Content -Path $PROFILE -Raw) -notcontains $pwshrcContent) { Add-Content -Path $PROFILE -Value $pwshrcContent }; Get-PSRepository | Set-PSRepository -InstallationPolicy Trusted; Install-Module PowerShellGet -ErrorAction Stop -SkipPublisherCheck; Install-Module PackageManagement -ErrorAction Stop -SkipPublisherCheck; Set-Alias -Name awk -Value gawk"'
   # shellcheck disable=SC2016
   pwsh_install_module='Install-Module -Name $module -ErrorAction Stop -SkipPublisherCheck;'
   pwsh_post_install='Update-Module;'
