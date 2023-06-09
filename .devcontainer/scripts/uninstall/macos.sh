@@ -8,8 +8,10 @@ export FAST_LEVEL="${fast_level}"
 export UNSAFE_LEVEL="${unsafe_level}"
 "$DEVCONTAINER_SCRIPTS_ROOT/uninstall/nvm.sh"
 if brew --version &>/dev/null; then
-  brew uninstall --force --ignore-dependencies bash
-  brew list --cask | xargs -I {} brew uninstall --cask "{}"
+  brew uninstall --force --ignore-dependencies bash zsh
+  if [ "$FAST_LEVEL" -eq 0 ]; then
+    brew list --cask | xargs -I {} brew uninstall --cask "{}"
+  fi
 fi
 
 "$DEVCONTAINER_SCRIPTS_ROOT/uninstall/brew.sh"
