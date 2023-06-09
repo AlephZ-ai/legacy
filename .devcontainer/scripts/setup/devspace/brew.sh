@@ -3,11 +3,6 @@
 # shellcheck source=/dev/null
 # init
 set -euo pipefail
-export BREW_FAST_LEVEL=0
-if command -v brew --version >/dev/null 2>&1; then
-  export BREW_FAST_LEVEL=$FAST_LEVEL
-fi
-
 os=$(uname -s)
 if [ -z "${HOMEBREW_PREFIX:-}" ]; then
   if [ "$os" = "Linux" ]; then
@@ -21,6 +16,15 @@ fi
 source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" '# ------- pre-generated above this line -------' all
 source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" '# ------- manual entry goes here -------' all
 source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" '# ------- auto-generated below this line -------' all
+# Check fast level
+source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export PATH=\"$HOMEBREW_PREFIX/bin:\$PATH\""
+if command -v brew >/dev/null 2>&1; then
+  export BREW_FAST_LEVEL=${BREW_FAST_LEVEL:-${FAST_LEVEL:-0}}
+else
+  export BREW_FAST_LEVEL=0
+fi
+
+echo "BREW_FAST_LEVEL=$BREW_FAST_LEVEL"
 # Setup Homebrew
 sudo echo "sudo cached"
 if [ "$BREW_FAST_LEVEL" -eq 0 ]; then
@@ -52,13 +56,12 @@ if [ "$BREW_FAST_LEVEL" -eq 0 ]; then
   brew update
   brew upgrade
   # Setup post hombrew packages
-  links=('dotnet' 'python@3.10' 'python-tk@3.10' 'postgresql@15')
+  links=('dotnet' 'python@3.9' 'python@3.10' 'python-tk@3.10' 'python@3.11' 'postgresql@15')
   if [ "$os" = "Linux" ]; then
     links+=('file-formula' 'curl' 'bzip2' 'zlib' 'libffi' 'llvm' 'openjdk' 'sqlite' 'openssl@3')
     sudo chsh "$USERNAME" -s "$(which zsh)"
   fi
 
-  brew unlink python@3.9 python@3.11
   for link in "${links[@]}"; do brew unlink "$link" || true; done
   for link in "${links[@]}"; do brew link --force --overwrite "$link"; done
 fi

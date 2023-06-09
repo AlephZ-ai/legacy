@@ -6,13 +6,16 @@ set -euo pipefail
 os=$(uname -s)
 # Setup pip
 python -m ensurepip --upgrade
+python --version
+pip --version
 python -m pip install --no-input --upgrade pip setuptools wheel
 python -m pip install --no-input --upgrade pygobject pycairo pipx virtualenv sphinx sphinx-multiversion \
-  openvino onnxruntime Cython cataclysm
+  openvino onnxruntime onnxruntime-extensions Cython cataclysm
 if [ "$os" = "Linux" ]; then
   pip install --no-input --upgrade \
     nvidia-cudnn-cu11 cudf-cu11 dask_cudf_cu11 cuml-cu11 cugraph-cu11 cucim nvidia-dali-cuda110 nvidia-dali-tf-plugin-cuda110 \
-    nvtabular 'transformers4rec[pytorch,nvtabular,docs,dev]' triton-model-analyzer
+    nvtabular 'transformers4rec[pytorch,nvtabular,docs,dev]' triton-model-analyzer onnxruntime-training \
+    torch-ort torch-ort-inference torch-ort-infer
   pip install --no-input --upgrade git+https://github.com/NVIDIA/TransformerEngine.git@stable
 fi
 
@@ -23,8 +26,8 @@ fi
 # https://aka.ms/azsdk/python/all
 # TODO: Check for Python 3.11 support:
 #   cntk ml-agents espnet2 gym-retro fastchan TensorFlowTTS triton-model-navigator nvidia-pytriton trimm trimm-viz rliable
-#   masl msal-extensions pytest-azurepipelines azureml-responsibleai azureml-dataprep-native azure-mlflow onnxruntime-extensions
-#   torch-directml onnxruntime-silicon onnxruntime-openmp onnxruntime-directml onnxruntime-training onnxruntime-gpu
+#   masl msal-extensions pytest-azurepipelines azureml-responsibleai azureml-dataprep-native azure-mlflow
+#   torch-directml onnxruntime-silicon onnxruntime-openmp onnxruntime-directml onnxruntime-gpu
 #   onnxruntime-cann onnxruntime-noopenmp onnxruntime-azure onnxruntime-openvino onnxruntime-coreml onnxruntime-powerpc64le
 #   model-perf azure-ai-vision
 # TODO: Keep a check on huggingface_sb3 it has huggingface-hub pinned to 0.8.1
@@ -39,15 +42,16 @@ fi
 # TODO: Keep a check on stable-baselines3[docs,extra,tests] 1.8.0 depends on gym==0.21
 # TODO: Keep a check on dlltracer, it throws an error on install on Mac
 # TODO: openvino-dev[caffe,kaldi,mxnet,onnx,pytorch,tensorflow,tensorflow2]
+# TODO: openvino-workbench 2022.3.0 depends on requests==2.22.0
 # pytorch-lightning>=1.9.0,<=1.9.4
 # gym[accept-rom-license,atari,box2d,classic_control,mujoco,robotics,toy_text,other]<=0.26,>=0.22
 pip install --no-input --user --upgrade \
   platformdirs dill isort mccabe ipykernel ipython-genutils packaging docker-pycreds flask pathy numpy \
   pygments flake8 tqdm rich ruff pytest pytest-sugar pytest-cov pytest-xdist pytest-xprocess pytest-mock pytest-benchmark \
   autopep8 aiosqlite absl-py astunparse flatbuffers gast google-pasta grpcio h5py jax libclang opt-einsum protobuf \
-  blis catalogue confection cymem murmurhash preshed black yapf pydantic jinja2 langcodes murmurhash filelock tokenizers \
-  'openvino-dev' openvino-workbench \
-  mtcnn-onnxruntime onnxruntime-tools scikit-onnxruntime torch-ort torch-ort-infer \
+  "blis>=0.9.1" catalogue confection cymem murmurhash preshed black yapf pydantic jinja2 langcodes murmurhash filelock tokenizers \
+  "opt_einsum>=3.3.0" "openvino-dev>=2023.0.0" \
+  mtcnn-onnxruntime onnxruntime-tools scikit-onnxruntime \
   keras opencv-python imageio lazy_loader networkx pillow wrapt py moreutils pylint mypy pandas moviepy \
   matplotlib scipy seaborn 'skops>=0.6.0' scikit-learn scikit-image scikit-optimize box2d-py pybullet 'optuna>=3.2.0' \
   cloudpickle tensorflow 'tensorflow-addons[tensorflow]' tensorboard 'wandb>=0.15.3' chromadb pytablewriter pyyaml boto3 \

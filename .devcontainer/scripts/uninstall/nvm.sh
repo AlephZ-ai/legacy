@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 set -euo pipefail
-if [ "$FAST_LEVEL" -eq 0 ] && command -v nvm --version --version >/dev/null 2>&1; then
+if [ "$FAST_LEVEL" -eq 0 ] && command -v nvm >/dev/null 2>&1; then
   nodes=('node' '--lts')
   for node in "${nodes[@]}"; do
     nvm use "$node"

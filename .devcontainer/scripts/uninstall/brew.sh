@@ -10,7 +10,7 @@ if [ -z "${HOMEBREW_PREFIX:-}" ]; then
 fi
 
 "$DEVCONTAINER_SCRIPTS_ROOT/uninstall/brew/brews.sh"
-if [ "$FAST_LEVEL" -eq 0 ] && command -v brew --version >/dev/null 2>&1; then
+if [ "$FAST_LEVEL" -eq 0 ] && command -v brew >/dev/null 2>&1; then
   NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/uninstall.sh)"
 fi
 

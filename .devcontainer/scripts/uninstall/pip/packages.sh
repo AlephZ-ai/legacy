@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 set -euo pipefail
-if command -v pip --version >/dev/null 2>&1; then
+if command -v pip >/dev/null 2>&1; then
   "$DEVCONTAINER_SCRIPTS_ROOT/utils/pip-enable-cache.sh"
   # function to uninstall python packages
   uninstall_python_packages() {

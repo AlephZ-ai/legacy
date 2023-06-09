@@ -1,6 +1,6 @@
 #shellcheck shell=bash
 set -euo pipefail
-if command -v pip --version >/dev/null 2>&1; then
+if command -v pip >/dev/null 2>&1; then
   files=("$HOME/.pip/pip.conf" "$HOME/.config/pip/pip.conf")
   for file in "${files[@]}"; do
     if [ -e "$file" ]; then
