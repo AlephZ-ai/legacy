@@ -2,7 +2,10 @@
 # shellcheck source=/dev/null
 # shellcheck shell=bash
 set -euo pipefail
-unsafe_level="$1"
+fast_level="${1:-0}"
+unsafe_level="${2:-0}"
+export FAST_LEVEL="${fast_level}"
+export UNSAFE_LEVEL="${unsafe_level}"
 "$DEVCONTAINER_SCRIPTS_ROOT/uninstall/nvm.sh"
 if brew --version &>/dev/null; then
   brew uninstall --force --ignore-dependencies bash
@@ -24,7 +27,7 @@ done
 sudo rm -rf "$HOME/.cache/Homebrew"
 sudo rm -rf "$HOME/Library/Caches/Homebrew"
 sudo rm -rf "$HOME/Library/Logs/Homebrew"
-if [ "$unsafe_level" -ge 1 ]; then
+if [ "$UNSAFE_LEVEL" -ge 1 ]; then
   echo -e "WARNING: You chose at least unsafe level 1."
   echo -e "Deleteing /usr/local/{Frameworks,bin,etc,include,lib,opt,sbin,share,var}"
   sudo rm -rf /usr/local/Frameworks
@@ -38,7 +41,7 @@ if [ "$unsafe_level" -ge 1 ]; then
   sudo rm -rf /usr/local/var
 fi
 
-if [ "$unsafe_level" -ge 2 ]; then
+if [ "$UNSAFE_LEVEL" -ge 2 ]; then
   echo -e "WARNING: You chose at least unsafe level 2."
   echo -e "Deleteing /usr/local/*, /etc/zsh/zshrc, and ~/.zshrc"
   sudo rm -rf /usr/local/* &>/dev/null || true

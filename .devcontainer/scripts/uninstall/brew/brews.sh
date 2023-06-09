@@ -1,9 +1,12 @@
 #!/bin/bash
 set -euo pipefail
-if command -v brew --version >/dev/null 2>&1; then
+if [ "$FAST_LEVEL" -eq 0 ] && command -v brew --version >/dev/null 2>&1; then
   brew uninstall --force --ignore-dependencies pycairo py3cairo pygobject3 pyenv pipx virtualenv
-  "$DEVCONTAINER_SCRIPTS_ROOT/uninstall/pip.sh"
-  "$DEVCONTAINER_SCRIPTS_ROOT/uninstall/asdf.sh"
+fi
+
+"$DEVCONTAINER_SCRIPTS_ROOT/uninstall/pip.sh"
+"$DEVCONTAINER_SCRIPTS_ROOT/uninstall/asdf.sh"
+if [ "$FAST_LEVEL" -eq 0 ] && command -v brew --version >/dev/null 2>&1; then
   while [[ $(brew list | wc -l) -ne 0 ]]; do
     for EACH in $(brew list); do
       brew uninstall --force --ignore-dependencies "$EACH"
