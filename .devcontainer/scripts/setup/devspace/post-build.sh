@@ -20,14 +20,14 @@ if [ "$os" = "Linux" ]; then
   sudo chsh "$USERNAME" -s "$(which zsh)"
 fi
 
+# Make trusted root CA then install and trust it
+source "$DEVCONTAINER_SCRIPTS_ROOT/setup/devspace/trust-root-ca.sh"
 # Make Edge the default browser if installed
 source "$DEVCONTAINER_SCRIPTS_ROOT/setup/devspace/edge-default.sh"
 # Setup adsf
 source "$DEVCONTAINER_SCRIPTS_ROOT/setup/devspace/asdf.sh"
 # Setup dotnet
 source "$DEVCONTAINER_SCRIPTS_ROOT/setup/devspace/dotnet.sh"
-# Make trusted root CA then install and trust it
-source "$DEVCONTAINER_SCRIPTS_ROOT/setup/devspace/trust-root-ca.sh"
 # Setup pwsh modules
 source "$DEVCONTAINER_SCRIPTS_ROOT/setup/devspace/pwsh.sh"
 # Setup pip

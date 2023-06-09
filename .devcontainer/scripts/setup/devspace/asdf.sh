@@ -5,9 +5,9 @@
 set -euo pipefail
 # Setup asdf
 # shellcheck disable=SC2016
-source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'PATH="$HOME/.asdf/shims:$PATH"'
-# shellcheck disable=SC2016
 source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "source \"$HOMEBREW_PREFIX/opt/asdf/libexec/asdf.sh\""
+# shellcheck disable=SC2016
+source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'PATH="$HOME/.asdf/shims:$PATH"'
 asdf plugin list | grep -q dotnet-core || asdf plugin add dotnet-core https://github.com/emersonsoares/asdf-dotnet-core.git
 asdf plugin update --all
 preview="$(asdf list all dotnet-core 8 | tail -1)"
@@ -24,9 +24,9 @@ for version in "${versions[@]}"; do
 
   asdf global dotnet-core "$version"
   asdf reshim
+  source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export DOTNET_ROOT=\"\$HOME/.asdf/installs/dotnet-core/$version\""
   dotnet --version
   asdf info
 done
 
-source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export DOTNET_ROOT=\"\$HOME/.asdf/installs/dotnet-core/$preview\""
 source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "$HOME/.asdf/plugins/dotnet-core/set-dotnet-home.bash"

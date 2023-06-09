@@ -6,7 +6,7 @@ set -euo pipefail
 os=$(uname -s)
 # Setup pip
 python -m ensurepip --upgrade
-python -m pip install --no-input --upgrade pip setuptools wheel distribute
+python -m pip install --no-input --upgrade pip setuptools wheel
 python -m pip install --no-input --upgrade pygobject pycairo pipx virtualenv sphinx sphinx-multiversion \
   openvino onnxruntime Cython cataclysm
 if [ "$os" = "Linux" ]; then
@@ -38,6 +38,7 @@ fi
 # TODO: Keep a check on gym-minigrid it only supports gym<=0.26 and >=0.22
 # TODO: Keep a check on stable-baselines3[docs,extra,tests] 1.8.0 depends on gym==0.21
 # TODO: Keep a check on dlltracer, it throws an error on install on Mac
+# TODO: openvino-dev[caffe,kaldi,mxnet,onnx,pytorch,tensorflow,tensorflow2]
 # pytorch-lightning>=1.9.0,<=1.9.4
 # gym[accept-rom-license,atari,box2d,classic_control,mujoco,robotics,toy_text,other]<=0.26,>=0.22
 pip install --no-input --user --upgrade \
@@ -45,7 +46,7 @@ pip install --no-input --user --upgrade \
   pygments flake8 tqdm rich ruff pytest pytest-sugar pytest-cov pytest-xdist pytest-xprocess pytest-mock pytest-benchmark \
   autopep8 aiosqlite absl-py astunparse flatbuffers gast google-pasta grpcio h5py jax libclang opt-einsum protobuf \
   blis catalogue confection cymem murmurhash preshed black yapf pydantic jinja2 langcodes murmurhash filelock tokenizers \
-  'openvino-dev[caffe,kaldi,mxnet,onnx,pytorch,tensorflow,tensorflow2]' openvino-workbench \
+  'openvino-dev' openvino-workbench \
   mtcnn-onnxruntime onnxruntime-tools scikit-onnxruntime torch-ort torch-ort-infer \
   keras opencv-python imageio lazy_loader networkx pillow wrapt py moreutils pylint mypy pandas moviepy \
   matplotlib scipy seaborn 'skops>=0.6.0' scikit-learn scikit-image scikit-optimize box2d-py pybullet 'optuna>=3.2.0' \
@@ -87,14 +88,7 @@ pip install --no-input --user --upgrade \
   microsoft-bing-websearch microsoft-bing-spellcheck microsoft-bing-videosearch microsoft-bing-imagesearch \
   microsoft-bing-customimagesearch microsoft-bing-visualsearch microsoft-bing-entitysearch microsoft-bing-customwebsearch \
   microsoft-bing-newssearch microsoft-bing-autosuggest google google-cloud google-benchmark
-files=("$HOME/.pip/pip.conf" "$HOME/.config/pip/pip.conf")
-for file in "${files[@]}"; do
-  if [ -e "$file" ]; then
-    sed -i.bak 's/no-cache-dir = .*/no-cache-dir = false/' "$file"
-    echo "$file"
-  fi
-done
-
+"$DEVCONTAINER_SCRIPTS_ROOT/utils/pip-enable-cache.sh"
 path="$HOME/.nvidia/pip"
 mkdir -p "$path"
 pushd "$path"
