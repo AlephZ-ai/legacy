@@ -7,7 +7,7 @@ if [ "$FAST_LEVEL" -eq 0 ] && command -v dotnet >/dev/null 2>&1; then
   fi
 
   dotnet tool list -g | awk 'NR>2 {print $1}' | xargs -n1 dotnet tool uninstall -g
-  list=$(dotnet workload list | awk 'NR>2 {print $1}' | grep -vE '^(-|=|Use$|Use )')
+  list=$(dotnet workload list | awk 'NR>2 {print $1}')
   if [ -n "$list" ]; then
     for workload in $list; do
       dotnet workload uninstall "$workload" || true

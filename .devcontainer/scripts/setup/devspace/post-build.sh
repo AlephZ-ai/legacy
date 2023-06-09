@@ -11,7 +11,29 @@ if [ "$os" = "Linux" ]; then
   sudo chsh "$USERNAME" -s "$(which zsh)"
 fi
 
+# Create /etc/bash.bashrc and /etc/zsh/zshrc if they don't exist
+sudo touch /etc/bash.bashrc
+sudo touch /etc/zsh/zshrc
+# Add default setting to /etc/bash.bashrc and /etc/zsh/zshrc
+# shellcheck disable=SC2016
+source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'source "$HOME/.bashrc"' "$HOME/.bash_profile"
+# shellcheck disable=SC2016
+source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'source "$HOME/.zshrc"' "$HOME/.zprofile"
+# Define the default rc files
+if [ "$os" = "Linux" ]; then
+  default_bashrc="$(cat "$DEVCONTAINER_PROJECT_ROOT/rc/linux/default.bashrc")"
+  default_zshrc="$(cat "$DEVCONTAINER_PROJECT_ROOT/rc/linux/default.zshrc")"
+else
+  default_bashrc="$(cat "$DEVCONTAINER_PROJECT_ROOT/rc/macos/default.bashrc")"
+  default_zshrc="$(cat "$DEVCONTAINER_PROJECT_ROOT/rc/macos/default.zshrc")"
+fi
+
+# Add default ~/.bashrc and ~/.zshrc if they don't exist
+if [ ! -f "$HOME/.bashrc" ]; then cp "$default_bashrc" "$HOME/.bashrc"; fi
+if [ ! -f "$HOME/.zshrc" ]; then cp "$default_zshrc" "$HOME/.zshrc"; fi
 source "$DEVCONTAINER_SCRIPTS_ROOT/setup/devspace/zsh.sh"
+# Restore the original ~/.zshrc
+mv "$HOME/.zshrc.pre-oh-my-zsh" "$HOME/.zshrc"
 # Setup Condas
 source "$DEVCONTAINER_SCRIPTS_ROOT/setup/devspace/condas.sh"
 # Setup Homebrew
