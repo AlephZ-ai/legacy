@@ -10,8 +10,18 @@ echo "FAST_LEVEL=$FAST_LEVEL"
 source "$DEVCONTAINER_SCRIPTS_ROOT/utils/disable-sudo-password.sh"
 # Setup Developer Command Line tools
 if ! (bash --version && git --version); then sudo xcode-select --install; fi
-# build commands
+# Setup required homebrew prefix on mac, this cannot be changed
 export HOMEBREW_PREFIX="/usr/local"
+# Create /etc/bash.bashrc and /etc/zsh/zshrc if they don't exist
+sudo touch /etc/bash.bashrc
+sudo touch /etc/zsh/zshrc
+# Define the default rc files
+default_bashrc="$(cat "$DEVCONTAINER_PROJECT_ROOT/rc/macos/default.bashrc")"
+default_zshrc="$(cat "$DEVCONTAINER_PROJECT_ROOT/rc/macos/default.zshrc")"
+# Add default ~/.bashrc and ~/.zshrc if they don't exist
+if [ ! -f "$HOME/.bashrc" ]; then cp "$default_bashrc" "$HOME/.bashrc"; fi
+if [ ! -f "$HOME/.zshrc" ]; then cp "$default_zshrc" "$HOME/.zshrc"; fi
+# post build commands
 source "$DEVCONTAINER_SCRIPTS_ROOT/setup/devspace/post-build.sh"
 # Add docker path
 # shellcheck disable=SC2016

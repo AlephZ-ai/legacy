@@ -12,6 +12,7 @@ USER $USERNAME
 COPY --chown=vscode:vscode ./ /devspaces/devcontainer/
 ENV PSHELL=pwsh
 ENV DEVCONTAINER_PROJECT_NAME=devcontainer
+ENV DEVCONTAINER_PROJECT_ROOT=/devspaces/devcontainer
 ENV DEVCONTAINER_SCRIPTS_ROOT=/devspaces/devcontainer/scripts
 ENTRYPOINT ["entrypoint.sh"]
 # https://docs.docker.com/engine/reference/builder/#cmd

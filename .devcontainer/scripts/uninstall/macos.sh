@@ -45,8 +45,10 @@ fi
 
 if [ "$UNSAFE_LEVEL" -ge 2 ]; then
   echo -e "WARNING: You chose at least unsafe level 2."
-  echo -e "Deleteing /usr/local/*, /etc/zsh/zshrc, and ~/.zshrc"
+  echo -e "Deleteing /usr/local/*, /etc/zsh/zshrc, ~/.zshrc", /etc/bash.bashrc, and ~/.bashhrc
   sudo rm -rf /usr/local/* &>/dev/null || true
   sudo rm -rf "/etc/zsh/zshrc"
+  sudo rm -rf "/etc/bash.bashrc"
   rm -rf "$HOME/.zshrc"
+  rm -rf "$HOME/.bashrc"
 fi
