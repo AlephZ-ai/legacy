@@ -7,8 +7,6 @@ export PATH=$HOME/bin:/usr/local/bin:$PATH
 ENABLE_CORRECTION="true"
 COMPLETION_WAITING_DOTS="true"
 
-# Path to your oh-my-zsh installation.
-export ZSH="$HOME/.oh-my-zsh"
 source "$(brew --prefix)/share/antigen/antigen.zsh"
 
 # update
