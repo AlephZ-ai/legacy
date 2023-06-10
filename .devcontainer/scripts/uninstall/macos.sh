@@ -7,7 +7,7 @@ unsafe_level="${2:-0}"
 export FAST_LEVEL="${fast_level}"
 export UNSAFE_LEVEL="${unsafe_level}"
 # shellcheck disable=SC2016
-export BREW_POST_UNINSTALL='"$DEVCONTAINER_SCRIPTS_ROOT/uninstall/brew/brews.sh"'
+export BREW_POST_UNINSTALL='"$DEVCONTAINER_SCRIPTS_ROOT/uninstall/macos/casks.sh"'
 "$DEVCONTAINER_SCRIPTS_ROOT/uninstall/nvm.sh"
 "$DEVCONTAINER_SCRIPTS_ROOT/uninstall/zsh.sh"
 "$DEVCONTAINER_SCRIPTS_ROOT/uninstall/brew.sh"
