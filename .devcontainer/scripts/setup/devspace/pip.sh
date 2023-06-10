@@ -5,6 +5,7 @@
 set -euo pipefail
 os=$(uname -s)
 # Setup pip
+source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'export PYENV_VIRTUALENV_DISABLE_PROMPT=1'
 # shellcheck disable=SC2016
 source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'if which pyenv > /dev/null; then eval "$(pyenv init -)"; fi'
 # shellcheck disable=SC2016
@@ -28,11 +29,11 @@ for version in "${versions[@]}"; do
 done
 
 devspace=devspace
-installed_3_9=$(pyenv versions --bare | grep -oP "3.9\.\d+" | sort -V | tail -n 1)
+installed_3_10=$(pyenv versions --bare | grep -oP "3.10\.\d+" | sort -V | tail -n 1)
 installed_3_11=$(pyenv versions --bare | grep -oP "3.11\.\d+" | sort -V | tail -n 1)
 pyenv global "$installed_3_11"
 if ! pyenv virtualenvs --bare | grep -q "^$devspace\$"; then
-  pyenv virtualenv "$installed_3_9" "$devspace"
+  pyenv virtualenv "$installed_3_10" "$devspace"
 fi
 
 source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "pyenv activate $devspace"
@@ -78,6 +79,11 @@ fi
 # TODO: openvino-workbench 2022.3.0 depends on requests==2.22.0
 # TODO: agents depends on gym==0.21.0 and that gym breaks with:
 #       error in gym setup command: 'extras_require' must be a dictionary whose values are strings or lists of strings containing valid project/version requirement specifiers.
+# TODO: Real old jupyter "jupyter-lsp>4.2.0" "jupyterlab>=4.0.2" jupyterlab-fonts "jupyterlab-git>=0.41.0" jupyterlab-markup
+#       jupyterlab_widgets jupyterlab-commands "jupyterlab_code_formatter>=2.2.1" jupyterlab-black jupyterlab-requirements
+#       jupyterlab-sparksql jupyterlab-drawio jupyterlab-powerpoint jupyterlab-github jupyterlab-flake8 jupyterlab-lsp
+#       jupyterlab-graph-lsp jupyterlab-telemetry jupyterlab-kernelspy jupyterlab-system-monitor jupyterlab-topbar
+#       jupyterlab-quickopen jupyter_contrib_core jupyter-contrib-nbextensions
 # pytorch-lightning>=1.9.0,<=1.9.4
 # gym[accept-rom-license,atari,box2d,classic_control,mujoco,robotics,toy_text,other]<=0.26,>=0.22
 pip install --no-input --upgrade \
@@ -97,11 +103,7 @@ pip install --no-input --upgrade \
   'bertopic[test,docs,dev,flair,spacy,use,gensim,vision]>=0.15.0' openai openai-whisper tiktoken ttok strip-tags llm llama-index \
   merlin-models merlin-systems merlin-dataloader merlin-sok fairscale sentencepiece langchain \
   'tritonclient>=2.34.0' pyctcdecode 'pythae>=0.1.1' 'rl_zoo3>=1.8.0' loralib 'dask>=2023.5.1' \
-  notebook jupyter-client jupyter-core jupyter "jupyter-lsp>4.2.0" "jupyterlab>=4.0.2" jupyterlab-fonts "jupyterlab-git>=0.41.0" jupyterlab-markup \
-  jupyterlab_widgets jupyterlab-commands "jupyterlab_code_formatter>=2.2.1" jupyterlab-black jupyterlab-requirements \
-  jupyterlab-sparksql jupyterlab-drawio jupyterlab-powerpoint jupyterlab-github jupyterlab-flake8 jupyterlab-lsp \
-  jupyterlab-graph-lsp jupyterlab-telemetry jupyterlab-kernelspy jupyterlab-system-monitor jupyterlab-topbar \
-  jupyterlab-quickopen jupyter_contrib_core jupyter-contrib-nbextensions "mlflow>2.4.0" \
+  notebook jupyter-client jupyter-core "mlflow>2.4.0" \
   'gymnasium[accept-rom-license,atari,box2d,classic-control,mujoco,mujoco-py,toy-text,jax,other,testing]>=0.28.1' \
   panda-gym gym-super-mario-bros flappy-bird-gymnasium \
   'sample-factory[dev,atari,envpool,mujoco,vizdoom]>=2.0.3' 'espnet>=202304' 'paddlenlp>=2.5.2' \
