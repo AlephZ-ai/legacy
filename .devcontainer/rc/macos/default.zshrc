@@ -6,7 +6,6 @@ export PATH=$HOME/bin:/usr/local/bin:$PATH
 # oh-my-zsh settings
 ENABLE_CORRECTION="true"
 COMPLETION_WAITING_DOTS="true"
-
 source "$(brew --prefix)/share/antigen/antigen.zsh"
 
 # update
