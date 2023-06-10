@@ -33,16 +33,15 @@ fi
 # Add default /etc/profile, ~/.bashrc, ~/.zshrc if they don't exist
 if [ ! -f /etc/profile ]; then sudo cp "$default_profile" /etc/profile; fi
 if [ ! -f /etc/zshrc ]; then sudo cp "$default_zprofile" /etc/zshrc; fi
+source "$DEVCONTAINER_SCRIPTS_ROOT/setup/devspace/zsh.sh"
 if [ ! -f "$HOME/.bashrc" ]; then cp "$default_bashrc" "$HOME/.bashrc"; fi
-if [ ! -f "$HOME/.zshrc" ]; then cp "$default_zshrc" "$HOME/.zshrc"; fi
+# TODO: Find oh-my-zsh backup zshrc files and restore the latest one and move these up
+cp "$default_zshrc" "$HOME/.zshrc"
 # Add default setting to /etc/bash.bashrc and /etc/zsh/zshrc
 # shellcheck disable=SC2016
 source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'source "$HOME/.bashrc"' "$HOME/.bash_profile"
 # shellcheck disable=SC2016
 source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'source "$HOME/.zshrc"' "$HOME/.zprofile"
-source "$DEVCONTAINER_SCRIPTS_ROOT/setup/devspace/zsh.sh"
-# Restore the original ~/.zshrc
-mv "$HOME/.zshrc.pre-oh-my-zsh" "$HOME/.zshrc" 2>/dev/null || true
 # Setup Condas
 source "$DEVCONTAINER_SCRIPTS_ROOT/setup/devspace/condas.sh"
 # Setup Homebrew

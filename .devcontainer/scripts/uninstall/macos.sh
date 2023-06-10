@@ -17,10 +17,11 @@ rm -rf "$HOME/.config/iterm2"
 files=("$HOME/.bashrc" "$HOME/.zshrc")
 for file in "${files[@]}"; do
   if [ -f "$file" ]; then
-    sed -i.bak '/# ------- auto-generated below this line -------/,$d' "$file"
+    sed -i.bak '/# ------- auto-generated below this line -------/,$d' "$file" && rm -rf "${file}.bak"
   fi
 done
 
+rm -rf ~/.antigen
 sudo rm -rf "$HOME/.cache/Homebrew"
 sudo rm -rf "$HOME/Library/Caches/Homebrew"
 sudo rm -rf "$HOME/Library/Logs/Homebrew"
@@ -40,7 +41,7 @@ fi
 
 if [ "$UNSAFE_LEVEL" -ge 2 ]; then
   echo -e "WARNING: You chose at least unsafe level 2."
-  echo -e 'Deleteing /usr/local/*, /etc/zshrc, /etc/zsh/zshrc, /etc/zsh/zshenv, ~/.zprofile, ~/.zshrc", /etc/profile, /etc/bash.bashrc, ~/.bash_profile and ~/.bashhrc'
+  echo -e 'Deleteing /usr/local/*, /etc/zshrc, /etc/zsh/zshrc, /etc/zsh/zshenv, ~/.zprofile, "~/.zshrc"*, /etc/profile, /etc/bash.bashrc, ~/.bash_profile and "~/.bashhrc"*'
   sudo rm -rf /usr/local/* &>/dev/null || true
   sudo rm -rf "/etc/zshrc"
   sudo rm -rf "/etc/zsh/zshrc"
@@ -48,9 +49,9 @@ if [ "$UNSAFE_LEVEL" -ge 2 ]; then
   sudo rm -rf "/etc/profile"
   sudo rm -rf "/etc/bash.bashrc"
   rm -rf "$HOME/.zprofile"
-  rm -rf "$HOME/.zshrc"
+  rm -rf "$HOME/.zshrc"*
   rm -rf "$HOME/.bash_profile"
-  rm -rf "$HOME/.bashrc"
+  rm -rf "$HOME/.bashrc"*
 fi
 
 if [ "$UNSAFE_LEVEL" -ge 3 ]; then

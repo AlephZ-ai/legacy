@@ -41,9 +41,8 @@ python --version
 python -m ensurepip --upgrade
 python -m pip install --no-input --upgrade pip setuptools wheel
 pip --version
-# TODO: Cython, cataclysm requires 3.10 or higher
 python -m pip install --no-input --upgrade pygobject pycairo pipx virtualenv sphinx sphinx-multiversion \
-  openvino onnxruntime onnxruntime-extensions
+  openvino onnxruntime onnxruntime-extensions Cython cataclysm
 if [ "$os" = "Linux" ]; then
   pip install --no-input --upgrade \
     nvidia-cudnn-cu11 cudf-cu11 dask_cudf_cu11 cuml-cu11 cugraph-cu11 cucim nvidia-dali-cuda110 nvidia-dali-tf-plugin-cuda110 \

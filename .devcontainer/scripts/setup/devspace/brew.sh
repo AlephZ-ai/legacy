@@ -43,8 +43,11 @@ if [ "$BREW_FAST_LEVEL" -eq 0 ]; then
   # linux only brews
   if [ "$os" = "Linux" ]; then HOMEBREW_ACCEPT_EULA=Y brew install --include-test --force procps systemd wayland wayland-protocols; fi
   # These work on all brew platforms
+  HOMEBREW_ACCEPT_EULA=Y brew install --include-test --force bash zsh antigen oh-my-posh
+  # shellcheck disable=SC2016
+  source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'source $HOME/antigen.zsh' "$HOME/.zshrc"
   while ! (
-    HOMEBREW_ACCEPT_EULA=Y brew install --include-test --force sevenzip p7zip awk ca-certificates bash zsh antigen oh-my-posh file-formula gnu-sed coreutils grep curl wget bzip2 swig less lesspipe readline
+    HOMEBREW_ACCEPT_EULA=Y brew install --include-test --force sevenzip p7zip awk ca-certificates file-formula gnu-sed coreutils grep curl wget bzip2 swig less lesspipe readline
     HOMEBREW_ACCEPT_EULA=Y brew install --include-test --force zlib zlib-ng buf protobuf grpc dos2unix git git-lfs sigstore/tap/gitsign-credential-cache sigstore/tap/gitsign gh asdf
     HOMEBREW_ACCEPT_EULA=Y brew install --include-test --force jq moreutils bash-completion@2 gcc make cmake cmake-docs z3 llvm dotnet dotnet@6 mono go rust python@3.9 python@3.10 python@3.11
     HOMEBREW_ACCEPT_EULA=Y brew install --include-test --force nss openssl@3 openssl@1.1 openssh age nghttp2 mkcert shellcheck speedtest-cli mono-libgdiplus chezmoi sqlite sqlite-utils postgresql@15

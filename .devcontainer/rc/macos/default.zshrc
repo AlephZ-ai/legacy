@@ -8,9 +8,6 @@ ENABLE_CORRECTION="true"
 COMPLETION_WAITING_DOTS="true"
 source "$(brew --prefix)/share/antigen/antigen.zsh"
 
-# update
-antigen update
-
 # Load the oh-my-zsh's library.
 antigen use oh-my-zsh
 
@@ -23,7 +20,7 @@ antigen bundle pip
 antigen bundle zsh-users/zsh-syntax-highlighting
 
 # Load the theme.
-antigen theme powerlevel10k/powerlevel10k
+antigen theme romkatv/powerlevel10k
 #antigen theme robbyrussell
 
 # User configuration
