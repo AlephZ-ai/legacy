@@ -31,14 +31,18 @@ devspace=devspace
 installed_3_9=$(pyenv versions --bare | grep -oP "3.9\.\d+" | sort -V | tail -n 1)
 installed_3_11=$(pyenv versions --bare | grep -oP "3.11\.\d+" | sort -V | tail -n 1)
 pyenv global "$installed_3_11"
-pyenv virtualenv "$installed_3_9" $devspace
+if ! pyenv virtualenvs --bare | grep -q "^$devspace\$"; then
+  pyenv virtualenv "$installed_3_9" "$devspace"
+fi
+
 source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "pyenv activate $devspace"
 python --version
 python -m ensurepip --upgrade
 python -m pip install --no-input --upgrade pip setuptools wheel
 pip --version
+# TODO: Cython, cataclysm requires 3.10 or higher
 python -m pip install --no-input --upgrade pygobject pycairo pipx virtualenv sphinx sphinx-multiversion \
-  openvino onnxruntime onnxruntime-extensions Cython cataclysm
+  openvino onnxruntime onnxruntime-extensions
 if [ "$os" = "Linux" ]; then
   pip install --no-input --upgrade \
     nvidia-cudnn-cu11 cudf-cu11 dask_cudf_cu11 cuml-cu11 cugraph-cu11 cucim nvidia-dali-cuda110 nvidia-dali-tf-plugin-cuda110 \
@@ -76,7 +80,7 @@ fi
 #       error in gym setup command: 'extras_require' must be a dictionary whose values are strings or lists of strings containing valid project/version requirement specifiers.
 # pytorch-lightning>=1.9.0,<=1.9.4
 # gym[accept-rom-license,atari,box2d,classic_control,mujoco,robotics,toy_text,other]<=0.26,>=0.22
-pip install --no-input --user --upgrade \
+pip install --no-input --upgrade \
   platformdirs dill isort mccabe ipykernel ipython-genutils packaging docker-pycreds flask pathy numpy \
   pygments flake8 tqdm rich ruff pytest pytest-sugar pytest-cov pytest-xdist pytest-xprocess pytest-mock pytest-benchmark \
   autopep8 aiosqlite absl-py astunparse flatbuffers gast google-pasta grpcio h5py jax libclang opt-einsum protobuf \
@@ -130,7 +134,7 @@ rm -rf apex
 git clone https://github.com/NVIDIA/apex.git
 pushd apex
 git checkout master
-pip install --no-input --user -v --disable-pip-version-check --no-cache-dir --global-option="--cpp_ext" --global-option="--cuda_ext" --global-option="--fast_layer_norm" --global-option="--distributed_adam" --global-option="--deprecated_fused_adam" ./
+pip install --no-input -v --disable-pip-version-check --no-cache-dir --global-option="--cpp_ext" --global-option="--cuda_ext" --global-option="--fast_layer_norm" --global-option="--distributed_adam" --global-option="--deprecated_fused_adam" ./
 popd
 popd
 spacy download en_core_web_sm
