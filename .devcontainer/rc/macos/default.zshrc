@@ -37,6 +37,8 @@ antigen theme robbyrussell
 antigen apply
 
 # User configuration
+# Local
+export LC_ALL="C"
 export MANPATH="/usr/local/man:$MANPATH"
 # You may need to manually set your language environment
 export LANG=en_US.UTF-8
