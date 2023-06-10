@@ -9,7 +9,8 @@ brew tap --repair
 brew update
 brew upgrade
 # Install casks
-brew install --cask microsoft-openjdk iterm2 microsoft-edge xquartz miniconda anaconda google-cloud-sdk
+while ! brew install --cask iterm2; do sudo rm -rf /Applications/iTerm.app; done
+brew install --cask microsoft-openjdk microsoft-edge xquartz miniconda anaconda google-cloud-sdk
 # Upgrade all casks
 brew update --cask
 brew upgrade --cask

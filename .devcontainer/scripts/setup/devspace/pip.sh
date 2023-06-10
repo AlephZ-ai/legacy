@@ -87,7 +87,7 @@ fi
 # pytorch-lightning>=1.9.0,<=1.9.4
 # gym[accept-rom-license,atari,box2d,classic_control,mujoco,robotics,toy_text,other]<=0.26,>=0.22
 pip install --no-input --upgrade \
-  platformdirs dill isort mccabe ipykernel ipython-genutils packaging docker-pycreds flask pathy numpy \
+  platformdirs dill isort mccabe ipykernel ipython-genutils packaging docker-pycreds flask pathy tbb numpy \
   pygments flake8 tqdm rich ruff pytest pytest-sugar pytest-cov pytest-xdist pytest-xprocess pytest-mock pytest-benchmark \
   autopep8 aiosqlite absl-py astunparse flatbuffers gast google-pasta grpcio h5py jax libclang opt-einsum protobuf \
   "blis>=0.9.1" catalogue confection cymem murmurhash preshed black yapf pydantic jinja2 langcodes murmurhash filelock tokenizers \

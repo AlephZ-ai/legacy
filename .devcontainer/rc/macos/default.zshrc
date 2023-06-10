@@ -1,4 +1,5 @@
 # shellcheck shell=bash
+# shellcheck source=/dev/null
 # If you come from bash you might have to change your $PATH.
 export PATH=$HOME/bin:/usr/local/bin:$PATH
 
@@ -9,9 +10,6 @@ COMPLETION_WAITING_DOTS="true"
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
 source "$(brew --prefix)/share/antigen/antigen.zsh"
-
-# log
-antigen -d
 
 # update
 antigen update
@@ -24,7 +22,7 @@ antigen bundle git
 antigen bundle heroku
 antigen bundle pip
 antigen bundle lein
-antigen bundle command-not-found
+# antigen bundle command-not-found
 
 # Syntax highlighting bundle.
 antigen bundle zsh-users/zsh-syntax-highlighting
@@ -32,9 +30,6 @@ antigen bundle zsh-users/zsh-syntax-highlighting
 # Load the theme.
 #antigen theme powerlevel10k/powerlevel10k
 antigen theme robbyrussell
-
-# Tell Antigen that you're done.
-antigen apply
 
 # User configuration
 # Local
@@ -48,18 +43,19 @@ if [[ -n $SSH_CONNECTION ]]; then
 else
     export EDITOR='code'
 fi
+
 # Compilation flags
-export ARCHFLAGS="-arch x86_64"
+# export ARCHFLAGS="-arch x86_64"
 # Set personal aliases, overriding those provided by oh-my-zsh libs,
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
 # users are encouraged to define aliases within the ZSH_CUSTOM folder.
 # For a full list of active aliases, run `alias`.
-#
 # Example aliases
 alias zshrc="code ~/.zshrc"
 alias bashrc="code ~/.bashconfig"
 alias ohmyzsh="code ~/.oh-my-zsh"
 # Custom
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
-autoload -Uz compinit
-compinit
+
+# Tell Antigen that you're done.
+antigen apply
