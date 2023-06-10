@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env bashg
 # shellcheck source=/dev/null
 # init
 set -euo pipefail
@@ -9,8 +9,8 @@ brew tap --repair
 brew update
 brew upgrade
 # Install casks
-while ! brew install --cask iterm2; do sudo rm -rf /Applications/iTerm.app; done
-brew install --cask microsoft-openjdk microsoft-edge xquartz miniconda anaconda google-cloud-sdk
+while ! HOMEBREW_ACCEPT_EULA=Y brew install --cask iterm2; do sudo rm -rf /Applications/iTerm.app; done
+HOMEBREW_ACCEPT_EULA=Y brew install --cask microsoft-openjdk microsoft-edge xquartz miniconda anaconda google-cloud-sdk
 # Upgrade all casks
 brew update --cask
 brew upgrade --cask
@@ -25,3 +25,4 @@ source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'source "$(brew --prefix)/
 "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'source "$(brew --prefix)/share/google-cloud-sdk/path.zsh.inc"' "$HOME/.zshrc" || true
 # shellcheck disable=SC2016
 "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'source "$(brew --prefix)/share/google-cloud-sdk/completion.zsh.inc"' "$HOME/.zshrc" || true
+gcloud components update
