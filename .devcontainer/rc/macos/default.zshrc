@@ -8,7 +8,10 @@ COMPLETION_WAITING_DOTS="true"
 
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
-source "$($brew --prefix)/share/antigen/antigen.zsh"
+source "$(brew --prefix)/share/antigen/antigen.zsh"
+
+# log
+antigen -d
 
 # update
 antigen update
@@ -27,8 +30,8 @@ antigen bundle command-not-found
 antigen bundle zsh-users/zsh-syntax-highlighting
 
 # Load the theme.
-antigen theme powerlevel10k/powerlevel10k
-#antigen theme robbyrussell
+#antigen theme powerlevel10k/powerlevel10k
+antigen theme robbyrussell
 
 # Tell Antigen that you're done.
 antigen apply
