@@ -24,13 +24,13 @@ source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'source "$HOME/.bashrc"' "
 source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'source "$HOME/.zshrc"' "$HOME/.zprofile"
 # Define the default rc files
 if [ "$os" = "Linux" ]; then
-  default_profile="$DEVCONTAINER_PROJECT_ROOT/rc/linux/default.profile"
-  default_zprofile="$DEVCONTAINER_PROJECT_ROOT/rc/linux/default.zprofile"
+  default_profile="$DEVCONTAINER_PROJECT_ROOT/rc/default.profile"
+  default_zprofile="$DEVCONTAINER_PROJECT_ROOT/rc/default.zprofile"
   default_bashrc="$DEVCONTAINER_PROJECT_ROOT/rc/linux/default.bashrc"
   default_zshrc="$DEVCONTAINER_PROJECT_ROOT/rc/linux/default.zshrc"
 else
-  default_profile="$DEVCONTAINER_PROJECT_ROOT/rc/macos/default.profile"
-  default_zprofile="$DEVCONTAINER_PROJECT_ROOT/rc/macos/default.zprofile"
+  default_profile="$DEVCONTAINER_PROJECT_ROOT/rc/default.profile"
+  default_zprofile="$DEVCONTAINER_PROJECT_ROOT/rc/default.zprofile"
   default_bashrc="$DEVCONTAINER_PROJECT_ROOT/rc/macos/default.bashrc"
   default_zshrc="$DEVCONTAINER_PROJECT_ROOT/rc/macos/default.zshrc"
 fi
