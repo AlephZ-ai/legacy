@@ -1,4 +1,5 @@
 #!/bin/bash
+# shellcheck source=/dev/null
 set -euo pipefail
 os=$(uname -s)
 if [ -z "${HOMEBREW_PREFIX:-}" ]; then
@@ -9,7 +10,18 @@ if [ -z "${HOMEBREW_PREFIX:-}" ]; then
   fi
 fi
 
-"$DEVCONTAINER_SCRIPTS_ROOT/uninstall/brew/brews.sh"
+if brew --version &>/dev/null; then
+  brew uninstall --force --ignore-dependencies bash zsh
+  if [ "$FAST_LEVEL" -eq 0 ]; then
+    brew list | xargs -I {} brew uninstall"{}"
+  fi
+fi
+
+# Run Homebrew post install
+if [ -n "$BREW_POST_UNINSTALL" ]; then
+  source "$BREW_POST_UNINSTALL"
+fi
+
 if [ "$FAST_LEVEL" -eq 0 ] && command -v brew >/dev/null 2>&1; then
   NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/uninstall.sh)"
 fi

@@ -6,15 +6,8 @@ fast_level="${1:-0}"
 unsafe_level="${2:-0}"
 export FAST_LEVEL="${fast_level}"
 export UNSAFE_LEVEL="${unsafe_level}"
+export BREW_POST_UNINSTALL="source \"$DEVCONTAINER_SCRIPTS_ROOT/uninstall/macos/brews.sh\""
 "$DEVCONTAINER_SCRIPTS_ROOT/uninstall/nvm.sh"
-if brew --version &>/dev/null; then
-  brew uninstall --force --ignore-dependencies bash zsh
-  if [ "$FAST_LEVEL" -eq 0 ]; then
-    brew list --cask | xargs -I {} brew uninstall --cask "{}"
-  fi
-fi
-
-"$DEVCONTAINER_SCRIPTS_ROOT/uninstall/brew.sh"
 "$DEVCONTAINER_SCRIPTS_ROOT/uninstall/zsh.sh"
 rm -rf "$HOME/.iterm2"
 rm -rf "$HOME/.config/iterm2"
