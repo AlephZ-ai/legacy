@@ -7,6 +7,8 @@ set -euo pipefail
 dotnet_latest_major_global='{ "sdk": { "rollForward": "latestmajor" } }'
 source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'export DOTNET_ROLL_FORWARD=LatestMajor'
 # shellcheck disable=SC2016
+source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'export PATH="$DOTNET_ROOT:$PATH"'
+# shellcheck disable=SC2016
 source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'PATH="$HOME/.dotnet/tools:$PATH"'
 # shellcheck disable=SC2016
 source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'PATH="$HOME/.dotnet/tools/preview:$PATH"'

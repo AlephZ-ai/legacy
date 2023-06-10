@@ -21,9 +21,6 @@ sudo ln -sfn "$(brew --prefix)/opt/openjdk@17/libexec/openjdk.jdk" /Library/Java
 # shellcheck disable=SC2016
 source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'source "$(brew --prefix)/share/google-cloud-sdk/path.bash.inc"' "$HOME/.bashrc"
 # shellcheck disable=SC2016
-"$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'source "$(brew --prefix)/share/google-cloud-sdk/path.zsh.inc"' "$HOME/.zshrc"
+"$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'source "$(brew --prefix)/share/google-cloud-sdk/path.zsh.inc"' "$HOME/.zshrc" || true
 # shellcheck disable=SC2016
-"$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'source "$(brew --prefix)/share/google-cloud-sdk/completion.zsh.inc"' "$HOME/.zshrc"
-# Run Homebrew cleanup and doctor to check for errors
-brew cleanup
-brew doctor || true
+"$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'source "$(brew --prefix)/share/google-cloud-sdk/completion.zsh.inc"' "$HOME/.zshrc" || true
