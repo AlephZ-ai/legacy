@@ -8,6 +8,7 @@
   "files.autoSave": "afterDelay",
   "json.format.enable": true,
   "omnisharp.enableRoslynAnalyzers": true,
+  "terminal.integrated.fontFamily": "MesloLGS NF",
   "terminal.integrated.profiles.windows": {
     "PowerShell": {
       "source": "PowerShell"

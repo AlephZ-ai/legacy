@@ -10,6 +10,8 @@ echo "FAST_LEVEL=$FAST_LEVEL"
 export BREW_POST_INSTALL='"$DEVCONTAINER_SCRIPTS_ROOT/setup/macos/brew.sh"'
 # Disable needing password for sudo
 source "$DEVCONTAINER_SCRIPTS_ROOT/utils/disable-sudo-password.sh"
+# Install fonts
+source "$DEVCONTAINER_SCRIPTS_ROOT/setup/macos/fonts.sh"
 # Setup Developer Command Line tools
 if ! (bash --version && git --version); then sudo xcode-select --install; fi
 # Wait for bash and git to be available

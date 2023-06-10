@@ -1,4 +1,4 @@
-#!/usr/bin/env bashg
+#!/usr/bin/env bash
 # shellcheck source=/dev/null
 # init
 set -euo pipefail
@@ -8,9 +8,11 @@ brew tap --repair
 # Upgrade all packages
 brew update
 brew upgrade
+# tap casks
+brew tap homebrew/cask-fonts
 # Install casks
 while ! HOMEBREW_ACCEPT_EULA=Y brew install --cask iterm2; do sudo rm -rf /Applications/iTerm.app; done
-HOMEBREW_ACCEPT_EULA=Y brew install --cask microsoft-openjdk microsoft-edge xquartz miniconda anaconda google-cloud-sdk
+HOMEBREW_ACCEPT_EULA=Y brew install --cask font-inconsolata microsoft-openjdk microsoft-edge xquartz miniconda anaconda google-cloud-sdk
 # Upgrade all casks
 brew update --cask
 brew upgrade --cask
