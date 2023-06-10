@@ -73,7 +73,7 @@ jobs:
           git add src/**/devcontainer-feature.json
           git commit -m "$message" || export NO_UPDATES=true
 
-          if [ "$NO_UPDATES" != "true" ] ; then
+          if [ "${NO_UPDATES:-false}" != "true" ] ; then
               git push origin "$branch"
               gh api \
                 --method POST \
