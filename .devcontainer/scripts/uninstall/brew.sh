@@ -13,7 +13,7 @@ fi
 if brew --version &>/dev/null; then
   brew uninstall --force --ignore-dependencies bash zsh
   if [ "$FAST_LEVEL" -eq 0 ]; then
-    brew list | xargs -I {} brew uninstall"{}"
+    brew list | xargs -I {} brew uninstall --ignore-dependencies "{}"
   fi
 fi
 
