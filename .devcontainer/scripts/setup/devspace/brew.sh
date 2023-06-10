@@ -57,9 +57,9 @@ if [ "$BREW_FAST_LEVEL" -eq 0 ]; then
   brew update
   brew upgrade
   # Setup post hombrew packages
-  links=('dotnet' 'python@3.9' 'python@3.10' 'python-tk@3.10' 'python@3.11' 'postgresql@15')
+  links=('dotnet@6' 'dotnet' 'openjdk@8' 'openjdk@11' 'openjdk@17' 'python@3.9' 'python@3.10' 'python-tk@3.10' 'python@3.11' 'postgresql@15')
   if [ "$os" = "Linux" ]; then
-    links+=('file-formula' 'curl' 'bzip2' 'zlib' 'libffi' 'llvm' 'openjdk' 'sqlite' 'openssl@3')
+    links+=('file-formula' 'curl' 'bzip2' 'zlib' 'libffi' 'llvm' 'sqlite' 'openssl@3')
     sudo chsh "$USERNAME" -s "$(which zsh)"
   fi
 
@@ -77,7 +77,7 @@ source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'export MONO_GAC_PREFIX="$
 source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'export GROOVY_HOME="$(brew --prefix)/opt/groovy/libexec"'
 # shellcheck disable=SC2016
 source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'export SCALA_HOME="$(brew --prefix)/opt/scala/idea"'
-brews=('gnu-sed' 'grep' 'make' 'coreutils' 'curl' 'bzip2' 'zlib' 'llvm' 'libffi' 'openjdk' 'sqlite' 'openssl@3' 'python@3.11' 'postgresql@15')
+brews=('gnu-sed' 'grep' 'make' 'coreutils' 'curl' 'bzip2' 'zlib' 'llvm' 'libffi' 'openjdk' 'sqlite' 'openssl@3' 'dotnet' 'python@3.11' 'postgresql@15')
 for brew in "${brews[@]}"; do
   # shellcheck disable=SC2016
   brew_dir='$(brew --prefix)/opt/$brew'
@@ -103,7 +103,7 @@ done
 if [ "$BREW_FAST_LEVEL" -eq 0 ]; then
   # Run Homebrew post install
   if [ -n "$BREW_POST_INSTALL" ]; then
-    source "$BREW_POST_INSTALL"
+    eval "$BREW_POST_INSTALL"
   fi
 
   # Run Homebrew cleanup and doctor to check for errors

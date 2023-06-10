@@ -6,7 +6,8 @@ fast_level="${1:-0}"
 unsafe_level="${2:-0}"
 export FAST_LEVEL="${fast_level}"
 export UNSAFE_LEVEL="${unsafe_level}"
-export BREW_POST_UNINSTALL="source \"$DEVCONTAINER_SCRIPTS_ROOT/uninstall/macos/brews.sh\""
+# shellcheck disable=SC2016
+export BREW_POST_UNINSTALL='"$DEVCONTAINER_SCRIPTS_ROOT/uninstall/macos/brews.sh"'
 "$DEVCONTAINER_SCRIPTS_ROOT/uninstall/nvm.sh"
 "$DEVCONTAINER_SCRIPTS_ROOT/uninstall/zsh.sh"
 rm -rf "$HOME/.iterm2"

@@ -19,7 +19,7 @@ fi
 
 # Run Homebrew post install
 if [ -n "$BREW_POST_UNINSTALL" ]; then
-  source "$BREW_POST_UNINSTALL"
+  eval "$BREW_POST_UNINSTALL"
 fi
 
 if [ "$FAST_LEVEL" -eq 0 ] && command -v brew >/dev/null 2>&1; then
