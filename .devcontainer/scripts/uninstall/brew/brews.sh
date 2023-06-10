@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 set -euo pipefail
 if [ "$FAST_LEVEL" -eq 0 ] && command -v brew >/dev/null 2>&1; then
   brew uninstall --force --ignore-dependencies pycairo py3cairo pygobject3 pyenv pyenv-virtualenv pipx virtualenv
