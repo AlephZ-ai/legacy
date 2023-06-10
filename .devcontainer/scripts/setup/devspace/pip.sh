@@ -13,7 +13,7 @@ source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'if which pyenv-virtualenv
 versions=("3.9" "3.10" "3.11")
 for version in "${versions[@]}"; do
   # Find the highest installed version and the highest available version
-  installed_version=$(pyenv versions --bare | grep -oP "$version\.\d+" | sort -V | tail -n 1)
+  installed_version=$(pyenv versions --bare | { grep -oP "$version\.\d+" || true; } | sort -V | tail -n 1)
   latest_version=$(pyenv install --list | grep -oP "$version\.\d+" | sort -V | tail -n 1)
   echo "Installed version: $installed_version"
   echo "Latest version: $latest_version"

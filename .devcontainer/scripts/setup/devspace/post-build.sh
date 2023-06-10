@@ -17,11 +17,6 @@ sudo touch /etc/zsh/zshrc
 sudo touch /etc/zsh/zshenv
 touch "$HOME/.bash_profile"
 touch "$HOME/.zprofile"
-# Add default setting to /etc/bash.bashrc and /etc/zsh/zshrc
-# shellcheck disable=SC2016
-source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'source "$HOME/.bashrc"' "$HOME/.bash_profile"
-# shellcheck disable=SC2016
-source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'source "$HOME/.zshrc"' "$HOME/.zprofile"
 # Define the default rc files
 if [ "$os" = "Linux" ]; then
   default_profile="$DEVCONTAINER_PROJECT_ROOT/rc/default.profile"
@@ -40,6 +35,11 @@ if [ ! -f /etc/profile ]; then sudo cp "$default_profile" /etc/profile; fi
 if [ ! -f /etc/zshrc ]; then sudo cp "$default_zprofile" /etc/zshrc; fi
 if [ ! -f "$HOME/.bashrc" ]; then cp "$default_bashrc" "$HOME/.bashrc"; fi
 if [ ! -f "$HOME/.zshrc" ]; then cp "$default_zshrc" "$HOME/.zshrc"; fi
+# Add default setting to /etc/bash.bashrc and /etc/zsh/zshrc
+# shellcheck disable=SC2016
+source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'source "$HOME/.bashrc"' "$HOME/.bash_profile"
+# shellcheck disable=SC2016
+source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'source "$HOME/.zshrc"' "$HOME/.zprofile"
 source "$DEVCONTAINER_SCRIPTS_ROOT/setup/devspace/zsh.sh"
 # Restore the original ~/.zshrc
 mv "$HOME/.zshrc.pre-oh-my-zsh" "$HOME/.zshrc" 2>/dev/null || true
