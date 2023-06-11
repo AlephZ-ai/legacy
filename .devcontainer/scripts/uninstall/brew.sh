@@ -13,13 +13,13 @@ fi
 if brew --version &>/dev/null; then
   brew uninstall --force --ignore-dependencies bash zsh
   if [ "$FAST_LEVEL" -eq 0 ]; then
-    brew list | xargs -I {} brew uninstall --ignore-dependencies "{}"
-  fi
-fi
+    # Run Homebrew post install
+    if [ -n "$BREW_POST_UNINSTALL" ]; then
+      eval "$BREW_POST_UNINSTALL"
+    fi
 
-# Run Homebrew post install
-if [ -n "$BREW_POST_UNINSTALL" ]; then
-  eval "$BREW_POST_UNINSTALL"
+    "$DEVCONTAINER_SCRIPTS_ROOT/uninstall/brew/brews.sh"
+  fi
 fi
 
 if [ "$FAST_LEVEL" -eq 0 ] && command -v brew >/dev/null 2>&1; then
