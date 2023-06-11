@@ -41,12 +41,12 @@ if [ "$BREW_FAST_LEVEL" -eq 0 ]; then
   # These work on all brew platforms
   HOMEBREW_ACCEPT_EULA=Y brew install --include-test --force zsh bash antigen oh-my-posh
   # shellcheck disable=SC2016
-  source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'source "$(brew --prefix)/share/antigen/antigen.zsh)"' "$HOME/.zshrc"
+  source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'source "$(brew --prefix)/share/antigen/antigen.zsh"' "$HOME/.zshrc"
   while ! (
-    HOMEBREW_ACCEPT_EULA=Y brew install --include-test --force sevenzip p7zip awk ca-certificates file-formula gnu-sed coreutils grep curl wget bzip2 swig less lesspipe readline
+    HOMEBREW_ACCEPT_EULA=Y brew install --include-test --force sevenzip p7zip awk ca-certificates file-formula gnu-sed coreutils grep curl wget bzip2 swig less lesspipe readline xz
     HOMEBREW_ACCEPT_EULA=Y brew install --include-test --force zlib zlib-ng buf protobuf grpc dos2unix git git-lfs sigstore/tap/gitsign-credential-cache sigstore/tap/gitsign gh asdf
     HOMEBREW_ACCEPT_EULA=Y brew install --include-test --force moreutils jq yq bash-completion@2 gcc make cmake cmake-docs z3 llvm dotnet dotnet@6 mono go rust python@3.9 python@3.10 python@3.11
-    HOMEBREW_ACCEPT_EULA=Y brew install --include-test --force nss openssl@3 openssl@1.1 openssh age nghttp2 mkcert shellcheck speedtest-cli mono-libgdiplus chezmoi sqlite sqlite-utils postgresql@15
+    HOMEBREW_ACCEPT_EULA=Y brew install --include-test --force nss openssl openssl@1.1 openssl@3 openssh age nghttp2 mkcert shellcheck speedtest-cli mono-libgdiplus chezmoi sqlite sqlite-utils sqlite3 postgresql@15
     HOMEBREW_ACCEPT_EULA=Y brew install --include-test --force azure-cli awscli msodbcsql18 mssql-tools18 gedit kubernetes-cli helm minikube kind k3d argocd derailed/k9s/k9s kustomize skaffold vcluster
     HOMEBREW_ACCEPT_EULA=Y brew install --include-test --force terraform openjdk openjdk@8 openjdk@11 openjdk@17 maven groovy gradle scala sbt yarn pygobject3 gtk+3 gtk+4 libffi libyaml
     HOMEBREW_ACCEPT_EULA=Y brew install --include-test --force ffmpeg libsndfile libsoundio openmpi pyenv pyenv-virtualenv pipx virtualenv boost opencv openvino bats-core tcl-tk
@@ -58,7 +58,7 @@ if [ "$BREW_FAST_LEVEL" -eq 0 ]; then
   # Setup post hombrew packages
   links=('dotnet@6' 'dotnet' 'openjdk@8' 'openjdk@11' 'openjdk@17' 'python@3.9' 'python@3.10' 'python@3.11' 'postgresql@15')
   if [ "$os" = "Linux" ]; then
-    links+=('file-formula' 'curl' 'bzip2' 'zlib' 'libffi' 'llvm' 'sqlite' 'openssl@3')
+    links+=('file-formula' 'readline' 'curl' 'bzip2' 'zlib' 'libffi' 'llvm' 'xz' 'tcl-tk' 'sqlite3' 'openssl' 'openssl@3')
     sudo chsh "$USERNAME" -s "$(which zsh)"
   fi
 

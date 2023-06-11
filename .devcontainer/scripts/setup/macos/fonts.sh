@@ -15,8 +15,8 @@ curl -LO "$url/MesloLGS%20NF%20Italic.ttf"
 curl -LO "$url/MesloLGS%20NF%20Bold%20Italic.ttf"
 # install the font files
 # shellcheck disable=SC2035
-cp "*.ttf" "$HOME/Library/Fonts/"
-chmod 700 -R "$HOME/Library/Fonts"
+cp *.ttf "$HOME/Library/Fonts/"
+chmod -R 700 "$HOME/Library/Fonts"
 popd
 # remove the temporary directory
 rm -rf "$tmppath"

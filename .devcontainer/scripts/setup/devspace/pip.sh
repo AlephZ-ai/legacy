@@ -5,11 +5,10 @@
 set -euo pipefail
 os=$(uname -s)
 # Setup pip
-# source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'export PYENV_VIRTUALENV_DISABLE_PROMPT=1'
 # shellcheck disable=SC2016
-source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'if which pyenv > /dev/null; then eval "$(pyenv init -)"; fi'
+source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'eval "$(pyenv init -)"'
 # shellcheck disable=SC2016
-source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'if which pyenv-virtualenv-init > /dev/null; then eval "$(pyenv virtualenv-init -)"; fi'
+source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'eval "$(pyenv virtualenv-init -)"'
 # Array of Python versions to upgrade
 versions=("3.9" "3.10" "3.11")
 for version in "${versions[@]}"; do
