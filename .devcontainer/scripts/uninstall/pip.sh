@@ -2,7 +2,7 @@
 set -euo pipefail
 devspace=devspace
 if pyenv --version &>/dev/null; then
-  devspaceExists=$(pyenv virtualenvs --bare | grep -qoP "^$devspace\$" && echo true || echo false)
+  devspaceExists=$(pyenv virtualenvs --bare | grep -qx "^$devspace\$" && echo true || echo false)
   if $devspaceExists; then pyenv activate $devspace; fi
 fi
 

@@ -50,8 +50,6 @@ source "$DEVCONTAINER_SCRIPTS_ROOT/setup/devspace/zsh.sh"
 # Restore the .zshrc
 rm -rf "$HOME/.zshrc"
 mv "$HOME/.og.zshrc" "$HOME/.zshrc"
-# Setup Condas
-source "$DEVCONTAINER_SCRIPTS_ROOT/setup/devspace/condas.sh"
 # Setup Homebrew
 source "$DEVCONTAINER_SCRIPTS_ROOT/setup/devspace/brew.sh"
 if [ "$os" = "Linux" ]; then
@@ -62,6 +60,8 @@ fi
 source "$DEVCONTAINER_SCRIPTS_ROOT/setup/devspace/trust-root-ca.sh"
 # Make Edge the default browser if installed
 source "$DEVCONTAINER_SCRIPTS_ROOT/setup/devspace/edge-default.sh"
+# Setup Condas
+source "$DEVCONTAINER_SCRIPTS_ROOT/setup/devspace/condas.sh"
 # Setup adsf
 source "$DEVCONTAINER_SCRIPTS_ROOT/setup/devspace/asdf.sh"
 # Setup dotnet

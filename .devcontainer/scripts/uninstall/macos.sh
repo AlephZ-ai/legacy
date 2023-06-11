@@ -49,9 +49,9 @@ if [ "$UNSAFE_LEVEL" -ge 2 ]; then
   sudo rm -rf "/etc/profile"
   sudo rm -rf "/etc/bash.bashrc"
   rm -rf "$HOME/.zprofile"
-  rm -rf "$HOME/.zshrc"*
+  rm -rf "$HOME/.zshrc"* || true
   rm -rf "$HOME/.bash_profile"
-  rm -rf "$HOME/.bashrc"*
+  rm -rf "$HOME/.bashrc"* || true
 fi
 
 if [ "$UNSAFE_LEVEL" -ge 3 ]; then
