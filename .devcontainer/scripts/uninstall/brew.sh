@@ -10,18 +10,21 @@ if [ -z "${HOMEBREW_PREFIX:-}" ]; then
   fi
 fi
 
-if brew --version &>/dev/null; then
+if [ "$FAST_LEVEL" -eq 0 ] && brew --version &>/dev/null; then
   brew uninstall --force --ignore-dependencies bash zsh
-  if [ "$FAST_LEVEL" -eq 0 ]; then
-    # Run Homebrew post install
-    if [ -n "$BREW_POST_UNINSTALL" ]; then
-      eval "$BREW_POST_UNINSTALL"
-    fi
+  brew uninstall --force --ignore-dependencies pycairo py3cairo pygobject3 pipx virtualenv
+fi
 
-    "$DEVCONTAINER_SCRIPTS_ROOT/uninstall/brew/brews.sh"
+"$DEVCONTAINER_SCRIPTS_ROOT/uninstall/pip.sh"
+"$DEVCONTAINER_SCRIPTS_ROOT/uninstall/asdf.sh"
+if [ "$FAST_LEVEL" -eq 0 ] && brew --version &>/dev/null; then
+  # Run Homebrew post install
+  if [ -n "$BREW_POST_UNINSTALL" ]; then
+    eval "$BREW_POST_UNINSTALL"
   fi
 fi
 
+"$DEVCONTAINER_SCRIPTS_ROOT/uninstall/brew/brews.sh"
 if [ "$FAST_LEVEL" -eq 0 ] && command -v brew >/dev/null 2>&1; then
   NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/uninstall.sh)"
 fi
