@@ -80,5 +80,3 @@ export ARCHFLAGS="-arch x86_64"
 alias zshrc="code ~/.zshrc"
 alias bashrc="code ~/.bashconfig"
 alias ohmyzsh="code ~/.oh-my-zsh"
-# Custom
-[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"

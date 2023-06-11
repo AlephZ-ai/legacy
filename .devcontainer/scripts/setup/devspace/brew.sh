@@ -12,10 +12,6 @@ if [ -z "${HOMEBREW_PREFIX:-}" ]; then
   fi
 fi
 
-# Add autogenerate line
-source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" '# ------- pre-generated above this line -------' all
-source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" '# ------- manual entry goes here -------' all
-source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" '# ------- auto-generated below this line -------' all
 # Check fast level
 source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export PATH=\"$HOMEBREW_PREFIX/bin:\$PATH\""
 if command -v brew >/dev/null 2>&1; then
@@ -43,10 +39,9 @@ if [ "$BREW_FAST_LEVEL" -eq 0 ]; then
   # linux only brews
   if [ "$os" = "Linux" ]; then HOMEBREW_ACCEPT_EULA=Y brew install --include-test --force procps systemd wayland wayland-protocols; fi
   # These work on all brew platforms
-  HOMEBREW_ACCEPT_EULA=Y brew install --include-test --force zsh antigen
+  HOMEBREW_ACCEPT_EULA=Y brew install --include-test --force zsh bash antigen oh-my-posh
   # shellcheck disable=SC2016
-  source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'source "$(brew --prefix)/share/q"' "$HOME/.zshrc"
-  HOMEBREW_ACCEPT_EULA=Y brew install --include-test --force bash oh-my-posh
+  source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'source "$(brew --prefix)/share/antigen/antigen.zsh)"' "$HOME/.zshrc"
   while ! (
     HOMEBREW_ACCEPT_EULA=Y brew install --include-test --force sevenzip p7zip awk ca-certificates file-formula gnu-sed coreutils grep curl wget bzip2 swig less lesspipe readline
     HOMEBREW_ACCEPT_EULA=Y brew install --include-test --force zlib zlib-ng buf protobuf grpc dos2unix git git-lfs sigstore/tap/gitsign-credential-cache sigstore/tap/gitsign gh asdf
@@ -84,13 +79,13 @@ source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'export SCALA_HOME="$(brew
 brews=('file-formula' 'gnu-sed' 'grep' 'make' 'coreutils' 'curl' 'bzip2' 'zlib' 'llvm' 'libffi' 'openjdk' 'sqlite' 'openssl@3' 'dotnet' 'python@3.11' 'postgresql@15')
 for brew in "${brews[@]}"; do
   # shellcheck disable=SC2016
-  brew_dir='$(brew --prefix)/opt/$brew'
+  brew_dir="\$(brew --prefix)/opt/$brew"
   brew_bin_dir="$brew_dir/bin"
   brew_include_dir="$brew_dir/include"
   brew_lib_dir="$brew_dir/lib"
   brew_pkgconfig_dir="$brew_lib_dir/pkgconfig"
   # shellcheck disable=SC2016
-  brew_libexec_dir='$(brew --prefix)/opt/$brew/libexec'
+  brew_libexec_dir="\$(brew --prefix)/opt/$brew/libexec"
   brew_libexec_bin_dir="$brew_libexec_dir/bin"
   brew_gnubin_dir="$brew_libexec_dir/gnubin"
   brew_gnuman_dir="$brew_libexec_dir/gnuman"
@@ -107,7 +102,7 @@ done
 if [ "$BREW_FAST_LEVEL" -eq 0 ]; then
   # Run Homebrew post install
   if [ -n "$BREW_POST_INSTALL" ]; then
-    eval "$BREW_POST_INSTALL"
+    while ! eval "$BREW_POST_INSTALL"; do echo "Retrying"; done
   fi
 
   # Run Homebrew cleanup and doctor to check for errors

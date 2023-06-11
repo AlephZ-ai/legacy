@@ -33,15 +33,23 @@ fi
 # Add default /etc/profile, ~/.bashrc, ~/.zshrc if they don't exist
 if [ ! -f /etc/profile ]; then sudo cp "$default_profile" /etc/profile; fi
 if [ ! -f /etc/zshrc ]; then sudo cp "$default_zprofile" /etc/zshrc; fi
-source "$DEVCONTAINER_SCRIPTS_ROOT/setup/devspace/zsh.sh"
 if [ ! -f "$HOME/.bashrc" ]; then cp "$default_bashrc" "$HOME/.bashrc"; fi
-# TODO: Find oh-my-zsh backup zshrc files and restore the latest one and move these up
-cp "$default_zshrc" "$HOME/.zshrc"
+if [ ! -f "$HOME/.zshrc" ]; then cp "$default_zshrc" "$HOME/.zshrc"; fi
 # Add default setting to /etc/bash.bashrc and /etc/zsh/zshrc
 # shellcheck disable=SC2016
 source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'source "$HOME/.bashrc"' "$HOME/.bash_profile"
 # shellcheck disable=SC2016
 source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'source "$HOME/.zshrc"' "$HOME/.zprofile"
+# Add autogenerate line
+source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" '# ------- pre-generated above this line -------' all
+source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" '# ------- manual entry goes here -------' all
+source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'POWERLEVEL9K_DISABLE_CONFIGURATION_WIZARD=true' "$HOME/.zshrc"
+source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" '# ------- auto-generated below this line -------' all
+mv "$HOME/.zshrc" "$HOME/.og.zshrc"
+source "$DEVCONTAINER_SCRIPTS_ROOT/setup/devspace/zsh.sh"
+# Restore the .zshrc
+rm -rf "$HOME/.zshrc"
+mv "$HOME/.og.zshrc" "$HOME/.zshrc"
 # Setup Condas
 source "$DEVCONTAINER_SCRIPTS_ROOT/setup/devspace/condas.sh"
 # Setup Homebrew

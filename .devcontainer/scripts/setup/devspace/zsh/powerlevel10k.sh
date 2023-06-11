@@ -4,7 +4,6 @@
 # init
 set -euo pipefail
 echo -e "Installing romkatv/powerlevel10k"
-source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'POWERLEVEL9K_DISABLE_CONFIGURATION_WIZARD=true'
 themes="${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes"
 plpath="$themes/romkatv"
 if [ ! -d "$plpath" ]; then
