@@ -43,9 +43,10 @@ if [ "$BREW_FAST_LEVEL" -eq 0 ]; then
   # linux only brews
   if [ "$os" = "Linux" ]; then HOMEBREW_ACCEPT_EULA=Y brew install --include-test --force procps systemd wayland wayland-protocols; fi
   # These work on all brew platforms
-  HOMEBREW_ACCEPT_EULA=Y brew install --include-test --force bash zsh antigen oh-my-posh
+  HOMEBREW_ACCEPT_EULA=Y brew install --include-test --force zsh antigen
   # shellcheck disable=SC2016
-  source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'source $HOME/antigen.zsh' "$HOME/.zshrc"
+  source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'source "$(brew --prefix)/share/q"' "$HOME/.zshrc"
+  HOMEBREW_ACCEPT_EULA=Y brew install --include-test --force bash oh-my-posh
   while ! (
     HOMEBREW_ACCEPT_EULA=Y brew install --include-test --force sevenzip p7zip awk ca-certificates file-formula gnu-sed coreutils grep curl wget bzip2 swig less lesspipe readline
     HOMEBREW_ACCEPT_EULA=Y brew install --include-test --force zlib zlib-ng buf protobuf grpc dos2unix git git-lfs sigstore/tap/gitsign-credential-cache sigstore/tap/gitsign gh asdf

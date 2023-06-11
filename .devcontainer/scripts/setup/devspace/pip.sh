@@ -5,7 +5,7 @@
 set -euo pipefail
 os=$(uname -s)
 # Setup pip
-source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'export PYENV_VIRTUALENV_DISABLE_PROMPT=1'
+# source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'export PYENV_VIRTUALENV_DISABLE_PROMPT=1'
 # shellcheck disable=SC2016
 source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'if which pyenv > /dev/null; then eval "$(pyenv init -)"; fi'
 # shellcheck disable=SC2016
@@ -29,11 +29,20 @@ for version in "${versions[@]}"; do
 done
 
 devspace=devspace
-installed_3_10=$(pyenv versions --bare | grep -oP "3.10\.\d+" | sort -V | tail -n 1)
-installed_3_11=$(pyenv versions --bare | grep -oP "3.11\.\d+" | sort -V | tail -n 1)
-pyenv global "$installed_3_11"
-if ! pyenv virtualenvs --bare | grep -q "^$devspace\$"; then
-  pyenv virtualenv "$installed_3_10" "$devspace"
+globalVersion=$(pyenv versions --bare | grep -oP "3.11\.\d+" | sort -V | tail -n 1)
+expectedVersion=$(pyenv versions --bare | grep -oP "3.10\.\d+" | sort -V | tail -n 1)
+devspaceExists=$(pyenv virtualenvs --bare | grep -qoP "^$devspace\$" && echo true || echo false)
+pyenv global "$globalVersion"
+if $devspaceExists; then
+  devspaceVersion="$("$(pyenv root)/versions/$devspace/bin/python" --version 2>&1 | cut -d ' ' -f 2)"
+  if [[ "$devspaceVersion" != "$expectedVersion" ]]; then
+    pyenv virtualenv-delete -f "$devspace"
+    devspaceExists=false
+  fi
+fi
+
+if ! $devspaceExists; then
+  pyenv virtualenv "$expectedVersion" "$devspace"
 fi
 
 source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "pyenv activate $devspace"
@@ -97,7 +106,7 @@ pip install --no-input --upgrade \
   cloudpickle tensorflow 'tensorflow-addons[tensorflow]' tensorboard 'wandb>=0.15.3' chromadb pytablewriter pyyaml boto3 \
   plotly torch torchvision torchaudio fire 'pytorch-lightning>==1.9.4' nltk poetry span_marker 'speechbrain>=0.5.14' \
   'huggingface-hub>=0.15.1' 'transformers>=4.29.2' 'diffusers>=0.16.1' 'adapter-transformers>=3.2.1' rouge_score \
-  'sentence-transformers>=2.2.2' 'flair>=0.12.2' gensim spacy 'fastai>=2.7.12' 'lupyne[graphql,rest]' plush lucene-querybuilder \
+  'sentence-transformers>=2.2.2' 'flair>=0.12.2' "gensim>=4.3.1" spacy 'fastai>=2.7.12' 'lupyne[graphql,rest]' plush lucene-querybuilder \
   'nemo_toolkit[common,asr,nlp,tts,slu,test]>=1.18.0' 'nemo_text_processing>=0.1.7rc0' shot-scraper \
   'bertopic[test,docs,dev,flair,spacy,use,gensim,vision]>=0.15.0' openai openai-whisper tiktoken ttok strip-tags llm llama-index \
   merlin-models merlin-systems merlin-dataloader merlin-sok fairscale sentencepiece langchain \
