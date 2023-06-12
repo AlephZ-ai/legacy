@@ -2,7 +2,7 @@
 # shellcheck source=/dev/null
 # shellcheck shell=bash
 set -euo pipefail
-source "$HOME/.zshrc"
+if [ -f "$HOME/.zshrc" ]; then source "$HOME/.zshrc"; fi
 fast_level="${1:-0}"
 unsafe_level="${2:-0}"
 export FAST_LEVEL="${fast_level}"

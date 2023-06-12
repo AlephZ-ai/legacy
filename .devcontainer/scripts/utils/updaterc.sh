@@ -101,11 +101,13 @@ fi
 
 cmd_parts=()
 toarray cmd_parts "$cmd" " "
-if [[ "${cmd_parts[0]}" = 'sudo' ]]; then
-  sudo=true
-  cmd="${cmd_parts[*]:1}"
-  if [ "$files" = "$user_files" ]; then
-    files="$sudo_files"
+if [ ${#cmd_parts[@]} -gt 0 ]; then
+  if [[ "${cmd_parts[0]}" = 'sudo' ]] &>/dev/null; then
+    sudo=true
+    cmd="${cmd_parts[*]:1}"
+    if [ "$files" = "$user_files" ]; then
+      files="$sudo_files"
+    fi
   fi
 fi
 

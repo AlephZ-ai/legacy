@@ -8,7 +8,7 @@ set -euo pipefail
 source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'source "$(brew --prefix)/opt/asdf/libexec/asdf.sh"'
 # shellcheck disable=SC2016
 source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'PATH="$HOME/.asdf/shims:$PATH"'
-if asdf plugin list | grep -q dotnet-core; then
+if asdf plugin list &>/dev/null || grep -q dotnet-core &>/dev/null; then
   export ASDF_FAST_LEVEL=${ASDF_FAST_LEVEL:-${FAST_LEVEL:-0}}
 else
   export ASDF_FAST_LEVEL=0

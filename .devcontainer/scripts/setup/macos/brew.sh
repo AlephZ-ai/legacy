@@ -23,9 +23,9 @@ sudo ln -sfn "$(brew --prefix)/opt/openjdk@8/libexec/openjdk.jdk" /Library/Java/
 sudo ln -sfn "$(brew --prefix)/opt/openjdk@11/libexec/openjdk.jdk" /Library/Java/JavaVirtualMachines/openjdk-11.jdk
 sudo ln -sfn "$(brew --prefix)/opt/openjdk@17/libexec/openjdk.jdk" /Library/Java/JavaVirtualMachines/openjdk-17.jdk
 # shellcheck disable=SC2016
+"$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'source "$(brew --prefix)/share/google-cloud-sdk/path.zsh.inc"' "$HOME/.zshrc"
+# shellcheck disable=SC2016
+"$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'source "$(brew --prefix)/share/google-cloud-sdk/completion.zsh.inc"' "$HOME/.zshrc"
+# shellcheck disable=SC2016
 source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'source "$(brew --prefix)/share/google-cloud-sdk/path.bash.inc"' "$HOME/.bashrc"
-# shellcheck disable=SC2016
-"$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'source "$(brew --prefix)/share/google-cloud-sdk/path.zsh.inc"' "$HOME/.zshrc" || true
-# shellcheck disable=SC2016
-"$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'source "$(brew --prefix)/share/google-cloud-sdk/completion.zsh.inc"' "$HOME/.zshrc" || true
 CLOUDSDK_CORE_DISABLE_PROMPTS=1 gcloud components update
