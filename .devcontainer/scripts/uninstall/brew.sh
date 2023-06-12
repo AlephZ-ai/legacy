@@ -16,7 +16,7 @@ if brew --version &>/dev/null; then
   eval "$(brew --prefix)/bin/brew shellenv"
   if [ "$FAST_LEVEL" -eq 0 ]; then
     brew uninstall --force --ignore-dependencies bash zsh
-    brew uninstall --force --ignore-dependencies pycairo py3cairo pygobject3 pipx virtualenv
+    # brew uninstall --force --ignore-dependencies pygobject3 pycairo py3cairo pipx virtualenv
   fi
 fi
 
