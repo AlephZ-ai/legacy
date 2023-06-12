@@ -76,6 +76,8 @@ source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'export MONO_GAC_PREFIX="$
 source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'export GROOVY_HOME="$(brew --prefix)/opt/groovy/libexec"'
 # shellcheck disable=SC2016
 source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'export SCALA_HOME="$(brew --prefix)/opt/scala/idea"'
+# shellcheck disable=SC2016
+source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'export DOTNET_ROOT="$(brew --prefix)/share/dotnet"'
 brews=('file-formula' 'gnu-sed' 'grep' 'make' 'coreutils' 'curl' 'bzip2' 'zlib' 'llvm' 'libffi' 'openjdk' 'sqlite' 'openssl' 'dotnet' 'python@3.11' 'python-tk@3.11' 'postgresql@15')
 for brew in "${brews[@]}"; do
   # shellcheck disable=SC2016

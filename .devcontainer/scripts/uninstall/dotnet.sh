@@ -2,6 +2,12 @@
 set -euo pipefail
 export DOTNET_CLI_TELEMETRY_OPTOUT=1
 export DOTNET_SKIP_FIRST_TIME_EXPERIENCE=1
+export DOTNET_ROLL_FORWARD=LatestMajor
+# shellcheck disable=SC2155
+export DOTNET_ROOT="$(brew --prefix)/share/dotnet"
+export PATH="$DOTNET_ROOT:$PATH"
+export PATH="$HOME/.dotnet/tools:$PATH"
+export PATH="$HOME/.dotnet/tools/preview:$PATH"
 "$DEVCONTAINER_SCRIPTS_ROOT/uninstall/pwsh.sh"
 if [ "$FAST_LEVEL" -eq 0 ] && command -v dotnet >/dev/null 2>&1; then
   if [ -e "$HOME/.dotnet/tools/preview" ]; then
