@@ -10,7 +10,7 @@ toarray() {
   local input="$2"
   local delim="${3:-;}"
   local array=()
-  if [[ -n "$ZSH_VERSION" ]]; then
+  if [[ -n "${ZSH_VERSION:-}" ]]; then
     # shellcheck disable=SC2016
     IFS="$delim" read -rA array <<<"$input"
   else
