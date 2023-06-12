@@ -45,7 +45,7 @@ if [ "$BREW_FAST_LEVEL" -eq 0 ]; then
   while ! (
     HOMEBREW_ACCEPT_EULA=Y brew install --include-test --force sevenzip p7zip awk ca-certificates file-formula gnu-sed coreutils grep curl wget bzip2 swig less lesspipe readline xz tcl-tk
     HOMEBREW_ACCEPT_EULA=Y brew install --include-test --force zlib zlib-ng buf protobuf grpc dos2unix git git-lfs sigstore/tap/gitsign-credential-cache sigstore/tap/gitsign gh asdf
-    HOMEBREW_ACCEPT_EULA=Y brew install --include-test --force moreutils jq yq bash-completion@2 gcc make cmake cmake-docs z3 llvm dotnet dotnet@6 mono go rust python@3.9 python-tk@3.9 python@3.10 python-tk@3.10 python@3.11 python-tk@3.11
+    HOMEBREW_ACCEPT_EULA=Y brew install --include-test --force moreutils jq yq bash-completion@2 gcc make cmake cmake-docs z3 llvm dotnet dotnet@6 mono go rust python python-tk python@3.9 python-tk@3.9 python@3.10 python-tk@3.10 python@3.11 python-tk@3.11
     HOMEBREW_ACCEPT_EULA=Y brew install --include-test --force nss openssl openssl@1.1 openssl@3 openssh age nghttp2 mkcert shellcheck speedtest-cli mono-libgdiplus chezmoi sqlite sqlite-utils sqlite-analyzer sqlite3 postgresql@15
     HOMEBREW_ACCEPT_EULA=Y brew install --include-test --force azure-cli awscli msodbcsql18 mssql-tools18 gedit kubernetes-cli helm minikube kind k3d argocd derailed/k9s/k9s kustomize skaffold vcluster
     HOMEBREW_ACCEPT_EULA=Y brew install --include-test --force terraform openjdk openjdk@8 openjdk@11 openjdk@17 maven groovy gradle scala sbt yarn pygobject3 gtk+3 gtk+4 libffi libyaml
@@ -56,7 +56,7 @@ if [ "$BREW_FAST_LEVEL" -eq 0 ]; then
   brew update
   brew upgrade
   # Setup post hombrew packages
-  links=('dotnet@6' 'dotnet' 'openjdk@8' 'openjdk@11' 'openjdk@17' 'python@3.9' 'python-tk@3.9' 'python@3.10' 'python-tk@3.10' 'python@3.11' 'python-tk@3.11' 'postgresql@15')
+  links=('dotnet@6' 'dotnet' 'openjdk@8' 'openjdk@11' 'openjdk@17' 'openjdk' 'python@3.9' 'python-tk@3.9' 'python@3.10' 'python-tk@3.10' 'python@3.11' 'python-tk@3.11' 'python' 'python-tk' 'postgresql@15')
   if [ "$os" = "Linux" ]; then
     links+=('file-formula' 'readline' 'curl' 'bzip2' 'zlib' 'libffi' 'llvm' 'xz' 'tcl-tk' 'sqlite3' 'openssl' 'openssl@3')
     sudo chsh "$USERNAME" -s "$(which zsh)"
@@ -78,8 +78,7 @@ source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'export GROOVY_HOME="$(bre
 source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'export SCALA_HOME="$(brew --prefix)/opt/scala/idea"'
 # shellcheck disable=SC2016
 source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'export DOTNET_ROOT="$(brew --prefix)/share/dotnet"'
-brews=('file-formula' 'gnu-sed' 'grep' 'make' 'coreutils' 'curl' 'bzip2' 'zlib' 'llvm' 'libffi' 'openjdk' 'sqlite' 'openssl' 'dotnet' 'python@3.11' 'python-tk@3.11' 'postgresql@15')
-for brew in "${brews[@]}"; do
+for brew in "${links[@]}"; do
   # shellcheck disable=SC2016
   brew_dir="\$(brew --prefix)/opt/$brew"
   brew_bin_dir="$brew_dir/bin"
