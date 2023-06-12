@@ -25,7 +25,7 @@ while ! (
   apt update
   apt upgrade -y
   apt install -y --install-recommends --fix-broken --fix-missing
-  apt install -y --install-recommends sudo systemd mawk gawk bash zsh file sed curl wget grep bzip2 swig build-essential make cmake gcc g++ less locales apt-transport-https
+  apt install -y --install-recommends sudo systemd mawk gawk bash zsh file sed curl wget grep bzip2 swig build-essential make cmake ninja-build gcc g++ less locales apt-transport-https
   apt install -y --install-recommends patch tzdata uuid-runtime netbase python3 python3-dev python3-openssl python3-opencv python3-numpy dotnet-sdk-6.0 dotnet-sdk-7.0 git
   apt install -y --install-recommends ca-certificates age openssl openssh-client procps checkinstall dos2unix software-properties-common libnss3 libnss3-tools
   apt install -y --install-recommends shellcheck jq moreutils bash-completion zlib1g-dev speedtest-cli powerline fonts-powerline fonts-dejavu-core gedit gimp

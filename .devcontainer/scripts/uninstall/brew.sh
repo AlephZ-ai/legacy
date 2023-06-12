@@ -11,12 +11,12 @@ if [ -z "${HOMEBREW_PREFIX:-}" ]; then
 fi
 
 # Check fast level
-export PATH="$HOMEBREW_PREFIX/bin:$PATH"
+export PATH="$HOMEBREW_PREFIX/bin:$HOMEBREW_PREFIX/sbin:$PATH"
 if brew --version &>/dev/null; then
   eval "$(brew --prefix)/bin/brew shellenv"
   if [ "$FAST_LEVEL" -eq 0 ]; then
     brew uninstall --force --ignore-dependencies bash zsh
-    # brew uninstall --force --ignore-dependencies pygobject3 pycairo py3cairo pipx virtualenv
+    brew uninstall --force --ignore-dependencies pygobject3 pycairo py3cairo
   fi
 fi
 

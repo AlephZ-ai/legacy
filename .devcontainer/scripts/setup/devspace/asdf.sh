@@ -8,7 +8,7 @@ set -euo pipefail
 source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'source "$(brew --prefix)/opt/asdf/libexec/asdf.sh"'
 # shellcheck disable=SC2016
 source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'PATH="$HOME/.asdf/shims:$PATH"'
-if asdf plugin list &>/dev/null || grep -q dotnet-core &>/dev/null; then
+if asdf plugin list 2>/dev/null | grep -q dotnet-core &>/dev/null; then
   export ASDF_FAST_LEVEL=${ASDF_FAST_LEVEL:-${FAST_LEVEL:-0}}
 else
   export ASDF_FAST_LEVEL=0
@@ -16,7 +16,6 @@ else
 fi
 
 echo "ASDF_FAST_LEVEL=$ASDF_FAST_LEVEL"
-preview="$(asdf list all dotnet-core 8 | tail -1)"
 if [ "$ASDF_FAST_LEVEL" -eq 0 ]; then
   asdf plugin update --all
   preview="$(asdf list all dotnet-core 8 | tail -1)"
@@ -37,6 +36,11 @@ if [ "$ASDF_FAST_LEVEL" -eq 0 ]; then
     dotnet --version
     asdf info
   done
+else
+  preview="$(asdf list dotnet-core 8 | tail -1)"
+  preview="${preview##*\*}"
+  # shellcheck disable=SC2001
+  preview="$(echo "${preview}" | sed -e 's|^[[:space:]]*||')"
 fi
 
 source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export DOTNET_ROOT=\"\$HOME/.asdf/installs/dotnet-core/$preview\""

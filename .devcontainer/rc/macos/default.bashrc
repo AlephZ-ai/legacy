@@ -1,4 +1,5 @@
 # shellcheck shell=bash
+# shellcheck source=/dev/null
 # ~/.bashrc: executed by bash(1) for non-login shells.
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
@@ -44,10 +45,12 @@ fi
 
 unset color_prompt force_color_prompt
 # If this is an xterm set the title to user@host:dir
+case "$TERM" in
 xterm* | rxvt*)
     PS1="\[\e]0;\u@\h: \w\a\]$PS1"
     ;;
 *) ;;
+esac
 # enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
@@ -57,6 +60,8 @@ if [ -x /usr/bin/dircolors ]; then
     alias grep='grep --color=auto'
     alias fgrep='fgrep --color=auto'
     alias egrep='egrep --color=auto'
+fi
+
 # some more ls aliases
 alias ll='ls -alF'
 alias la='ls -A'
@@ -70,6 +75,8 @@ alias alert='osascript -e "display notification \"$(history|tail -n1|sed -e '\''
 # See /usr/share/doc/bash-doc/examples in the bash-doc package.
 if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
+fi
+
 # Custom
 # Preferred editor for local and remote sessions
 if [[ -n ${SSH_CONNECTION:-} ]]; then
@@ -77,4 +84,3 @@ if [[ -n ${SSH_CONNECTION:-} ]]; then
 else
     export EDITOR='code'
 fi
-

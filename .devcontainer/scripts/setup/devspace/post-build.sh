@@ -6,11 +6,6 @@ set -euo pipefail
 HOMEBREW_PREFIX=${HOMEBREW_PREFIX:-/home/linuxbrew/.linuxbrew}
 USERNAME="${USERNAME:-$(whoami)}"
 os=$(uname -s)
-# Setup ohmyzsh and make zsh default shell
-if [ "$os" = "Linux" ]; then
-  sudo chsh "$USERNAME" -s "$(which zsh)"
-fi
-
 # Create /etc/bash.bashrc and /etc/zsh/zshrc if they don't exist
 sudo touch /etc/bash.bashrc
 sudo touch /etc/zsh/zshrc
@@ -37,19 +32,15 @@ if [ ! -f "$HOME/.bashrc" ]; then cp "$default_bashrc" "$HOME/.bashrc"; fi
 if [ ! -f "$HOME/.zshrc" ]; then cp "$default_zshrc" "$HOME/.zshrc"; fi
 # Add default setting to /etc/bash.bashrc and /etc/zsh/zshrc
 # shellcheck disable=SC2016
-source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" '[ -f "$HOME/.bashrc" ] && source "$HOME/.bashrc"' "$HOME/.bash_profile"
+"$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" '[ -f "$HOME/.bashrc" ] && source "$HOME/.bashrc"' "$HOME/.bash_profile"
 # shellcheck disable=SC2016
-source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" '[ -f "$HOME/.zshrc" ] && source "$HOME/.zshrc"' "$HOME/.zprofile"
+"$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" '[ -f "$HOME/.zshrc" ] && source "$HOME/.zshrc"' "$HOME/.zprofile"
 # Add autogenerate line
-source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" '# ------- pre-generated above this line -------' all
-source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" '# ------- manual entry goes here -------' all
+"$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" '# ------- pre-generated above this line -------' all
+"$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" '# ------- manual entry goes here -------' all
 source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'POWERLEVEL9K_DISABLE_CONFIGURATION_WIZARD=true' "$HOME/.zshrc"
-source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" '# ------- auto-generated below this line -------' all
-mv "$HOME/.zshrc" "$HOME/.og.zshrc"
+"$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" '# ------- auto-generated below this line -------' all
 source "$DEVCONTAINER_SCRIPTS_ROOT/setup/devspace/zsh.sh"
-# Restore the .zshrc
-rm -rf "$HOME/.zshrc"
-mv "$HOME/.og.zshrc" "$HOME/.zshrc"
 # Setup Homebrew
 source "$DEVCONTAINER_SCRIPTS_ROOT/setup/devspace/brew.sh"
 if [ "$os" = "Linux" ]; then

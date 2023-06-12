@@ -46,6 +46,7 @@ updaterc() {
   local rc="$2"
   local sudo="${3:-false}"
   local prefix="${cmd%%=*}="
+  local suffix="$(echo "$cmd" | awk -F "=" '{print $2}')"
   # Extract the variable name from the prefix
   # shellcheck disable=SC2155
   local var=$(echo "$prefix" | cut -d'=' -f1 | awk '{print $NF}')
@@ -60,13 +61,22 @@ updaterc() {
   # shellcheck disable=SC2155
   local prefix_exists=$(run grep -Eq "^$prefix" "$rc" >/dev/null && echo true || echo false)
   # Check if the command is self-referencing
-  # shellcheck disable=SC2155
-  local self_ref=$(echo "$cmd" | awk -F "=" '{print $2}' | grep -q "\$$var" >/dev/null && echo true || echo false)
+  # shellcheck disable=SC2016,SC2155
+  local self_ref=$( (echo "$suffix" | grep -q '${'"$var" && echo true) || (echo "$suffix" | grep -q "\$$var" && echo true) || echo false)
   run mkdir -p "$rc_dir"
   run touch "$rc"
-
-  # No cmd match
+  # echo "cmd: $cmd"
+  # echo "rc: $rc"
+  # echo "sudo: $sudo"
+  # echo "prefix: $prefix"
+  # echo "suffix: $suffix"
+  # echo "var: $var"
+  # echo "rc_dir: $rc_dir"
+  # echo "cmd_exists: $cmd_exists"
+  # echo "prefix_exists: $prefix_exists"
+  # echo "self_ref: $self_ref"
   if ! $cmd_exists; then
+    # $cmd does not exist in $rc
     # If the prefix exists and the command is not self-referencing, update it
     if $prefix_exists && ! $self_ref; then
       # Select a delimiter not present in either $cmd or $prefix
@@ -101,19 +111,28 @@ fi
 
 cmd_parts=()
 toarray cmd_parts "$cmd" " "
+# Check if array is 0 or 1 based
+sudo_index=0
+if [ -n "${ZSH_VERSION:-}" ]; then sudo_index=1; fi
 if [ ${#cmd_parts[@]} -gt 0 ]; then
-  if [[ "${cmd_parts[0]}" = 'sudo' ]] &>/dev/null; then
+  if [[ "${cmd_parts[$sudo_index]}" = 'sudo' ]] &>/dev/null; then
     sudo=true
-    cmd="${cmd_parts[*]:1}"
+    next_index=$((sudo_index + 1))
+    cmd="${cmd_parts[*]:$next_index}"
     if [ "$files" = "$user_files" ]; then
       files="$sudo_files"
     fi
   fi
 fi
-
 rcs=()
 toarray rcs "$files"
-eval "$cmd" &>/dev/null || true
+if [[ "${BASH_SOURCE[0]:-${ZSH_ARGZERO:-}}" != "$0" ]]; then
+  echo "eval $cmd"
+  set +u
+  eval "$cmd"
+  set -u
+fi
+
 for rc in "${rcs[@]}"; do
   updaterc "$cmd" "$rc" "$sudo"
 done
@@ -122,5 +141,9 @@ if $sudo_too; then
   sudo=true
   sudo_too=false
   files="$sudo_files"
-  source "$0" "$cmd" sudo
+  if [[ "${BASH_SOURCE[0]:-${ZSH_ARGZERO:-}}" != "$0" ]]; then
+    source "$0" "$cmd" sudo
+  else
+    "$0" "$cmd" sudo
+  fi
 fi

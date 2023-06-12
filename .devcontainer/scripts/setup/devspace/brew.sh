@@ -14,6 +14,7 @@ fi
 
 # Check fast level
 source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export PATH=\"$HOMEBREW_PREFIX/bin:\$PATH\""
+source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export PATH=\"$HOMEBREW_PREFIX/sbin:\$PATH\""
 if command -v brew >/dev/null 2>&1; then
   export BREW_FAST_LEVEL=${BREW_FAST_LEVEL:-${FAST_LEVEL:-0}}
 else
@@ -28,7 +29,7 @@ if [ "$BREW_FAST_LEVEL" -eq 0 ]; then
 fi
 
 # shellcheck disable=SC2016
-source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'eval "\$($(brew --prefix)/bin/brew shellenv)"'
+source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'eval "$("$(brew --prefix)/bin/brew" shellenv)"'
 if [ "$BREW_FAST_LEVEL" -eq 0 ]; then
   # Install taps
   brew tap microsoft/mssql-release https://github.com/Microsoft/homebrew-mssql-release
@@ -45,29 +46,28 @@ if [ "$BREW_FAST_LEVEL" -eq 0 ]; then
   while ! (
     HOMEBREW_ACCEPT_EULA=Y brew install --include-test --force sevenzip p7zip awk ca-certificates file-formula gnu-sed coreutils grep curl wget bzip2 swig less lesspipe readline xz tcl-tk libuv
     HOMEBREW_ACCEPT_EULA=Y brew install --include-test --force zlib zlib-ng buf protobuf grpc dos2unix git git-lfs sigstore/tap/gitsign-credential-cache sigstore/tap/gitsign gh asdf numpy
-    HOMEBREW_ACCEPT_EULA=Y brew install --include-test --force moreutils jq yq bash-completion@2 gcc make cmake cmake-docs z3 llvm dotnet dotnet@6 mono go rust python python-tk python@3.9 python-tk@3.9 python@3.10 python-tk@3.10 python@3.11 python-tk@3.11
-    HOMEBREW_ACCEPT_EULA=Y brew install --include-test --force nss openssl openssl@1.1 openssl@3 openssh age nghttp2 mkcert shellcheck speedtest-cli mono-libgdiplus chezmoi sqlite sqlite-utils sqlite-analyzer sqlite3 postgresql@15
+    HOMEBREW_ACCEPT_EULA=Y brew install --include-test --force moreutils jq yq bash-completion@2 gcc make cmake cmake-docs ninja z3 llvm clang-format lang-build-analyzer dotnet dotnet@6 mono go rust perl ruby python python-tk python@3.9 python-tk@3.9 python@3.10 python-tk@3.10 python@3.11 python-tk@3.11
+    HOMEBREW_ACCEPT_EULA=Y brew install --include-test --force nss openssl openssl@1.1 openssl@3 openssh age nghttp2 mkcert shellcheck speedtest-cli mono-libgdiplus chezmoi sqlite sqlite-utils sqlite-analyzer postgresql@15
     HOMEBREW_ACCEPT_EULA=Y brew install --include-test --force azure-cli awscli msodbcsql18 mssql-tools18 gedit kubernetes-cli helm minikube kind k3d argocd derailed/k9s/k9s kustomize skaffold vcluster
     HOMEBREW_ACCEPT_EULA=Y brew install --include-test --force terraform openjdk openjdk@8 openjdk@11 openjdk@17 maven groovy gradle scala sbt yarn pygobject3 gtk+3 gtk+4 libffi libyaml
-    HOMEBREW_ACCEPT_EULA=Y brew install --include-test --force ffmpeg libsndfile libsoundio openmpi boost opencv openvino bats-core git-gui git-svn
+    HOMEBREW_ACCEPT_EULA=Y brew install --include-test --force ffmpeg libsndfile libsoundio openmpi boost boost-build boost-mpi boost-python3 opencv openvino bats-core git-gui git-svn
   ); do echo "Retrying"; done
 
   # Upgrade all packages
   brew update
   brew upgrade
   # Setup post hombrew packages
-  links=('dotnet@6' 'dotnet' 'openjdk@8' 'openjdk@11' 'openjdk@17' 'openjdk' 'python@3.9' 'python-tk@3.9' 'python@3.10' 'python-tk@3.10' 'python@3.11' 'python-tk@3.11' 'python' 'python-tk' 'postgresql@15')
+  links=('dotnet' 'python@3.11' 'python-tk@3.11' 'postgresql@15')
   if [ "$os" = "Linux" ]; then
-    links+=('file-formula' 'readline' 'curl' 'bzip2' 'zlib' 'libffi' 'llvm' 'xz' 'tcl-tk' 'sqlite3' 'openssl' 'openssl@3')
-    sudo chsh "$USERNAME" -s "$(which zsh)"
+    links+=('file-formula' 'readline' 'curl' 'bzip2' 'zlib' 'libffi' 'llvm' 'xz' 'tcl-tk' 'sqlite' 'openssl@3' 'openssl')
   fi
 
-  for link in "${links[@]}"; do brew unlink "$link" || true; done
-  for link in "${links[@]}"; do brew link --force --overwrite "$link"; done
+  for brew in "${links[@]}"; do brew unlink "$brew"; done
+  for brew in "${links[@]}"; do brew link --force --overwrite "$brew"; done
 fi
 
 # shellcheck disable=SC2016
-source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" '[[ -r "$(brew --prefix)/etc/profile.d/bash_completion.sh" ]] && source "$(brew --prefix)/etc/profile.d/bash_completion.sh"' "$HOME/.bashrc"
+"$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" '[[ -r "$(brew --prefix)/etc/profile.d/bash_completion.sh" ]] && source "$(brew --prefix)/etc/profile.d/bash_completion.sh"' "$HOME/.bashrc"
 # shellcheck disable=SC2016
 source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'export LESSOPEN="|$(brew --prefix)/bin/lesspipe.sh %s"'
 # shellcheck disable=SC2016
@@ -78,26 +78,31 @@ source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'export GROOVY_HOME="$(bre
 source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'export SCALA_HOME="$(brew --prefix)/opt/scala/idea"'
 # shellcheck disable=SC2016
 source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'export DOTNET_ROOT="$(brew --prefix)/share/dotnet"'
-for brew in "${links[@]}"; do
+exports=('file-formula' 'gnu-sed' 'grep' 'make' 'coreutils' 'curl' 'readline' 'bzip2' 'zlib' 'xz' 'libffi' 'llvm' 'tcl-tk' 'openssl' 'dotnet' 'openjdk' 'python' 'python-tk' 'sqlite' 'postgresql@15')
+for brew in "${exports[@]}"; do
   # shellcheck disable=SC2016
   brew_dir="\$(brew --prefix)/opt/$brew"
   brew_bin_dir="$brew_dir/bin"
+  brew_sbin_dir="$brew_dir/sbin"
   brew_include_dir="$brew_dir/include"
   brew_lib_dir="$brew_dir/lib"
   brew_pkgconfig_dir="$brew_lib_dir/pkgconfig"
   # shellcheck disable=SC2016
   brew_libexec_dir="\$(brew --prefix)/opt/$brew/libexec"
   brew_libexec_bin_dir="$brew_libexec_dir/bin"
+  brew_libexec_sbin_dir="$brew_libexec_dir/sbin"
   brew_gnubin_dir="$brew_libexec_dir/gnubin"
   brew_gnuman_dir="$brew_libexec_dir/gnuman"
   if [ -e "$(eval echo "$brew_bin_dir")" ]; then source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export PATH=\"$brew_bin_dir:\$PATH\""; fi
+  if [ -e "$(eval echo "$brew_sbin_dir")" ]; then source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export PATH=\"$brew_sbin_dir:\$PATH\""; fi
   if [ -e "$(eval echo "$brew_libexec_bin_dir")" ]; then source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export PATH=\"$brew_libexec_bin_dir:\$PATH\""; fi
+  if [ -e "$(eval echo "$brew_libexec_sbin_dir")" ]; then source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export PATH=\"$brew_libexec_sbin_dir:\$PATH\""; fi
   if [ -e "$(eval echo "$brew_gnubin_dir")" ]; then source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export PATH=\"$brew_gnubin_dir:\$PATH\""; fi
-  if [ -e "$(eval echo "$brew_gnuman_dir")" ]; then source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export MANPATH=\"$brew_gnuman_dir\${MANPATH:+:}\$MANPATH\""; fi
-  if [ -e "$(eval echo "$brew_include_dir")" ]; then source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export CPPFLAGS=\"-I$brew_include_dir\${CPPFLAGS:+ }\$CPPFLAGS\""; fi
-  if [ -e "$(eval echo "$brew_lib_dir")" ]; then source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export LDFLAGS=\"-L$brew_lib_dir\${LDFLAGS:+ }\$LDFLAGS\""; fi
-  if [ "$brew" = "llvm" ]; then source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export LDFLAGS=\"-L$brew_lib_dir/c++ -Wl,-rpath,$brew_lib_dir/c++\${LDFLAGS:+ }\$LDFLAGS\""; fi
-  if [ -e "$(eval echo "$brew_pkgconfig_dir")" ]; then source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export PKG_CONFIG_PATH=\"$brew_pkgconfig_dir\${PKG_CONFIG_PATH:+:}\$PKG_CONFIG_PATH\""; fi
+  if [ -e "$(eval echo "$brew_gnuman_dir")" ]; then source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export MANPATH=\"$brew_gnuman_dir\${MANPATH:+:}\${MANPATH:-}\""; fi
+  if [ -e "$(eval echo "$brew_include_dir")" ]; then source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export CPPFLAGS=\"-I$brew_include_dir\${CPPFLAGS:+ }\${CPPFLAGS:-}\""; fi
+  if [ -e "$(eval echo "$brew_lib_dir")" ]; then source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export LDFLAGS=\"-L$brew_lib_dir\${LDFLAGS:+ }\${LDFLAGS:-}\""; fi
+  if [ "$brew" = "llvm" ]; then source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export LDFLAGS=\"-L$brew_lib_dir/c++ -Wl,-rpath,$brew_lib_dir/c++\${LDFLAGS:+ }\${LDFLAGS:-}\""; fi
+  if [ -e "$(eval echo "$brew_pkgconfig_dir")" ]; then source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export PKG_CONFIG_PATH=\"$brew_pkgconfig_dir\${PKG_CONFIG_PATH:+:}\${PKG_CONFIG_PATH:-}\""; fi
 done
 
 if [ "$BREW_FAST_LEVEL" -eq 0 ]; then

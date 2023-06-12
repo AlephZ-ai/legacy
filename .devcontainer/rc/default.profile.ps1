@@ -1,4 +1,4 @@
-$envOutput = bash -i -c "source ~/.bashrc; env"
+$envOutput = bash -c "source ~/.bashrc; env"
 $envOutput -split "`n" | ForEach-Object {
     if ($_ -match "([^=]+)=(.*)") {
         $name = $matches[1]
