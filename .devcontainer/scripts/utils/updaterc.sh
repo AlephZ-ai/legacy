@@ -2,11 +2,6 @@
 # shellcheck source=/dev/null
 # init
 set -euo pipefail
-zsh_ver=${ZSH_VERSION:-}
-# if [ -n "$zsh_ver" ]; then
-#   setopt localoptions ksharrays
-# fi
-
 user_files="$HOME/.bashrc;$HOME/.zshrc"
 sudo_files="/etc/bash.bashrc;/etc/zsh/zshrc"
 delimiters=('/' '#' '@' '%' '_' '+' '-' ',')
@@ -15,7 +10,7 @@ toarray() {
   local input="$2"
   local delim="${3:-;}"
   local array=()
-  if [[ -n $zsh_ver ]]; then
+  if [[ -n "$ZSH_VERSION" ]]; then
     # shellcheck disable=SC2016
     IFS="$delim" read -rA array <<<"$input"
   else
@@ -106,12 +101,9 @@ fi
 
 cmd_parts=()
 toarray cmd_parts "$cmd" " "
-sudo_index=0
-if [ -n "$zsh_ver" ]; then sudo_index=1; fi
-if [[ "${cmd_parts[$sudo_index]}" = 'sudo' ]]; then
+if [[ "${cmd_parts[0]}" = 'sudo' ]]; then
   sudo=true
-  next_index=$((sudo_index + 1))
-  cmd="${cmd_parts[*]:$next_index}"
+  cmd="${cmd_parts[*]:1}"
   if [ "$files" = "$user_files" ]; then
     files="$sudo_files"
   fi
