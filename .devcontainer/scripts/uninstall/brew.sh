@@ -12,9 +12,12 @@ fi
 
 # Check fast level
 export PATH="$HOMEBREW_PREFIX/bin:$PATH"
-if [ "$FAST_LEVEL" -eq 0 ] && brew --version &>/dev/null; then
-  brew uninstall --force --ignore-dependencies bash zsh
-  brew uninstall --force --ignore-dependencies pycairo py3cairo pygobject3 pipx virtualenv
+if brew --version &>/dev/null; then
+  eval "$(brew --prefix)/bin/brew shellenv"
+  if [ "$FAST_LEVEL" -eq 0 ]; then
+    brew uninstall --force --ignore-dependencies bash zsh
+    brew uninstall --force --ignore-dependencies pycairo py3cairo pygobject3 pipx virtualenv
+  fi
 fi
 
 "$DEVCONTAINER_SCRIPTS_ROOT/uninstall/pip.sh"
