@@ -72,7 +72,7 @@ if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
 # Custom
 # Preferred editor for local and remote sessions
-if [[ -n $SSH_CONNECTION ]]; then
+if [[ -n ${SSH_CONNECTION:-} ]]; then
     export EDITOR='vim'
 else
     export EDITOR='code'
