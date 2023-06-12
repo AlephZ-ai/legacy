@@ -13,7 +13,7 @@ brew tap homebrew/cask-fonts
 # Install casks
 while ! HOMEBREW_ACCEPT_EULA=Y brew install --cask iterm2; do sudo rm -rf /Applications/iTerm.app; done
 # TODO: Investigate why anaconda is hanging
-HOMEBREW_ACCEPT_EULA=Y brew install --cask font-inconsolata microsoft-openjdk microsoft-edge xquartz miniconda anaconda google-cloud-sdk
+HOMEBREW_ACCEPT_EULA=Y brew install --cask font-inconsolata microsoft-openjdk microsoft-edge xquartz miniconda google-cloud-sdk
 # Upgrade all casks
 brew update --cask
 brew upgrade --cask
