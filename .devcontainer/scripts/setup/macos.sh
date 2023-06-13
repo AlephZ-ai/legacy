@@ -13,7 +13,7 @@ source "$DEVCONTAINER_SCRIPTS_ROOT/utils/disable-sudo-password.sh"
 # Install fonts
 source "$DEVCONTAINER_SCRIPTS_ROOT/setup/macos/fonts.sh"
 # Setup Developer Command Line tools
-if ! (bash --version && git --version); then sudo xcode-select --install; fi
+if ! (bash --version && git --version) &>/dev/null; then sudo xcode-select --install; fi
 # Wait for bash and git to be available
 while ! (bash --version >/dev/null 2>&1 && git --version >/dev/null 2>&1); do sleep 10; done
 sleep 5

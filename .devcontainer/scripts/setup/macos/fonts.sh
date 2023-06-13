@@ -4,7 +4,14 @@
 # init
 set -euo pipefail
 urldecode() {
-  perl -MURI::Escape -e 'print uri_unescape($ARGV[0])' "$1"
+  if perl -MURI::Escape -e '' &>/dev/null; then
+    perl -MURI::Escape -e 'print uri_unescape($ARGV[0])' "$1"
+  elif python -c 'import urllib.parse' &>/dev/null; then
+    python -c "import urllib.parse; print(urllib.parse.unquote('$1'))"
+  else
+    # shellcheck disable=SC2059
+    printf "$(echo -n $1 | sed 's/+/ /g;s/%\(..\)/\\x\1/g;')"
+  fi
 }
 
 # create a temporary directory
@@ -24,5 +31,6 @@ done
 # shellcheck disable=SC2035
 cp *.ttf "$HOME/Library/Fonts/"
 popd
+chown -R "$(id -u):$(id -g)" "$HOME/Library/Fonts"
 # remove the temporary directory
 rm -rf "$tmppath"
