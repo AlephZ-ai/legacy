@@ -4,7 +4,7 @@ export DOTNET_CLI_TELEMETRY_OPTOUT=1
 export DOTNET_SKIP_FIRST_TIME_EXPERIENCE=1
 export DOTNET_ROLL_FORWARD=LatestMajor
 # shellcheck disable=SC2155
-if command -v brew >/dev/null 2>&1; then
+if command -v dotnet >/dev/null 2>&1; then
   if command -v asdf >/dev/null 2>&1; then
     preview="$(asdf list dotnet-core 8 | tail -1)"
     preview="${preview##*\*}"
@@ -12,7 +12,7 @@ if command -v brew >/dev/null 2>&1; then
     preview="$(echo "${preview}" | sed -e 's|^[[:space:]]*||')"
     export DOTNET_ROOT="$HOME/.asdf/installs/dotnet-core/$preview"
     "$HOME/.asdf/plugins/dotnet-core/set-dotnet-home.bash"
-  else
+  elif command -v brew >/dev/null 2>&1; then
     export DOTNET_ROOT="$(brew --prefix)/share/dotnet"
   fi
 
