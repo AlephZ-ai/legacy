@@ -31,6 +31,5 @@ done
 # shellcheck disable=SC2035
 cp *.ttf "$HOME/Library/Fonts/"
 popd
-chown -R "$(id -u):$(id -g)" "$HOME/Library/Fonts"
 # remove the temporary directory
 rm -rf "$tmppath"
