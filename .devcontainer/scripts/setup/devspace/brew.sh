@@ -40,19 +40,20 @@ if [ "$BREW_FAST_LEVEL" -eq 0 ]; then
   # linux only brews
   if [ "$os" = "Linux" ]; then HOMEBREW_ACCEPT_EULA=Y brew install --include-test --force procps systemd wayland wayland-protocols; fi
   # These work on all brew platforms
-  HOMEBREW_ACCEPT_EULA=Y brew install --include-test --force ca-certificates coreutils readline xz zsh bash make cmake cmake-docs ninja antigen oh-my-posh pyenv pyenv-virtualenv pipx virtualenv fontconfig
+  HOMEBREW_ACCEPT_EULA=Y brew install --include-test --force ca-certificates coreutils moreutils readline xz zsh bash make cmake cmake-docs ninja antigen oh-my-posh pyenv pyenv-virtualenv pipx virtualenv fontconfig
   #TODO: Fix fontconfig
   brew postinstall fontconfig || true
   # shellcheck disable=SC2016
   source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'source "$(brew --prefix)/share/antigen/antigen.zsh"' "$HOME/.zshrc"
   while ! (
-    HOMEBREW_ACCEPT_EULA=Y brew install --include-test --force sevenzip p7zip awk file-formula gnu-sed grep curl wget bzip2 swig less lesspipe tcl-tk libuv
-    HOMEBREW_ACCEPT_EULA=Y brew install --include-test --force zlib zlib-ng buf protobuf grpc dos2unix git git-lfs sigstore/tap/gitsign-credential-cache sigstore/tap/gitsign gh asdf numpy
-    HOMEBREW_ACCEPT_EULA=Y brew install --include-test --force moreutils jq yq bash-completion@2 gcc z3 llvm clang-format clang-build-analyzer dotnet dotnet@6 mono go rust perl ruby python python-tk python@3.9 python-tk@3.9 python@3.10 python-tk@3.10 python@3.11 python-tk@3.11
+    HOMEBREW_ACCEPT_EULA=Y brew install --include-test --force sevenzip p7zip awk file-formula gnu-sed grep curl wget bzip2 swig less lesspipe tcl-tk libuv jq yq
+    HOMEBREW_ACCEPT_EULA=Y brew install --include-test --force zlib zlib-ng buf protobuf grpc dos2unix git git-lfs sigstore/tap/gitsign-credential-cache sigstore/tap/gitsign gh subversion
+    HOMEBREW_ACCEPT_EULA=Y brew install --include-test --force gcc llvm clang-format clang-build-analyzer dotnet dotnet@6 mono go rust perl ruby python python-tk python@3.9 python-tk@3.9 python@3.10 python-tk@3.10 python@3.11 python-tk@3.11
     HOMEBREW_ACCEPT_EULA=Y brew install --include-test --force nss openssl openssl@1.1 openssl@3 openssh age nghttp2 mkcert shellcheck speedtest-cli mono-libgdiplus chezmoi sqlite sqlite-utils sqlite-analyzer postgresql@15
-    HOMEBREW_ACCEPT_EULA=Y brew install --include-test --force azure-cli awscli msodbcsql18 mssql-tools18 gedit kubernetes-cli helm minikube kind k3d argocd derailed/k9s/k9s kustomize skaffold vcluster
-    HOMEBREW_ACCEPT_EULA=Y brew install --include-test --force terraform openjdk openjdk@8 openjdk@11 openjdk@17 maven groovy gradle scala sbt yarn pygobject3 gtk+3 gtk+4 libffi libyaml
-    HOMEBREW_ACCEPT_EULA=Y brew install --include-test --force qt pyqt ffmpeg libsndfile libsoundio openmpi boost boost-build boost-mpi boost-python3 opencv openvino bats-core git-gui git-svn
+    HOMEBREW_ACCEPT_EULA=Y brew install --include-test --force openjdk openjdk@8 openjdk@11 openjdk@17 maven groovy gradle scala sbt yarn bash-completion@2 z3 asdf numpy scipy libtensorflow torchvision
+    HOMEBREW_ACCEPT_EULA=Y brew install --include-test --force azure-cli awscli msodbcsql18 mssql-tools18 kubernetes-cli helm minikube kind k3d argocd derailed/k9s/k9s kustomize skaffold vcluster
+    HOMEBREW_ACCEPT_EULA=Y brew install --include-test --force pygobject3 py3cairo pycairo libffi libyaml qt pyqt boost boost-build boost-mpi boost-python3 terraform gtk+3 gtk+4
+    HOMEBREW_ACCEPT_EULA=Y brew install --include-test --force ffmpeg libsndfile libsoundio openmpi opencv openvino bats-core gedit git-gui git-svn
   ); do echo "Retrying"; done
 
   # Upgrade all packages

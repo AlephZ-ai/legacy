@@ -80,6 +80,9 @@
     "formulahendry.dotnet",
     "pflannery.vscode-versionlens",
     "mnxn.fsharp-fsl-fsy",
-    "jetmartin.bats"
+    "jetmartin.bats",
+    "davidanson.vscode-markdownlint",
+    "christian-kohler.npm-intellisense",
+    "johnstoncode.svn-scm"
   ]
 }
