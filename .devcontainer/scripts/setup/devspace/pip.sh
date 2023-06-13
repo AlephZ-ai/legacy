@@ -102,7 +102,7 @@ pip install --no-input --upgrade \
   "opt_einsum>=3.3.0" "openvino-dev>=2023.0.0" \
   mtcnn-onnxruntime onnxruntime-tools scikit-onnxruntime \
   keras opencv-python imageio lazy_loader networkx pillow wrapt py moreutils pylint mypy pandas moviepy \
-  matplotlib scipy seaborn 'skops>=0.6.0' scikit-learn scikit-image scikit-optimize box2d-py pybullet 'optuna>=3.2.0' \
+  matplotlib scipy seaborn 'skops>=0.6.0' scikit-learn "scikit-image>-0.21.0" "scikit-optimize>=0.9.0" box2d-py pybullet 'optuna>=3.2.0' \
   cloudpickle tensorflow 'tensorflow-addons[tensorflow]' tensorboard 'wandb>=0.15.3' chromadb pytablewriter pyyaml boto3 \
   plotly torch torchvision torchaudio fire 'pytorch-lightning>==1.9.4' nltk poetry span_marker 'speechbrain>=0.5.14' \
   'huggingface-hub>=0.15.1' 'transformers>=4.29.2' 'diffusers>=0.16.1' 'adapter-transformers>=3.2.1' rouge_score \
