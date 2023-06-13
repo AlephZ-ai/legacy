@@ -34,11 +34,10 @@ if [ "$FONT_FAST_LEVEL" -eq 0 ]; then
     font_file=$(urldecode "$font")
     curl -L "$font_url" -o "$font_file"
   done
+  # install the font files
+  # shellcheck disable=SC2035
+  cp *.ttf "$HOME/Library/Fonts/"
+  popd
+  # remove the temporary directory
+  rm -rf "$tmppath"
 fi
-
-# install the font files
-# shellcheck disable=SC2035
-cp *.ttf "$HOME/Library/Fonts/"
-popd
-# remove the temporary directory
-rm -rf "$tmppath"

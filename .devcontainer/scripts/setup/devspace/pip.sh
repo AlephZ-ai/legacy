@@ -45,7 +45,7 @@ fi
 source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'if command -v pyenv 1>/dev/null 2>&1; then eval "$(pyenv init -)"; fi'
 # shellcheck disable=SC2016
 source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'if command -v pyenv 1>/dev/null 2>&1; then eval "$(pyenv virtualenv-init -)"; fi'
-deactivate
+source deactivate
 pyenv uninstall -f "$devspace"
 source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "pyenv activate \"$devspace\""
 python --version

@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# shellcheck source=/dev/null
 set -euo pipefail
 devspace=devspace
 if pyenv --version &>/dev/null; then
@@ -14,7 +15,7 @@ if [ "$FAST_LEVEL" -eq 0 ]; then
 fi
 
 if pyenv --version &>/dev/null; then
-  deactivate
+  source deactivate
   for venv in $(pyenv virtualenvs --bare); do
     echo "Deleting virtualenv: $venv"
     pyenv virtualenv-delete -f "$venv"
