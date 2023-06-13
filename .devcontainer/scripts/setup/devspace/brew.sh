@@ -40,7 +40,7 @@ if [ "$BREW_FAST_LEVEL" -eq 0 ]; then
   # linux only brews
   if [ "$os" = "Linux" ]; then HOMEBREW_ACCEPT_EULA=Y brew install --include-test --force procps systemd wayland wayland-protocols; fi
   # These work on all brew platforms
-  HOMEBREW_ACCEPT_EULA=Y brew install --include-test --force font-config ca-certificates coreutils readline xz zsh bash make cmake cmake-docs ninja antigen oh-my-posh pyenv pyenv-virtualenv pipx virtualenv
+  HOMEBREW_ACCEPT_EULA=Y brew install --include-test --force fontconfig ca-certificates coreutils readline xz zsh bash make cmake cmake-docs ninja antigen oh-my-posh pyenv pyenv-virtualenv pipx virtualenv
   brew postinstall fontconfig
   # shellcheck disable=SC2016
   source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'source "$(brew --prefix)/share/antigen/antigen.zsh"' "$HOME/.zshrc"
@@ -63,7 +63,7 @@ if [ "$BREW_FAST_LEVEL" -eq 0 ]; then
     links+=('file-formula' 'curl' 'readline' 'bzip2' 'zlib' 'libffi' 'llvm' 'tcl-tk' 'sqlite' 'openssl@3' 'openjdk')
   fi
 
-  links+=('make' 'gnu-sed' 'grep' 'coreutils' 'xz' 'dotnet' 'python@3.11' 'python-tk@3.11' 'postgresql@15' 'qt' 'pyqt')
+  links+=('make' 'cmake' 'gnu-sed' 'grep' 'coreutils' 'xz' 'python@3.11' 'python-tk@3.11' 'postgresql@15' 'qt' 'pyqt')
   for brew in "${links[@]}"; do brew unlink "$brew"; done
   for brew in "${links[@]}"; do brew link --force --overwrite "$brew"; done
 fi
@@ -81,7 +81,7 @@ if [ "$BREW_FAST_LEVEL" -le 1 ]; then
   source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'export SCALA_HOME="$(brew --prefix)/opt/scala/idea"'
   # shellcheck disable=SC2016
   source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'export DOTNET_ROOT="$(brew --prefix)/share/dotnet"'
-  exports=('file-formula' 'curl' 'readline' 'bzip2' 'zlib' 'libffi' 'llvm' 'tcl-tk' 'sqlite' 'openssl@3' 'openjdk' 'make' 'gnu-sed' 'grep' 'coreutils' 'xz' 'dotnet' 'python@3.11' 'python-tk@3.11' 'postgresql@15' 'qt' 'pyqt')
+  exports=('file-formula' 'curl' 'readline' 'bzip2' 'zlib' 'libffi' 'llvm' 'tcl-tk' 'sqlite' 'openssl@3' 'openjdk' 'gmake' 'gnu-sed' 'grep' 'coreutils' 'xz' 'dotnet' 'python@3.11' 'python-tk@3.11' 'postgresql@15' 'qt' 'pyqt')
   for brew in "${exports[@]}"; do
     # shellcheck disable=SC2016
     brew_dir="\$(brew --prefix)/opt/$brew"
