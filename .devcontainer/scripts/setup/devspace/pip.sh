@@ -45,12 +45,13 @@ fi
 source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'if command -v pyenv 1>/dev/null 2>&1; then eval "$(pyenv init -)"; fi'
 # shellcheck disable=SC2016
 source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'if command -v pyenv 1>/dev/null 2>&1; then eval "$(pyenv virtualenv-init -)"; fi'
-source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "pyenv activate $devspace"
+deactivate
+pyenv uninstall -f "$devspace"
+source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "pyenv activate \"$devspace\""
 python --version
 python -m ensurepip --upgrade
 python -m pip install --no-input --upgrade pip setuptools wheel
 pip --version
-pip uninstall --yes sphinx-multiversion
 pip install --no-input --upgrade pygobject pycairo pipx virtualenv sphinx sphinx-multiversion \
   openvino onnxruntime onnxruntime-extensions Cython cataclysm
 # pip install --no-input --upgrade git+https://github.com/mikemckiernan/sphinx-multiversion.git

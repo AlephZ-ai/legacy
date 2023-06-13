@@ -17,4 +17,4 @@ fi
 pushd "$plpath"
 git pull
 popd
-"$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'ZSH_THEME="romkatv/powerlevel10k"'
+"$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'ZSH_THEME="romkatv/powerlevel10k"' "$HOME/.zshrc"
