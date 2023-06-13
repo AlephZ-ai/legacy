@@ -3,6 +3,13 @@
 # shellcheck source=/dev/null
 # init
 set -euo pipefail
+if [ -f "$HOME/Library/Fonts/MesloLGS NF Bold Italic.ttf" ]; then
+  export FONT_FAST_LEVEL=${FONT_FAST_LEVEL:-${FAST_LEVEL:-0}}
+else
+  export FONT_FAST_LEVEL=0
+fi
+
+echo "FONT_FAST_LEVEL: $FONT_FAST_LEVEL"
 urldecode() {
   if perl -MURI::Escape -e '' &>/dev/null; then
     perl -MURI::Escape -e 'print uri_unescape($ARGV[0])' "$1"
@@ -14,7 +21,7 @@ urldecode() {
   fi
 }
 
-if [ "$FAST_LEVEL" -eq 0 ]; then
+if [ "$FONT_FAST_LEVEL" -eq 0 ]; then
   # create a temporary directory
   tmppath="/tmp/MesloLGS_NF"
   url="https://github.com/romkatv/powerlevel10k-media/raw/master"

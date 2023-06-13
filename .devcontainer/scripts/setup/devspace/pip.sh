@@ -50,9 +50,10 @@ python --version
 python -m ensurepip --upgrade
 python -m pip install --no-input --upgrade pip setuptools wheel
 pip --version
-pip install --no-input --upgrade pygobject pycairo pipx virtualenv sphinx \
+pip uninstall --yes sphinx-multiversion
+pip install --no-input --upgrade pygobject pycairo pipx virtualenv sphinx sphinx-multiversion \
   openvino onnxruntime onnxruntime-extensions Cython cataclysm
-pip install --no-input --upgrade git+https://github.com/mikemckiernan/sphinx-multiversion.git
+# pip install --no-input --upgrade git+https://github.com/mikemckiernan/sphinx-multiversion.git
 if [ "$os" = "Linux" ]; then
   pip install --no-input --upgrade \
     nvidia-cudnn-cu11 cudf-cu11 dask_cudf_cu11 cuml-cu11 cugraph-cu11 cucim nvidia-dali-cuda110 nvidia-dali-tf-plugin-cuda110 \

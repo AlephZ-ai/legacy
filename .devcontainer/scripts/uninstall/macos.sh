@@ -3,10 +3,12 @@
 # shellcheck shell=bash
 if [ -f "$HOME/.zshrc" ]; then source "$HOME/.zshrc"; fi
 set -euo pipefail
-fast_level="${1:-0}"
-unsafe_level="${2:-0}"
+fast_level="${1:-${FAST_LEVEL:-0}}"
+unsafe_level="${2:-${UNSAFE_LEVEL:-0}}"
 export FAST_LEVEL="${fast_level}"
 export UNSAFE_LEVEL="${unsafe_level}"
+echo "FAST_LEVEL=$FAST_LEVEL"
+echo "UNSAFE_LEVEL=$UNSAFE_LEVEL"
 # shellcheck disable=SC2016
 export BREW_POST_UNINSTALL='"$DEVCONTAINER_SCRIPTS_ROOT/uninstall/macos/casks.sh"'
 "$DEVCONTAINER_SCRIPTS_ROOT/uninstall/nvm.sh"

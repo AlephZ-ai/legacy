@@ -14,10 +14,7 @@ if [ ! -d "$plpath" ]; then
   git clone --depth=1 https://github.com/romkatv/powerlevel10k.git "$plpath" &>/dev/null
 fi
 
-if [ "$FAST_LEVEL" -eq 0 ]; then
-  pushd "$plpath"
-  git pull
-  popd
-fi
-
+pushd "$plpath"
+git pull
+popd
 "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'ZSH_THEME="romkatv/powerlevel10k"'

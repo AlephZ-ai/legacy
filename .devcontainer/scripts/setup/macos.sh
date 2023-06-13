@@ -3,7 +3,7 @@
 # shellcheck source=/dev/null
 # init
 set -euo pipefail
-fast_level="${1:-0}"
+fast_level="${1:-${FAST_LEVEL:-0}}"
 export FAST_LEVEL="${fast_level}"
 echo "FAST_LEVEL=$FAST_LEVEL"
 # shellcheck disable=SC2016
