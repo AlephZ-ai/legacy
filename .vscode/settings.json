@@ -8,6 +8,13 @@
   "files.autoSave": "afterDelay",
   "json.format.enable": true,
   "omnisharp.enableRoslynAnalyzers": true,
+  "terminal.integrated.defaultProfile.windows": "PowerShell",
+  "terminal.integrated.defaultProfile.osx": "zsh",
+  "terminal.integrated.defaultProfile.linux": "zsh",
+  "terminal.integrated.cursorBlinking": true,
+  "terminal.integrated.copyOnSelection": true,
+  "terminal.integrated.enableBell": true,
+  "terminal.integrated.experimentalImageSupport": true,
   "terminal.integrated.fontFamily": "MesloLGS NF",
   "terminal.integrated.profiles.windows": {
     "PowerShell": {
@@ -30,9 +37,6 @@
       ]
     }
   },
-  "terminal.integrated.defaultProfile.windows": "PowerShell",
-  "terminal.integrated.defaultProfile.osx": "zsh",
-  "terminal.integrated.defaultProfile.linux": "zsh",
   "json.schemas": [
     {
       "fileMatch": [
