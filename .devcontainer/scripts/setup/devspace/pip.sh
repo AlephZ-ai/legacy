@@ -45,8 +45,6 @@ fi
 source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'if command -v pyenv 1>/dev/null 2>&1; then eval "$(pyenv init -)"; fi'
 # shellcheck disable=SC2016
 source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'if command -v pyenv 1>/dev/null 2>&1; then eval "$(pyenv virtualenv-init -)"; fi'
-source deactivate
-pyenv uninstall -f "$devspace"
 source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "pyenv activate \"$devspace\""
 python --version
 python -m ensurepip --upgrade
@@ -54,13 +52,13 @@ python -m pip install --no-input --upgrade pip setuptools wheel
 pip --version
 pip install --no-input --upgrade pygobject pycairo pipx virtualenv sphinx sphinx-multiversion \
   openvino onnxruntime onnxruntime-extensions Cython cataclysm
-# pip install --no-input --upgrade git+https://github.com/mikemckiernan/sphinx-multiversion.git
+pip install --no-input --upgrade --no-cache-dir git+https://github.com/mikemckiernan/sphinx-multiversion.git
 if [ "$os" = "Linux" ]; then
   pip install --no-input --upgrade \
     nvidia-cudnn-cu11 cudf-cu11 dask_cudf_cu11 cuml-cu11 cugraph-cu11 cucim nvidia-dali-cuda110 nvidia-dali-tf-plugin-cuda110 \
     triton-model-analyzer onnxruntime-training \
     torch-ort torch-ort-inference torch-ort-infer
-  pip install --no-input --upgrade git+https://github.com/NVIDIA/TransformerEngine.git@stable
+  pip install --no-input --upgrade --no-cache-dir git+https://github.com/NVIDIA/TransformerEngine.git@stable
 fi
 
 # https://huggingface.co/models?other=stable-baselines3
@@ -100,6 +98,7 @@ fi
 #       panda-gym gym-super-mario-bros flappy-bird-gymnasium
 # pytorch-lightning>=1.9.0,<=1.9.4
 # gym[accept-rom-license,atari,box2d,classic_control,mujoco,robotics,toy_text,other]<=0.26,>=0.22
+# transformers4rec[docs,dev] https://github.com/NVIDIA-Merlin/Transformers4Rec
 pip install --no-input --upgrade \
   platformdirs dill isort mccabe ipykernel ipython-genutils packaging docker-pycreds flask pathy tbb numpy \
   pygments flake8 tqdm rich ruff pytest pytest-sugar pytest-cov pytest-xdist pytest-xprocess pytest-mock pytest-benchmark \
@@ -115,7 +114,7 @@ pip install --no-input --upgrade \
   'sentence-transformers>=2.2.2' 'flair>=0.12.2' "gensim>=4.3.1" spacy 'fastai>=2.7.12' 'lupyne[graphql,rest]' plush lucene-querybuilder \
   'nemo_toolkit[common,asr,nlp,tts,slu,test]>=1.18.0' 'nemo_text_processing>=0.1.7rc0' shot-scraper \
   'bertopic[test,docs,dev,flair,spacy,use,gensim,vision]>=0.15.0' openai openai-whisper tiktoken ttok strip-tags llm llama-index \
-  nvtabular 'transformers4rec[pytorch,nvtabular,docs,dev]' merlin-models sentencepiece langchain \
+  nvtabular 'transformers4rec[pytorch,nvtabular]' merlin-models sentencepiece langchain \
   'tritonclient>=2.34.0' pyctcdecode 'pythae>=0.1.1' 'rl_zoo3>=1.8.0' loralib 'dask>=2023.5.1' \
   notebook jupyter-client jupyter-core "mlflow>2.4.0" \
   'sample-factory[dev,atari,envpool,mujoco,vizdoom]>=2.0.3' 'espnet>=202304' 'paddlenlp>=2.5.2' \

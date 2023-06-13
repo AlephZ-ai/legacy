@@ -9,7 +9,7 @@ else
   PWSH_FAST_LEVEL=${PWSH_FAST_LEVEL:-${FAST_LEVEL:-0}}
 fi
 
-echo "PWSH_FAST_LEVEL: $PWSH_FAST_LEVEL"
+echo "PWSH_FAST_LEVEL=$PWSH_FAST_LEVEL"
 # Setup pwsh modules
 if [ "$PWSH_FAST_LEVEL" -eq 0 ]; then
   pwshrc="$DEVCONTAINER_PROJECT_ROOT/rc/default.profile.ps1"

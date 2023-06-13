@@ -9,7 +9,7 @@ else
   export FONT_FAST_LEVEL=0
 fi
 
-echo "FONT_FAST_LEVEL: $FONT_FAST_LEVEL"
+echo "FONT_FAST_LEVEL=$FONT_FAST_LEVEL"
 urldecode() {
   if perl -MURI::Escape -e '' &>/dev/null; then
     perl -MURI::Escape -e 'print uri_unescape($ARGV[0])' "$1"
