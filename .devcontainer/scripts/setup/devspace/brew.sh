@@ -40,17 +40,18 @@ if [ "$BREW_FAST_LEVEL" -eq 0 ]; then
   # linux only brews
   if [ "$os" = "Linux" ]; then HOMEBREW_ACCEPT_EULA=Y brew install --include-test --force procps systemd wayland wayland-protocols; fi
   # These work on all brew platforms
-  HOMEBREW_ACCEPT_EULA=Y brew install --include-test --force zsh bash antigen oh-my-posh pyenv pyenv-virtualenv pipx virtualenv
+  HOMEBREW_ACCEPT_EULA=Y brew install --include-test --force font-config ca-certificates coreutils readline xz zsh bash make cmake cmake-docs ninja antigen oh-my-posh pyenv pyenv-virtualenv pipx virtualenv
+  brew postinstall fontconfig
   # shellcheck disable=SC2016
   source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'source "$(brew --prefix)/share/antigen/antigen.zsh"' "$HOME/.zshrc"
   while ! (
-    HOMEBREW_ACCEPT_EULA=Y brew install --include-test --force sevenzip p7zip awk ca-certificates file-formula gnu-sed coreutils grep curl wget bzip2 swig less lesspipe readline xz tcl-tk libuv
+    HOMEBREW_ACCEPT_EULA=Y brew install --include-test --force sevenzip p7zip awk file-formula gnu-sed grep curl wget bzip2 swig less lesspipe tcl-tk libuv
     HOMEBREW_ACCEPT_EULA=Y brew install --include-test --force zlib zlib-ng buf protobuf grpc dos2unix git git-lfs sigstore/tap/gitsign-credential-cache sigstore/tap/gitsign gh asdf numpy
-    HOMEBREW_ACCEPT_EULA=Y brew install --include-test --force moreutils jq yq bash-completion@2 gcc make cmake cmake-docs ninja z3 llvm clang-format lang-build-analyzer dotnet dotnet@6 mono go rust perl ruby python python-tk python@3.9 python-tk@3.9 python@3.10 python-tk@3.10 python@3.11 python-tk@3.11
+    HOMEBREW_ACCEPT_EULA=Y brew install --include-test --force moreutils jq yq bash-completion@2 gcc z3 llvm clang-format lang-build-analyzer dotnet dotnet@6 mono go rust perl ruby python python-tk python@3.9 python-tk@3.9 python@3.10 python-tk@3.10 python@3.11 python-tk@3.11
     HOMEBREW_ACCEPT_EULA=Y brew install --include-test --force nss openssl openssl@1.1 openssl@3 openssh age nghttp2 mkcert shellcheck speedtest-cli mono-libgdiplus chezmoi sqlite sqlite-utils sqlite-analyzer postgresql@15
     HOMEBREW_ACCEPT_EULA=Y brew install --include-test --force azure-cli awscli msodbcsql18 mssql-tools18 gedit kubernetes-cli helm minikube kind k3d argocd derailed/k9s/k9s kustomize skaffold vcluster
     HOMEBREW_ACCEPT_EULA=Y brew install --include-test --force terraform openjdk openjdk@8 openjdk@11 openjdk@17 maven groovy gradle scala sbt yarn pygobject3 gtk+3 gtk+4 libffi libyaml
-    HOMEBREW_ACCEPT_EULA=Y brew install --include-test --force ffmpeg libsndfile libsoundio openmpi boost boost-build boost-mpi boost-python3 opencv openvino bats-core git-gui git-svn
+    HOMEBREW_ACCEPT_EULA=Y brew install --include-test --force qt pyqt ffmpeg libsndfile libsoundio openmpi boost boost-build boost-mpi boost-python3 opencv openvino bats-core git-gui git-svn
   ); do echo "Retrying"; done
 
   # Upgrade all packages
@@ -62,7 +63,7 @@ if [ "$BREW_FAST_LEVEL" -eq 0 ]; then
     links+=('file-formula' 'curl' 'readline' 'bzip2' 'zlib' 'libffi' 'llvm' 'tcl-tk' 'sqlite' 'openssl@3' 'openjdk')
   fi
 
-  links+=('gnu-sed' 'grep' 'make' 'coreutils' 'xz' 'dotnet' 'python@3.11' 'python-tk@3.11' 'postgresql@15')
+  links+=('make' 'gnu-sed' 'grep' 'coreutils' 'xz' 'dotnet' 'python@3.11' 'python-tk@3.11' 'postgresql@15' 'qt' 'pyqt')
   for brew in "${links[@]}"; do brew unlink "$brew"; done
   for brew in "${links[@]}"; do brew link --force --overwrite "$brew"; done
 fi
@@ -80,7 +81,7 @@ if [ "$BREW_FAST_LEVEL" -le 1 ]; then
   source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'export SCALA_HOME="$(brew --prefix)/opt/scala/idea"'
   # shellcheck disable=SC2016
   source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'export DOTNET_ROOT="$(brew --prefix)/share/dotnet"'
-  exports=('file-formula' 'curl' 'readline' 'bzip2' 'zlib' 'libffi' 'llvm' 'tcl-tk' 'sqlite' 'openssl@3' 'openjdk' 'gnu-sed' 'grep' 'make' 'coreutils' 'xz' 'dotnet' 'python@3.11' 'python-tk@3.11' 'postgresql@15')
+  exports=('file-formula' 'curl' 'readline' 'bzip2' 'zlib' 'libffi' 'llvm' 'tcl-tk' 'sqlite' 'openssl@3' 'openjdk' 'make' 'gnu-sed' 'grep' 'coreutils' 'xz' 'dotnet' 'python@3.11' 'python-tk@3.11' 'postgresql@15' 'qt' 'pyqt')
   for brew in "${exports[@]}"; do
     # shellcheck disable=SC2016
     brew_dir="\$(brew --prefix)/opt/$brew"
