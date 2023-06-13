@@ -8,6 +8,31 @@
   "files.autoSave": "afterDelay",
   "json.format.enable": true,
   "omnisharp.enableRoslynAnalyzers": true,
+  "vim.disableExtension": false,
+  "vim.showcmd": true,
+  "vim.showmodename": true,
+  "vim.startInInsertMode": true,
+  "vim.overrideCopy": true,
+  "vim.useCtrlKeys": true,
+  "vim.useSystemClipboard": true,
+  "vim.autoindent": true,
+  "vim.mouseSelectionGoesIntoVisualMode": false,
+  "vim.handleKeys": {
+    "<D-c>": false,
+    "<esc>": false,
+    "<tab>": false
+  },
+  "vim.insertModeKeyBindings": [
+    {
+      "before": [
+        "k",
+        "j"
+      ],
+      "after": [
+        "<Esc>"
+      ]
+    }
+  ],
   "terminal.integrated.defaultProfile.windows": "PowerShell",
   "terminal.integrated.defaultProfile.osx": "zsh",
   "terminal.integrated.defaultProfile.linux": "zsh",

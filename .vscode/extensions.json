@@ -83,6 +83,7 @@
     "jetmartin.bats",
     "davidanson.vscode-markdownlint",
     "christian-kohler.npm-intellisense",
-    "johnstoncode.svn-scm"
+    "johnstoncode.svn-scm",
+    "vscodevim.vim"
   ]
 }

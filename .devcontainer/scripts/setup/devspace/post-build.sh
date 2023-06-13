@@ -31,10 +31,12 @@ if [ ! -f /etc/zshrc ]; then sudo cp "$default_zprofile" /etc/zshrc; fi
 if [ ! -f "$HOME/.bashrc" ]; then cp "$default_bashrc" "$HOME/.bashrc"; fi
 if [ ! -f "$HOME/.zshrc" ]; then cp "$default_zshrc" "$HOME/.zshrc"; fi
 # Add default setting to /etc/bash.bashrc and /etc/zsh/zshrc
+# TODO: Eventually remove this, it was causing double time of loading a new shell
+# TODO: Consider if I should default to the these rcs for most things and only put some in the interactive rcs
 # shellcheck disable=SC2016
-"$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" '[ -f "$HOME/.bashrc" ] && source "$HOME/.bashrc"' "$HOME/.bash_profile"
+# "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" '[ -f "$HOME/.bashrc" ] && source "$HOME/.bashrc"' "$HOME/.bash_profile"
 # shellcheck disable=SC2016
-"$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" '[ -f "$HOME/.zshrc" ] && source "$HOME/.zshrc"' "$HOME/.zprofile"
+# "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" '[ -f "$HOME/.zshrc" ] && source "$HOME/.zshrc"' "$HOME/.zprofile"
 # Add autogenerate line
 "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" '# ------- pre-generated above this line -------' all
 "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" '# ------- manual entry goes here -------' all

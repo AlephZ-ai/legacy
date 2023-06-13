@@ -1,0 +1,18 @@
+// These don't actually work here
+[
+  {
+    "key": "tab",
+    "command": "tab",
+    "when": "editorTextFocus && vim.active && !inDebugRepl && !editorTabMovesFocus && !suggestWidgetVisible"
+  },
+  {
+    "key": "shift+tab",
+    "command": "outdent",
+    "when": "editorTextFocus && vim.active && !inDebugRepl && !editorTabMovesFocus && !suggestWidgetVisible"
+  },
+  {
+    "key": "escape",
+    "command": "-extension.vim_escape",
+    "when": "editorTextFocus && vim.active && !inDebugRepl"
+  }
+]
