@@ -42,7 +42,7 @@ fi
 
 if [ "$UNSAFE_LEVEL" -ge 2 ]; then
   echo -e "WARNING: You chose at least unsafe level 2."
-  echo -e 'Deleteing /usr/local/*, /etc/zshrc, /etc/zsh/zshrc, /etc/zsh/zshenv, ~/.zprofile, "~/.zshrc"*, /etc/profile, /etc/bash.bashrc, ~/.bash_profile and "~/.bashhrc"*'
+  echo -e 'Deleteing /usr/local/*, /etc/zshrc, /etc/zsh/zshrc, /etc/zsh/zshenv, ~/.zprofile, "~/.zshrc"*, /etc/profile, /etc/bash.bashrc, ~/.bash_profile and "~/.bashhrc"* and ~/.config/powershell/Microsoft.PowerShell_profile.ps1'
   sudo rm -rf /usr/local/* &>/dev/null || true
   sudo rm -rf "/etc/zshrc"
   sudo rm -rf "/etc/zsh/zshrc"
@@ -53,6 +53,7 @@ if [ "$UNSAFE_LEVEL" -ge 2 ]; then
   rm -rf "$HOME/.zshrc"* || true
   rm -rf "$HOME/.bash_profile"
   rm -rf "$HOME/.bashrc"* || true
+  rm -rf "$HOME/.config/powershell/Microsoft.PowerShell_profile.ps1"
 fi
 
 if [ "$UNSAFE_LEVEL" -ge 3 ]; then

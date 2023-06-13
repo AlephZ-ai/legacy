@@ -50,12 +50,13 @@ python --version
 python -m ensurepip --upgrade
 python -m pip install --no-input --upgrade pip setuptools wheel
 pip --version
-python -m pip install --no-input --upgrade pygobject pycairo pipx virtualenv sphinx sphinx-multiversion \
+pip install --no-input --upgrade pygobject pycairo pipx virtualenv sphinx \
   openvino onnxruntime onnxruntime-extensions Cython cataclysm
+pip install --no-input --upgrade git+https://github.com/mikemckiernan/sphinx-multiversion.git
 if [ "$os" = "Linux" ]; then
   pip install --no-input --upgrade \
     nvidia-cudnn-cu11 cudf-cu11 dask_cudf_cu11 cuml-cu11 cugraph-cu11 cucim nvidia-dali-cuda110 nvidia-dali-tf-plugin-cuda110 \
-    nvtabular 'transformers4rec[pytorch,nvtabular,docs,dev]' triton-model-analyzer onnxruntime-training \
+    triton-model-analyzer onnxruntime-training \
     torch-ort torch-ort-inference torch-ort-infer
   pip install --no-input --upgrade git+https://github.com/NVIDIA/TransformerEngine.git@stable
 fi
@@ -65,6 +66,7 @@ fi
 # https://github.com/facebookresearch/llama
 # https://github.com/tatsu-lab/stanford_alpaca
 # https://aka.ms/azsdk/python/all
+# TODO: Needs Python 3.9: merlin-sok merlin-dataloader merlin-systems fairscale
 # TODO: Check for Python 3.11 support:
 #   cntk ml-agents espnet2 gym-retro fastchan TensorFlowTTS triton-model-navigator nvidia-pytriton trimm trimm-viz rliable
 #   masl msal-extensions pytest-azurepipelines azureml-responsibleai azureml-dataprep-native azure-mlflow
@@ -92,6 +94,8 @@ fi
 #       jupyterlab-sparksql jupyterlab-drawio jupyterlab-powerpoint jupyterlab-github jupyterlab-flake8 jupyterlab-lsp
 #       jupyterlab-graph-lsp jupyterlab-telemetry jupyterlab-kernelspy jupyterlab-system-monitor jupyterlab-topbar
 #       jupyterlab-quickopen jupyter_contrib_core jupyter-contrib-nbextensions
+# TODO: 'gymnasium[accept-rom-license,atari,box2d,classic-control,mujoco,mujoco-py,toy-text,jax,other,testing]>=0.28.1' needs scipy>=1.7.1
+#       panda-gym gym-super-mario-bros flappy-bird-gymnasium
 # pytorch-lightning>=1.9.0,<=1.9.4
 # gym[accept-rom-license,atari,box2d,classic_control,mujoco,robotics,toy_text,other]<=0.26,>=0.22
 pip install --no-input --upgrade \
@@ -102,18 +106,16 @@ pip install --no-input --upgrade \
   "opt_einsum>=3.3.0" "openvino-dev>=2023.0.0" \
   mtcnn-onnxruntime onnxruntime-tools scikit-onnxruntime \
   keras opencv-python imageio lazy_loader networkx pillow wrapt py moreutils pylint mypy pandas moviepy \
-  matplotlib scipy seaborn 'skops>=0.6.0' scikit-learn "scikit-image>-0.21.0" "scikit-optimize>=0.9.0" box2d-py pybullet 'optuna>=3.2.0' \
+  matplotlib "scipy<2" seaborn 'skops>=0.6.0' "scikit-learn>=1.2.2" "scikit-image>=0.21.0" "scikit-optimize>=0.9.0" box2d-py pybullet 'optuna>=3.2.0' \
   cloudpickle tensorflow 'tensorflow-addons[tensorflow]' tensorboard 'wandb>=0.15.3' chromadb pytablewriter pyyaml boto3 \
   plotly torch torchvision torchaudio fire 'pytorch-lightning>==1.9.4' nltk poetry span_marker 'speechbrain>=0.5.14' \
   'huggingface-hub>=0.15.1' 'transformers>=4.29.2' 'diffusers>=0.16.1' 'adapter-transformers>=3.2.1' rouge_score \
   'sentence-transformers>=2.2.2' 'flair>=0.12.2' "gensim>=4.3.1" spacy 'fastai>=2.7.12' 'lupyne[graphql,rest]' plush lucene-querybuilder \
   'nemo_toolkit[common,asr,nlp,tts,slu,test]>=1.18.0' 'nemo_text_processing>=0.1.7rc0' shot-scraper \
   'bertopic[test,docs,dev,flair,spacy,use,gensim,vision]>=0.15.0' openai openai-whisper tiktoken ttok strip-tags llm llama-index \
-  merlin-models merlin-systems merlin-dataloader merlin-sok fairscale sentencepiece langchain \
+  nvtabular 'transformers4rec[pytorch,nvtabular,docs,dev]' merlin-models sentencepiece langchain \
   'tritonclient>=2.34.0' pyctcdecode 'pythae>=0.1.1' 'rl_zoo3>=1.8.0' loralib 'dask>=2023.5.1' \
   notebook jupyter-client jupyter-core "mlflow>2.4.0" \
-  'gymnasium[accept-rom-license,atari,box2d,classic-control,mujoco,mujoco-py,toy-text,jax,other,testing]>=0.28.1' \
-  panda-gym gym-super-mario-bros flappy-bird-gymnasium \
   'sample-factory[dev,atari,envpool,mujoco,vizdoom]>=2.0.3' 'espnet>=202304' 'paddlenlp>=2.5.2' \
   azure-cli azure-identity azure-keyvault azure-cli-keyvault azure-keyvault-certificates azure-keyvault-secrets azure-keyvault-browser azure-keyvault-administration \
   azure_devtools azureml-dataprep semantic-kernel \

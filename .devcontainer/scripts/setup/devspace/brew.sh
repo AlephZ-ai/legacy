@@ -57,11 +57,12 @@ if [ "$BREW_FAST_LEVEL" -eq 0 ]; then
   brew update
   brew upgrade
   # Setup post hombrew packages
-  links=('dotnet' 'python@3.11' 'python-tk@3.11' 'postgresql@15')
+  links=()
   if [ "$os" = "Linux" ]; then
-    links+=('file-formula' 'readline' 'curl' 'bzip2' 'zlib' 'libffi' 'llvm' 'xz' 'tcl-tk' 'sqlite' 'openssl@3' 'openssl')
+    links+=('file-formula' 'curl' 'readline' 'bzip2' 'zlib' 'libffi' 'llvm' 'tcl-tk' 'sqlite' 'openssl@3' 'openjdk')
   fi
 
+  links+=('gnu-sed' 'grep' 'make' 'coreutils' 'xz' 'dotnet' 'python@3.11' 'python-tk@3.11' 'postgresql@15')
   for brew in "${links[@]}"; do brew unlink "$brew"; done
   for brew in "${links[@]}"; do brew link --force --overwrite "$brew"; done
 fi
@@ -79,7 +80,7 @@ if [ "$BREW_FAST_LEVEL" -le 1 ]; then
   source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'export SCALA_HOME="$(brew --prefix)/opt/scala/idea"'
   # shellcheck disable=SC2016
   source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'export DOTNET_ROOT="$(brew --prefix)/share/dotnet"'
-  exports=('file-formula' 'gnu-sed' 'grep' 'make' 'coreutils' 'curl' 'readline' 'bzip2' 'zlib' 'xz' 'libffi' 'llvm' 'tcl-tk' 'openssl' 'dotnet' 'openjdk' 'python' 'python-tk' 'sqlite' 'postgresql@15')
+  exports=('file-formula' 'curl' 'readline' 'bzip2' 'zlib' 'libffi' 'llvm' 'tcl-tk' 'sqlite' 'openssl@3' 'openjdk' 'gnu-sed' 'grep' 'make' 'coreutils' 'xz' 'dotnet' 'python@3.11' 'python-tk@3.11' 'postgresql@15')
   for brew in "${exports[@]}"; do
     # shellcheck disable=SC2016
     brew_dir="\$(brew --prefix)/opt/$brew"
