@@ -4,5 +4,15 @@
     "key": "escape",
     "command": "-extension.vim_escape",
     "when": "editorTextFocus && vim.active && !inDebugRepl"
+  },
+  {
+    "key": "ctrl+f",
+    "command": "actions.find",
+    "when": "editorTextFocus"
+  },
+  {
+    "key": "ctrl+f",
+    "command": "-extension.vim_ctrl+f",
+    "when": "editorTextFocus && vim.active && !inDebugRepl"
   }
 ]

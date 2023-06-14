@@ -6,6 +6,15 @@ set -euo pipefail
 os=$(uname -s)
 # Setup pip
 source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'export PYENV_VIRTUALENV_DISABLE_PROMPT=1'
+# Check fast level
+devspace=devspace
+if [ "${PYENV_VERSION:-}" != "$devspace" ]; then
+  export PIP_FAST_LEVEL=${PIP_FAST_LEVEL:-${FAST_LEVEL:-0}}
+else
+  export PIP_FAST_LEVEL=0
+fi
+
+echo "PIP_FAST_LEVEL=$PIP_FAST_LEVEL"
 # Array of Python versions to upgrade
 versions=("3.9" "3.10" "3.11")
 for version in "${versions[@]}"; do
@@ -24,7 +33,6 @@ for version in "${versions[@]}"; do
   fi
 done
 
-devspace=devspace
 globalVersion=$(pyenv versions --bare | grep -oP "3.11\.\d+" | sort -V | tail -n 1)
 expectedVersion=$(pyenv versions --bare | grep -oP "3.10\.\d+" | sort -V | tail -n 1)
 devspaceExists=$(pyenv virtualenvs --bare | grep -qoP "^$devspace\$" && echo true || echo false)
@@ -112,8 +120,8 @@ pip install --no-input --upgrade setuptools wheel pygobject pycairo pipx virtual
   autopep8 aiosqlite absl-py astunparse flatbuffers gast google-pasta grpcio h5py jax jaxlib libclang opt-einsum protobuf \
   'blis>=0.9.1' catalogue confection cymem murmurhash preshed black yapf pydantic jinja2 langcodes murmurhash filelock tokenizers \
   msal msal-extensions numpy 'jsmin>=3.0.1' 'opt-einsum>=3.3.0' 'openvino-dev>=2023.0.0' \
-  mtcnn-onnxruntime onnxruntime-tools scikit-onnxruntime autograd autograd-minimize \
-  semantic-kernel batch-inference 'pytket>=1.16.0' pennylane 'pytket-pennylane>=0.8.0' pennylane-lightning "$catalyst" qulacs pennylane-qulacs pytket-qulacs qulacsvis \
+  mtcnn-onnxruntime onnxruntime-tools scikit-onnxruntime 'autograd>=1.5' autograd-minimize \
+  'semantic-kernel>=0.3.1.dev0' batch-inference 'pytket>=1.16.0' 'pennylane>=0.30.0' 'pytket-pennylane>=0.8.0' pennylane-lightning "$catalyst" qulacs pennylane-qulacs pytket-qulacs qulacsvis \
   keras opencv-python imageio lazy-loader networkx pillow wrapt py moreutils pylint mypy pandas moviepy \
   matplotlib 'scipy<2' seaborn 'skops>=0.6.0' 'scikit-learn>=1.2.2' 'scikit-image>=0.21.0' 'scikit-optimize>=0.9.0' box2d-py pybullet 'optuna>=3.2.0' \
   cloudpickle tensorflow 'tensorflow-addons[tensorflow]' tensorboard 'wandb>=0.15.3' chromadb pytablewriter pyyaml boto3 \

@@ -3,11 +3,18 @@
 # shellcheck source=/dev/null
 # init
 set -euo pipefail
+os=$(uname -s)
 # Setup nvm
 source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'export NVM_SYMLINK_CURRENT="true"'
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/master/install.sh | bash
-# shellcheck disable=SC2016
-source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'export NVM_DIR="$([ -z "${XDG_CONFIG_HOME}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"'
+if [ "$os" = "Linux" ]; then
+  # shellcheck disable=SC2016
+  source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'export NVM_DIR="$([ -z "${XDG_CONFIG_HOME}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"'
+else
+  # shellcheck disable=SC2016
+  source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'export NVM_DIR="${HOME}/.nvm"'
+fi
+
 # shellcheck disable=SC2016
 source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" '[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm'
 # shellcheck disable=SC2016
