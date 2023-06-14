@@ -13,9 +13,9 @@
   "vim.showmodename": true,
   "vim.startInInsertMode": true,
   "vim.overrideCopy": true,
-  "vim.useCtrlKeys": true,
+  "vim.useCtrlKeys": false,
   "vim.useSystemClipboard": true,
-  "vim.autoindent": true,
+  "vim.autoindent": false,
   "vim.mouseSelectionGoesIntoVisualMode": false,
   "vim.handleKeys": {
     "<D-c>": false,

@@ -45,20 +45,18 @@ fi
 source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'if command -v pyenv 1>/dev/null 2>&1; then eval "$(pyenv init -)"; fi'
 # shellcheck disable=SC2016
 source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'if command -v pyenv 1>/dev/null 2>&1; then eval "$(pyenv virtualenv-init -)"; fi'
-source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "pyenv activate \"$devspace\""
+source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "if [ \"\$PYENV_VERSION\" != \"$devspace\" ]; then pyenv activate \"$devspace\"; fi"
 python --version
 python -m ensurepip --upgrade
 python -m pip install --no-input --upgrade pip setuptools wheel
 pip --version
-pip install --no-input --upgrade pygobject pycairo pipx virtualenv sphinx sphinx-multiversion \
-  openvino onnxruntime onnxruntime-extensions Cython cataclysm
-# pip install --no-input --upgrade --no-cache-dir git+https://github.com/mikemckiernan/sphinx-multiversion.git
+pip install --no-input --upgrade setuptools wheel pygobject pycairo pipx virtualenv sphinx sphinx-multiversion \
+  openvino onnxruntime onnxruntime-extensions cataclysm 'Cython>=0.29.35'
 if [ "$os" = "Linux" ]; then
   pip install --no-input --upgrade \
-    nvidia-cudnn-cu11 cudf-cu11 dask_cudf_cu11 cuml-cu11 cugraph-cu11 cucim nvidia-dali-cuda110 nvidia-dali-tf-plugin-cuda110 \
-    triton-model-analyzer onnxruntime-training \
-    torch-ort torch-ort-inference torch-ort-infer
-  pip install --no-input --upgrade --no-cache-dir git+https://github.com/NVIDIA/TransformerEngine.git@stable
+    nvidia-cudnn-cu11 cudf-cu11 dask-cudf-cu11 cuml-cu11 cugraph-cu11 cucim nvidia-dali-cuda110 nvidia-dali-tf-plugin-cuda110 \
+    triton-model-analyzer onnxruntime-training git+https://github.com/NVIDIA/TransformerEngine.git@stable \
+    torch-ort torch-ort-inference torch-ort-infer pennylane-lightning[gpu] qulacs-gpu
 fi
 
 # https://huggingface.co/models?other=stable-baselines3
@@ -66,14 +64,14 @@ fi
 # https://github.com/facebookresearch/llama
 # https://github.com/tatsu-lab/stanford_alpaca
 # https://aka.ms/azsdk/python/all
-# TODO: Needs Python 3.9: merlin-sok merlin-dataloader merlin-systems fairscale sample-factory[dev,atari,envpool,mujoco,vizdoom]>=2.0.3
+# TODO: Needs Python 3.9: merlin-sok merlin-dataloader merlin-systems fairscale azure-keyvault azure-identity azure-cli
 # TODO: Check for Python 3.11 support:
 #   cntk ml-agents espnet2 gym-retro fastchan TensorFlowTTS triton-model-navigator nvidia-pytriton trimm trimm-viz rliable
-#   masl msal-extensions pytest-azurepipelines azureml-responsibleai azureml-dataprep-native azure-mlflow
+#   msal msal-extensions pytest-azurepipelines azureml-responsibleai azureml-dataprep-native azure-mlflow
 #   torch-directml onnxruntime-silicon onnxruntime-openmp onnxruntime-directml onnxruntime-gpu
 #   onnxruntime-cann onnxruntime-noopenmp onnxruntime-azure onnxruntime-openvino onnxruntime-coreml onnxruntime-powerpc64le
 #   model-perf azure-ai-vision
-# TODO: Keep a check on huggingface_sb3 it has huggingface-hub pinned to 0.8.1
+# TODO: Keep a check on huggingface-sb3 it has huggingface-hub pinned to 0.8.1
 # https://github.com/huggingface/huggingface_sb3/issues/27
 # TODO: Keep a check on asteroid and see when it will allow upgrading torchmetrics>=0.11.0, currently torchmetrics<0.8.0
 # https://github.com/asteroid-team/asteroid/issues/669
@@ -90,37 +88,41 @@ fi
 # TODO: agents depends on gym==0.21.0 and that gym breaks with:
 #       error in gym setup command: 'extras_require' must be a dictionary whose values are strings or lists of strings containing valid project/version requirement specifiers.
 # TODO: Real old jupyter "jupyter-lsp>4.2.0" "jupyterlab>=4.0.2" jupyterlab-fonts "jupyterlab-git>=0.41.0" jupyterlab-markup
-#       jupyterlab_widgets jupyterlab-commands "jupyterlab_code_formatter>=2.2.1" jupyterlab-black jupyterlab-requirements
+#       jupyterlab-widgets jupyterlab-commands "jupyterlab-code-formatter>=2.2.1" jupyterlab-black jupyterlab-requirements
 #       jupyterlab-sparksql jupyterlab-drawio jupyterlab-powerpoint jupyterlab-github jupyterlab-flake8 jupyterlab-lsp
 #       jupyterlab-graph-lsp jupyterlab-telemetry jupyterlab-kernelspy jupyterlab-system-monitor jupyterlab-topbar
-#       jupyterlab-quickopen jupyter_contrib_core jupyter-contrib-nbextensions
+#       jupyterlab-quickopen jupyter-contrib-core jupyter-contrib-nbextensions
 # TODO: 'gymnasium[accept-rom-license,atari,box2d,classic-control,mujoco,mujoco-py,toy-text,jax,other,testing]>=0.28.1' needs scipy>=1.7.1
 #       panda-gym gym-super-mario-bros flappy-bird-gymnasium
 # TODO: nemo-toolkit[asr,common,nlp,slu,test,tts] 1.18.1 depends on pytorch-lightning<=1.9.4 and >=1.9.0; extra == "nlp" pytorch-lightning>=1.9.0,<=1.9.4
 # gym[accept-rom-license,atari,box2d,classic_control,mujoco,robotics,toy_text,other]<=0.26,>=0.22
 # TODO: transformers4rec[docs,dev] https://github.com/NVIDIA-Merlin/Transformers4Rec
-pip install --no-input --upgrade \
-  platformdirs dill isort mccabe ipykernel ipython-genutils packaging docker-pycreds flask pathy tbb numpy \
+# TODO: 'sample-factory[dev,atari,envpool,mujoco,vizdoom]>=2.0.3'
+pip install --no-input --upgrade setuptools wheel pygobject pycairo pipx virtualenv sphinx sphinx-multiversion \
+  openvino onnxruntime onnxruntime-extensions cataclysm 'Cython>=0.29.35' \
+  platformdirs dill isort mccabe ipykernel ipython-genutils packaging docker-pycreds flask pathy tbb 'pynini>0.1.1' \
   pygments flake8 tqdm rich ruff pytest pytest-sugar pytest-cov pytest-xdist pytest-xprocess pytest-mock pytest-benchmark \
-  autopep8 aiosqlite absl-py astunparse flatbuffers gast google-pasta grpcio h5py jax libclang opt-einsum protobuf \
-  "blis>=0.9.1" catalogue confection cymem murmurhash preshed black yapf pydantic jinja2 langcodes murmurhash filelock tokenizers \
-  "opt_einsum>=3.3.0" "openvino-dev>=2023.0.0" \
-  mtcnn-onnxruntime onnxruntime-tools scikit-onnxruntime \
-  keras opencv-python imageio lazy_loader networkx pillow wrapt py moreutils pylint mypy pandas moviepy \
-  matplotlib "scipy<2" seaborn 'skops>=0.6.0' "scikit-learn>=1.2.2" "scikit-image>=0.21.0" "scikit-optimize>=0.9.0" box2d-py pybullet 'optuna>=3.2.0' \
+  autopep8 aiosqlite absl-py astunparse flatbuffers gast google-pasta grpcio h5py jax jaxlib libclang opt-einsum protobuf \
+  'blis>=0.9.1' catalogue confection cymem murmurhash preshed black yapf pydantic jinja2 langcodes murmurhash filelock tokenizers \
+  msal msal-extensions numpy 'jsmin>=3.0.1' 'opt-einsum>=3.3.0' 'openvino-dev>=2023.0.0' \
+  mtcnn-onnxruntime onnxruntime-tools scikit-onnxruntime autograd autograd-minimize \
+  semantic-kernel batch-inference pytket pennylane pytket-pennylane pennylane-lightning git+https://github.com/PennyLaneAI/catalyst.git qulacs pennylane-qulacs pytket-qulacs qulacsvis \
+  keras opencv-python imageio lazy-loader networkx pillow wrapt py moreutils pylint mypy pandas moviepy \
+  matplotlib 'scipy<2' seaborn 'skops>=0.6.0' 'scikit-learn>=1.2.2' 'scikit-image>=0.21.0' 'scikit-optimize>=0.9.0' box2d-py pybullet 'optuna>=3.2.0' \
   cloudpickle tensorflow 'tensorflow-addons[tensorflow]' tensorboard 'wandb>=0.15.3' chromadb pytablewriter pyyaml boto3 \
   plotly torch torchvision torchaudio fire 'pytorch-lightning<=1.9.4,>=1.9.0' nltk poetry 'span-marker>=1.1.1' 'speechbrain>=0.5.14' \
-  'huggingface-hub>=0.15.1' 'transformers>=4.29.2' 'diffusers>=0.16.1' 'adapter-transformers>=3.2.1' rouge_score \
-  'sentence-transformers>=2.2.2' 'flair>=0.12.2' "gensim>=4.3.1" spacy 'fastai>=2.7.12' 'lupyne[graphql,rest]' plush lucene-querybuilder \
-  'nemo_toolkit[common,asr,nlp,tts,slu,test]>=1.18.0' 'nemo_text_processing>=0.1.7rc0' shot-scraper \
+  'huggingface-hub>=0.15.1' 'transformers>=4.29.2' 'diffusers>=0.16.1' 'adapter-transformers>=3.2.1' rouge-score \
+  'sentence-transformers>=2.2.2' 'flair>=0.12.2' 'gensim>=4.3.1' spacy 'fastai>=2.7.12' 'lupyne[graphql,rest]' plush lucene-querybuilder \
+  'nemo-toolkit[common,asr,nlp,tts,slu,test]>=1.18.0' 'nemo-text-processing>=0.1.7rc0' shot-scraper \
   'bertopic[test,docs,dev,flair,spacy,use,gensim,vision]>=0.15.0' openai 'openai-whisper>=20230314' tiktoken ttok strip-tags llm llama-index \
   nvtabular 'transformers4rec[pytorch,nvtabular]>=23.5.0' merlin-models sentencepiece langchain \
-  'tritonclient>=2.34.0' pyctcdecode 'pythae>=0.1.1' 'rl_zoo3>=1.8.0' loralib 'dask>=2023.5.1' \
-  notebook jupyter-client jupyter-core "mlflow>2.4.0" \
-  'sample-factory[atari,mujoco,vizdoom]>=2.0.3' 'espnet>=202304' 'paddlenlp>=2.5.2' \
-  azure-cli azure-identity azure-keyvault azure-cli-keyvault azure-keyvault-certificates azure-keyvault-secrets azure-keyvault-browser azure-keyvault-administration \
-  azure_devtools azureml-dataprep semantic-kernel \
-  batch-inference pytket pennylane qdk 'azure-quantum[all]' quantum-viz knack qsharp qsharp-chemistry pytket-qsharp pennylane-qsharp \
+  'tritonclient>=2.34.0' pyctcdecode 'pythae>=0.1.1' 'rl-zoo3>=1.8.0' loralib 'dask>=2023.5.1' \
+  notebook jupyter-client jupyter-core 'mlflow>2.4.0' \
+  'espnet>=202304' 'paddlenlp>=2.5.2' \
+  'azure-cli-keyvault>2.2.16' azure-keyvault-certificates azure-keyvault-secrets azure-keyvault-browser azure-keyvault-administration \
+  azure-devtools azureml-dataprep cirq cirq-iqm pennyLane-cirq quil pyquil qclient \
+  qiskit-terra qiskit-ibmq-provider 'qiskit[visualization,experiments,optimization,finance,machine-learning,nature]' qiskit-qir pennyLane-qiskit \
+  qdk knack qsharp qsharp-chemistry pytket-qsharp pennylane-qsharp 'azure-quantum[dev,cirq,qiskit,qsharp,quil]' pyquil-for-azure-quantum quantum-viz \
   presidio-cli presidio-analyzer presidio-anonymizer presidio-evaluator presidio-image-redactor msticpy msticnb \
   textworld botbuilder-ai botbuilder-applicationinsights botbuilder-azure botbuilder-core botbuilder-dialogs botbuilder-schema botframework-connector \
   onefuzz ptgnn deepgnn-ge deepgnn-torch deepgnn-tf rapidocr-openvino rapidocr-onnxruntime \
@@ -135,7 +137,7 @@ pip install --no-input --upgrade \
   azure-cognitiveservices-search-autosuggest azure-cognitiveservices-search-imagesearch azure-cognitiveservices-language-spellcheck \
   azure-cognitiveservices-search-newssearch azure-cognitiveservices-search-customsearch azure-cognitiveservices-search-customimagesearch \
   azure-cognitiveservices-search-entitysearch playwright pytest-playwright planetary-computer debugpy azure-pylint-guidelines-checker \
-  scenepic qiskit-qir azure-developer-loadtesting azure-defender-easm lsprotocol azure-appconfiguration keyper confidential-ml-utils \
+  scenepic azure-developer-loadtesting azure-defender-easm lsprotocol azure-appconfiguration keyper confidential-ml-utils \
   microsoft-bing-websearch microsoft-bing-spellcheck microsoft-bing-videosearch microsoft-bing-imagesearch \
   microsoft-bing-customimagesearch microsoft-bing-visualsearch microsoft-bing-entitysearch microsoft-bing-customwebsearch \
   microsoft-bing-newssearch microsoft-bing-autosuggest google google-cloud google-benchmark
@@ -143,10 +145,10 @@ pip install --no-input --upgrade \
 path="$HOME/.nvidia/pip"
 mkdir -p "$path"
 pushd "$path"
-rm -rf apex
 git clone https://github.com/NVIDIA/apex.git
 pushd apex
 git checkout master
+git pull
 pip install --no-input -v --disable-pip-version-check --no-cache-dir --global-option="--cpp_ext" --global-option="--cuda_ext" --global-option="--fast_layer_norm" --global-option="--distributed_adam" --global-option="--deprecated_fused_adam" ./
 popd
 popd

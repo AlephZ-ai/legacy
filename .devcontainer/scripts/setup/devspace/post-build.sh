@@ -59,6 +59,8 @@ source "$DEVCONTAINER_SCRIPTS_ROOT/setup/devspace/trust-root-ca.sh"
 source "$DEVCONTAINER_SCRIPTS_ROOT/setup/devspace/edge-default.sh"
 # Setup Condas
 source "$DEVCONTAINER_SCRIPTS_ROOT/setup/devspace/condas.sh"
+# Setup rust
+source "$DEVCONTAINER_SCRIPTS_ROOT/setup/devspace/rust.sh"
 # Setup adsf
 source "$DEVCONTAINER_SCRIPTS_ROOT/setup/devspace/asdf.sh"
 # Setup dotnet
