@@ -38,5 +38,5 @@ while ! (
   apt install -y --install-recommends caffe-cuda-cusparse caffe-cuda-cusparse-dev caffe-cuda-npp caffe-cuda-npp-dev caffe-cuda-nvrtc caffe-cuda-nvrtc-dev
   apt install -y --install-recommends caffe-cuda-cudnn caffe-cuda-cudnn-dev caffe-cuda-cudnn8 caffe-cuda-cudnn8-dev caffe-cuda-cudnn8-doc caffe-cuda-cudnn8-samples
   apt install -y --install-recommends libgtk-3-dev libpng-dev libjpeg-dev libopenexr-dev libtiff-dev libwebp-dev libavcodec-dev libavformat-dev libswscale-dev libuv-dev libuv1-dev
-  apt install -y --install-recommends manpages-posix manpages-posix-dev bats clang lld ccache libomp-dev
+  apt install -y --install-recommends manpages-posix manpages-posix-dev bats clang lld ccache libomp-dev neovim
 ); do echo "Retrying apt-packages..."; done

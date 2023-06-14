@@ -50,12 +50,10 @@ python --version
 python -m ensurepip --upgrade
 python -m pip install --no-input --upgrade pip setuptools wheel
 pip --version
-pip install --no-input --upgrade setuptools wheel pygobject pycairo pipx virtualenv sphinx sphinx-multiversion \
-  openvino onnxruntime onnxruntime-extensions cataclysm 'Cython>=0.29.35'
 if [ "$os" = "Linux" ]; then
-  pip install --no-input --upgrade \
+  pip install --no-input --upgrade --global-option="--cpp_ext" --global-option="--cuda_ext" --global-option="--fast_layer_norm" --global-option="--distributed_adam" --global-option="--deprecated_fused_adam" \
     nvidia-cudnn-cu11 cudf-cu11 dask-cudf-cu11 cuml-cu11 cugraph-cu11 cucim nvidia-dali-cuda110 nvidia-dali-tf-plugin-cuda110 \
-    triton-model-analyzer onnxruntime-training git+https://github.com/NVIDIA/TransformerEngine.git@stable \
+    triton-model-analyzer onnxruntime-training git+https://github.com/NVIDIA/TransformerEngine.git@stable git+https://github.com/NVIDIA/apex.git \
     torch-ort torch-ort-inference torch-ort-infer pennylane-lightning[gpu] qulacs-gpu
 fi
 
@@ -64,7 +62,8 @@ fi
 # https://github.com/facebookresearch/llama
 # https://github.com/tatsu-lab/stanford_alpaca
 # https://aka.ms/azsdk/python/all
-# TODO: Needs Python 3.9: merlin-sok merlin-dataloader merlin-systems fairscale azure-keyvault azure-identity azure-cli
+# TODO: Needs Python 3.9: merlin-sok merlin-dataloader merlin-systems fairscale azure-keyvault azure-identity
+#       azure-cli azure-cli-keyvault
 # TODO: Check for Python 3.11 support:
 #   cntk ml-agents espnet2 gym-retro fastchan TensorFlowTTS triton-model-navigator nvidia-pytriton trimm trimm-viz rliable
 #   msal msal-extensions pytest-azurepipelines azureml-responsibleai azureml-dataprep-native azure-mlflow
@@ -98,6 +97,14 @@ fi
 # gym[accept-rom-license,atari,box2d,classic_control,mujoco,robotics,toy_text,other]<=0.26,>=0.22
 # TODO: transformers4rec[docs,dev] https://github.com/NVIDIA-Merlin/Transformers4Rec
 # TODO: 'sample-factory[dev,atari,envpool,mujoco,vizdoom]>=2.0.3'
+catalyst_ver=$(curl --silent "https://api.github.com/repos/PennyLaneAI/catalyst/tags" | jq -r '.[0].name')
+catalyst="$HOME/source/repos/catalyst"
+mkdir -p "$catalyst"
+git clone --recurse-submodules https://github.com/PennyLaneAI/catalyst.git "$catalyst"
+pushd "$catalyst"
+git checkout "$catalyst_ver"
+git pull
+popd
 pip install --no-input --upgrade setuptools wheel pygobject pycairo pipx virtualenv sphinx sphinx-multiversion \
   openvino onnxruntime onnxruntime-extensions cataclysm 'Cython>=0.29.35' \
   platformdirs dill isort mccabe ipykernel ipython-genutils packaging docker-pycreds flask pathy tbb 'pynini>0.1.1' \
@@ -106,7 +113,7 @@ pip install --no-input --upgrade setuptools wheel pygobject pycairo pipx virtual
   'blis>=0.9.1' catalogue confection cymem murmurhash preshed black yapf pydantic jinja2 langcodes murmurhash filelock tokenizers \
   msal msal-extensions numpy 'jsmin>=3.0.1' 'opt-einsum>=3.3.0' 'openvino-dev>=2023.0.0' \
   mtcnn-onnxruntime onnxruntime-tools scikit-onnxruntime autograd autograd-minimize \
-  semantic-kernel batch-inference pytket pennylane pytket-pennylane pennylane-lightning git+https://github.com/PennyLaneAI/catalyst.git qulacs pennylane-qulacs pytket-qulacs qulacsvis \
+  semantic-kernel batch-inference 'pytket>=1.16.0' pennylane 'pytket-pennylane>=0.8.0' pennylane-lightning "$catalyst" qulacs pennylane-qulacs pytket-qulacs qulacsvis \
   keras opencv-python imageio lazy-loader networkx pillow wrapt py moreutils pylint mypy pandas moviepy \
   matplotlib 'scipy<2' seaborn 'skops>=0.6.0' 'scikit-learn>=1.2.2' 'scikit-image>=0.21.0' 'scikit-optimize>=0.9.0' box2d-py pybullet 'optuna>=3.2.0' \
   cloudpickle tensorflow 'tensorflow-addons[tensorflow]' tensorboard 'wandb>=0.15.3' chromadb pytablewriter pyyaml boto3 \
@@ -119,7 +126,7 @@ pip install --no-input --upgrade setuptools wheel pygobject pycairo pipx virtual
   'tritonclient>=2.34.0' pyctcdecode 'pythae>=0.1.1' 'rl-zoo3>=1.8.0' loralib 'dask>=2023.5.1' \
   notebook jupyter-client jupyter-core 'mlflow>2.4.0' \
   'espnet>=202304' 'paddlenlp>=2.5.2' \
-  'azure-cli-keyvault>2.2.16' azure-keyvault-certificates azure-keyvault-secrets azure-keyvault-browser azure-keyvault-administration \
+  azure-keyvault-certificates azure-keyvault-secrets azure-keyvault-browser azure-keyvault-administration \
   azure-devtools azureml-dataprep cirq cirq-iqm pennyLane-cirq quil pyquil qclient \
   qiskit-terra qiskit-ibmq-provider 'qiskit[visualization,experiments,optimization,finance,machine-learning,nature]' qiskit-qir pennyLane-qiskit \
   qdk knack qsharp qsharp-chemistry pytket-qsharp pennylane-qsharp 'azure-quantum[dev,cirq,qiskit,qsharp,quil]' pyquil-for-azure-quantum quantum-viz \
@@ -142,16 +149,6 @@ pip install --no-input --upgrade setuptools wheel pygobject pycairo pipx virtual
   microsoft-bing-customimagesearch microsoft-bing-visualsearch microsoft-bing-entitysearch microsoft-bing-customwebsearch \
   microsoft-bing-newssearch microsoft-bing-autosuggest google google-cloud google-benchmark
 "$DEVCONTAINER_SCRIPTS_ROOT/utils/pip-enable-cache.sh"
-path="$HOME/.nvidia/pip"
-mkdir -p "$path"
-pushd "$path"
-git clone https://github.com/NVIDIA/apex.git
-pushd apex
-git checkout master
-git pull
-pip install --no-input -v --disable-pip-version-check --no-cache-dir --global-option="--cpp_ext" --global-option="--cuda_ext" --global-option="--fast_layer_norm" --global-option="--distributed_adam" --global-option="--deprecated_fused_adam" ./
-popd
-popd
 spacy download en_core_web_sm
 spacy download en_core_web_md
 spacy download en_core_web_lg

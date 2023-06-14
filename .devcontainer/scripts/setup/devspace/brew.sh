@@ -53,7 +53,7 @@ if [ "$BREW_FAST_LEVEL" -eq 0 ]; then
     HOMEBREW_ACCEPT_EULA=Y brew install --include-test --force openjdk openjdk@8 openjdk@11 openjdk@17 maven groovy gradle scala sbt yarn bash-completion@2 z3 asdf
     HOMEBREW_ACCEPT_EULA=Y brew install --include-test --force azure-cli awscli msodbcsql18 mssql-tools18 kubernetes-cli helm minikube kind k3d argocd derailed/k9s/k9s kustomize skaffold vcluster
     HOMEBREW_ACCEPT_EULA=Y brew install --include-test --force python-typing-extensions pygobject3 py3cairo pyyaml libffi libyaml qt pyqt boost boost-build boost-mpi boost-python3 terraform gtk+3 gtk+4
-    HOMEBREW_ACCEPT_EULA=Y brew install --include-test --force ffmpeg libsndfile libsoundio openmpi opencv openvino bats-core gedit git-gui git-svn numpy scipy libtensorflow pytorch torchvision
+    HOMEBREW_ACCEPT_EULA=Y brew install --include-test --force ffmpeg libsndfile libsoundio openmpi opencv openvino bats-core gedit git-gui git-svn numpy scipy libtensorflow pytorch torchvision neovim
   ); do echo "Retrying"; done
 
   # Upgrade all packages
