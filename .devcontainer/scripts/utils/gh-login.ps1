@@ -1,4 +1,6 @@
 #!/usr/bin/env pwsh
+Set-StrictMode -Version Latest
+$ErrorActionPreference = 'Stop'
 if (-not ($env:GITHUB_TOKEN)) {
   try {
     gh auth status

@@ -1,4 +1,6 @@
 #!/usr/bin/env pwsh
+Set-StrictMode -Version Latest
+$ErrorActionPreference = 'Stop'
 git update-index --add --chmod=+x "$env:DEVCONTAINER_FEATURES_PROJECT_ROOT/run"
 git update-index --add --chmod=+x "$env:DEVCONTAINER_PROJECT_ROOT/init"
 Get-ChildItem -Recurse -Path "$env:DEVCONTAINER_PROJECT_ROOT/scripts" -Filter "*.sh" | ForEach-Object { git update-index --add --chmod=+x $_.FullName }
