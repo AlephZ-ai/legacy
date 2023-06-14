@@ -1,5 +1,6 @@
 # shellcheck shell=bash
 # shellcheck source=/dev/null
+# shellcheck disable=SC2034
 # If you come from bash you might have to change your $PATH.
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
@@ -61,7 +62,7 @@ if [ -f "$ZSH/oh-my-zsh.sh" ]; then source "$ZSH/oh-my-zsh.sh"; fi
 export LANG=en_US.UTF-8
 # Preferred editor for local and remote sessions
 if [[ -n ${SSH_CONNECTION:-} ]]; then
-    export EDITOR='vim'
+    export EDITOR='neovim'
 else
     export EDITOR='code'
 fi

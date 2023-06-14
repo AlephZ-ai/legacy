@@ -105,13 +105,16 @@ fi
 # gym[accept-rom-license,atari,box2d,classic_control,mujoco,robotics,toy_text,other]<=0.26,>=0.22
 # TODO: transformers4rec[docs,dev] https://github.com/NVIDIA-Merlin/Transformers4Rec
 # TODO: 'sample-factory[dev,atari,envpool,mujoco,vizdoom]>=2.0.3'
-catalyst_ver=$(curl --silent "https://api.github.com/repos/PennyLaneAI/catalyst/tags" | jq -r '.[0].name')
 catalyst="$HOME/source/repos/catalyst"
+catalyst_ver=$(curl --silent "https://api.github.com/repos/PennyLaneAI/catalyst/tags" | jq -r '.[0].name')
 mkdir -p "$catalyst"
-git clone --recurse-submodules https://github.com/PennyLaneAI/catalyst.git "$catalyst"
+git clone https://github.com/PennyLaneAI/catalyst.git "$catalyst" &>/dev/null || true
 pushd "$catalyst"
-git checkout "$catalyst_ver"
 git pull
+git checkout "$catalyst_ver"
+git submodule update --init --recursive
+# shellcheck disable=SC2016
+git submodule foreach --recursive 'branch="$(git config -f $toplevel/.gitmodules submodule.$name.branch)"; git pull origin "$branch"'
 popd
 pip install --no-input --upgrade setuptools wheel pygobject pycairo pipx virtualenv sphinx sphinx-multiversion \
   openvino onnxruntime onnxruntime-extensions cataclysm 'Cython>=0.29.35' \

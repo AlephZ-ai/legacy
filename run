@@ -3,13 +3,13 @@
 projectRoot="$(cd -- "$(dirname -- "${BASH_SOURCE-$0}")" &>/dev/null && pwd)"
 scriptsRoot="$projectRoot/.devcontainer/scripts"
 source "$scriptsRoot/setup/environment.sh"
-if [ "$1" = "-id" ] || [ "$1" = "--in-dependency" ]; then
+if [[ "$1" = "-id" ]] || [[ "$1" = "--in-dependency" ]]; then
   dependency="$2"
   scriptPath="$3"
   script="$4"
   shift 4
   scriptsRoot="$projectRoot/.devcontainer/dependencies/$dependency/src"
-elif [ "$1" = "-s" ] || [ "$1" = "--src" ]; then
+elif [[ "$1" = "-s" ]] || [[ "$1" = "--src" ]]; then
   scriptPath="$2"
   script="$3"
   shift 3
@@ -20,7 +20,7 @@ else
   shift 2
 fi
 
-if [ "$scriptPath" = "-h" ] || [ "$scriptPath" = "--help" ]; then
+if [[ "$scriptPath" = "-h" ]] || [[ "$scriptPath" = "--help" ]]; then
   echo "Run will run a script from in the src directory with the correct env variables setup."
   echo "Usage: ./run <script> <command>"
   echo "DevContainer Feature Scripts:"

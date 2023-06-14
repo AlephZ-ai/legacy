@@ -53,6 +53,8 @@ if [ "$os" = "Linux" ]; then
   sudo chsh "$USERNAME" -s "$(which zsh)"
 fi
 
+# Setup GH
+source "$DEVCONTAINER_SCRIPTS_ROOT/setup/devspace/gh.sh"
 # Make trusted root CA then install and trust it (with mkcert)
 source "$DEVCONTAINER_SCRIPTS_ROOT/setup/devspace/trust-root-ca.sh"
 # Make Edge the default browser if installed
@@ -75,8 +77,6 @@ source "$DEVCONTAINER_SCRIPTS_ROOT/setup/devspace/pip.sh"
 source "$DEVCONTAINER_SCRIPTS_ROOT/setup/devspace/az.sh"
 # Setup nvm
 source "$DEVCONTAINER_SCRIPTS_ROOT/setup/devspace/nvm.sh"
-# Setup GH
-source "$DEVCONTAINER_SCRIPTS_ROOT/setup/devspace/gh.sh"
 # Setup desktop-list
 source "$DEVCONTAINER_SCRIPTS_ROOT/setup/devspace/desktop-lite.sh"
 # Setup ohmyzsh plugins

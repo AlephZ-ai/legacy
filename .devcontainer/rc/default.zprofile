@@ -1,4 +1,6 @@
 # shellcheck shell=bash
+# shellcheck source=/dev/null
+# shellcheck disable=SC1087,SC2102,SC2034,SC2125,SC2157
 # System-wide profile for interactive zsh(1) shells.
 
 # Setup user specific overrides for this in ~/.zshrc. See zshbuiltins(1)
@@ -22,8 +24,8 @@ setopt BEEP
 
 # Use keycodes (generated via zkbd) if present, otherwise fallback on
 # values from terminfo
-if [[ -r ${ZDOTDIR:-$HOME}/.zkbd/${TERM}-${VENDOR} ]]; then
-    source ${ZDOTDIR:-$HOME}/.zkbd/${TERM}-${VENDOR}
+if [[ -r "${ZDOTDIR:-$HOME}/.zkbd/${TERM}-${VENDOR}" ]]; then
+    source "${ZDOTDIR:-$HOME}/.zkbd/${TERM}-${VENDOR}"
 else
     typeset -g -A key
 
@@ -71,4 +73,4 @@ fi
 PS1="%n@%m %1~ %# "
 
 # Useful support for interacting with Terminal.app or other terminal programs
-[ -r "/etc/zshrc_$TERM_PROGRAM" ] && . "/etc/zshrc_$TERM_PROGRAM"
+[[ -r "/etc/zshrc_$TERM_PROGRAM" ]] && . "/etc/zshrc_$TERM_PROGRAM"
