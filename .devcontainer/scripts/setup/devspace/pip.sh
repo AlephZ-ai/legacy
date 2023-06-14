@@ -53,7 +53,7 @@ fi
 source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'if command -v pyenv 1>/dev/null 2>&1; then eval "$(pyenv init -)"; fi'
 # shellcheck disable=SC2016
 source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'if command -v pyenv 1>/dev/null 2>&1; then eval "$(pyenv virtualenv-init -)"; fi'
-source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "if [ \"\$PYENV_VERSION\" != \"$devspace\" ]; then pyenv activate \"$devspace\"; fi"
+source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "if [[ \"\$PYENV_VERSION\" != \"$devspace\" ]]; then pyenv activate \"$devspace\"; fi"
 python --version
 python -m ensurepip --upgrade
 python -m pip install --no-input --upgrade pip setuptools wheel
@@ -110,11 +110,13 @@ catalyst_ver=$(curl --silent "https://api.github.com/repos/PennyLaneAI/catalyst/
 mkdir -p "$catalyst"
 git clone https://github.com/PennyLaneAI/catalyst.git "$catalyst" &>/dev/null || true
 pushd "$catalyst"
-git pull
-git checkout "$catalyst_ver"
+git fetch --tags
+git reset --hard
+git checkout --theirs "$catalyst_ver"
+git pull origin "$catalyst_ver"
 git submodule update --init --recursive
 # shellcheck disable=SC2016
-git submodule foreach --recursive 'branch="$(git config -f $toplevel/.gitmodules submodule.$name.branch)"; git pull origin "$branch"'
+git submodule foreach --recursive 'git config pull.rebase true; branch="$(git config -f $toplevel/.gitmodules submodule.$name.branch)"; git pull origin "$branch"'
 popd
 pip install --no-input --upgrade setuptools wheel pygobject pycairo pipx virtualenv sphinx sphinx-multiversion \
   openvino onnxruntime onnxruntime-extensions cataclysm 'Cython>=0.29.35' \

@@ -30,3 +30,4 @@ fi
 rm -rf "$HOME/.pip"
 rm -rf "$HOME/.config/pip"
 rm -rf "$HOME/.nvidia/pip"
+rm -rf "$HOME/source/repos/catalyst"

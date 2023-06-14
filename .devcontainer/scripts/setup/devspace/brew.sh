@@ -13,6 +13,7 @@ if [ -z "${HOMEBREW_PREFIX:-}" ]; then
 fi
 
 # Check fast level
+source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export HOMEBREW_PREFIX=\"$HOMEBREW_PREFIX\""
 source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export PATH=\"$HOMEBREW_PREFIX/bin:\$PATH\""
 source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export PATH=\"$HOMEBREW_PREFIX/sbin:\$PATH\""
 if command -v brew >/dev/null 2>&1; then
@@ -28,8 +29,9 @@ if [ "$BREW_FAST_LEVEL" -eq 0 ]; then
   NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
 fi
 
+source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export HOMEBREW_PREFIX=\"$HOMEBREW_PREFIX\""
 # shellcheck disable=SC2016
-source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'eval "$("$(brew --prefix)/bin/brew" shellenv)"'
+source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'eval "$("$HOMEBREW_PREFIX/bin/brew" shellenv)"'
 if [ "$BREW_FAST_LEVEL" -eq 0 ]; then
   # Install taps
   brew tap microsoft/mssql-release https://github.com/Microsoft/homebrew-mssql-release
@@ -44,7 +46,7 @@ if [ "$BREW_FAST_LEVEL" -eq 0 ]; then
   #TODO: Fix fontconfig
   brew postinstall fontconfig || true
   # shellcheck disable=SC2016
-  source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'source "$(brew --prefix)/share/antigen/antigen.zsh"' "$HOME/.zshrc"
+  source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'source "$HOMEBREW_PREFIX/share/antigen/antigen.zsh"' "$HOME/.zshrc"
   while ! (
     HOMEBREW_ACCEPT_EULA=Y brew install --include-test --force sevenzip p7zip awk file-formula gnu-sed grep curl wget bzip2 swig less lesspipe tcl-tk libuv jq yq
     HOMEBREW_ACCEPT_EULA=Y brew install --include-test --force zlib zlib-ng buf protobuf grpc dos2unix git git-lfs sigstore/tap/gitsign-credential-cache sigstore/tap/gitsign gh subversion
@@ -72,28 +74,28 @@ fi
 
 if [ "$BREW_FAST_LEVEL" -le 1 ]; then
   # shellcheck disable=SC2016
-  "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" '[[ -r "$(brew --prefix)/etc/profile.d/bash_completion.sh" ]] && source "$(brew --prefix)/etc/profile.d/bash_completion.sh"' "$HOME/.bashrc"
+  "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" '[[ -r "$HOMEBREW_PREFIX/etc/profile.d/bash_completion.sh" ]] && source "$HOMEBREW_PREFIX/etc/profile.d/bash_completion.sh"' "$HOME/.bashrc"
   # shellcheck disable=SC2016
-  source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'export LESSOPEN="|$(brew --prefix)/bin/lesspipe.sh %s"'
+  source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'export LESSOPEN="|$HOMEBREW_PREFIX/bin/lesspipe.sh %s"'
   # shellcheck disable=SC2016
-  source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'export MONO_GAC_PREFIX="$(brew --prefix)"'
+  source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'export MONO_GAC_PREFIX="$HOMEBREW_PREFIX"'
   # shellcheck disable=SC2016
-  source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'export GROOVY_HOME="$(brew --prefix)/opt/groovy/libexec"'
+  source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'export GROOVY_HOME="$HOMEBREW_PREFIX/opt/groovy/libexec"'
   # shellcheck disable=SC2016
-  source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'export SCALA_HOME="$(brew --prefix)/opt/scala/idea"'
+  source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'export SCALA_HOME="$HOMEBREW_PREFIX/opt/scala/idea"'
   # shellcheck disable=SC2016
-  source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'export DOTNET_ROOT="$(brew --prefix)/share/dotnet"'
+  source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'export DOTNET_ROOT="$HOMEBREW_PREFIX/share/dotnet"'
   exports=('file-formula' 'curl' 'readline' 'bzip2' 'zlib' 'libffi' 'llvm' 'tcl-tk' 'sqlite' 'openssl@3' 'openjdk' 'gmake' 'gnu-sed' 'grep' 'coreutils' 'xz' 'dotnet' 'python-tk@3.11' 'python@3.11' 'postgresql@15' 'qt' 'pyqt')
   for brew in "${exports[@]}"; do
     # shellcheck disable=SC2016
-    brew_dir="\$(brew --prefix)/opt/$brew"
+    brew_dir="\$HOMEBREW_PREFIX/opt/$brew"
     brew_bin_dir="$brew_dir/bin"
     brew_sbin_dir="$brew_dir/sbin"
     brew_include_dir="$brew_dir/include"
     brew_lib_dir="$brew_dir/lib"
     brew_pkgconfig_dir="$brew_lib_dir/pkgconfig"
     # shellcheck disable=SC2016
-    brew_libexec_dir="\$(brew --prefix)/opt/$brew/libexec"
+    brew_libexec_dir="\$HOMEBREW_PREFIX/opt/$brew/libexec"
     brew_libexec_bin_dir="$brew_libexec_dir/bin"
     brew_libexec_sbin_dir="$brew_libexec_dir/sbin"
     brew_gnubin_dir="$brew_libexec_dir/gnubin"

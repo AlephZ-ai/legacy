@@ -13,7 +13,7 @@ if command -v dotnet >/dev/null 2>&1; then
     export DOTNET_ROOT="$HOME/.asdf/installs/dotnet-core/$preview"
     "$HOME/.asdf/plugins/dotnet-core/set-dotnet-home.bash"
   elif command -v brew >/dev/null 2>&1; then
-    export DOTNET_ROOT="$(brew --prefix)/share/dotnet"
+    export DOTNET_ROOT="$HOMEBREW_PREFIX/share/dotnet"
   fi
 
   export PATH="$DOTNET_ROOT:$PATH"
