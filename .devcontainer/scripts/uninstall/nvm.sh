@@ -1,8 +1,16 @@
 #!/usr/bin/env bash
 # shellcheck source=/dev/null
 set -euo pipefail
+os=$(uname -s)
 # shellcheck disable=SC2155
-export NVM_DIR="$([ -z "${XDG_CONFIG_HOME:-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME:-}/nvm")"
+if [ "$os" = "Linux" ]; then
+  # shellcheck disable=SC2016
+  source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'export NVM_DIR="$([ -z "${XDG_CONFIG_HOME}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"'
+else
+  # shellcheck disable=SC2016
+  source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'export NVM_DIR="${HOME}/.nvm"'
+fi
+
 if [ -d "$NVM_DIR" ]; then
   [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
   [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"

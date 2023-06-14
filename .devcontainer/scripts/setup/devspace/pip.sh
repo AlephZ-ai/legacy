@@ -52,7 +52,7 @@ fi
 # shellcheck disable=SC2016
 source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'if command -v pyenv 1>/dev/null 2>&1; then eval "$(pyenv init -)"; fi'
 # shellcheck disable=SC2016
-source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'if command -v pyenv 1>/dev/null 2>&1; then eval "$(pyenv virtualenv-init -)"; fi'
+ource "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'if which pyenv-virtualenv-init > /dev/null; then eval "$(pyenv virtualenv-init -)"; fi'
 source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "if [[ \"\$PYENV_VERSION\" != \"$devspace\" ]]; then pyenv activate \"$devspace\"; fi"
 python --version
 python -m ensurepip --upgrade
