@@ -5,7 +5,10 @@
 set -euo pipefail
 os=$(uname -s)
 if [ -z "${HOMEBREW_PREFIX:-}" ]; then
-  if [ "$os" = "Linux" ]; then
+  if command -v brew >/dev/null 2>&1; then
+    # shellcheck disable=SC2155
+    export HOMEBREW_PREFIX="$(brew --prefix)"
+  elif [ "$os" = "Linux" ]; then
     export HOMEBREW_PREFIX="/home/linuxbrew/.linuxbrew"
   else
     export HOMEBREW_PREFIX="/usr/local"
