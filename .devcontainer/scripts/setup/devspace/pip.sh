@@ -111,10 +111,15 @@ catalyst_ver=$(curl --silent "https://api.github.com/repos/PennyLaneAI/catalyst/
 mkdir -p "$catalyst"
 git clone https://github.com/PennyLaneAI/catalyst.git "$catalyst" &>/dev/null || true
 pushd "$catalyst"
-git checkout "$catalyst_ver"
+git fetch origin
+git reset --hard
+git checkout --force "$catalyst_ver"
+git reset --hard "$catalyst_ver"
+git pull origin "$catalyst_ver"
+git reset --hard
 git submodule update --init --recursive
 # shellcheck disable=SC2016
-git submodule foreach --recursive 'git config pull.rebase true; branch="$(git config -f $toplevel/.gitmodules submodule.$name.branch)"; git checkout --theirs "$branch"; git pull origin "$branch"'
+git submodule foreach --recursive 'git fetch origin; git reset --hard; git checkout --force "$branch"; git reset --hard "origin/$branch"; git pull origin "$branch"'
 popd
 pip install --no-input --upgrade setuptools wheel pygobject pycairo pipx virtualenv sphinx sphinx-multiversion \
   openvino onnxruntime onnxruntime-extensions cataclysm 'Cython>=0.29.35' \
