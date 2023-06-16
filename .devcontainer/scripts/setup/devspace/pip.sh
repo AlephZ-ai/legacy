@@ -198,6 +198,8 @@ clone_or_update_repo "catalyst" "PennyLaneAI"
 PACKAGES=setuptools wheel pygobject pycairo pipx virtualenv sphinx sphinx-multiversion \
   openvino onnxruntime "$onnxruntime/build/Linux/Release/dist/onnxruntime_openvino-*.whl" onnxruntime-extensions cataclysm 'Cython>=0.29.35'
 # shellcheck disable=SC2086
+"$DEVCONTAINER_SCRIPTS_ROOT/utils/pip-enable-cache.sh"
+# shellcheck disable=SC2086
 pip install --no-input --upgrade $PACKAGES
 # shellcheck disable=SC2154
 PACKAGES+=platformdirs dill isort mccabe ipykernel ipython-genutils packaging docker-pycreds flask poetry pathy tbb playwright \
@@ -249,8 +251,9 @@ PACKAGES+=platformdirs dill isort mccabe ipykernel ipython-genutils packaging do
   jupyter-client jupyter-core notebook jupyterlab voila 'mlflow>2.4.0' \
   'huggingface-hub>=0.15.1' 'skops>=0.6.0'
 # shellcheck disable=SC2086
-pip install --no-input --upgrade $PACKAGES
 "$DEVCONTAINER_SCRIPTS_ROOT/utils/pip-enable-cache.sh"
+# shellcheck disable=SC2086
+pip install --no-input --upgrade $PACKAGES
 spacy download en_core_web_sm
 spacy download en_core_web_md
 spacy download en_core_web_lg
