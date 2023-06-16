@@ -3,9 +3,38 @@
 # shellcheck source=/dev/null
 # init
 set -euo pipefail
-os=$(uname -s)
-# Setup pip
+## Setup pip
 source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'export PYENV_VIRTUALENV_DISABLE_PROMPT=1'
+# Array of Python versions to upgrade
+# Array of Python versions to upgrade
+versions=("3.9" "3.10" "3.11")
+for version in "${versions[@]}"; do
+  # Find the highest installed version and the highest available version
+  installed_version=$(pyenv versions --bare | { grep -oP "$version\.\d+" || true; } | sort -V | tail -n 1)
+  latest_version=$(pyenv install --list | grep -oP "$version\.\d+" | sort -V | tail -n 1)
+
+  # If the installed version is not the latest version, uninstall it and install the latest version
+  if [[ "$installed_version" != "$latest_version" ]]; then
+    if [[ -n "$installed_version" ]]; then
+      pyenv uninstall -f "$installed_version"
+    fi
+
+    pyenv install "$latest_version"
+  fi
+done
+
+# Set the global Python version to the latest 3.11.x version
+globalVersion=$(pyenv versions --bare | grep -oP "3.11\.\d+" | sort -V | tail -n 1)
+pyenv global "$globalVersion"
+
+# Check Python and pip versions
+python --version
+pip --version
+
+# Upgrade pip, setuptools, and wheel
+python -m ensurepip --upgrade
+python -m pip install --no-input --upgrade pip setuptools wheel
+os=$(uname -s)
 # Check fast level
 devspace=devspace
 if [[ "${PYENV_VERSION:-}" == "$devspace" ]]; then
@@ -13,6 +42,7 @@ if [[ "${PYENV_VERSION:-}" == "$devspace" ]]; then
 fi
 
 # Function to clone or update a repo
+# shellcheck disable=SC2317
 # shellcheck disable=SC2317
 function clone_or_update_repo() {
   local repo_name="$1"
@@ -66,27 +96,7 @@ function clone_or_update_repo() {
   popd >/dev/null
 }
 
-# Array of Python versions to upgrade
-versions=("3.9" "3.10" "3.11")
-for version in "${versions[@]}"; do
-  # Find the highest installed version and the highest available version
-  installed_version=$(pyenv versions --bare | { grep -oP "$version\.\d+" || true; } | sort -V | tail -n 1)
-  latest_version=$(pyenv install --list | grep -oP "$version\.\d+" | sort -V | tail -n 1)
-
-  # If the installed version is not the latest version, uninstall it and install the latest version
-  if [[ "$installed_version" != "$latest_version" ]]; then
-    if [[ -n "$installed_version" ]]; then
-      pyenv uninstall -f "$installed_version"
-    fi
-
-    pyenv install "$latest_version"
-  fi
-
-  echo "PIP_FAST_LEVEL=$PIP_FAST_LEVEL"
-done
 globalVersion
-# Array of Python versions to upgrade
-versions=("3.9" "3.10" "3.11")
 for version in "${versions[@]}"; do
   # Find the highest installed version and the highest available version
   installed_version=$(pyenv versions --bare | { grep -oP "$version\.\d+" || true; } | sort -V | tail -n 1)
