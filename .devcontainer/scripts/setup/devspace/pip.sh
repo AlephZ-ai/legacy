@@ -190,10 +190,14 @@ fi
 # TODO: 'sample-factory[dev,atari,envpool,mujoco,vizdoom]>=2.0.3'
 # TODO: Fix grep: Unmatched [, [^, [:, [., or [=
 # Setup onnxruntime-openvino
+# shellcheck disable=SC2086
+"$DEVCONTAINER_SCRIPTS_ROOT/utils/pip-enable-cache.sh"
 clone_or_update_repo "onnxruntime" "microsoft" './build.sh --config Release --use_openvino CPU_FP32 --build_shared_lib --parallel'
 source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "$onnxruntime/setupvars.sh"
 # Setup catalyst
 clone_or_update_repo "catalyst" "PennyLaneAI"
+# shellcheck disable=SC2086
+"$DEVCONTAINER_SCRIPTS_ROOT/utils/pip-enable-cache.sh"
 # shellcheck disable=SC2154
 PACKAGES=setuptools wheel pygobject pycairo pipx virtualenv sphinx sphinx-multiversion \
   openvino onnxruntime "$onnxruntime/build/Linux/Release/dist/onnxruntime_openvino-*.whl" onnxruntime-extensions cataclysm 'Cython>=0.29.35'

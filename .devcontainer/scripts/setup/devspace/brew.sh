@@ -77,8 +77,9 @@ if [ "$BREW_FAST_LEVEL" -eq 0 ]; then
   # linux only brews
   if [ "$os" = "Linux" ]; then HOMEBREW_ACCEPT_EULA=Y brew reinstall --include-test --force procps systemd wayland wayland-protocols; fi
   # These work on all brew platforms
-  HOMEBREW_ACCEPT_EULA=Y brew reinstall --include-test --force ca-certificates coreutils moreutils readline xz zsh bash make cmake cmake-docs ninja antigen oh-my-posh pyenv pyenv-virtualenv pipx virtualenv fontconfig
+  HOMEBREW_ACCEPT_EULA=Y brew reinstall --include-test --force ca-certificates coreutils moreutils readline xz zsh bash make cmake cmake-docs ninja antigen oh-my-posh pyenv pyenv-virtualenv pipx virtualenv
   #TODO: Fix #fontconfig
+  HOMEBREW_ACCEPT_EULA=Y brew reinstall --include-test --force fontconfig || true
   brew postinstall fontconfig || true
   # shellcheck disable=SC2016
   source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'source "$HOMEBREW_PREFIX/share/antigen/antigen.zsh"' "$HOME/.zshrc"
