@@ -27,6 +27,8 @@ fi
 
 echo "BREW_FAST_LEVEL=$BREW_FAST_LEVEL"
 # Setup Homebrew
+# shellcheck disable=SC2034
+install="$(if [ "$BREW_FAST_LEVEL" -eq 0 ]; then echo "reinstall"; else echo "install"; fi)"
 sudo echo "sudo cached"
 if [ "$BREW_FAST_LEVEL" -eq 0 ]; then
   NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
@@ -43,14 +45,14 @@ if [ "$BREW_FAST_LEVEL" -eq 0 ]; then
   brew tap --repair
   # Install Homebrew packages
   # linux only brews
-  if [ "$os" = "Linux" ]; then HOMEBREW_ACCEPT_EULA=Y brew reinstall --force procps systemd wayland wayland-protocols; fi
+  if [ "$os" = "Linux" ]; then eval 'HOMEBREW_ACCEPT_EULA=Y brew $install procps systemd wayland wayland-protocols'; fi
   # These work on all brew platforms
-  HOMEBREW_ACCEPT_EULA=Y brew reinstall --force ca-certificates coreutils moreutils readline xz zsh bash make cmake cmake-docs ninja antigen oh-my-posh pyenv pyenv-virtualenv pipx virtualenv fontconfig
-  #TODO: Fix fontconfig
+  eval 'HOMEBREW_ACCEPT_EULA=Y brew $install ca-certificates coreutils moreutils readline xz zsh bash make cmake cmake-docs ninja antigen oh-my-posh pyenv pyenv-virtualenv pipx virtualenv fontconfig || true'
+  # TODO: Fix fontconfig
   brew postinstall fontconfig || true
   # shellcheck disable=SC2016
   source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'source "$HOMEBREW_PREFIX/share/antigen/antigen.zsh"' "$HOME/.zshrc"
-  while ! (HOMEBREW_ACCEPT_EULA=Y brew reinstall --force sevenzip p7zip awk file-formula gnu-sed grep curl wget bzip2 swig less lesspipe tcl-tk libuv jq yq); do echo "Retrying..."; done
+  while ! (eval 'HOMEBREW_ACCEPT_EULA=Y brew $install sevenzip p7zip awk file-formula gnu-sed grep curl wget bzip2 swig less lesspipe tcl-tk libuv jq yq'); do echo "Retrying..."; done
 fi
 
 # Setup Homebrew
@@ -69,23 +71,35 @@ if [ "$BREW_FAST_LEVEL" -eq 0 ]; then
   brew tap --repair
   # Install Homebrew packages
   # linux only brews
-  if [ "$os" = "Linux" ]; then HOMEBREW_ACCEPT_EULA=Y brew reinstall --include-test --force procps systemd wayland wayland-protocols; fi
+  if [ "$os" = "Linux" ]; then eval 'HOMEBREW_ACCEPT_EULA=Y brew $install --include-test procps systemd wayland wayland-protocols'; fi
   # These work on all brew platforms
-  HOMEBREW_ACCEPT_EULA=Y brew reinstall --include-test --force ca-certificates coreutils moreutils readline xz zsh bash make cmake cmake-docs ninja antigen oh-my-posh pyenv pyenv-virtualenv pipx virtualenv
-  #TODO: Fix #fontconfig
-  HOMEBREW_ACCEPT_EULA=Y brew reinstall --include-test --force fontconfig || true
+  # shellcheck disable=SC2034
+  packages=(ca-certificates coreutils moreutils readline xz zsh bash make cmake cmake-docs ninja antigen oh-my-posh pyenv pyenv-virtualenv pipx virtualenv)
+  for package in "${packages[@]}"; do eval 'HOMEBREW_ACCEPT_EULA=Y brew $install --include-test "$package"'; done
+  # TODO: Fix #fontconfig
+  packages=(fontconfig)
+  for package in "${packages[@]}"; do eval 'HOMEBREW_ACCEPT_EULA=Y brew $install --include-test "$package" || true'; done
   brew postinstall fontconfig || true
   # shellcheck disable=SC2016
   source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'source "$HOMEBREW_PREFIX/share/antigen/antigen.zsh"' "$HOME/.zshrc"
+  # shellcheck disable=SC2034
   while ! (
-    HOMEBREW_ACCEPT_EULA=Y brew reinstall --include-test --force sevenzip p7zip awk file-formula gnu-sed grep curl wget bzip2 swig less lesspipe tcl-tk libuv jq yq
-    HOMEBREW_ACCEPT_EULA=Y brew reinstall --include-test --force zlib zlib-ng buf protobuf grpc dos2unix git git-lfs sigstore/tap/gitsign-credential-cache sigstore/tap/gitsign gh subversion
-    HOMEBREW_ACCEPT_EULA=Y brew reinstall --include-test --force gcc llvm clang-format clang-build-analyzer dotnet dotnet@6 mono go rust perl ruby python python-tk python@3.9 python-tk@3.9 python@3.10 python-tk@3.10 python@3.11 python-tk@3.11
-    HOMEBREW_ACCEPT_EULA=Y brew reinstall --include-test --force nss openssl openssl@1.1 openssl@3 openssh age nghttp2 mkcert shellcheck speedtest-cli mono-libgdiplus chezmoi sqlite sqlite-utils sqlite-analyzer postgresql@15
-    HOMEBREW_ACCEPT_EULA=Y brew reinstall --include-test --force openjdk openjdk@8 openjdk@11 openjdk@17 maven groovy gradle scala sbt yarn bash-completion@2 z3 asdf tbb
-    HOMEBREW_ACCEPT_EULA=Y brew reinstall --include-test --force azure-cli awscli msodbcsql18 mssql-tools18 kubernetes-cli helm minikube kind k3d argocd derailed/k9s/k9s kustomize skaffold vcluster
-    HOMEBREW_ACCEPT_EULA=Y brew reinstall --include-test --force python-typing-extensions pygobject3 py3cairo pyyaml libffi libyaml qt pyqt boost boost-build boost-mpi boost-python3 terraform gtk+3 gtk+4
-    HOMEBREW_ACCEPT_EULA=Y brew reinstall --include-test --force ffmpeg libsndfile libsoundio openmpi opencv openvino bats-core gedit git-gui git-svn numpy scipy libtensorflow pytorch torchvision neovim
+    packages=(sevenzip p7zip awk file-formula gnu-sed grep curl wget bzip2 swig less lesspipe tcl-tk libuv jq yq)
+    for package in "${packages[@]}"; do eval 'HOMEBREW_ACCEPT_EULA=Y brew $install --include-test "$package"'; done
+    packages=(zlib zlib-ng buf protobuf grpc dos2unix git git-lfs sigstore/tap/gitsign-credential-cache sigstore/tap/gitsign gh subversion)
+    for package in "${packages[@]}"; do eval 'HOMEBREW_ACCEPT_EULA=Y brew $install "$package"'; done
+    packages=(gcc llvm clang-format clang-build-analyzer dotnet dotnet@6 mono go rust perl ruby python python-tk python@3.9 python-tk@3.9 python@3.10 python-tk@3.10 python@3.11 python-tk@3.11)
+    for package in "${packages[@]}"; do eval 'HOMEBREW_ACCEPT_EULA=Y brew $install --include-test "$package"'; done
+    packages=(nss openssl openssl@1.1 openssl@3 openssh age nghttp2 mkcert shellcheck speedtest-cli mono-libgdiplus chezmoi sqlite sqlite-utils sqlite-analyzer postgresql@15)
+    for package in "${packages[@]}"; do eval 'HOMEBREW_ACCEPT_EULA=Y brew $install --include-test "$package"'; done
+    packages=(openjdk openjdk@8 openjdk@11 openjdk@17 maven groovy gradle scala sbt yarn bash-completion@2 z3 asdf tbb)
+    for package in "${packages[@]}"; do eval 'HOMEBREW_ACCEPT_EULA=Y brew $install --include-test "$package"'; done
+    packages=(azure-cli awscli msodbcsql18 mssql-tools18 kubernetes-cli helm minikube kind k3d argocd derailed/k9s/k9s kustomize skaffold vcluster)
+    for package in "${packages[@]}"; do eval 'HOMEBREW_ACCEPT_EULA=Y brew $install --include-test "$package"'; done
+    packages=(python-typing-extensions pygobject3 py3cairo pyyaml libffi libyaml qt pyqt boost boost-build boost-mpi boost-python3 terraform gtk+3 gtk+4)
+    for package in "${packages[@]}"; do eval 'HOMEBREW_ACCEPT_EULA=Y brew $install --include-test "$package"'; done
+    packages=(ffmpeg libsndfile libsoundio openmpi opencv openvino bats-core gedit git-gui git-svn numpy scipy libtensorflow pytorch torchvision neovim)
+    for package in "${packages[@]}"; do eval 'HOMEBREW_ACCEPT_EULA=Y brew $install --include-test "$package"'; done
   ); do echo "Retrying"; done
 
   # Upgrade all packages
@@ -99,7 +113,7 @@ if [ "$BREW_FAST_LEVEL" -eq 0 ]; then
 
   links+=('make' 'cmake' 'gnu-sed' 'grep' 'coreutils' 'xz' 'python-tk@3.11' 'python@3.11' 'postgresql@15' 'qt' 'pyqt' 'openvino')
   for brew in "${links[@]}"; do brew unlink "$brew"; done
-  for brew in "${links[@]}"; do brew link --force --overwrite "$brew"; done
+  for brew in "${links[@]}"; do brew link --overwrite "$brew"; done
 fi
 
 # Setup post hombrew packages
