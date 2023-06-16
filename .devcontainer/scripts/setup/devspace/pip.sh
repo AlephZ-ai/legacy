@@ -193,6 +193,7 @@ fi
 # shellcheck disable=SC2086
 "$DEVCONTAINER_SCRIPTS_ROOT/utils/pip-enable-cache.sh"
 clone_or_update_repo "onnxruntime" "microsoft" './build.sh --config Release --use_openvino CPU_FP32 --build_shared_lib --parallel'
+# shellcheck disable=SC2154
 source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "$onnxruntime/setupvars.sh"
 # Setup catalyst
 clone_or_update_repo "catalyst" "PennyLaneAI"
