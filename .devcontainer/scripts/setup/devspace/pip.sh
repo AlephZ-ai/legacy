@@ -8,7 +8,10 @@ os=$(uname -s)
 source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'export PYENV_VIRTUALENV_DISABLE_PROMPT=1'
 # Check fast level
 devspace=devspace
-export PIP_FAST_LEVEL=${PIP_FAST_LEVEL:-${FAST_LEVEL:-0}}
+if [[ "${PYENV_VERSION:-}" == "$devspace" ]]; then
+  export PIP_FAST_LEVEL=${PIP_FAST_LEVEL:-${FAST_LEVEL:-0}}
+fi
+
 # Function to clone or update a repo
 # shellcheck disable=SC2317
 function clone_or_update_repo() {
@@ -63,10 +66,6 @@ function clone_or_update_repo() {
   popd >/dev/null
 }
 
-if [[ "${PYENV_VERSION:-}" == "$devspace" ]]; then
-  export PIP_FAST_LEVEL=0
-fi
-
 # Array of Python versions to upgrade
 versions=("3.9" "3.10" "3.11")
 for version in "${versions[@]}"; do
@@ -82,11 +81,10 @@ for version in "${versions[@]}"; do
 
     pyenv install "$latest_version"
   fi
+
+  echo "PIP_FAST_LEVEL=$PIP_FAST_LEVEL"
 done
-
-echo "PIP_FAST_LEVEL=$PIP_FAST_LEVEL"
 globalVersion
-
 # Array of Python versions to upgrade
 versions=("3.9" "3.10" "3.11")
 for version in "${versions[@]}"; do
