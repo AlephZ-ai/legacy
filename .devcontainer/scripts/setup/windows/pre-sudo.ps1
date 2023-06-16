@@ -19,5 +19,5 @@ scoop bucket add versions | Write-Host
 scoop update | Write-Host
 scoop install sudo refreshenv python | Write-Host
 scoop update --all | Write-Host
-& "$env:DEVCONTAINER_FEATURES_PROJECT_ROOT/run.ps1" setup/windows pip
+& "$env:LEGACY_PROJECT_ROOT/run.ps1" setup/windows pip
 refreshenv

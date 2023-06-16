@@ -10,7 +10,7 @@ try {
     Set-Variable -Name $key -Value $value -Scope Global
   }
 } finally {
-  $env:DEVCONTAINER_FEATURES_PROJECT_NAME = "devcontainer-features"
+  $env:LEGACY_PROJECT_NAME = "devcontainer-features"
   $env:DEVCONTAINER_PROJECT_NAME = "devcontainer"
   Pop-Location
 }
@@ -22,9 +22,9 @@ if ($PSVersionTable.PSEdition -eq 'Core') {
 }
 
 Set-Alias -Name "pshell" -Value "$env:PSHELL"
-$env:DEVCONTAINER_FEATURES_PROJECT_ROOT="$projectRoot"
-$env:DEVCONTAINER_FEATURES_SOURCE_ROOT="$env:DEVCONTAINER_FEATURES_PROJECT_ROOT/src"
-$env:DEVCONTAINER_PROJECT_ROOT="$env:DEVCONTAINER_FEATURES_PROJECT_ROOT/.devcontainer"
+$env:LEGACY_PROJECT_ROOT="$projectRoot"
+$env:LEGACY_SOURCE_ROOT="$env:LEGACY_PROJECT_ROOT/src"
+$env:DEVCONTAINER_PROJECT_ROOT="$env:LEGACY_PROJECT_ROOT/.devcontainer"
 $env:DEVCONTAINER_SCRIPTS_ROOT="$env:DEVCONTAINER_PROJECT_ROOT/scripts"
 
 try {

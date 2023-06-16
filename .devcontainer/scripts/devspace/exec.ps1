@@ -5,6 +5,6 @@ param (
   [string]$command
 )
 
-& "$env:DEVCONTAINER_FEATURES_PROJECT_ROOT/run.ps1" -scriptPath devspace -script up
+& "$env:LEGACY_PROJECT_ROOT/run.ps1" -scriptPath devspace -script up
 $containerid = docker ps -q -f name="$env:DEVCONTAINER_PROJECT_NAME-devspace"
-devcontainer exec --container-id "$containerid" zsh -l -c "sudo `$DEVCONTAINER_FEATURES_PROJECT_ROOT/run` $commandPath $command"
+devcontainer exec --container-id "$containerid" zsh -l -c "sudo `$LEGACY_PROJECT_ROOT/run` $commandPath $command"

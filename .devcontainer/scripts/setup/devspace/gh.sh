@@ -5,7 +5,10 @@ set -euo pipefail
 # Adding GH .ssh known hosts
 mkdir -p "$HOME/.ssh/"
 touch "$HOME/.ssh/known_hosts"
-bash -c eval "$(ssh-keyscan github.com >>"$HOME/.ssh/known_hosts")"
+if ! grep -q "^github.com " "$HOME/.ssh/known_hosts"; then
+  ssh-keyscan github.com >>"$HOME/.ssh/known_hosts"
+fi
+
 # Configure git
 git config pull.rebase true
 git config advice.detachedHead false

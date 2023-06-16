@@ -5,8 +5,8 @@ services:
   # Kind cluster
   devcontainer-features:
     image: ghcr.io/alephz-ai/$DEVCONTAINER_PROJECT_NAME:latest
-    container_name: $DEVCONTAINER_FEATURES_PROJECT_NAME-devspace
-    labels: [ "ai.alephz.role=$DEVCONTAINER_FEATURES_PROJECT_NAME" ]
+    container_name: $LEGACY_PROJECT_NAME-devspace
+    labels: [ "ai.alephz.role=$LEGACY_PROJECT_NAME" ]
     env_file: .env
     # https://github.com/microsoft/wslg/blob/main/samples/container/Containers.md
     environment: []

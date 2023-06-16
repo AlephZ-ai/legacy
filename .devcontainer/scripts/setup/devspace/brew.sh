@@ -70,11 +70,12 @@ if [ "$BREW_FAST_LEVEL" -eq 0 ]; then
     links+=('file-formula' 'curl' 'readline' 'bzip2' 'zlib' 'libffi' 'llvm' 'tcl-tk' 'sqlite' 'openssl@3' 'openjdk')
   fi
 
-  links+=('make' 'cmake' 'gnu-sed' 'grep' 'coreutils' 'xz' 'python-tk@3.11' 'python@3.11' 'postgresql@15' 'qt' 'pyqt')
+  links+=('make' 'cmake' 'gnu-sed' 'grep' 'coreutils' 'xz' 'python-tk@3.11' 'python@3.11' 'postgresql@15' 'qt' 'pyqt' 'openvino')
   for brew in "${links[@]}"; do brew unlink "$brew"; done
   for brew in "${links[@]}"; do brew link --force --overwrite "$brew"; done
 fi
 
+# Setup post hombrew packages
 if [ "$BREW_FAST_LEVEL" -le 1 ]; then
   # shellcheck disable=SC2016
   "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" '[[ -r "$HOMEBREW_PREFIX/etc/profile.d/bash_completion.sh" ]] && source "$HOMEBREW_PREFIX/etc/profile.d/bash_completion.sh"' "$HOME/.bashrc"
@@ -88,7 +89,7 @@ if [ "$BREW_FAST_LEVEL" -le 1 ]; then
   source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'export SCALA_HOME="$HOMEBREW_PREFIX/opt/scala/idea"'
   # shellcheck disable=SC2016
   source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'export DOTNET_ROOT="$HOMEBREW_PREFIX/share/dotnet"'
-  exports=('file-formula' 'curl' 'readline' 'bzip2' 'zlib' 'libffi' 'llvm' 'tcl-tk' 'sqlite' 'openssl@3' 'openjdk' 'gmake' 'gnu-sed' 'grep' 'coreutils' 'xz' 'dotnet' 'python-tk@3.11' 'python@3.11' 'postgresql@15' 'qt' 'pyqt')
+  exports=('file-formula' 'curl' 'readline' 'bzip2' 'zlib' 'libffi' 'llvm' 'tcl-tk' 'sqlite' 'openssl@3' 'openjdk' 'gmake' 'gnu-sed' 'grep' 'coreutils' 'xz' 'dotnet' 'python-tk@3.11' 'python@3.11' 'postgresql@15' 'qt' 'pyqt' 'openvino')
   for brew in "${exports[@]}"; do
     # shellcheck disable=SC2016
     brew_dir="\$HOMEBREW_PREFIX/opt/$brew"
@@ -113,7 +114,12 @@ if [ "$BREW_FAST_LEVEL" -le 1 ]; then
     if [ -e "$(eval echo "$brew_lib_dir")" ]; then source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export LDFLAGS=\"-L$brew_lib_dir\${LDFLAGS:+ }\${LDFLAGS:-}\""; fi
     if [ "$brew" = "llvm" ]; then source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export LDFLAGS=\"-L$brew_lib_dir/c++ -Wl,-rpath,$brew_lib_dir/c++\${LDFLAGS:+ }\${LDFLAGS:-}\""; fi
     if [ -e "$(eval echo "$brew_pkgconfig_dir")" ]; then source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export PKG_CONFIG_PATH=\"$brew_pkgconfig_dir\${PKG_CONFIG_PATH:+:}\${PKG_CONFIG_PATH:-}\""; fi
+    # shellcheck disable=SC2016
+    if [ "$brew" = "openvino" ]; then source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'export OpenVINO_ROOT_DIR=$(brew info --json openvino | jq -r '\''.[0].installed[0].prefix'\'')'; fi
   done
+
+  # # shellcheck disable=SC2016
+  # source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'source "$HOMEBREW_PREFIX/openvino/bin/setupvars.sh"'
 fi
 
 if [ "$BREW_FAST_LEVEL" -eq 0 ]; then

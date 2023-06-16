@@ -7,9 +7,9 @@ for %%i in ("%devcontainerRoot%\..") do for %%j in ("%%~fi") do set "projectRoot
 pushd %devcontainerRoot%
 for /F "tokens=1,2 delims==" %%a in ('type .env') do set "%%a=%%b"
 popd
-set "DEVCONTAINER_FEATURES_PROJECT_ROOT=%projectRoot%"
-set "DEVCONTAINER_FEATURES_SOURCE_ROOT=%DEVCONTAINER_FEATURES_PROJECT_ROOT%\src"
-set "DEVCONTAINER_PROJECT_ROOT=%DEVCONTAINER_FEATURES_PROJECT_ROOT%\.devcontainer"
+set "LEGACY_PROJECT_ROOT=%projectRoot%"
+set "LEGACY_SOURCE_ROOT=%LEGACY_PROJECT_ROOT%\src"
+set "DEVCONTAINER_PROJECT_ROOT=%LEGACY_PROJECT_ROOT%\.devcontainer"
 set "DEVCONTAINER_SCRIPTS_ROOT=%DEVCONTAINER_PROJECT_ROOT%\scripts"
 for /f "delims=" %%i in ('wsl echo $DISPLAY') do set "DISPLAY=%%i"
 if errorlevel 1 (

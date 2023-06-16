@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 set -euo pipefail
-devcontainer build --workspace-folder "$DEVCONTAINER_FEATURES_PROJECT_ROOT"
+devcontainer build --workspace-folder "$LEGACY_PROJECT_ROOT"

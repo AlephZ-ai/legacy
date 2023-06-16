@@ -1,1 +1,1 @@
-devcontainer up --workspace-folder "$env:DEVCONTAINER_FEATURES_PROJECT_ROOT"
+devcontainer up --workspace-folder "$env:LEGACY_PROJECT_ROOT"
