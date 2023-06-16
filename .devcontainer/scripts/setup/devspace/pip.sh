@@ -75,63 +75,13 @@ for version in "${versions[@]}"; do
 done
 
 # Function to clone or update a repo
-# shellcheck disable=SC2317
-# shellcheck disable=SC2317
 function clone_or_update_repo() {
   local repo_name="$1"
   local repo_owner="$2"
   local repo_cmd="${3:-}"
   local repo_dir="$HOME/.pip/repos/$repo_name"
-  local repo_url="https://github.com/$repo_owner/$repo_name.git"
-  # shellcheck disable=SC2155
-  local repo_ver=$(curl --silent "https://api.github.com/repos/$repo_owner/$repo_name/tags" | jq -r '.[0].name')
 
-  echo "eval \"$repo_name=$repo_dir\""
-  eval "$repo_name=$repo_dir"
-
-  # If the repository doesn't exist, clone it
-  if [ ! -d "$repo_dir" ]; then
-    git clone --branch "$repo_ver" --recurse-submodules "$repo_url" "$repo_dir"
-  fi
-
-  # Navigate to the repository
-  pushd "$repo_dir"
-
-  # Disable the detached head warning
-  git config advice.detachedHead false
-
-  # Fetch the latest tags and branches from the remote repository
-  git fetch --all
-
-  # If the current version is not the latest version, update the repo
-  if [[ "$(git rev-parse HEAD)" != "$(git rev-parse "$repo_ver")" ]]; then
-    # Discard any uncommitted changes and remove untracked files
-    git reset --hard
-    git clean -fd
-
-    # Checkout to the specific tag
-    git checkout "$repo_ver"
-
-    # Discard any uncommitted changes and remove untracked files in submodules
-    git submodule foreach --recursive git reset --hard
-    git submodule foreach --recursive git clean -fd
-
-    # Update the submodules to the state at the checked out tag
-    git submodule update --init --recursive
-  fi
-
-  # Install any requirements
-  if [ -f "requirements.txt" ]; then
-    pip install -r requirements.txt
-  fi
-
-  # Run the provided command
-  if [ -n "$repo_cmd" ]; then
-    echo "eval $repo_cmd"
-    eval "$repo_cmd"
-  fi
-
-  popd
+  "$DEVCONTAINER_SCRIPTS_ROOT/utils/clone-or-update-repo.sh" "$repo_name" "$repo_owner" "$repo_dir" "$repo_cmd"
 }
 
 for version in "${versions[@]}"; do
@@ -190,11 +140,11 @@ PACKAGES=(setuptools wheel cython ninja numpy tbb pugixml flatbuffers snappy pro
   pyyaml libclang clang-format intel-openmp onnxruntime onnxruntime-extensions openvino onnxruntime-tools openvino-dev
   sphinx sphinx-multiversion)
 pip install --no-input --upgrade "${PACKAGES[@]}"
-clone_or_update_repo clspv google 'python utils/fetch_sources.py; mkdir -p build && pushd build; cmake -G Ninja -DCMAKE_BUILD_TYPE=Release ..; ninja; popd;'
+clone_or_update_repo clspv google 'python utils/fetch_sources.py; mkdir -p build && pushd build; cmake -G Ninja -DCMAKE_BUILD_TYPE=Release -DENABLE_DOXYGEN=ON ..; ninja; popd;'
 # # shellcheck disable=SC2016
 # clone_or_update_repo openvino openvinotoolkit 'mkdir -p build && pushd build; cmake -G "Ninja Multi-Config" -DENABLE_SYSTEM_PUGIXML=ON -DENABLE_SYSTEM_SNAPPY=ON -DENABLE_SYSTEM_PROTOBUF=ON -DENABLE_PYTHON=ON -DProtobuf_INCLUDE_DIR="$HOMEBREW_PREFIX/opt/protobuf/include" -DProtobuf_LIBRARY="$HOMEBREW_PREFIX/opt/protobuf/lib" -DOpenMP_C_FLAGS="-fopenmp -I$HOMEBREW_PREFIX/opt/libomp/include" -DOpenMP_C_LIB_NAMES="gomp" -DOpenMP_gomp_LIBRARY="$HOMEBREW_PREFIX/opt/gcc/lib/gcc/current/libgomp.dylib" ..; cmake --build . --config Release --parallel $(sysctl -n hw.ncpu); popd;'
 # shellcheck disable=SC2016
-clone_or_update_repo onnxruntime microsoft 'NVCC_OUT=/tmp ./build.sh --config Release --ms_experimental --enable_pybind  --use_full_protobuf --enable_lto --enable_multi_device_test --use_xcode --enable_lazy_tensor --use_cache --use_lock_free_queue --use_coreml --use_openvino --build_wasm --use_azure CPU_FP32 --build_shared_lib --build_apple_framework --build_wasm_static_lib  --use_extensions --parallel --llvm_path "$HOMEBREW_PREFIX/opt/llvm"'
+clone_or_update_repo onnxruntime microsoft 'NVCC_OUT=/tmp ./build.sh --config Release --skip_tests --skip-keras-test --ms_experimental --build_wheel --gen_doc validate --gen-api-doc --enable_pybind  --use_gdk --use_full_protobuf --enable_lto --enable_multi_device_test --use_xcode --enable_memory_profile --enable_training --enable_training_apis --enable_training_ops --mpi_home "$$HOMEBREW_PREFIX/open-mpi" --use_mpi ON --enable_lazy_tensor --use_cache --use_lock_free_queue --use_coreml --use_openvino CPU_FP32 --build_wasm --enable_wasm_simd --enable_wasm_threads --enable_wasm_api_exception_catching --enable_wasm_exception_throwing_override --enable_wasm_profiling --enable_wasm_debug_info --wasm_run_tests_in_browser --use_azure --build_shared_lib --build_apple_framework --build_wasm_static_lib  --use_extensions --parallel --llvm_path "$HOMEBREW_PREFIX/opt/llvm"'
 PACKAGES+=(pygobject pycairo pipx virtualenv cataclysm "$onnxruntime/build/Linux/Release/dist/onnxruntime_openvino-*.whl")
 pip install --no-input --upgrade "${PACKAGES[@]}"
 # Setup catalyst

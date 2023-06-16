@@ -63,7 +63,7 @@ if [ "$BREW_FAST_LEVEL" -eq 0 ]; then
     HOMEBREW_ACCEPT_EULA=Y brew install --include-test openjdk openjdk@8 openjdk@11 openjdk@17 maven groovy gradle scala sbt yarn bash-completion@2 z3 asdf tbb scons fdupes pugixml molten-vk
     HOMEBREW_ACCEPT_EULA=Y brew install --include-test azure-cli awscli msodbcsql18 mssql-tools18 kubernetes-cli helm minikube kind k3d argocd derailed/k9s/k9s kustomize skaffold vcluster
     HOMEBREW_ACCEPT_EULA=Y brew install --include-test python-typing-extensions pygobject3 py3cairo pyyaml libffi libyaml qt pyqt boost boost-build boost-mpi boost-python3 terraform gtk+3 gtk+4
-    HOMEBREW_ACCEPT_EULA=Y brew install --include-test ffmpeg libsndfile libsoundio libomp openmpi opencv openvino bats-core gedit git-gui git-svn numpy scipy libtensorflow pytorch torchvision neovim
+    HOMEBREW_ACCEPT_EULA=Y brew install --include-test ffmpeg libsndfile libsoundio libomp open-mpi mpich opencv openvino bats-core gedit git-gui git-svn numpy scipy libtensorflow pytorch torchvision neovim
   ); do echo "Retrying"; done
 
   # Setup post hombrew packages
@@ -72,7 +72,6 @@ if [ "$BREW_FAST_LEVEL" -eq 0 ]; then
   eval "$(opam env --switch=default)"
   opam update -y
   opam install -y ocamlfind ctypes
-  opam update -y
   opam upgrade -y
   # shellcheck disable=SC2016
   source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'eval "$(opam env --switch=default)"'
@@ -84,7 +83,7 @@ if [ "$BREW_FAST_LEVEL" -eq 0 ]; then
   source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'export OCAML_STDLIB_PATH=$(ocamlc -where)'
   links=()
   if [ "$os" = "Linux" ]; then
-    links+=('file-formula' 'curl' 'readline' 'bzip2' 'protobuf' 'zlib' 'libffi' 'llvm' 'tcl-tk' 'sqlite' 'openssl@3' 'openjdk')
+    links+=('file-formula' 'curl' 'readline' 'bzip2' 'protobuf' 'zlib' 'libffi' 'llvm' 'tcl-tk' 'sqlite' 'openssl@3' 'openjdk' 'open-mpi')
   fi
 
   links+=('make' 'cmake' 'gnu-sed' 'grep' 'coreutils' 'xz' 'python-tk@3.11' 'python@3.11' 'postgresql@15' 'qt' 'pyqt' 'openvino')
@@ -101,7 +100,7 @@ if [ "$BREW_FAST_LEVEL" -le 2 ]; then
   source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'export GROOVY_HOME="$HOMEBREW_PREFIX/opt/groovy/libexec"'
   source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'export SCALA_HOME="$HOMEBREW_PREFIX/opt/scala/idea"'
   source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'export DOTNET_ROOT="$HOMEBREW_PREFIX/share/dotnet"'
-  exports=('file-formula' 'curl' 'readline' 'bzip2' 'protobuf' 'zlib' 'libffi' 'llvm' 'tcl-tk' 'sqlite' 'openssl@3' 'openjdk' 'gmake' 'gnu-sed' 'grep' 'coreutils' 'xz' 'dotnet' 'python-tk@3.11' 'python@3.11' 'postgresql@15' 'qt' 'pyqt' 'llibomp' 'openvino')
+  exports=('file-formula' 'curl' 'readline' 'bzip2' 'protobuf' 'zlib' 'libffi' 'llvm' 'tcl-tk' 'sqlite' 'openssl@3' 'openjdk' 'gmake' 'gnu-sed' 'grep' 'coreutils' 'xz' 'dotnet' 'python-tk@3.11' 'python@3.11' 'postgresql@15' 'qt' 'pyqt' 'open-mpi' 'openvino')
   for brew in "${exports[@]}"; do
     brew_dir="\$HOMEBREW_PREFIX/opt/$brew"
     brew_bin_dir="$brew_dir/bin"
