@@ -8,13 +8,9 @@ os=$(uname -s)
 source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'export PYENV_VIRTUALENV_DISABLE_PROMPT=1'
 # Check fast level
 devspace=devspace
-if [[ "${PYENV_VERSION:-}" != "$devspace" ]]; then
-  export PIP_FAST_LEVEL=${PIP_FAST_LEVEL:-${FAST_LEVEL:-0}}
-else
-  export PIP_FAST_LEVEL=0
-fi
-
-echo "PIP_FAST_LEVEL=$PIP_FAST_LEVEL"
+export PIP_FAST_LEVEL=${PIP_FAST_LEVEL:-${FAST_LEVEL:-0}}
+# Function to clone or update a repo
+# shellcheck disable=SC2317
 function clone_or_update_repo() {
   local repo_name="$1"
   local repo_owner="$2"
@@ -25,37 +21,71 @@ function clone_or_update_repo() {
   local repo_ver=$(curl --silent "https://api.github.com/repos/$repo_owner/$repo_name/tags" | jq -r '.[0].name')
 
   eval "$repo_name=$repo_dir"
+
   # If the repository doesn't exist, clone it
   if [ ! -d "$repo_dir" ]; then
     git clone --branch "$repo_ver" --recurse-submodules "$repo_url" "$repo_dir"
   fi
 
   # Navigate to the repository
-  pushd "$repo_dir"
-  # Discard any uncommitted changes and remove untracked files
-  git reset --hard
-  git clean -fd
+  pushd "$repo_dir" >/dev/null
+
   # Fetch the latest tags and branches from the remote repository
   git fetch --all
-  # Checkout to the specific tag
-  git checkout "$repo_ver"
-  # Discard any uncommitted changes and remove untracked files in submodules
-  git submodule foreach --recursive git reset --hard
-  git submodule foreach --recursive git clean -fd
-  # Update the submodules to the state at the checked out tag
-  git submodule update --init --recursive
-  # Install any requirements
-  if [ -f "requirements.txt" ]; then
-    pip install -r requirements.txt
+
+  # If the current version is not the latest version, update the repo
+  if [[ "$(git rev-parse HEAD)" != "$(git rev-parse "$repo_ver")" ]]; then
+    # Discard any uncommitted changes and remove untracked files
+    git reset --hard
+    git clean -fd
+
+    # Checkout to the specific tag
+    git checkout "$repo_ver"
+
+    # Discard any uncommitted changes and remove untracked files in submodules
+    git submodule foreach --recursive git reset --hard
+    git submodule foreach --recursive git clean -fd
+
+    # Update the submodules to the state at the checked out tag
+    git submodule update --init --recursive
+
+    # Install any requirements
+    if [ -f "requirements.txt" ]; then
+      pip install -r requirements.txt
+    fi
+
+    # Run the provided command
+    if [ -n "$repo_cmd" ]; then
+      eval "$repo_cmd"
+    fi
   fi
 
-  # Run the provided command
-  if [ -n "$repo_cmd" ]; then
-    eval "$repo_cmd"
-  fi
-
-  popd
+  popd >/dev/null
 }
+
+if [[ "${PYENV_VERSION:-}" == "$devspace" ]]; then
+  export PIP_FAST_LEVEL=0
+fi
+
+# Array of Python versions to upgrade
+versions=("3.9" "3.10" "3.11")
+for version in "${versions[@]}"; do
+  # Find the highest installed version and the highest available version
+  installed_version=$(pyenv versions --bare | { grep -oP "$version\.\d+" || true; } | sort -V | tail -n 1)
+  latest_version=$(pyenv install --list | grep -oP "$version\.\d+" | sort -V | tail -n 1)
+
+  # If the installed version is not the latest version, uninstall it and install the latest version
+  if [[ "$installed_version" != "$latest_version" ]]; then
+    if [[ -n "$installed_version" ]]; then
+      pyenv uninstall -f "$installed_version"
+    fi
+
+    pyenv install "$latest_version"
+  fi
+done
+
+echo "PIP_FAST_LEVEL=$PIP_FAST_LEVEL"
+globalVersion
 
 # Array of Python versions to upgrade
 versions=("3.9" "3.10" "3.11")
@@ -153,6 +183,7 @@ fi
 # TODO: Fix grep: Unmatched [, [^, [:, [., or [=
 # Setup onnxruntime-openvino
 clone_or_update_repo "onnxruntime" "microsoft" './build.sh --config Release --use_openvino CPU_FP32 --build_shared_lib --parallel'
+source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "$onnxruntime/setupvars.sh"
 # Setup catalyst
 clone_or_update_repo "catalyst" "PennyLaneAI"
 # shellcheck disable=SC2154
