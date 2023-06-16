@@ -52,7 +52,6 @@ if [ "$BREW_FAST_LEVEL" -eq 0 ]; then
   brew postinstall fontconfig || true
   # shellcheck disable=SC2016
   source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'source "$HOMEBREW_PREFIX/share/antigen/antigen.zsh"' "$HOME/.zshrc"
-  while ! (eval 'HOMEBREW_ACCEPT_EULA=Y brew $install sevenzip p7zip awk file-formula gnu-sed grep curl wget bzip2 swig less lesspipe tcl-tk libuv jq yq'); do echo "Retrying..."; done
 fi
 
 # Setup Homebrew
