@@ -1,4 +1,4 @@
-#!/usr/bin/env zsh
+#!/bin/zsh
 #shellcheck shell=bash
 # shellcheck source=/dev/null
 # init
