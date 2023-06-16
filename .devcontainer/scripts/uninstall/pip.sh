@@ -9,13 +9,13 @@ if pyenv --version &>/dev/null; then
   if $devspaceExists; then pyenv activate "$devspace"; fi
 fi
 
-if [ "$FAST_LEVEL" -eq 0 ]; then
+if [ "${FAST_LEVEL:-0}" -eq 0 ]; then
   "$DEVCONTAINER_SCRIPTS_ROOT/uninstall/pip/packages.sh"
   "$DEVCONTAINER_SCRIPTS_ROOT/uninstall/pip/package-cache.sh"
 fi
 
 if pyenv --version &>/dev/null; then
-  source deactivate
+  source deactivate || true
   for venv in $(pyenv virtualenvs --bare); do
     echo "Deleting virtualenv: $venv"
     pyenv virtualenv-delete -f "$venv"
