@@ -17,6 +17,11 @@ if ! (bash --version && git --version) &>/dev/null; then sudo xcode-select --ins
 # Wait for bash and git to be available
 while ! (bash --version >/dev/null 2>&1 && git --version >/dev/null 2>&1); do sleep 10; done
 sleep 5
+if [ -e "/Applications/Xcode.app" ]; then
+  sudo xcode-select --switch /Applications/Xcode.app
+  sudo xcodebuild -license accept
+fi
+
 # Setup required homebrew prefix on mac, this cannot be changed
 export HOMEBREW_PREFIX="/usr/local"
 # post build commands

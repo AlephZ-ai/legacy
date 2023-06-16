@@ -84,6 +84,7 @@
     "davidanson.vscode-markdownlint",
     "christian-kohler.npm-intellisense",
     "johnstoncode.svn-scm",
-    "vscodevim.vim"
+    "vscodevim.vim",
+    "ocamllabs.ocaml-platform"
   ]
 }

@@ -23,10 +23,9 @@ echo "PIP_FAST_LEVEL=$PIP_FAST_LEVEL"
 # TODO: Check for Python 3.11 support:
 #   cntk ml-agents espnet2 gym-retro fastchan TensorFlowTTS triton-model-navigator nvidia-pytriton trimm trimm-viz rliable
 #   msal msal-extensions pytest-azurepipelines azureml-responsibleai azureml-dataprep-native azure-mlflow
-#   torch-directml onnxruntime-silicon onnxruntime-openmp onnxruntime-directml onnxruntime-gpu
-#   onnxruntime-cann onnxruntime-noopenmp onnxruntime-azure onnxruntime-coreml onnxruntime-powerpc64le
-#   model-perf azure-ai-vision
+#   torch-directml model-perf azure-ai-vision
 # TODO: Keep a check on huggingface-sb3 it has huggingface-hub pinned to 0.8.1
+# TODO: Check onnxruntime-openmp onnxruntime-noopenmp onnxruntime-coreml onnxruntime-silicon onnxruntime-gpu onnxruntime-cann onnxruntime-azure onnxruntime-powerpc64le
 # https://github.com/huggingface/huggingface_sb3/issues/27
 # TODO: Keep a check on asteroid and see when it will allow upgrading torchmetrics>=0.11.0, currently torchmetrics<0.8.0
 # https://github.com/asteroid-team/asteroid/issues/669
@@ -188,14 +187,15 @@ fi
 "$DEVCONTAINER_SCRIPTS_ROOT/utils/pip-enable-cache.sh"
 # Setup onnxruntime-openvino
 PACKAGES=(setuptools wheel cython ninja numpy tbb pugixml flatbuffers snappy protobuf zlib-ng absl-py libusb
-  pyyaml libclang clang-format intel-openmp onnxruntime openvino)
+  pyyaml libclang clang-format intel-openmp onnxruntime onnxruntime-extensions openvino onnxruntime-tools openvino-dev
+  sphinx sphinx-multiversion)
 pip install --no-input --upgrade "${PACKAGES[@]}"
 clone_or_update_repo clspv google 'python utils/fetch_sources.py; mkdir -p build && pushd build; cmake -G Ninja -DCMAKE_BUILD_TYPE=Release ..; ninja; popd;'
+# # shellcheck disable=SC2016
+# clone_or_update_repo openvino openvinotoolkit 'mkdir -p build && pushd build; cmake -G "Ninja Multi-Config" -DENABLE_SYSTEM_PUGIXML=ON -DENABLE_SYSTEM_SNAPPY=ON -DENABLE_SYSTEM_PROTOBUF=ON -DENABLE_PYTHON=ON -DProtobuf_INCLUDE_DIR="$HOMEBREW_PREFIX/opt/protobuf/include" -DProtobuf_LIBRARY="$HOMEBREW_PREFIX/opt/protobuf/lib" -DOpenMP_C_FLAGS="-fopenmp -I$HOMEBREW_PREFIX/opt/libomp/include" -DOpenMP_C_LIB_NAMES="gomp" -DOpenMP_gomp_LIBRARY="$HOMEBREW_PREFIX/opt/gcc/lib/gcc/current/libgomp.dylib" ..; cmake --build . --config Release --parallel $(sysctl -n hw.ncpu); popd;'
 # shellcheck disable=SC2016
-clone_or_update_repo openvino openvinotoolkit 'mkdir -p build && pushd build; cmake -G "Ninja Multi-Config" -DENABLE_SYSTEM_PUGIXML=ON -DENABLE_SYSTEM_SNAPPY=ON -DENABLE_SYSTEM_PROTOBUF=ON -DENABLE_PYTHON=ON -DProtobuf_INCLUDE_DIR="$HOMEBREW_PREFIX/opt/protobuf/include" -DProtobuf_LIBRARY="$HOMEBREW_PREFIX/opt/protobuf/lib" -DOpenMP_C_FLAGS="-fopenmp -I$HOMEBREW_PREFIX/opt/libomp/include" -DOpenMP_C_LIB_NAMES="gomp" -DOpenMP_gomp_LIBRARY="$HOMEBREW_PREFIX/opt/gcc/lib/gcc/current/libgomp.dylib" ..; cmake --build . --config Release --parallel $(sysctl -n hw.ncpu); popd;'
-clone_or_update_repo onnxruntime microsoft './build.sh --config Release --use_openvino CPU_FP32 --build_shared_lib --parallel'
-PACKAGES+=(pygobject pycairo pipx virtualenv sphinx sphinx-multiversion
-  "$onnxruntime/build/Linux/Release/dist/onnxruntime_openvino-*.whl" onnxruntime-extensions cataclysm)
+clone_or_update_repo onnxruntime microsoft 'NVCC_OUT=/tmp ./build.sh --config Release --ms_experimental --enable_pybind  --use_full_protobuf --enable_lto --enable_multi_device_test --use_xcode --enable_lazy_tensor --use_cache --use_lock_free_queue --use_coreml --use_openvino --build_wasm --use_azure CPU_FP32 --build_shared_lib --build_apple_framework --build_wasm_static_lib  --use_extensions --parallel --llvm_path "$HOMEBREW_PREFIX/opt/llvm"'
+PACKAGES+=(pygobject pycairo pipx virtualenv cataclysm "$onnxruntime/build/Linux/Release/dist/onnxruntime_openvino-*.whl")
 pip install --no-input --upgrade "${PACKAGES[@]}"
 # Setup catalyst
 clone_or_update_repo catalyst PennyLaneAI
@@ -244,7 +244,6 @@ PACKAGES+=(platformdirs dill isort mccabe ipykernel ipython-genutils packaging a
   'pytket>=1.16.0' 'pennylane>=0.30.0' pennylane-lightning "$catalyst"
   pytket-cirq pytket-iqm pytket-qir pytket-qsharp pytket-qulacs 'pytket-pennylane>=0.8.0'
   pennyLane-cirq pennyLane-qiskit pennylane-qulacs pennylane-qsharp
-  'openvino-dev>=2023.0.0' 'onnxruntime-tools>=1.7.0'
   jupyter-client jupyter-core notebook jupyterlab voila 'mlflow>2.4.0'
   'huggingface-hub>=0.15.1' 'skops>=0.6.0')
 pip install --no-input --upgrade "${PACKAGES[@]}"

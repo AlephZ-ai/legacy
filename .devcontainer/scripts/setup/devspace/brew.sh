@@ -56,9 +56,9 @@ if [ "$BREW_FAST_LEVEL" -eq 0 ]; then
   source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'source "$HOMEBREW_PREFIX/share/antigen/antigen.zsh"' "$HOME/.zshrc"
   # shellcheck disable=SC2034
   while ! (
-    HOMEBREW_ACCEPT_EULA=Y brew install --include-test sevenzip p7zip awk file-formula gnu-sed grep curl wget bzip2 swig less lesspipe tcl-tk libuv jq yq nlohmann-json gflags libusb
-    HOMEBREW_ACCEPT_EULA=Y brew install --include-test zlib zlib-ng flatbuffers snappy buf protobuf grpc dos2unix git git-lfs sigstore/tap/gitsign-credential-cache sigstore/tap/gitsign gh subversion
-    HOMEBREW_ACCEPT_EULA=Y brew install --include-test gcc llvm clang-format clang-build-analyzer dotnet dotnet@6 mono go rust perl ruby python python-tk python@3.9 python-tk@3.9 python@3.10 python-tk@3.10 python@3.11 python-tk@3.11
+    HOMEBREW_ACCEPT_EULA=Y brew install --include-test sevenzip p7zip awk file-formula gnu-sed grep curl wget bzip2 swig less lesspipe tcl-tk libuv jq yq nlohmann-json gflags libusb doxygen
+    HOMEBREW_ACCEPT_EULA=Y brew install --include-test zlib zlib-ng flatbuffers snappy buf protobuf grpc dos2unix git git-lfs sigstore/tap/gitsign-credential-cache sigstore/tap/gitsign gh subversion mercurial darcs
+    HOMEBREW_ACCEPT_EULA=Y brew install --include-test gcc llvm clang-format clang-build-analyzer dotnet dotnet@6 mono go rust perl ruby python python-tk python@3.9 python-tk@3.9 python@3.10 python-tk@3.10 python@3.11 python-tk@3.11 ocaml opam
     HOMEBREW_ACCEPT_EULA=Y brew install --include-test nss openssl openssl@1.1 openssl@3 openssh age nghttp2 mkcert shellcheck speedtest-cli mono-libgdiplus chezmoi sqlite sqlite-utils sqlite-analyzer postgresql@15
     HOMEBREW_ACCEPT_EULA=Y brew install --include-test openjdk openjdk@8 openjdk@11 openjdk@17 maven groovy gradle scala sbt yarn bash-completion@2 z3 asdf tbb scons fdupes pugixml molten-vk
     HOMEBREW_ACCEPT_EULA=Y brew install --include-test azure-cli awscli msodbcsql18 mssql-tools18 kubernetes-cli helm minikube kind k3d argocd derailed/k9s/k9s kustomize skaffold vcluster
@@ -67,6 +67,21 @@ if [ "$BREW_FAST_LEVEL" -eq 0 ]; then
   ); do echo "Retrying"; done
 
   # Setup post hombrew packages
+  opam init -y --no-setup
+  # shellcheck disable=SC2016
+  eval "$(opam env --switch=default)"
+  opam update -y
+  opam install -y ocamlfind ctypes
+  opam update -y
+  opam upgrade -y
+  # shellcheck disable=SC2016
+  source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'eval "$(opam env --switch=default)"'
+  # shellcheck disable=SC2016
+  source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'export OCAMLFIND="$(which ocamlfind)"'
+  # shellcheck disable=SC2016
+  source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'export OCAML_VERSION=$(ocaml -version | awk '\''{print $5}'\'')'
+  # shellcheck disable=SC2016
+  source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'export OCAML_STDLIB_PATH=$(ocamlc -where)'
   links=()
   if [ "$os" = "Linux" ]; then
     links+=('file-formula' 'curl' 'readline' 'bzip2' 'protobuf' 'zlib' 'libffi' 'llvm' 'tcl-tk' 'sqlite' 'openssl@3' 'openjdk')
@@ -78,29 +93,22 @@ if [ "$BREW_FAST_LEVEL" -eq 0 ]; then
 fi
 
 # Setup post hombrew packages
+# shellcheck disable=SC2016
 if [ "$BREW_FAST_LEVEL" -le 2 ]; then
-  # shellcheck disable=SC2016
   "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" '[[ -r "$HOMEBREW_PREFIX/etc/profile.d/bash_completion.sh" ]] && source "$HOMEBREW_PREFIX/etc/profile.d/bash_completion.sh"' "$HOME/.bashrc"
-  # shellcheck disable=SC2016
   source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'export LESSOPEN="|$HOMEBREW_PREFIX/bin/lesspipe.sh %s"'
-  # shellcheck disable=SC2016
   source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'export MONO_GAC_PREFIX="$HOMEBREW_PREFIX"'
-  # shellcheck disable=SC2016
   source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'export GROOVY_HOME="$HOMEBREW_PREFIX/opt/groovy/libexec"'
-  # shellcheck disable=SC2016
   source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'export SCALA_HOME="$HOMEBREW_PREFIX/opt/scala/idea"'
-  # shellcheck disable=SC2016
   source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'export DOTNET_ROOT="$HOMEBREW_PREFIX/share/dotnet"'
   exports=('file-formula' 'curl' 'readline' 'bzip2' 'protobuf' 'zlib' 'libffi' 'llvm' 'tcl-tk' 'sqlite' 'openssl@3' 'openjdk' 'gmake' 'gnu-sed' 'grep' 'coreutils' 'xz' 'dotnet' 'python-tk@3.11' 'python@3.11' 'postgresql@15' 'qt' 'pyqt' 'llibomp' 'openvino')
   for brew in "${exports[@]}"; do
-    # shellcheck disable=SC2016
     brew_dir="\$HOMEBREW_PREFIX/opt/$brew"
     brew_bin_dir="$brew_dir/bin"
     brew_sbin_dir="$brew_dir/sbin"
     brew_include_dir="$brew_dir/include"
     brew_lib_dir="$brew_dir/lib"
     brew_pkgconfig_dir="$brew_lib_dir/pkgconfig"
-    # shellcheck disable=SC2016
     brew_libexec_dir="\$HOMEBREW_PREFIX/opt/$brew/libexec"
     brew_libexec_bin_dir="$brew_libexec_dir/bin"
     brew_libexec_sbin_dir="$brew_libexec_dir/sbin"
@@ -116,7 +124,6 @@ if [ "$BREW_FAST_LEVEL" -le 2 ]; then
     if [ -e "$(eval echo "$brew_lib_dir")" ]; then source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export LDFLAGS=\"-L$brew_lib_dir\${LDFLAGS:+ }\${LDFLAGS:-}\""; fi
     if [ "$brew" = "llvm" ]; then source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export LDFLAGS=\"-L$brew_lib_dir/c++ -Wl,-rpath,$brew_lib_dir/c++\${LDFLAGS:+ }\${LDFLAGS:-}\""; fi
     if [ -e "$(eval echo "$brew_pkgconfig_dir")" ]; then source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "export PKG_CONFIG_PATH=\"$brew_pkgconfig_dir\${PKG_CONFIG_PATH:+:}\${PKG_CONFIG_PATH:-}\""; fi
-    # # shellcheck disable=SC2016
     # if [ "$brew" = "openvino" ]; then source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'export OpenVINO_ROOT_DIR=$(brew info --json openvino | jq -r '\''.[0].installed[0].prefix'\'')'; fi
   done
 fi
