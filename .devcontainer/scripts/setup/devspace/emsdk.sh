@@ -15,7 +15,7 @@ function clone_or_update_repo() {
   local repo_name="$1"
   local repo_owner="$2"
   local repo_cmd="${3:-}"
-  local repo_dir="$HOME/.emsdk/repos/$repo_name"
+  local repo_dir="$HOME/.emsdk"
 
   "$DEVCONTAINER_SCRIPTS_ROOT/utils/clone-or-update-repo.sh" "$repo_name" "$repo_owner" "$repo_dir" "$repo_cmd"
 }

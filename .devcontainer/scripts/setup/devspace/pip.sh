@@ -24,6 +24,7 @@ echo "PIP_FAST_LEVEL=$PIP_FAST_LEVEL"
 #   cntk ml-agents espnet2 gym-retro fastchan TensorFlowTTS triton-model-navigator nvidia-pytriton trimm trimm-viz rliable
 #   msal msal-extensions pytest-azurepipelines azureml-responsibleai azureml-dataprep-native azure-mlflow
 #   torch-directml model-perf azure-ai-vision
+# TODO: 'botbuilder-dialogs>=4.14.4'
 # TODO: Keep a check on huggingface-sb3 it has huggingface-hub pinned to 0.8.1
 # TODO: Check onnxruntime-openmp onnxruntime-noopenmp onnxruntime-coreml onnxruntime-silicon onnxruntime-gpu onnxruntime-cann onnxruntime-azure onnxruntime-powerpc64le
 # https://github.com/huggingface/huggingface_sb3/issues/27
@@ -53,6 +54,7 @@ echo "PIP_FAST_LEVEL=$PIP_FAST_LEVEL"
 # gym[accept-rom-license,atari,box2d,classic_control,mujoco,robotics,toy_text,other]<=0.26,>=0.22
 # TODO: transformers4rec[docs,dev] https://github.com/NVIDIA-Merlin/Transformers4Rec
 # TODO: 'sample-factory[dev,atari,envpool,mujoco,vizdoom]>=2.0.3'
+# TODO: onefuzz
 # TODO: Fix grep: Unmatched [, [^, [:, [., or [=
 # Setup pip
 source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'export PYENV_VIRTUALENV_DISABLE_PROMPT=1'
@@ -136,44 +138,40 @@ fi
 
 "$DEVCONTAINER_SCRIPTS_ROOT/utils/pip-enable-cache.sh"
 # Setup onnxruntime-openvino
-PACKAGES=(setuptools wheel cython ninja numpy tbb pugixml flatbuffers snappy protobuf zlib-ng absl-py libusb
-  pyyaml libclang clang-format intel-openmp onnxruntime onnxruntime-extensions openvino onnxruntime-tools openvino-dev
-  sphinx sphinx-multiversion)
+PACKAGES=(setuptools wheel 'cython>=0.29.35' pygobject pycairo pipx virtualenv pyyaml pybind11 libclang clang-format clang-tidy
+  sphinx sphinx-multiversion cataclysm enchant)
 pip install --no-input --upgrade "${PACKAGES[@]}"
-clone_or_update_repo clspv google 'python utils/fetch_sources.py; mkdir -p build && pushd build; cmake -G Ninja -DCMAKE_BUILD_TYPE=Release -DENABLE_DOXYGEN=ON ..; ninja; popd;'
+# clone_or_update_repo clspv google 'python utils/fetch_sources.py; mkdir -p build && pushd build; cmake -G Ninja -DCMAKE_BUILD_TYPE=Release ..; ninja; popd;'
 # # shellcheck disable=SC2016
 # clone_or_update_repo openvino openvinotoolkit 'mkdir -p build && pushd build; cmake -G "Ninja Multi-Config" -DENABLE_SYSTEM_PUGIXML=ON -DENABLE_SYSTEM_SNAPPY=ON -DENABLE_SYSTEM_PROTOBUF=ON -DENABLE_PYTHON=ON -DProtobuf_INCLUDE_DIR="$HOMEBREW_PREFIX/opt/protobuf/include" -DProtobuf_LIBRARY="$HOMEBREW_PREFIX/opt/protobuf/lib" -DOpenMP_C_FLAGS="-fopenmp -I$HOMEBREW_PREFIX/opt/libomp/include" -DOpenMP_C_LIB_NAMES="gomp" -DOpenMP_gomp_LIBRARY="$HOMEBREW_PREFIX/opt/gcc/lib/gcc/current/libgomp.dylib" ..; cmake --build . --config Release --parallel $(sysctl -n hw.ncpu); popd;'
-# shellcheck disable=SC2016
-clone_or_update_repo onnxruntime microsoft 'NVCC_OUT=/tmp ./build.sh --config Release --skip_tests --skip-keras-test --ms_experimental --build_wheel --gen_doc validate --gen-api-doc --enable_pybind  --use_gdk --use_full_protobuf --enable_lto --enable_multi_device_test --use_xcode --enable_memory_profile --enable_training --enable_training_apis --enable_training_ops --mpi_home "$$HOMEBREW_PREFIX/open-mpi" --use_mpi ON --enable_lazy_tensor --use_cache --use_lock_free_queue --use_coreml --use_openvino CPU_FP32 --build_wasm --enable_wasm_simd --enable_wasm_threads --enable_wasm_api_exception_catching --enable_wasm_exception_throwing_override --enable_wasm_profiling --enable_wasm_debug_info --wasm_run_tests_in_browser --use_azure --build_shared_lib --build_apple_framework --build_wasm_static_lib  --use_extensions --parallel --llvm_path "$HOMEBREW_PREFIX/opt/llvm"'
-PACKAGES+=(pygobject pycairo pipx virtualenv cataclysm "$onnxruntime/build/Linux/Release/dist/onnxruntime_openvino-*.whl")
-pip install --no-input --upgrade "${PACKAGES[@]}"
-# Setup catalyst
-clone_or_update_repo catalyst PennyLaneAI
-PACKAGES+=(platformdirs dill isort mccabe ipykernel ipython-genutils packaging absl-extra docker-pycreds flask poetry pathy playwright
-  pygments flake8 tqdm rich ruff pytest pytest-sugar pytest-cov pytest-xdist pytest-xprocess pytest-mock pytest-benchmark pytest-playwright
+PACKAGES+=(platformdirs dill isort mccabe ipykernel ipython-genutils packaging nbmake absl-extra docker-pycreds flask 'poetry>=1.5.1' pathy playwright
+  ninja tbb pugixml flatbuffers snappy protobuf zlib-ng absl-py libusb
+  pygments flake8 tqdm rich ruff lit pytest pytest-sugar pytest-cov pytest-xdist pytest-xprocess pytest-mock pytest-benchmark pytest-playwright
   autopep8 aiosqlite absl-py astunparse gast google-pasta grpcio h5py knack
-  'blis>=0.9.1' catalogue confection cymem murmurhash preshed black yapf pydantic jinja2 langcodes murmurhash filelock
+  'blis>=0.9.1' catalogue confection cymem murmurhash preshed yapf pydantic jinja2 langcodes murmurhash filelock
   'dask>=2023.5.1' shot-scraper strip-tags 'pynini>0.1.1' lsprotocol debugpy
-  tokenizers sentencepiece lazy-loader networkx pillow wrapt py moreutils pylint mypy pandas moviepy 'opt-einsum>=3.3.0'
-  'jsmin>=3.0.1' msal msal-extensions chromadb pytablewriter boto3 cloudpickle dbt-glue scenepic
-  opencv-python mtcnn-onnxruntime imageio matplotlib plotly 'scipy>=1.10.1' seaborn spacy nltk rouge-score 'gensim>=4.3.1'
-  pyctcdecode 'lupyne[graphql,rest]' plush lucene-querybuilder
+  tokenizers sentencepiece lazy-loader networkx pillow wrapt py moreutils 'pylint[spelling]>=2.17.4' mypy pandas moviepy numpy 'opt-einsum>=3.3.0'
+  'jsmin>=3.0.1' msal msal-extensions 'chromadb>=0.3.26' pytablewriter boto3 cloudpickle 'dbt_core>=1.5.1' dbt-glue scenepic
+  opencv-python imageio matplotlib plotly 'scipy>=1.10.1' seaborn 'spacy>=3.5.3' 'nltk>=3.8.1' rouge-score 'gensim>=4.3.1'
+  pyctcdecode 'lupyne[graphql,rest]' plush lucene-querybuilder intel-openmp
   'jax>=0.4.12' 'jaxlib>=0.4.12' 'autograd>=1.5' autograd-minimize box2d-py pybullet 'optuna>=3.2.0'
-  'scikit-learn>=1.2.2' 'scikit-image>=0.21.0' 'scikit-optimize>=0.9.0' 'scikit-onnxruntime>=0.2.1.4'
+  'scikit-learn>=1.2.2' 'scikit-image>=0.21.0' 'scikit-optimize>=0.9.0'
   tensorflow 'tensorflow-addons[tensorflow]' tensorboard keras 'semantic-kernel>=0.3.1.dev0' batch-inference 'wandb>=0.15.3'
-  torch torchvision torchaudio fire 'pytorch-lightning>=2.0.3' torch-ort-inference 'torch-ort-infer>=1.13.1'
+  torch torchvision torchaudio fire 'pytorch-lightning==1.9.4'
   'speechbrain>=0.5.14' 'flair>=0.12.2' 'fastai>=2.7.12' 'fastai-datasets>=0.0.8'
-  'transformers>=4.29.2' 'diffusers>=0.16.1' 'adapter-transformers>=3.2.1' 'span-marker>=1.1.1' 'sentence-transformers>=2.2.2'
-  openai 'openai-whisper>=20230314' tiktoken ttok llm llama-index loralib langchain
+  'accelerate>=0.20.3' 'transformers>=4.30.2' 'datasets>=2.13.0' 'diffusers>=0.16.1' 'adapter-transformers>=3.2.1' 'span-marker>=1.1.1' 'sentence-transformers>=2.2.2'
+  openai 'openai-whisper>=20230314' 'tiktoken==0.3.1' ttok llm llama-index loralib 'langchain>=0.0.202'
   'pythae>=0.1.1' 'espnet>=202304' 'paddlenlp>=2.5.2'
   'nemo-toolkit[common,asr,nlp,tts,slu,test]>=1.18.0' 'nemo-text-processing>=0.1.7rc0'
   'bertopic[test,docs,dev,flair,spacy,use,gensim,vision]>=0.15.0'
-  nvtabular 'transformers4rec[pytorch,nvtabular]>=23.5.0' merlin-models 'tritonclient>=2.34.0'
+  nvtabular 'transformers4rec[pytorch,nvtabular]>=23.5.0' merlin-models merlin-dataloader 'tritonclient>=2.34.0'
   azure-devtools azure-keyvault-certificates azure-keyvault-secrets azure-keyvault-browser azure-keyvault-administration azureml-dataprep
-  presidio-cli presidio-analyzer presidio-anonymizer presidio-evaluator presidio-image-redactor msticpy msticnb
-  textworld botbuilder-ai botbuilder-applicationinsights botbuilder-azure botbuilder-core botbuilder-dialogs botbuilder-schema botframework-connector
-  onefuzz ptgnn deepgnn-ge deepgnn-torch deepgnn-tf rapidocr-openvino rapidocr-onnxruntime
-  graspologic olive-ai azure-cosmos msrest import-mocker
+  presidio-cli 'presidio-analyzer>=2.2.33' presidio-anonymizer presidio-evaluator presidio-image-redactor 'msticpy[azure]==2.3.1' 'msticnb>=1.1.0'
+  textworld botbuilder-ai botbuilder-applicationinsights botbuilder-azure botbuilder-core 'botbuilder-schema>=4.14.4' botframework-connector
+  'bokeh>=3.1.1')
+pip install --no-input --upgrade "${PACKAGES[@]}"
+PACKAGES+=(tgnn deepgnn-ge deepgnn-torch deepgnn-tf
+  graspologic olive-ai azure-cosmos 'msrest==0.6.*' import-mocker
   azure-ai-ml azure-ai-contentsafety azure-ai-mlmonitoring azure-ai-textanalytics azure-ai-formrecognizer
   azure-ai-anomalydetector azure-ai-metricsadvisor azureml-rai-utils azure-ai-translation-text azure-ai-translation-document
   azure-ai-language-questionanswering azure-ai-language-conversations azure-cli-cognitiveservices azure-cognitiveservices-speech
@@ -191,12 +189,21 @@ PACKAGES+=(platformdirs dill isort mccabe ipykernel ipython-genutils packaging a
   cirq cirq-iqm quil pyquil qclient qulacs qulacsvis
   qiskit-terra qiskit-ibmq-provider 'qiskit[visualization,experiments,optimization,finance,machine-learning,nature]' qiskit-qir
   qdk qsharp qsharp-chemistry 'azure-quantum[dev,cirq,qiskit,qsharp,quil]' pyquil-for-azure-quantum quantum-viz
-  'pytket>=1.16.0' 'pennylane>=0.30.0' pennylane-lightning "$catalyst"
+  'pytket>=1.16.0' 'pennylane>=0.30.0' pennylane-lightning
   pytket-cirq pytket-iqm pytket-qir pytket-qsharp pytket-qulacs 'pytket-pennylane>=0.8.0'
   pennyLane-cirq pennyLane-qiskit pennylane-qulacs pennylane-qsharp
-  jupyter-client jupyter-core notebook jupyterlab voila 'mlflow>2.4.0'
-  'huggingface-hub>=0.15.1' 'skops>=0.6.0')
+  'black[jupyter]' jupyter-client jupyter-core notebook jupyterlab voila 'mlflow>2.4.0'
+  'huggingface-hub>=0.15.1' 'skops>=0.6.0' openvino openvino-dev rapidocr-openvino
+  onnxruntime onnxruntime-extensions onnxruntime-tools mtcnn-onnxruntime
+  'scikit-onnxruntime>=0.2.1.4' torch-ort-inference 'torch-ort-infer>=1.13.1' rapidocr-onnxruntime)
 pip install --no-input --upgrade "${PACKAGES[@]}"
+# Setup catalyst
+clone_or_update_repo catalyst PennyLaneAI 'python setup.py install'
+# Setup onnxruntime and openvino
+# shellcheck disable=SC2016
+clone_or_update_repo onnxruntime microsoft 'NVCC_OUT=/tmp ./build.sh --config Release --skip_tests --skip-keras-test --ms_experimental --build_wheel --enable_pybind  --use_gdk --use_full_protobuf --enable_lto --enable_multi_device_test --use_xcode --enable_memory_profile --enable_training --enable_training_apis --enable_training_ops --mpi_home "$$HOMEBREW_PREFIX/open-mpi" --use_mpi true --enable_lazy_tensor --use_cache --use_lock_free_queue --use_coreml --use_openvino CPU_FP32 --build_wasm --enable_wasm_simd --enable_wasm_threads --enable_wasm_api_exception_catching --enable_wasm_exception_throwing_override --enable_wasm_profiling --enable_wasm_debug_info --wasm_run_tests_in_browser --use_azure --build_shared_lib --build_apple_framework --build_wasm_static_lib  --use_extensions --parallel --llvm_path "$HOMEBREW_PREFIX/opt/llvm"'
+# shellcheck disable=SC2154
+pip install --no-input --upgrade "$onnxruntime/build/Linux/Release/dist/onnxruntime_openvino-*.whl"
 spacy download en_core_web_sm
 spacy download en_core_web_md
 spacy download en_core_web_lg

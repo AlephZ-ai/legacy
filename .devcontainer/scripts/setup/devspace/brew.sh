@@ -63,7 +63,7 @@ if [ "$BREW_FAST_LEVEL" -eq 0 ]; then
     HOMEBREW_ACCEPT_EULA=Y brew install --include-test openjdk openjdk@8 openjdk@11 openjdk@17 maven groovy gradle scala sbt yarn bash-completion@2 z3 asdf tbb scons fdupes pugixml molten-vk
     HOMEBREW_ACCEPT_EULA=Y brew install --include-test azure-cli awscli msodbcsql18 mssql-tools18 kubernetes-cli helm minikube kind k3d argocd derailed/k9s/k9s kustomize skaffold vcluster
     HOMEBREW_ACCEPT_EULA=Y brew install --include-test python-typing-extensions pygobject3 py3cairo pyyaml libffi libyaml qt pyqt boost boost-build boost-mpi boost-python3 terraform gtk+3 gtk+4
-    HOMEBREW_ACCEPT_EULA=Y brew install --include-test ffmpeg libsndfile libsoundio libomp open-mpi mpich opencv openvino bats-core gedit git-gui git-svn numpy scipy libtensorflow pytorch torchvision neovim
+    HOMEBREW_ACCEPT_EULA=Y brew install --include-test ffmpeg libsndfile libsoundio libomp open-mpi opencv openvino bats-core gedit git-gui git-svn numpy scipy libtensorflow pytorch torchvision neovim enchant
   ); do echo "Retrying"; done
 
   # Setup post hombrew packages

@@ -10,20 +10,22 @@ echo "FAST_LEVEL=$FAST_LEVEL"
 export BREW_POST_INSTALL='"$DEVCONTAINER_SCRIPTS_ROOT/setup/macos/brew.sh"'
 # Disable needing password for sudo
 source "$DEVCONTAINER_SCRIPTS_ROOT/utils/disable-sudo-password.sh"
-# Install fonts
-source "$DEVCONTAINER_SCRIPTS_ROOT/setup/macos/fonts.sh"
 # Setup Developer Command Line tools
 if ! (bash --version && git --version) &>/dev/null; then sudo xcode-select --install; fi
 # Wait for bash and git to be available
 while ! (bash --version >/dev/null 2>&1 && git --version >/dev/null 2>&1); do sleep 10; done
 sleep 5
-if [ -e "/Applications/Xcode.app" ]; then
-  sudo xcode-select --switch /Applications/Xcode.app
+xcode=/Applications/Xcode.app
+if [ -e "$xcode" ]; then
+  echo "Using $xcode for command line tools"
+  sudo xcode-select --switch "$xcode"
   sudo xcodebuild -license accept
 fi
 
 # Setup required homebrew prefix on mac, this cannot be changed
 export HOMEBREW_PREFIX="/usr/local"
+# Install fonts
+source "$DEVCONTAINER_SCRIPTS_ROOT/setup/macos/fonts.sh"
 # post build commands
 source "$DEVCONTAINER_SCRIPTS_ROOT/setup/devspace/post-build.sh"
 # Add docker path
