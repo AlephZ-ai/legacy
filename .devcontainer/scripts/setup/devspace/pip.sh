@@ -54,8 +54,9 @@ echo "PIP_FAST_LEVEL=$PIP_FAST_LEVEL"
 # gym[accept-rom-license,atari,box2d,classic_control,mujoco,robotics,toy_text,other]<=0.26,>=0.22
 # TODO: transformers4rec[docs,dev] https://github.com/NVIDIA-Merlin/Transformers4Rec
 # TODO: 'sample-factory[dev,atari,envpool,mujoco,vizdoom]>=2.0.3'
-# TODO: onefuzz
+# TODO: semantic-kernel, onefuzz, espnet, dbt_core, dbt-glue, presidio-image-redactor, cataclysm, timm-viz,ptgnn
 # TODO: Fix grep: Unmatched [, [^, [:, [., or [=
+# TODO: 'msticpy[azure]==2.3.1' 'msticnb>=1.1.0'
 # Setup pip
 source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'export PYENV_VIRTUALENV_DISABLE_PROMPT=1'
 # Array of Python versions to upgrade
@@ -125,52 +126,62 @@ source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'if which pyenv-virtualenv
 source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" "if [[ \"\$PYENV_VERSION\" != \"$devspace\" ]]; then pyenv activate \"$devspace\"; fi"
 python --version
 python -m ensurepip --upgrade
-python -m pip install --no-input --upgrade pip setuptools wheel
+python -m pip install --no-input --upgrade pip
 pip --version
 if [ "$os" = "Linux" ]; then
   pip install --no-input --upgrade --global-option="--cpp_ext" --global-option="--cuda_ext" --global-option="--fast_layer_norm" --global-option="--distributed_adam" --global-option="--deprecated_fused_adam" \
     nvidia-cudnn-cu11 cudf-cu11 dask-cudf-cu11 cuml-cu11 cugraph-cu11 cucim nvidia-dali-cuda110 nvidia-dali-tf-plugin-cuda110 \
     triton-model-analyzer onnxruntime-training git+https://github.com/NVIDIA/TransformerEngine.git@stable git+https://github.com/NVIDIA/apex.git \
-    pennylane-lightning[gpu] qulacs-gpu
+    pennylane-lightning[gpu] qulacs-gpu nvtabular 'transformers4rec[pytorch,nvtabular]' merlin-core merlin-models merlin-dataloader
 else
   pip install --no-input --upgrade keyper
 fi
 
 "$DEVCONTAINER_SCRIPTS_ROOT/utils/pip-enable-cache.sh"
 # Setup onnxruntime-openvino
-PACKAGES=(setuptools wheel 'cython>=0.29.35' pygobject pycairo pipx virtualenv pyyaml pybind11 libclang clang-format clang-tidy
-  sphinx sphinx-multiversion cataclysm enchant)
+PACKAGES=(
+  'setuptools==65.5.1' wheel 'cython>=0.29.35' pygobject pycairo pipx virtualenv pyyaml pybind11 libclang clang-format clang-tidy
+  sphinx sphinx-multiversion enchant 'numpy==1.23.5')
 pip install --no-input --upgrade "${PACKAGES[@]}"
 # clone_or_update_repo clspv google 'python utils/fetch_sources.py; mkdir -p build && pushd build; cmake -G Ninja -DCMAKE_BUILD_TYPE=Release ..; ninja; popd;'
 # # shellcheck disable=SC2016
 # clone_or_update_repo openvino openvinotoolkit 'mkdir -p build && pushd build; cmake -G "Ninja Multi-Config" -DENABLE_SYSTEM_PUGIXML=ON -DENABLE_SYSTEM_SNAPPY=ON -DENABLE_SYSTEM_PROTOBUF=ON -DENABLE_PYTHON=ON -DProtobuf_INCLUDE_DIR="$HOMEBREW_PREFIX/opt/protobuf/include" -DProtobuf_LIBRARY="$HOMEBREW_PREFIX/opt/protobuf/lib" -DOpenMP_C_FLAGS="-fopenmp -I$HOMEBREW_PREFIX/opt/libomp/include" -DOpenMP_C_LIB_NAMES="gomp" -DOpenMP_gomp_LIBRARY="$HOMEBREW_PREFIX/opt/gcc/lib/gcc/current/libgomp.dylib" ..; cmake --build . --config Release --parallel $(sysctl -n hw.ncpu); popd;'
-PACKAGES+=(platformdirs dill isort mccabe ipykernel ipython-genutils packaging nbmake absl-extra docker-pycreds flask 'poetry>=1.5.1' pathy playwright
+PACKAGES+=(
+  platformdirs dill isort mccabe ipykernel ipython-genutils packaging nbmake absl-extra docker-pycreds flask 'poetry>=1.5.1' pathy playwright
   ninja tbb pugixml flatbuffers snappy protobuf zlib-ng absl-py libusb
   pygments flake8 tqdm rich ruff lit pytest pytest-sugar pytest-cov pytest-xdist pytest-xprocess pytest-mock pytest-benchmark pytest-playwright
-  autopep8 aiosqlite absl-py astunparse gast google-pasta grpcio h5py knack
-  'blis>=0.9.1' catalogue confection cymem murmurhash preshed yapf pydantic jinja2 langcodes murmurhash filelock
-  'dask>=2023.5.1' shot-scraper strip-tags 'pynini>0.1.1' lsprotocol debugpy
-  tokenizers sentencepiece lazy-loader networkx pillow wrapt py moreutils 'pylint[spelling]>=2.17.4' mypy pandas moviepy numpy 'opt-einsum>=3.3.0'
-  'jsmin>=3.0.1' msal msal-extensions 'chromadb>=0.3.26' pytablewriter boto3 cloudpickle 'dbt_core>=1.5.1' dbt-glue scenepic
-  opencv-python imageio matplotlib plotly 'scipy>=1.10.1' seaborn 'spacy>=3.5.3' 'nltk>=3.8.1' rouge-score 'gensim>=4.3.1'
-  pyctcdecode 'lupyne[graphql,rest]' plush lucene-querybuilder intel-openmp
+  autopep8 aiosqlite absl-py astunparse google-pasta grpcio 'h5py>=3.8.0' 'knack>=0.10.1'
+  'blis<0.8.0,>=0.7.8' catalogue confection cymem murmurhash preshed yapf pydantic jinja2 langcodes murmurhash filelock
+  'dask>=2023.5.1' 'shot-scraper>=1.2' strip-tags 'pynini>0.1.1' lsprotocol debugpy
+  tokenizers sentencepiece lazy-loader pillow py 'pylint[spelling]>=2.17.4' mypy 'pandas>=2.0.2' 'moviepy>=1.0.3' 'opt-einsum>=3.3.0'
+  'jsmin>=3.0.1' msal msal-extensions 'chromadb>=0.3.26' pytablewriter boto3 cloudpickle 'scenepic>=1.1.0')
+pip install --no-input --upgrade "${PACKAGES[@]}"
+PACKAGES+=(
+  'opencv-python>=4.7.0.72' 'imageio>=2.31.1' 'matplotlib==3.6.2' plotly 'scipy>=1.10.1' 'seaborn>=0.12.2' 'spacy>=3.5.3' 'nltk>=3.8.1' 'rouge-score>=0.1.2' 'gensim>=4.3.1'
+  'pyctcdecode>=0.5.0' 'lupyne[graphql,rest]' plush lucene-querybuilder intel-openmp
   'jax>=0.4.12' 'jaxlib>=0.4.12' 'autograd>=1.5' autograd-minimize box2d-py pybullet 'optuna>=3.2.0'
   'scikit-learn>=1.2.2' 'scikit-image>=0.21.0' 'scikit-optimize>=0.9.0'
-  tensorflow 'tensorflow-addons[tensorflow]' tensorboard keras 'semantic-kernel>=0.3.1.dev0' batch-inference 'wandb>=0.15.3'
-  torch torchvision torchaudio fire 'pytorch-lightning==1.9.4'
-  'speechbrain>=0.5.14' 'flair>=0.12.2' 'fastai>=2.7.12' 'fastai-datasets>=0.0.8'
+  'tensorflow>=2.12.0' 'tensorflow-addons[tensorflow]' tensorboard keras batch-inference 'wandb>=0.15.3'
+  gast wrapt kaggle
+  torch torchvision torchaudio fire 'pytorch-lightning==1.9.4' timm)
+pip install --no-input --upgrade "${PACKAGES[@]}"
+PACKAGES+=(
+  'speechbrain>=0.5.14' 'flair>=0.12.2' 'fastai[dev]>=2.7.12' 'fastai-datasets>=0.0.8'
   'accelerate>=0.20.3' 'transformers>=4.30.2' 'datasets>=2.13.0' 'diffusers>=0.16.1' 'adapter-transformers>=3.2.1' 'span-marker>=1.1.1' 'sentence-transformers>=2.2.2'
   openai 'openai-whisper>=20230314' 'tiktoken==0.3.1' ttok llm llama-index loralib 'langchain>=0.0.202'
-  'pythae>=0.1.1' 'espnet>=202304' 'paddlenlp>=2.5.2'
+  'pythae>=0.1.1' 'paddlenlp>=2.5.2' 'altair>=5.0.1'
   'nemo-toolkit[common,asr,nlp,tts,slu,test]>=1.18.0' 'nemo-text-processing>=0.1.7rc0'
-  'bertopic[test,docs,dev,flair,spacy,use,gensim,vision]>=0.15.0'
-  nvtabular 'transformers4rec[pytorch,nvtabular]>=23.5.0' merlin-models merlin-dataloader 'tritonclient>=2.34.0'
-  azure-devtools azure-keyvault-certificates azure-keyvault-secrets azure-keyvault-browser azure-keyvault-administration azureml-dataprep
-  presidio-cli 'presidio-analyzer>=2.2.33' presidio-anonymizer presidio-evaluator presidio-image-redactor 'msticpy[azure]==2.3.1' 'msticnb>=1.1.0'
-  textworld botbuilder-ai botbuilder-applicationinsights botbuilder-azure botbuilder-core 'botbuilder-schema>=4.14.4' botframework-connector
-  'bokeh>=3.1.1')
+  'bertopic[test,docs,dev,flair,spacy,use,gensim,vision]>=0.15.0')
 pip install --no-input --upgrade "${PACKAGES[@]}"
-PACKAGES+=(tgnn deepgnn-ge deepgnn-torch deepgnn-tf
+PACKAGES+=(
+  'tritonclient>=2.34.0'
+  azure-devtools azure-keyvault-certificates azure-keyvault-secrets azure-keyvault-administration 'azureml-dataprep>=4.11.3'
+  'presidio-cli>=0.0.8' 'presidio-analyzer>=2.2.33' presidio-anonymizer presidio-evaluator
+  textworld botbuilder-ai botbuilder-applicationinsights botbuilder-azure botbuilder-core 'botbuilder-schema>=4.14.4' botframework-connector
+  'bokeh<3.0.0,>=1.4.0' 'gradio>=3.35.2' 'mdit-py-plugins==0.3.3')
+pip install --no-input --upgrade "${PACKAGES[@]}"
+PACKAGES+=(
+  sympy deepgnn-ge deepgnn-torch deepgnn-tf graphviz
   graspologic olive-ai azure-cosmos 'msrest==0.6.*' import-mocker
   azure-ai-ml azure-ai-contentsafety azure-ai-mlmonitoring azure-ai-textanalytics azure-ai-formrecognizer
   azure-ai-anomalydetector azure-ai-metricsadvisor azureml-rai-utils azure-ai-translation-text azure-ai-translation-document
@@ -192,8 +203,8 @@ PACKAGES+=(tgnn deepgnn-ge deepgnn-torch deepgnn-tf
   'pytket>=1.16.0' 'pennylane>=0.30.0' pennylane-lightning
   pytket-cirq pytket-iqm pytket-qir pytket-qsharp pytket-qulacs 'pytket-pennylane>=0.8.0'
   pennyLane-cirq pennyLane-qiskit pennylane-qulacs pennylane-qsharp
-  'black[jupyter]' jupyter-client jupyter-core notebook jupyterlab voila 'mlflow>2.4.0'
-  'huggingface-hub>=0.15.1' 'skops>=0.6.0' openvino openvino-dev rapidocr-openvino
+  'black[jupyter]' jupyter-client jupyter-core notebook jupyterlab voila RISE 'mlflow>2.4.0'
+  'huggingface-hub>=0.15.1' 'skops>=0.6.0' openvino openvino-dev rapidocr-openvino networkx
   onnxruntime onnxruntime-extensions onnxruntime-tools mtcnn-onnxruntime
   'scikit-onnxruntime>=0.2.1.4' torch-ort-inference 'torch-ort-infer>=1.13.1' rapidocr-onnxruntime)
 pip install --no-input --upgrade "${PACKAGES[@]}"
