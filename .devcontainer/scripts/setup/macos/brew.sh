@@ -11,7 +11,7 @@ while ! HOMEBREW_ACCEPT_EULA=Y brew install --cask font-inconsolata; do find "$H
 while ! HOMEBREW_ACCEPT_EULA=Y brew install --cask iterm2; do sudo rm -rf '/Applications/iTerm.app'; done
 while ! HOMEBREW_ACCEPT_EULA=Y brew install --cask github; do sudo rm -rf '/Applications/GitHub Desktop.app'; done
 # TODO: Investigate why anaconda is hanging
-HOMEBREW_ACCEPT_EULA=Y brew install --cask microsoft-openjdk powershell-preview microsoft-edge xquartz miniconda google-cloud-sdk
+HOMEBREW_ACCEPT_EULA=Y brew install --cask microsoft-openjdk powershell-preview microsoft-edge xquartz quarto miniconda google-cloud-sdk
 # Upgrade all casks
 brew update --cask
 brew upgrade --cask
