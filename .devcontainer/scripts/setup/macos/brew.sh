@@ -8,8 +8,8 @@ brew tap homebrew/cask-fonts
 brew tap homebrew/cask-versions
 # Install casks
 while ! HOMEBREW_ACCEPT_EULA=Y brew install --cask font-inconsolata; do find "$HOME/Library/Fonts" -name 'Inconsolata*' -delete; done
-while ! HOMEBREW_ACCEPT_EULA=Y brew install --cask iterm2; do sudo rm -rf /Applications/iTerm.app; done
-while ! HOMEBREW_ACCEPT_EULA=Y brew install --cask github; do sudo rm -rf /Applications/GitHub Desktop.app; done
+while ! HOMEBREW_ACCEPT_EULA=Y brew install --cask iterm2; do sudo rm -rf '/Applications/iTerm.app'; done
+while ! HOMEBREW_ACCEPT_EULA=Y brew install --cask github; do sudo rm -rf '/Applications/GitHub Desktop.app'; done
 # TODO: Investigate why anaconda is hanging
 HOMEBREW_ACCEPT_EULA=Y brew install --cask microsoft-openjdk powershell-preview microsoft-edge xquartz miniconda google-cloud-sdk
 # Upgrade all casks
