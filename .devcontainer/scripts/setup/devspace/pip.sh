@@ -54,7 +54,7 @@ echo "PIP_FAST_LEVEL=$PIP_FAST_LEVEL"
 # gym[accept-rom-license,atari,box2d,classic_control,mujoco,robotics,toy_text,other]<=0.26,>=0.22
 # TODO: transformers4rec[docs,dev] https://github.com/NVIDIA-Merlin/Transformers4Rec
 # TODO: 'sample-factory[dev,atari,envpool,mujoco,vizdoom]>=2.0.3'
-# TODO: semantic-kernel, onefuzz, espnet, dbt_core, dbt-glue, presidio-image-redactor, cataclysm, timm-viz,ptgnn
+# TODO: semantic-kernel, onefuzz, espnet, dbt_core, dbt-glue, presidio-image-redactor, cataclysm, timm-viz,ptgnn, botbuilder-azure
 # TODO: Fix grep: Unmatched [, [^, [:, [., or [=
 # TODO: 'msticpy[azure]==2.3.1' 'msticnb>=1.1.0'
 # Setup pip
@@ -143,8 +143,8 @@ fi
 # clone_or_update_repo clspv google 'python utils/fetch_sources.py; mkdir -p build && pushd build; cmake -G Ninja -DCMAKE_BUILD_TYPE=Release ..; ninja; popd;'
 # # shellcheck disable=SC2016
 # clone_or_update_repo openvino openvinotoolkit 'mkdir -p build && pushd build; cmake -G "Ninja Multi-Config" -DENABLE_SYSTEM_PUGIXML=ON -DENABLE_SYSTEM_SNAPPY=ON -DENABLE_SYSTEM_PROTOBUF=ON -DENABLE_PYTHON=ON -DProtobuf_INCLUDE_DIR="$HOMEBREW_PREFIX/opt/protobuf/include" -DProtobuf_LIBRARY="$HOMEBREW_PREFIX/opt/protobuf/lib" -DOpenMP_C_FLAGS="-fopenmp -I$HOMEBREW_PREFIX/opt/libomp/include" -DOpenMP_C_LIB_NAMES="gomp" -DOpenMP_gomp_LIBRARY="$HOMEBREW_PREFIX/opt/gcc/lib/gcc/current/libgomp.dylib" ..; cmake --build . --config Release --parallel $(sysctl -n hw.ncpu); popd;'
-pip install --no-input --upgrade platformdirs dill isort mccabe ipykernel ipython-genutils packaging nbmake absl-extra docker-pycreds flask 'poetry>=1.5.1' pathy playwright
-pip install --no-input --upgrade ninja tbb pugixml flatbuffers snappy protobuf zlib-ng absl-py libusb
+pip install --no-input --upgrade platformdirs isort mccabe ipykernel ipython-genutils packaging nbmake absl-extra docker-pycreds flask 'poetry>=1.5.1' pathy playwright
+pip install --no-input --upgrade ninja tbb pugixml flatbuffers snappy zlib-ng absl-py libusb
 pip install --no-input --upgrade pygments flake8 tqdm rich ruff lit pytest pytest-sugar pytest-cov pytest-xdist pytest-xprocess pytest-mock pytest-benchmark pytest-playwright
 pip install --no-input --upgrade autopep8 aiosqlite absl-py astunparse google-pasta grpcio 'h5py>=3.8.0' 'knack>=0.10.1'
 pip install --no-input --upgrade 'blis<0.8.0,>=0.7.8' catalogue confection cymem murmurhash preshed yapf pydantic jinja2 langcodes murmurhash filelock
@@ -154,20 +154,20 @@ pip install --no-input --upgrade 'jsmin>=3.0.1' msal msal-extensions 'chromadb>=
 pip install --no-input --upgrade 'opencv-python>=4.7.0.72' 'imageio>=2.31.1' 'matplotlib==3.6.2' plotly 'scipy>=1.10.1' 'seaborn>=0.12.2' 'spacy>=3.5.3' 'nltk>=3.8.1' 'rouge-score>=0.1.2' 'gensim>=4.3.1'
 pip install --no-input --upgrade 'pyctcdecode>=0.5.0' 'lupyne[graphql,rest]' plush lucene-querybuilder intel-openmp
 pip install --no-input --upgrade 'jax>=0.4.12' 'jaxlib>=0.4.12' 'autograd>=1.5' autograd-minimize box2d-py pybullet 'optuna>=3.2.0'
-pip install --no-input --upgrade 'scikit-learn>=1.2.2' 'scikit-image>=0.21.0' 'scikit-optimize>=0.9.0'
-pip install --no-input --upgrade 'tensorflow>=2.12.0' 'tensorflow-addons[tensorflow]' tensorboard keras batch-inference 'wandb>=0.15.3'
-pip install --no-input --upgrade gast wrapt kaggle pipdeptree
+pip install --no-input --upgrade 'scikit-learn>=1.2.2' 'scikit-image>=0.21.0' 'scikit-optimize>=0.9.0' 'networkx>=2.8,<=2.8.8'
+pip install --no-input --upgrade 'tensorflow>=2.12.0' 'tensorflow-addons[tensorflow]' tensorboard keras batch-inference 'gastt<=0.4.0,>=0.2.1' 'wrapt<1.15,>=1.11.0' 'protobuf<4,>=3.8.0' 'wandb>=0.15.3'
+pip install --no-input --upgrade kaggle pipdeptree
 pip install --no-input --upgrade torch torchvision torchaudio fire 'pytorch-lightning==1.9.4' timm
 pip install --no-input --upgrade 'speechbrain>=0.5.14' 'flair>=0.12.2' 'fastai[dev]>=2.7.12' 'fastai-datasets>=0.0.8'
 pip install --no-input --upgrade 'accelerate>=0.20.3' 'transformers>=4.30.2' 'datasets>=2.13.0' 'diffusers>=0.16.1' 'adapter-transformers>=3.2.1' 'span-marker>=1.1.1' 'sentence-transformers>=2.2.2'
 pip install --no-input --upgrade openai 'openai-whisper>=20230314' 'tiktoken==0.3.1' ttok llm llama-index loralib 'langchain>=0.0.202'
-pip install --no-input --upgrade 'pythae>=0.1.1' 'paddlenlp>=2.5.2' 'altair>=5.0.1'
+pip install --no-input --upgrade 'pythae>=0.1.1' 'paddlenlp>=2.5.2' 'altair>=5.0.1' 'dill<0.3.5'
 pip install --no-input --upgrade 'nemo-toolkit[common,asr,nlp,tts,slu,test]>=1.18.0' 'nemo-text-processing>=0.1.7rc0'
 pip install --no-input --upgrade 'bertopic[test,docs,dev,flair,spacy,use,gensim,vision]>=0.15.0'
 pip install --no-input --upgrade 'tritonclient>=2.34.0'
 pip install --no-input --upgrade azure-devtools azure-keyvault-certificates azure-keyvault-secrets azure-keyvault-administration 'azureml-dataprep>=4.11.3'
 pip install --no-input --upgrade 'presidio-cli>=0.0.8' 'presidio-analyzer>=2.2.33' presidio-anonymizer presidio-evaluator
-pip install --no-input --upgrade textworld botbuilder-ai botbuilder-applicationinsights botbuilder-azure botbuilder-core 'botbuilder-schema>=4.14.4' botframework-connector
+pip install --no-input --upgrade textworld botbuilder-ai botbuilder-applicationinsights botbuilder-core 'botbuilder-schema>=4.14.4' botframework-connector
 pip install --no-input --upgrade 'bokeh<3.0.0,>=1.4.0' 'gradio>=3.35.2' 'mdit-py-plugins==0.3.3'
 pip install --no-input --upgrade sympy deepgnn-ge deepgnn-torch deepgnn-tf graphviz
 pip install --no-input --upgrade graspologic olive-ai azure-cosmos 'msrest==0.6.*' import-mocker
@@ -192,7 +192,7 @@ pip install --no-input --upgrade 'pytket>=1.16.0' 'pennylane>=0.30.0' pennylane-
 pip install --no-input --upgrade pytket-cirq pytket-iqm pytket-qir pytket-qsharp pytket-qulacs 'pytket-pennylane>=0.8.0'
 pip install --no-input --upgrade pennyLane-cirq pennyLane-qiskit pennylane-qulacs pennylane-qsharp
 pip install --no-input --upgrade 'black[jupyter]' jupyter-client jupyter-core notebook jupyterlab voila RISE 'mlflow>2.4.0'
-pip install --no-input --upgrade 'huggingface-hub>=0.15.1' 'skops>=0.6.0' openvino openvino-dev rapidocr-openvino networkx
+pip install --no-input --upgrade 'huggingface-hub>=0.15.1' 'skops>=0.6.0' openvino openvino-dev rapidocr-openvino
 pip install --no-input --upgrade onnxruntime onnxruntime-extensions onnxruntime-tools mtcnn-onnxruntime
 pip install --no-input --upgrade 'scikit-onnxruntime>=0.2.1.4' torch-ort-inference 'torch-ort-infer>=1.13.1' rapidocr-onnxruntime
 # Setup catalyst
