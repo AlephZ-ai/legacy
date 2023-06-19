@@ -2,7 +2,7 @@
 # shellcheck shell=bash
 # shellcheck source=/dev/null
 set -euo pipefail
-if command -v rustup >/dev/null 2>&1; then
+if command -v clspv >/dev/null 2>&1; then
   export CLSPV_FAST_LEVEL=${CLSPV_FAST_LEVEL:-${FAST_LEVEL:-0}}
 else
   export CLSPV_FAST_LEVEL=0
