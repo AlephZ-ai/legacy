@@ -2,6 +2,7 @@
 # shellcheck shell=bash
 # shellcheck source=/dev/null
 set -euo pipefail
+if [ -e "$HOME/.clspv/build" ]; then export "$HOME/.clspv/build"; fi
 if command -v clspv >/dev/null 2>&1; then
   export CLSPV_FAST_LEVEL=${CLSPV_FAST_LEVEL:-${FAST_LEVEL:-0}}
 else
@@ -19,4 +20,9 @@ function clone_or_update_repo() {
   "$DEVCONTAINER_SCRIPTS_ROOT/utils/clone-or-update-repo.sh" "$repo_name" "$repo_owner" "$repo_dir" "$repo_cmd"
 }
 
-clone_or_update_repo clspv google 'python utils/fetch_sources.py; mkdir -p build && pushd build; cmake -G Ninja -DCMAKE_BUILD_TYPE=Release ..; ninja; popd;'
+if [ "$CLSPV_FAST_LEVEL" -eq 0 ]; then
+  clone_or_update_repo clspv google 'python utils/fetch_sources.py; mkdir -p build && pushd build; cmake -G Ninja -DCMAKE_BUILD_TYPE=Release ..; ninja; popd;'
+fi
+
+# shellcheck disable=SC2016
+source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'export "$HOME/.clspv/build"'

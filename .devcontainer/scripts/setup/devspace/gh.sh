@@ -10,7 +10,7 @@ if ! grep -q "^github.com " "$HOME/.ssh/known_hosts"; then
 fi
 
 # Configure git
+git config --global advice.detachedHead false
 git config pull.rebase true
-git config advice.detachedHead false
 # Configure GH
 gh config set -h github.com git_protocol https

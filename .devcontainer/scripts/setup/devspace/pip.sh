@@ -54,6 +54,7 @@ echo "PIP_FAST_LEVEL=$PIP_FAST_LEVEL"
 # TODO: transformers4rec[docs,dev] https://github.com/NVIDIA-Merlin/Transformers4Rec
 # TODO: 'sample-factory[dev,atari,envpool,mujoco,vizdoom]>=2.0.3'
 # TODO: semantic-kernel, onefuzz, espnet, dbt_core, dbt-glue, presidio-image-redactor, cataclysm, timm-viz,ptgnn, botbuilder-azure
+# TODO: olive-ai
 # TODO: Fix grep: Unmatched [, [^, [:, [., or [=
 # TODO: 'msticpy[azure]==2.3.1' 'msticnb>=1.1.0'
 # Setup pip
@@ -154,8 +155,8 @@ packages+=(platformdirs isort mccabe ipykernel ipython-genutils packaging nbmake
   'scikit-learn>=1.2.2' 'scikit-image>=0.21.0' 'scikit-optimize>=0.9.0'
   'tensorflow>=2.12.0' 'tensorflow-addons[tensorflow]' tensorboard keras batch-inference 'gast<=0.4.0,>=0.2.1' 'wrapt<1.15,>=1.11.0' 'protobuf<4,>=3.8.0' 'wandb>=0.15.3'
   kaggle pipdeptree
-  torch torchvision torchaudio fire 'pytorch-lightning==1.9.4' timm 'torchmetrics<0.10.1,>=0.7.0'
-  'speechbrain>=0.5.14' 'flair>=0.12.2' 'fastai[dev]>=2.7.12' 'fastai-datasets>=0.0.8' olive-ai
+  torch torchvision torchaudio fire 'pytorch-lightning==1.9.4' timm 'torchmetrics'
+  'speechbrain>=0.5.14' 'flair>=0.12.2' 'fastai[dev]>=2.7.12' 'fastai-datasets>=0.0.8'
   'accelerate>=0.20.3' 'transformers>=4.30.2' 'datasets>=2.13.0' 'diffusers>=0.16.1' 'adapter-transformers>=3.2.1' 'span-marker>=1.1.1' 'sentence-transformers>=2.2.2'
   openai 'openai-whisper>=20230314' 'tiktoken==0.3.1' ttok llm llama-index loralib 'langchain>=0.0.202'
   'pythae>=0.1.1' 'paddlenlp>=2.5.2' 'altair>=5.0.1' 'dill<0.3.5'
