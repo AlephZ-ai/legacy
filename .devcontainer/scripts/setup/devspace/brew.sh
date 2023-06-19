@@ -59,7 +59,7 @@ if [ "$BREW_FAST_LEVEL" -eq 0 ]; then
     HOMEBREW_ACCEPT_EULA=Y brew install --include-test zlib zlib-ng flatbuffers snappy buf protobuf grpc dos2unix git git-lfs sigstore/tap/gitsign-credential-cache sigstore/tap/gitsign gh subversion mercurial darcs
     HOMEBREW_ACCEPT_EULA=Y brew install --include-test gcc llvm clang-format clang-build-analyzer dotnet dotnet@6 mono go rust perl ruby python python-tk python@3.9 python-tk@3.9 python@3.10 python-tk@3.10 python@3.11 python-tk@3.11 ocaml opam
     HOMEBREW_ACCEPT_EULA=Y brew install --include-test nss openssl openssl@1.1 openssl@3 openssh age nghttp2 mkcert shellcheck speedtest-cli mono-libgdiplus chezmoi sqlite sqlite-utils sqlite-analyzer postgresql@15
-    HOMEBREW_ACCEPT_EULA=Y brew install --include-test openjdk openjdk@8 openjdk@11 openjdk@17 maven groovy gradle scala sbt yarn bash-completion@2 z3 asdf tbb scons fdupes pugixml molten-vk
+    HOMEBREW_ACCEPT_EULA=Y brew install --include-test openjdk openjdk@8 openjdk@11 openjdk@17 maven groovy gradle scala sbt yarn bash-completion@2 z3 asdf tbb scons fdupes pugixml molten-vk googletest
     HOMEBREW_ACCEPT_EULA=Y brew install --include-test azure-cli awscli msodbcsql18 mssql-tools18 kubernetes-cli helm minikube kind k3d argocd derailed/k9s/k9s kustomize skaffold vcluster openfst
     HOMEBREW_ACCEPT_EULA=Y brew install --include-test python-typing-extensions pygobject3 py3cairo pyyaml libffi libyaml qt pyqt boost boost-build boost-mpi boost-python3 terraform gtk+3 gtk+4 graphviz
     HOMEBREW_ACCEPT_EULA=Y brew install --include-test ffmpeg libsndfile libsoundio libomp open-mpi opencv openvino bats-core gedit git-gui git-svn numpy scipy libtensorflow pytorch torchvision neovim enchant

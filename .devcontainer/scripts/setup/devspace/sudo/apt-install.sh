@@ -32,7 +32,7 @@ while ! (
   apt install -y --install-recommends gnupg sqlite3 libsqlite3-dev libopenmpi-dev libssl-dev libbz2-dev libreadline-dev libncurses5-dev libncursesw5-dev
   apt install -y --install-recommends xz-utils tk-dev libffi-dev liblzma-dev libgl1-mesa-glx libegl1-mesa libxrandr2 libxss1 libxcursor1 libxcomposite1 libxtst6
   apt install -y --install-recommends libatlas-base-dev libopenblas-dev libblas-dev liblapack-dev liblapacke-dev liblapack-doc liblapack-pic liblapacke liblapacke-dev
-  apt install -y --install-recommends caffe-cuda caffe-tools-cuda caffe-cuda-cublas caffe-cuda-cublas-dev caffe-cuda-cudart caffe-cuda-cudart-dev
+  apt install -y --install-recommends caffe-cuda caffe-tools-cuda caffe-cuda-cublas caffe-cuda-cublas-dev caffe-cuda-cudart caffe-cuda-cudart-dev libgtest-dev
   apt install -y --install-recommends caffe-cuda-cufft caffe-cuda-cufft-dev caffe-cuda-curand caffe-cuda-curand-dev caffe-cuda-cusolver caffe-cuda-cusolver-dev
   apt install -y --install-recommends caffe-cuda-cusparse caffe-cuda-cusparse-dev caffe-cuda-npp caffe-cuda-npp-dev caffe-cuda-nvrtc caffe-cuda-nvrtc-dev
   apt install -y --install-recommends caffe-cuda-cudnn caffe-cuda-cudnn-dev caffe-cuda-cudnn8 caffe-cuda-cudnn8-dev caffe-cuda-cudnn8-doc caffe-cuda-cudnn8-samples

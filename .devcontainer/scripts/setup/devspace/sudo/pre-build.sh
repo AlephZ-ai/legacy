@@ -5,6 +5,8 @@ USERNAME=${USERNAME:-}
 # Update apt-packages
 source "$DEVCONTAINER_SCRIPTS_ROOT/setup/devspace/sudo/apt-install.sh"
 # Update apt-packages
+source "$DEVCONTAINER_SCRIPTS_ROOT/setup/devspace/sudo/googletest.sh"
+# Update apt-packages
 source "$DEVCONTAINER_SCRIPTS_ROOT/setup/devspace/sudo/snap.sh"
 # Install docker completions
 source "$DEVCONTAINER_SCRIPTS_ROOT/setup/devspace/sudo/docker-completions.sh"

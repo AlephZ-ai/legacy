@@ -160,7 +160,7 @@ packages+=(platformdirs isort mccabe ipykernel ipython-genutils packaging nbmake
   'accelerate>=0.20.3' 'transformers>=4.30.2' 'datasets>=2.13.0' 'diffusers>=0.16.1' 'adapter-transformers>=3.2.1' 'span-marker>=1.1.1' 'sentence-transformers>=2.2.2'
   openai 'openai-whisper>=20230314' 'tiktoken==0.3.1' ttok llm llama-index loralib 'langchain>=0.0.202'
   'pythae>=0.1.1' 'paddlenlp>=2.5.2' 'altair>=5.0.1' 'dill<0.3.5'
-  'nemo-toolkit[common,asr,nlp,tts,slu,test]>=1.18.0' 'nemo-text-processing>=0.1.7rc0'
+  'nemo-toolkit[common,asr,nlp,tts,slu,test]>=1.19.0' 'nemo-text-processing>=0.1.7rc0'
   'bertopic[test,docs,dev,flair,spacy,use,gensim,vision]>=0.15.0'
   'tritonclient>=2.34.0'
   azure-devtools azure-keyvault-certificates azure-keyvault-secrets azure-keyvault-administration 'azureml-dataprep>=4.11.3'
