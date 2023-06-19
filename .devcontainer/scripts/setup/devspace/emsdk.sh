@@ -2,7 +2,7 @@
 # shellcheck shell=bash
 # shellcheck source=/dev/null
 set -euo pipefail
-source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'EMSDK_QUIET=1'
+source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'export EMSDK_QUIET=1'
 if [ -e "$HOME/.emsdk/emsdk_env.sh" ]; then source "$HOME/.emsdk/emsdk_env.sh"; fi
 if command -v rustup >/dev/null 2>&1; then
   export EMSDK_FAST_LEVEL=${EMSDK_FAST_LEVEL:-${FAST_LEVEL:-0}}

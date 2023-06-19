@@ -73,6 +73,8 @@ source "$DEVCONTAINER_SCRIPTS_ROOT/setup/devspace/dotnet.sh"
 source "$DEVCONTAINER_SCRIPTS_ROOT/setup/devspace/trust-root-ca.sh"
 # Setup pwsh modules
 source "$DEVCONTAINER_SCRIPTS_ROOT/setup/devspace/pwsh.sh"
+# Setup rust
+source "$DEVCONTAINER_SCRIPTS_ROOT/setup/devspace/clspv.sh"
 # Setup pip
 source "$DEVCONTAINER_SCRIPTS_ROOT/setup/devspace/pip.sh"
 # Setup az

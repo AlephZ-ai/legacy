@@ -1,7 +1,6 @@
 #!/usr/bin/env zsh
 # shellcheck shell=bash
 # shellcheck source=/dev/null
-# init
 set -euo pipefail
 os=$(uname -s)
 # Check fast level
@@ -129,72 +128,77 @@ python -m ensurepip --upgrade
 python -m pip install --no-input --upgrade pip
 pip --version
 "$DEVCONTAINER_SCRIPTS_ROOT/utils/pip-enable-cache.sh"
-pip install --no-input --upgrade 'setuptools==65.5.1' wheel 'cython>=0.29.35' pygobject pycairo pipx virtualenv pyyaml pybind11 libclang clang-format clang-tidy
-pip install --no-input --upgrade sphinx sphinx-multiversion enchant 'numpy==1.23.5'
+packages=('setuptools==65.5.1' wheel 'cython>=0.29.35' pygobject pycairo pipx virtualenv pyyaml pybind11 libclang clang-format clang-tidy
+  sphinx sphinx-multiversion enchant 'numpy==1.23.4' 'networkx>=2.8,<=2.8.8')
 if [ "$os" = "Linux" ]; then
-  pip install --no-input --upgrade --global-option="--cpp_ext" --global-option="--cuda_ext" --global-option="--fast_layer_norm" --global-option="--distributed_adam" --global-option="--deprecated_fused_adam" \
-    nvidia-cudnn-cu11 cudf-cu11 dask-cudf-cu11 cuml-cu11 cugraph-cu11 cucim nvidia-dali-cuda110 nvidia-dali-tf-plugin-cuda110 \
-    triton-model-analyzer onnxruntime-training git+https://github.com/NVIDIA/TransformerEngine.git@stable git+https://github.com/NVIDIA/apex.git \
-    pennylane-lightning[gpu] qulacs-gpu nvtabular 'transformers4rec[pytorch,nvtabular]' merlin-core merlin-models merlin-dataloader
+  packages+=(nvidia-cudnn-cu11 cudf-cu11 dask-cudf-cu11 cuml-cu11 cugraph-cu11 cucim nvidia-dali-cuda110 nvidia-dali-tf-plugin-cuda110
+    triton-model-analyzer onnxruntime-training
+    'pennylane-lightning[gpu]' qulacs-gpu nvtabular 'transformers4rec[pytorch,nvtabular]' merlin-core merlin-models merlin-dataloader)
 else
-  pip install --no-input --upgrade keyper
+  packages+=(keyper)
 fi
 
-# clone_or_update_repo clspv google 'python utils/fetch_sources.py; mkdir -p build && pushd build; cmake -G Ninja -DCMAKE_BUILD_TYPE=Release ..; ninja; popd;'
 # # shellcheck disable=SC2016
 # clone_or_update_repo openvino openvinotoolkit 'mkdir -p build && pushd build; cmake -G "Ninja Multi-Config" -DENABLE_SYSTEM_PUGIXML=ON -DENABLE_SYSTEM_SNAPPY=ON -DENABLE_SYSTEM_PROTOBUF=ON -DENABLE_PYTHON=ON -DProtobuf_INCLUDE_DIR="$HOMEBREW_PREFIX/opt/protobuf/include" -DProtobuf_LIBRARY="$HOMEBREW_PREFIX/opt/protobuf/lib" -DOpenMP_C_FLAGS="-fopenmp -I$HOMEBREW_PREFIX/opt/libomp/include" -DOpenMP_C_LIB_NAMES="gomp" -DOpenMP_gomp_LIBRARY="$HOMEBREW_PREFIX/opt/gcc/lib/gcc/current/libgomp.dylib" ..; cmake --build . --config Release --parallel $(sysctl -n hw.ncpu); popd;'
-pip install --no-input --upgrade platformdirs isort mccabe ipykernel ipython-genutils packaging nbmake absl-extra docker-pycreds flask 'poetry>=1.5.1' pathy playwright
-pip install --no-input --upgrade ninja tbb pugixml flatbuffers snappy zlib-ng absl-py libusb
-pip install --no-input --upgrade pygments flake8 tqdm rich ruff lit pytest pytest-sugar pytest-cov pytest-xdist pytest-xprocess pytest-mock pytest-benchmark pytest-playwright
-pip install --no-input --upgrade autopep8 aiosqlite absl-py astunparse google-pasta grpcio 'h5py>=3.8.0' 'knack>=0.10.1'
-pip install --no-input --upgrade 'blis<0.8.0,>=0.7.8' catalogue confection cymem murmurhash preshed yapf pydantic jinja2 langcodes murmurhash filelock
-pip install --no-input --upgrade 'dask>=2023.5.1' 'shot-scraper>=1.2' strip-tags 'pynini>0.1.1' lsprotocol debugpy
-pip install --no-input --upgrade tokenizers sentencepiece lazy-loader pillow py 'pylint[spelling]>=2.17.4' mypy 'pandas>=2.0.2' 'moviepy>=1.0.3' 'opt-einsum>=3.3.0'
-pip install --no-input --upgrade 'jsmin>=3.0.1' msal msal-extensions 'chromadb>=0.3.26' pytablewriter boto3 cloudpickle 'scenepic>=1.1.0'
-pip install --no-input --upgrade 'opencv-python>=4.7.0.72' 'imageio>=2.31.1' 'matplotlib==3.6.2' plotly 'scipy>=1.10.1' 'seaborn>=0.12.2' 'spacy>=3.5.3' 'nltk>=3.8.1' 'rouge-score>=0.1.2' 'gensim>=4.3.1'
-pip install --no-input --upgrade 'pyctcdecode>=0.5.0' 'lupyne[graphql,rest]' plush lucene-querybuilder intel-openmp
-pip install --no-input --upgrade 'jax>=0.4.12' 'jaxlib>=0.4.12' 'autograd>=1.5' autograd-minimize box2d-py pybullet 'optuna>=3.2.0'
-pip install --no-input --upgrade 'scikit-learn>=1.2.2' 'scikit-image>=0.21.0' 'scikit-optimize>=0.9.0' 'networkx>=2.8,<=2.8.8'
-pip install --no-input --upgrade 'tensorflow>=2.12.0' 'tensorflow-addons[tensorflow]' tensorboard keras batch-inference 'gastt<=0.4.0,>=0.2.1' 'wrapt<1.15,>=1.11.0' 'protobuf<4,>=3.8.0' 'wandb>=0.15.3'
-pip install --no-input --upgrade kaggle pipdeptree
-pip install --no-input --upgrade torch torchvision torchaudio fire 'pytorch-lightning==1.9.4' timm
-pip install --no-input --upgrade 'speechbrain>=0.5.14' 'flair>=0.12.2' 'fastai[dev]>=2.7.12' 'fastai-datasets>=0.0.8'
-pip install --no-input --upgrade 'accelerate>=0.20.3' 'transformers>=4.30.2' 'datasets>=2.13.0' 'diffusers>=0.16.1' 'adapter-transformers>=3.2.1' 'span-marker>=1.1.1' 'sentence-transformers>=2.2.2'
-pip install --no-input --upgrade openai 'openai-whisper>=20230314' 'tiktoken==0.3.1' ttok llm llama-index loralib 'langchain>=0.0.202'
-pip install --no-input --upgrade 'pythae>=0.1.1' 'paddlenlp>=2.5.2' 'altair>=5.0.1' 'dill<0.3.5'
-pip install --no-input --upgrade 'nemo-toolkit[common,asr,nlp,tts,slu,test]>=1.18.0' 'nemo-text-processing>=0.1.7rc0'
-pip install --no-input --upgrade 'bertopic[test,docs,dev,flair,spacy,use,gensim,vision]>=0.15.0'
-pip install --no-input --upgrade 'tritonclient>=2.34.0'
-pip install --no-input --upgrade azure-devtools azure-keyvault-certificates azure-keyvault-secrets azure-keyvault-administration 'azureml-dataprep>=4.11.3'
-pip install --no-input --upgrade 'presidio-cli>=0.0.8' 'presidio-analyzer>=2.2.33' presidio-anonymizer presidio-evaluator
-pip install --no-input --upgrade textworld botbuilder-ai botbuilder-applicationinsights botbuilder-core 'botbuilder-schema>=4.14.4' botframework-connector
-pip install --no-input --upgrade 'bokeh<3.0.0,>=1.4.0' 'gradio>=3.35.2' 'mdit-py-plugins==0.3.3'
-pip install --no-input --upgrade sympy deepgnn-ge deepgnn-torch deepgnn-tf graphviz
-pip install --no-input --upgrade graspologic olive-ai azure-cosmos 'msrest==0.6.*' import-mocker
-pip install --no-input --upgrade azure-ai-ml azure-ai-contentsafety azure-ai-mlmonitoring azure-ai-textanalytics azure-ai-formrecognizer
-pip install --no-input --upgrade azure-ai-anomalydetector azure-ai-metricsadvisor azureml-rai-utils azure-ai-translation-text azure-ai-translation-document
-pip install --no-input --upgrade azure-ai-language-questionanswering azure-ai-language-conversations azure-cli-cognitiveservices azure-cognitiveservices-speech
-pip install --no-input --upgrade azure-cognitiveservices-inkrecognizer azure-cognitiveservices-personalizer azure-cognitiveservices-anomalydetector
-pip install --no-input --upgrade azure-cognitiveservices-vision-computervision azure-cognitiveservices-vision-customvision azure-cognitiveservices-knowledge-qnamaker
-pip install --no-input --upgrade azure-cognitiveservices-language-luis azure-cognitiveservices-vision-contentmoderator azure-cognitiveservices-search-websearch
-pip install --no-input --upgrade azure-cognitiveservices-search-videosearch azure-cognitiveservices-search-visualsearch azure-cognitiveservices-vision-face
-pip install --no-input --upgrade azure-cognitiveservices-search-autosuggest azure-cognitiveservices-search-imagesearch azure-cognitiveservices-language-spellcheck
-pip install --no-input --upgrade azure-cognitiveservices-search-newssearch azure-cognitiveservices-search-customsearch azure-cognitiveservices-search-customimagesearch
-pip install --no-input --upgrade azure-cognitiveservices-search-entitysearch planetary-computer azure-pylint-guidelines-checker
-pip install --no-input --upgrade azure-developer-loadtesting azure-defender-easm azure-appconfiguration confidential-ml-utils
-pip install --no-input --upgrade microsoft-bing-websearch microsoft-bing-spellcheck microsoft-bing-videosearch microsoft-bing-imagesearch
-pip install --no-input --upgrade microsoft-bing-customimagesearch microsoft-bing-visualsearch microsoft-bing-entitysearch microsoft-bing-customwebsearch
-pip install --no-input --upgrade microsoft-bing-newssearch microsoft-bing-autosuggest google google-cloud google-benchmark
-pip install --no-input --upgrade cirq cirq-iqm quil pyquil qclient qulacs qulacsvis
-pip install --no-input --upgrade qiskit-terra qiskit-ibmq-provider 'qiskit[visualization,experiments,optimization,finance,machine-learning,nature]' qiskit-qir
-pip install --no-input --upgrade qdk qsharp qsharp-chemistry 'azure-quantum[dev,cirq,qiskit,qsharp,quil]' pyquil-for-azure-quantum quantum-viz
-pip install --no-input --upgrade 'pytket>=1.16.0' 'pennylane>=0.30.0' pennylane-lightning
-pip install --no-input --upgrade pytket-cirq pytket-iqm pytket-qir pytket-qsharp pytket-qulacs 'pytket-pennylane>=0.8.0'
-pip install --no-input --upgrade pennyLane-cirq pennyLane-qiskit pennylane-qulacs pennylane-qsharp
-pip install --no-input --upgrade 'black[jupyter]' jupyter-client jupyter-core notebook jupyterlab voila RISE 'mlflow>2.4.0'
-pip install --no-input --upgrade 'huggingface-hub>=0.15.1' 'skops>=0.6.0' openvino openvino-dev rapidocr-openvino
-pip install --no-input --upgrade onnxruntime onnxruntime-extensions onnxruntime-tools mtcnn-onnxruntime
-pip install --no-input --upgrade 'scikit-onnxruntime>=0.2.1.4' torch-ort-inference 'torch-ort-infer>=1.13.1' rapidocr-onnxruntime
+packages+=(platformdirs isort mccabe ipykernel ipython-genutils packaging nbmake absl-extra docker-pycreds 'flask==2.2.5' 'poetry>=1.5.1' pathy playwright
+  ninja tbb pugixml flatbuffers snappy zlib-ng absl-py libusb
+  pygments flake8 tqdm rich ruff lit pytest pytest-sugar pytest-cov pytest-xdist pytest-xprocess pytest-mock pytest-benchmark pytest-playwright
+  autopep8 aiosqlite absl-py astunparse google-pasta grpcio 'h5py>=3.8.0' 'knack>=0.10.1'
+  'blis<0.8.0,>=0.7.8' catalogue confection cymem murmurhash preshed yapf pydantic jinja2 langcodes murmurhash filelock
+  'dask>=2023.5.1' 'shot-scraper>=1.2' strip-tags 'pynini>0.1.1' lsprotocol debugpy
+  tokenizers sentencepiece lazy-loader pillow py 'pylint[spelling]>=2.17.4' mypy 'pandas>=2.0.2' 'moviepy>=1.0.3' 'opt-einsum>=3.3.0'
+  'jsmin>=3.0.1' msal msal-extensions 'chromadb>=0.3.26' pytablewriter boto3 cloudpickle 'scenepic>=1.1.0'
+  'opencv-python>=4.7.0.72' 'imageio>=2.31.1' 'matplotlib==3.6.2' plotly 'scipy>=1.10.1' 'seaborn>=0.12.2' 'spacy>=3.5.3' 'nltk>=3.8.1' 'rouge-score>=0.1.2' 'gensim>=4.3.1'
+  'pyctcdecode>=0.5.0' 'lupyne[graphql,rest]' plush lucene-querybuilder intel-openmp
+  'jax>=0.4.12' 'jaxlib>=0.4.12' 'autograd>=1.5' autograd-minimize box2d-py pybullet 'optuna>=3.2.0'
+  'scikit-learn>=1.2.2' 'scikit-image>=0.21.0' 'scikit-optimize>=0.9.0'
+  'tensorflow>=2.12.0' 'tensorflow-addons[tensorflow]' tensorboard keras batch-inference 'gast<=0.4.0,>=0.2.1' 'wrapt<1.15,>=1.11.0' 'protobuf<4,>=3.8.0' 'wandb>=0.15.3'
+  kaggle pipdeptree
+  torch torchvision torchaudio fire 'pytorch-lightning==1.9.4' timm 'torchmetrics<0.10.1,>=0.7.0'
+  'speechbrain>=0.5.14' 'flair>=0.12.2' 'fastai[dev]>=2.7.12' 'fastai-datasets>=0.0.8' olive-ai
+  'accelerate>=0.20.3' 'transformers>=4.30.2' 'datasets>=2.13.0' 'diffusers>=0.16.1' 'adapter-transformers>=3.2.1' 'span-marker>=1.1.1' 'sentence-transformers>=2.2.2'
+  openai 'openai-whisper>=20230314' 'tiktoken==0.3.1' ttok llm llama-index loralib 'langchain>=0.0.202'
+  'pythae>=0.1.1' 'paddlenlp>=2.5.2' 'altair>=5.0.1' 'dill<0.3.5'
+  'nemo-toolkit[common,asr,nlp,tts,slu,test]>=1.18.0' 'nemo-text-processing>=0.1.7rc0'
+  'bertopic[test,docs,dev,flair,spacy,use,gensim,vision]>=0.15.0'
+  'tritonclient>=2.34.0'
+  azure-devtools azure-keyvault-certificates azure-keyvault-secrets azure-keyvault-administration 'azureml-dataprep>=4.11.3'
+  'presidio-cli>=0.0.8' 'presidio-analyzer>=2.2.33' presidio-anonymizer presidio-evaluator
+  textworld botbuilder-ai botbuilder-applicationinsights botbuilder-core 'botbuilder-schema>=4.14.4' botframework-connector
+  'bokeh<3.0.0,>=1.4.0' 'gradio>=3.35.2' 'mdit-py-plugins==0.3.3'
+  sympy deepgnn-ge deepgnn-torch deepgnn-tf graphviz
+  graspologic azure-cosmos 'msrest==0.6.*' import-mocker
+  azure-ai-ml azure-ai-contentsafety azure-ai-mlmonitoring azure-ai-textanalytics azure-ai-formrecognizer
+  azure-ai-anomalydetector azure-ai-metricsadvisor azureml-rai-utils azure-ai-translation-text azure-ai-translation-document
+  azure-ai-language-questionanswering azure-ai-language-conversations azure-cli-cognitiveservices azure-cognitiveservices-speech
+  azure-cognitiveservices-inkrecognizer azure-cognitiveservices-personalizer azure-cognitiveservices-anomalydetector
+  azure-cognitiveservices-vision-computervision azure-cognitiveservices-vision-customvision azure-cognitiveservices-knowledge-qnamaker
+  azure-cognitiveservices-language-luis azure-cognitiveservices-vision-contentmoderator azure-cognitiveservices-search-websearch
+  azure-cognitiveservices-search-videosearch azure-cognitiveservices-search-visualsearch azure-cognitiveservices-vision-face
+  azure-cognitiveservices-search-autosuggest azure-cognitiveservices-search-imagesearch azure-cognitiveservices-language-spellcheck
+  azure-cognitiveservices-search-newssearch azure-cognitiveservices-search-customsearch azure-cognitiveservices-search-customimagesearch
+  azure-cognitiveservices-search-entitysearch planetary-computer azure-pylint-guidelines-checker
+  azure-developer-loadtesting azure-defender-easm azure-appconfiguration confidential-ml-utils
+  microsoft-bing-websearch microsoft-bing-spellcheck microsoft-bing-videosearch microsoft-bing-imagesearch
+  microsoft-bing-customimagesearch microsoft-bing-visualsearch microsoft-bing-entitysearch microsoft-bing-customwebsearch
+  microsoft-bing-newssearch microsoft-bing-autosuggest google google-cloud google-benchmark
+  cirq cirq-iqm quil pyquil qclient qulacs qulacsvis
+  qiskit-terra qiskit-ibmq-provider 'qiskit[visualization,experiments,optimization,finance,machine-learning,nature]' qiskit-qir
+  qdk qsharp qsharp-chemistry 'azure-quantum[dev,cirq,qiskit,qsharp,quil]' pyquil-for-azure-quantum quantum-viz
+  'pytket>=1.16.0' 'pennylane>=0.30.0' pennylane-lightning
+  pytket-cirq pytket-iqm pytket-qir pytket-qsharp pytket-qulacs 'pytket-pennylane>=0.8.0'
+  pennyLane-cirq pennyLane-qiskit pennylane-qulacs pennylane-qsharp
+  'black[jupyter]' jupyter-client jupyter-core notebook jupyterlab voila RISE 'mlflow>2.4.0'
+  'huggingface-hub>=0.15.1' 'skops>=0.6.0' openvino openvino-dev rapidocr-openvino
+  onnxruntime onnxruntime-extensions onnxruntime-tools mtcnn-onnxruntime
+  'scikit-onnxruntime>=0.2.1.4' torch-ort-inference 'torch-ort-infer>=1.13.1' rapidocr-onnxruntime)
+pip install --no-input --upgrade "${packages[@]}"
+if [ "$os" = "Linux" ]; then
+  pip install --no-input --upgrade --global-option="--cpp_ext" --global-option="--cuda_ext" --global-option="--fast_layer_norm" \
+    --global-option="--distributed_adam" --global-option="--deprecated_fused_adam" \
+    'git+https://github.com/NVIDIA/TransformerEngine.git@stable' 'git+https://github.com/NVIDIA/apex.git'
+fi
+
 # Setup catalyst
 clone_or_update_repo catalyst PennyLaneAI 'python setup.py install'
 # Setup onnxruntime and openvino

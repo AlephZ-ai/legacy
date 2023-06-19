@@ -1,7 +1,6 @@
 #!/bin/zsh
 # shellcheck shell=bash
 # shellcheck source=/dev/null
-# init
 set -euo pipefail
 os=$(uname -s)
 if [ -z "${HOMEBREW_PREFIX:-}" ]; then
