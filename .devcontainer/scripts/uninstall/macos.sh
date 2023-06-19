@@ -14,6 +14,7 @@ export BREW_POST_UNINSTALL='"$DEVCONTAINER_SCRIPTS_ROOT/uninstall/macos/casks.sh
 "$DEVCONTAINER_SCRIPTS_ROOT/uninstall/nvm.sh"
 "$DEVCONTAINER_SCRIPTS_ROOT/uninstall/zsh.sh"
 "$DEVCONTAINER_SCRIPTS_ROOT/uninstall/brew.sh"
+"$DEVCONTAINER_SCRIPTS_ROOT/uninstall/other.sh"
 rm -rf "$HOME/.iterm2"
 rm -rf "$HOME/.config/iterm2"
 # Remove autogenerate section from rc files
