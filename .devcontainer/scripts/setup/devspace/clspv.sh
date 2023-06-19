@@ -2,7 +2,7 @@
 # shellcheck shell=bash
 # shellcheck source=/dev/null
 set -euo pipefail
-if [ -e "$HOME/.clspv/build" ]; then export "$HOME/.clspv/build"; fi
+if [ -e "$HOME/.clspv/build" ]; then export PATH="$HOME/.clspv/build/bin:$PATH"; fi
 if command -v clspv >/dev/null 2>&1; then
   export CLSPV_FAST_LEVEL=${CLSPV_FAST_LEVEL:-${FAST_LEVEL:-0}}
 else
@@ -25,4 +25,4 @@ if [ "$CLSPV_FAST_LEVEL" -eq 0 ]; then
 fi
 
 # shellcheck disable=SC2016
-source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'export "$HOME/.clspv/build"'
+source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'export PATH="$HOME/.clspv/build/bin:$PATH"'
