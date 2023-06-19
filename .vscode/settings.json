@@ -8,7 +8,7 @@
   "files.autoSave": "afterDelay",
   "json.format.enable": true,
   "omnisharp.enableRoslynAnalyzers": true,
-  "vim.disableExtension": false,
+  "vim.disableExtension": true,
   "vim.startInInsertMode": true,
   "vim.showmodename": true,
   "vim.showcmd": false,
