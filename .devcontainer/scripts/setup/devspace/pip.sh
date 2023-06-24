@@ -23,7 +23,7 @@ echo "PIP_FAST_LEVEL=$PIP_FAST_LEVEL"
 #   cntk ml-agents espnet2 gym-retro fastchan TensorFlowTTS triton-model-navigator nvidia-pytriton trimm trimm-viz rliable
 #   msal msal-extensions pytest-azurepipelines azureml-responsibleai azureml-dataprep-native azure-mlflow
 #   torch-directml model-perf azure-ai-vision
-# TODO: 'botbuilder-dialogs>=4.14.4'
+# TODO: 'botbuilder-dialogs>=4.14.4' 'botbuilder-schema>=4.14.4' 'botframework-connector>=4.14.4' 'botbuilder-ai>=4.14.4' botbuilder-applicationinsights botbuilder-core
 # TODO: Keep a check on huggingface-sb3 it has huggingface-hub pinned to 0.8.1
 # TODO: Check onnxruntime-openmp onnxruntime-noopenmp onnxruntime-coreml onnxruntime-silicon onnxruntime-gpu onnxruntime-cann onnxruntime-azure onnxruntime-powerpc64le
 # https://github.com/huggingface/huggingface_sb3/issues/27
@@ -46,7 +46,7 @@ echo "PIP_FAST_LEVEL=$PIP_FAST_LEVEL"
 #       jupyterlab-widgets jupyterlab-commands "jupyterlab-code-formatter>=2.2.1" jupyterlab-black jupyterlab-requirements
 #       jupyterlab-sparksql jupyterlab-drawio jupyterlab-powerpoint jupyterlab-github jupyterlab-flake8 jupyterlab-lsp
 #       jupyterlab-graph-lsp jupyterlab-telemetry jupyterlab-kernelspy jupyterlab-system-monitor jupyterlab-topbar
-#       jupyterlab-quickopen
+#       jupyterlab-quickopen 'flask==2.2.5'
 # TODO: 'gymnasium[accept-rom-license,atari,box2d,classic-control,mujoco,mujoco-py,toy-text,jax,other,testing]>=0.28.1' needs scipy>=1.7.1
 #       panda-gym gym-super-mario-bros flappy-bird-gymnasium
 # TODO: nemo-toolkit[asr,common,nlp,slu,test,tts] 1.18.1 depends on pytorch-lightning<=1.9.4 and >=1.9.0; extra == "nlp" pytorch-lightning>=1.9.0,<=1.9.4
@@ -54,9 +54,10 @@ echo "PIP_FAST_LEVEL=$PIP_FAST_LEVEL"
 # TODO: transformers4rec[docs,dev] https://github.com/NVIDIA-Merlin/Transformers4Rec
 # TODO: 'sample-factory[dev,atari,envpool,mujoco,vizdoom]>=2.0.3'
 # TODO: semantic-kernel, onefuzz, espnet, dbt_core, dbt-glue, presidio-image-redactor, cataclysm, timm-viz,ptgnn, botbuilder-azure
-# TODO: olive-ai, textworld, deepgnn-ge, azure-ai-translation-text
+# TODO: olive-ai, textworld, deepgnn-ge, azure-ai-translation-text 'chromadb>=0.3.26'
 # TODO: Fix grep: Unmatched [, [^, [:, [., or [=
 # TODO: 'msticpy[azure]==2.3.1' 'msticnb>=1.1.0'
+# TODO: 'qulacsvis>=0.7.1' azure-quantum[dev,cirq,qiskit,qsharp,quil] pyquil-for-azure-quantum
 # Setup pip
 source "$DEVCONTAINER_SCRIPTS_ROOT/utils/updaterc.sh" 'export PYENV_VIRTUALENV_DISABLE_PROMPT=1'
 # Array of Python versions to upgrade
@@ -141,55 +142,54 @@ fi
 
 # # shellcheck disable=SC2016
 # clone_or_update_repo openvino openvinotoolkit 'mkdir -p build && pushd build; cmake -G "Ninja Multi-Config" -DENABLE_SYSTEM_PUGIXML=ON -DENABLE_SYSTEM_SNAPPY=ON -DENABLE_SYSTEM_PROTOBUF=ON -DENABLE_PYTHON=ON -DProtobuf_INCLUDE_DIR="$HOMEBREW_PREFIX/opt/protobuf/include" -DProtobuf_LIBRARY="$HOMEBREW_PREFIX/opt/protobuf/lib" -DOpenMP_C_FLAGS="-fopenmp -I$HOMEBREW_PREFIX/opt/libomp/include" -DOpenMP_C_LIB_NAMES="gomp" -DOpenMP_gomp_LIBRARY="$HOMEBREW_PREFIX/opt/gcc/lib/gcc/current/libgomp.dylib" ..; cmake --build . --config Release --parallel $(sysctl -n hw.ncpu); popd;'
-packages+=(platformdirs isort mccabe ipykernel ipython-genutils packaging nbmake absl-extra docker-pycreds 'flask==2.2.5' 'poetry>=1.5.1' pathy playwright
+packages+=(platformdirs isort mccabe ipykernel ipython-genutils packaging nbmake absl-extra docker-pycreds 'poetry>=1.5.1' pathy playwright
   ninja tbb pugixml flatbuffers snappy zlib-ng absl-py libusb
   pygments flake8 tqdm rich ruff lit pytest pytest-sugar pytest-cov pytest-xdist pytest-xprocess pytest-mock pytest-benchmark pytest-playwright
   autopep8 aiosqlite absl-py astunparse google-pasta grpcio 'h5py>=3.8.0' 'knack>=0.10.1'
-  'blis<0.8.0,>=0.7.8' catalogue confection cymem murmurhash preshed yapf pydantic jinja2 langcodes murmurhash filelock
+  'blis<0.8.0,>=0.7.8' catalogue confection cymem murmurhash preshed yapf 'pydantic~=1.8.2' jinja2 langcodes murmurhash filelock
   'dask>=2023.5.1' 'shot-scraper>=1.2' strip-tags 'pynini>0.1.1' lsprotocol debugpy
   tokenizers sentencepiece lazy-loader pillow py 'pylint[spelling]>=2.17.4' mypy 'pandas>=2.0.2' 'moviepy>=1.0.3' 'opt-einsum>=3.3.0'
-  'jsmin>=3.0.1' msal msal-extensions 'chromadb>=0.3.26' pytablewriter boto3 cloudpickle 'scenepic>=1.1.0'
+  'jsmin>=3.0.1' msal msal-extensions pytablewriter boto3 cloudpickle 'scenepic>=1.1.0'
   'opencv-python>=4.7.0.72' 'imageio>=2.31.1' 'matplotlib==3.6.2' plotly 'scipy>=1.10.1' 'seaborn>=0.12.2' 'spacy>=3.5.3' 'nltk>=3.8.1' 'rouge-score>=0.1.2' 'gensim>=4.3.1'
   'pyctcdecode>=0.5.0' 'lupyne[graphql,rest]' plush lucene-querybuilder intel-openmp
   'jax>=0.4.12' 'jaxlib>=0.4.12' 'autograd>=1.5' autograd-minimize box2d-py pybullet 'optuna>=3.2.0'
   'scikit-learn>=1.2.2' 'scikit-image>=0.21.0' 'scikit-optimize>=0.9.0'
-  'tensorflow>=2.12.0' 'tensorflow-addons[tensorflow]' tensorboard keras batch-inference 'gast<=0.4.0,>=0.2.1' 'wrapt<1.15,>=1.11.0' 'protobuf<4,>=3.8.0' 'wandb>=0.15.3'
-  kaggle fastkaggle pipdeptree
-  'torch>=2.0.1' torchvision torchaudio fire 'pytorch-lightning==1.9.4' timm 'torchmetrics'
+  'tensorflow>=2.12.0' 'tensorflow-addons[tensorflow]' 'tensorboard>=2.13.0' keras batch-inference 'gast<=0.4.0,>=0.2.1' 'wrapt<1.15,>=1.11.0' 'protobuf<4,>=3.8.0' 'wandb>=0.15.4'
+  'kaggle>=1.5.13' fastkaggle pipdeptree
+  'torch>=2.0.1' 'torchvision>=0.15.2' torchaudio fire 'pytorch-lightning==1.9.4' timm 'torchmetrics'
   'speechbrain>=0.5.14' 'flair>=0.12.2' 'fastai[dev]>=2.7.12' 'fastai-datasets>=0.0.8'
-  'accelerate>=0.20.3' 'transformers>=4.30.2' 'datasets>=2.13.0' 'diffusers>=0.16.1' 'adapter-transformers>=3.2.1' 'span-marker>=1.1.1' 'sentence-transformers>=2.2.2'
-  openai 'openai-whisper>=20230314' 'tiktoken==0.3.1' ttok llm llama-index loralib 'langchain>=0.0.202'
+  'accelerate>=0.20.3' 'transformers>=4.30.2' 'datasets>=2.13.0' 'diffusers>=0.17.1' 'adapter-transformers>=3.2.1' 'span-marker>=1.1.1' 'sentence-transformers>=2.2.2'
+  'openai>=0.27.8' 'openai-whisper>=20230314' 'tiktoken==0.3.1' ttok llm 'llama-index>=0.6.28' loralib 'langchain>=0.0.211'
   'pythae>=0.1.1' 'paddlenlp>=2.5.2' 'altair>=5.0.1' 'dill<0.3.5'
   'nemo-toolkit[common,asr,nlp,tts,slu,test]>=1.19.0' 'nemo-text-processing>=0.1.7rc0'
   'bertopic[test,docs,dev,flair,spacy,use,gensim,vision]>=0.15.0'
   'tritonclient>=2.34.0'
   azure-devtools azure-keyvault-certificates azure-keyvault-secrets azure-keyvault-administration 'azureml-dataprep>=4.11.3'
   'presidio-cli>=0.0.8' 'presidio-analyzer>=2.2.33' presidio-anonymizer presidio-evaluator
-  botbuilder-ai botbuilder-applicationinsights botbuilder-core 'botbuilder-schema>=4.14.4' 'botframework-connector>=4.14.4'
-  'bokeh<3.0.0,>=1.4.0' 'gradio>=3.28.3' 'mdit-py-plugins==0.3.3'
-  sympy 'deepgnn-torch>=0.1.60' deepgnn-tf graphviz
-  graspologic azure-cosmos 'msrest==0.6.*' import-mocker 'streamlit>=1.23.1'
-  'azure-ai-ml>=1.8.0' azure-ai-contentsafety azure-ai-mlmonitoring azure-ai-textanalytics 'azure-ai-formrecognizer>=3.2.1'
+  'bokeh<3.0.0,>=2.4.3' 'gradio==3.28.3' 'mdit-py-plugins==0.3.3'
+  sympy 'deepgnn-torch>=0.1.60' 'deepgnn-tf>=0.1.60' graphviz
+  'graspologic>=3.2.0' azure-cosmos 'msrest<1.0,>=0.7.1' import-mocker 'streamlit>=1.23.1'
+  'azure-ai-ml>=1.8.0' azure-ai-contentsafety 'azure-ai-mlmonitoring>=0.1.0a3' azure-ai-textanalytics 'azure-ai-formrecognizer>=3.2.1'
   azure-ai-anomalydetector azure-ai-metricsadvisor azureml-rai-utils azure-ai-translation-document
   azure-ai-language-questionanswering azure-ai-language-conversations azure-cli-cognitiveservices azure-cognitiveservices-speech
-  azure-cognitiveservices-inkrecognizer azure-cognitiveservices-personalizer azure-cognitiveservices-anomalydetector
-  azure-cognitiveservices-vision-computervision azure-cognitiveservices-vision-customvision azure-cognitiveservices-knowledge-qnamaker
-  azure-cognitiveservices-language-luis azure-cognitiveservices-vision-contentmoderator 'azure-cognitiveservices-search-websearch>=2.0.0'
-  azure-cognitiveservices-search-videosearch 'azure-cognitiveservices-search-visualsearch>=0.2.0' 'azure-cognitiveservices-vision-face>=0.6.0'
-  azure-cognitiveservices-search-autosuggest 'azure-cognitiveservices-search-imagesearch>=2.0.0'
-  azure-cognitiveservices-search-newssearch 'azure-cognitiveservices-search-customsearch>=0.3.0' azure-cognitiveservices-search-customimagesearch
-  'azure-cognitiveservices-search-entitysearch>=2.0.0' planetary-computer azure-pylint-guidelines-checker
+  azure-cognitiveservices-inkrecognizer azure-cognitiveservices-personalizer 'azure-cognitiveservices-anomalydetector>=0.3.0'
+  'azure-cognitiveservices-vision-computervision>=0.9.0' 'azure-cognitiveservices-vision-customvision>=3.1.0' 'azure-cognitiveservices-knowledge-qnamaker>=0.3.0'
+  'azure-cognitiveservices-language-luis==0.2.0' 'azure-cognitiveservices-vision-contentmoderator>=1.0.0' 'azure-cognitiveservices-search-websearch>=2.0.0'
+  'azure-cognitiveservices-search-videosearch>=2.0.0' 'azure-cognitiveservices-search-visualsearch>=0.2.0' 'azure-cognitiveservices-vision-face>=0.6.0'
+  'azure-cognitiveservices-search-autosuggest>=0.2.0' 'azure-cognitiveservices-search-imagesearch>=2.0.0'
+  'azure-cognitiveservices-search-newssearch>=2.0.0' 'azure-cognitiveservices-search-customsearch>=0.3.0' 'azure-cognitiveservices-search-customimagesearch>=0.2.0'
+  'azure-cognitiveservices-search-entitysearch>=2.0.0' 'planetary-computer>=0.5.1' azure-pylint-guidelines-checker
   azure-developer-loadtesting azure-defender-easm azure-appconfiguration confidential-ml-utils
   microsoft-bing-websearch microsoft-bing-spellcheck microsoft-bing-videosearch microsoft-bing-imagesearch
   microsoft-bing-customimagesearch microsoft-bing-visualsearch microsoft-bing-entitysearch microsoft-bing-customwebsearch
   microsoft-bing-newssearch microsoft-bing-autosuggest google google-cloud google-benchmark
-  'iqm-client>=12.5' "cirq~=1.1" 'cirq-iqm>=11.9' quil 'pyquil>=3.5.4' qclient 'qulacs>=0.6.0' 'qulacsvis>=0.7.1'
+  'iqm-client==1.6' "cirq==0.15.0" cirq-iqm quil 'pyquil~=3.0.0' qclient 'qulacs>=0.6.0'
   qiskit-terra qiskit-ibmq-provider 'qiskit[visualization,experiments,optimization,finance,machine-learning,nature]' qiskit-qir
-  qdk qsharp qsharp-chemistry 'azure-quantum[dev,cirq,qiskit,qsharp,quil]>=0.28.277227' pyquil-for-azure-quantum quantum-viz
+  qdk qsharp qsharp-chemistry 'azure-quantum[cirq,qiskit]==0.25.222597' quantum-viz
   'pytket>=1.16.0' 'pennylane>=0.30.0' pennylane-lightning
-  pytket-cirq pytket-iqm pytket-qir pytket-qsharp pytket-qulacs 'pytket-pennylane>=0.8.0'
+  'pytket-cirq==0.25.0' 'pytket-iqm==0.2.0' pytket-qir pytket-qsharp pytket-qulacs 'pytket-pennylane>=0.8.0'
   pennyLane-cirq pennyLane-qiskit pennylane-qulacs pennylane-qsharp
-  'black[jupyter]' jupyter-client jupyter-core notebook notebook2script jupyterlab voila jupyter-contrib-core jupyter-contrib-nbextensions nbdev RISE 'mlflow>2.4.0'
+  'black[jupyter]' jupyter-client jupyter-core notebook notebook2script jupyterlab voila jupyter-contrib-core 'widgetsnbextension~=4.0' jupyter-contrib-nbextensions nbdev RISE 'mlflow>2.4.0'
   'huggingface-hub>=0.15.1' 'skops>=0.6.0' openvino openvino-dev rapidocr-openvino
   onnxruntime onnxruntime-extensions onnxruntime-tools mtcnn-onnxruntime
   'scikit-onnxruntime>=0.2.1.4' torch-ort-inference 'torch-ort-infer>=1.13.1' rapidocr-onnxruntime)
