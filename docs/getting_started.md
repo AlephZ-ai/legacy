@@ -72,5 +72,6 @@ Open the install launcher and at the first screen, accept the agreement.
 1. Then, to fix the error, press Ctrl+Shift+P in VSCode, which prompts the same menu shown before. However, instead of pressing Git:Clone, the user should press Terminal: Create New Terminal. In the terminal that pops up, type: “git config --global user.name "Insert name here” and then type "git config --global user.email "Insert email here"
 2. Lastly, to commit to a branch of the user's choosing, it is recommended to create a new branch before committing any changes as is it improper to commit to main. To do so go to "Source Control" and then perform the steps as shown in the following:![Alt text](doc_images/vscode33.png)
 3. Then, the user can type in a message in Source Control and commit their work to the selected branch.
-4.  **At this point, the user should be able to navigate and use repositories in VSCode off of GitHub.**
+4. To publish the work to the internet, press "Publish Branch" exactly where you committed the changes.
+5.  **At this point, the user should be able to navigate and use repositories in VSCode off of GitHub.**
 ---
